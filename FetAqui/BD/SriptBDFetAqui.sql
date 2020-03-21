@@ -1,5 +1,4 @@
 create schema fetaqui;
-
 use fetaqui;
 
 create table poblacion(
@@ -151,6 +150,7 @@ create table pedido(
     fecha_entrega timestamp not null,
     cliente int not null,
     destino int not null,
+    estado varchar(32) not null,
     foreign key (cliente) references cliente(id_cliente)
 		on update cascade,
 	foreign key (destino) references direccion(id_direccion)
