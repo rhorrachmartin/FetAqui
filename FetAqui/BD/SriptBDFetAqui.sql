@@ -158,12 +158,12 @@ create table pedido(
 );
 
 create table detalle_pedido(
+	id_detalle int not null primary key auto_increment,
 	id_pedido int not null,
     id_producto int not null,
     precio_unidad decimal(6,2),
     cantidad int not null,
     dto int,
-    primary key(id_pedido,id_producto),
     foreign key (id_pedido) references pedido(id_pedido)
 		on update cascade,
 	foreign key (id_producto) references producto(id_producto)
@@ -171,8 +171,51 @@ create table detalle_pedido(
 );
 
 
+insert into poblacion (nombre) values ('Palma');
+insert into poblacion (nombre) values ('Santa Maria');
+
+insert into direccion (direccion,poblacion) values ('Avenida Argentina 1 3º c', 1);
+insert into direccion (direccion,poblacion) values ('Major 2 1 b', 2);
+
+insert into vendedor (email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
+	values ('rhorrach@gmail.com', '12345', 'foto.jpg', 1, 630513222, 1, now(),1);
+
+insert into post (texto_post, autor) values ('Esto es un post de prueba', 1);
+
+insert into cliente (email, nombre, apellido, telefono,direccion, password, foto) 
+	values ('rhorrachmartin@gmail.com', 'Ramon', 'Horrach', 630513222, 2, '12345','foto2.jpg');
+    
+insert into valoracion_post (valoracion, id_cliente, id_post) values (10, 1, 1);
+
+insert into valoracioncv (valoracion, id_cliente, id_vendedor) values (10,1,1);
+
+insert into valoracionvc (valoracion, id_cliente, id_vendedor) values (10,1,1);
+
+insert into categoria (nombre) values ('Fruta');
+
+insert into formato (nombre) values ('Kg');
+
+insert into producto (nombre, descripcion, foto, precio, vendedor, stock, vendido, categoria, formato,venta_online) 
+	values ('Naranjas de Sóller', 'Naranjas traídas de Sóller', 'naranjas.jpg', 0.50, 1,100,0,1,1,1);
+    
+insert into valoracion_producto (valoracion, cliente, producto) values (10,1,1);
+
+insert into pedido (fecha_pedido, fecha_entrega,cliente, destino, estado) values (now(), now() +1,1,1,'Pendiente');
+
+insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
+insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
+insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
+insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
 
 
 
-
-
+select * 
+from pedido
+inner join detalle_pedido
+	on pedido.id_pedido = detalle_pedido.id_pedido
+inner join producto
+	on detalle_pedido.id_producto = producto.id_producto;
+    
+    
+select * from vendedor;
+select * from cliente;
