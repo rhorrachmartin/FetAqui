@@ -1,4 +1,5 @@
 create schema fetaqui;
+
 use fetaqui;
 
 create table poblacion(
@@ -19,7 +20,8 @@ create table direccion(
 
 create table vendedor(
 	id_vendedor int not null primary key auto_increment,
-    nif varchar(9),/*no es necesaria en caso de que un vendedor no desee vender online, en caso de que lo desee deberá updatear el atributo*/
+    nif varchar(9),
+    nombre varchar(32) not null,/*no es necesaria en caso de que un vendedor no desee vender online, en caso de que lo desee deberá updatear el atributo*/
     email varchar(64) not null,
     password varchar(32) not null,
     foto varchar(100) not null,
@@ -177,8 +179,8 @@ insert into poblacion (nombre) values ('Santa Maria');
 insert into direccion (direccion,poblacion) values ('Avenida Argentina 1 3º c', 1);
 insert into direccion (direccion,poblacion) values ('Major 2 1 b', 2);
 
-insert into vendedor (email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
-	values ('rhorrach@gmail.com', '12345', 'foto.jpg', 1, 630513222, 1, now(),1);
+insert into vendedor (nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
+	values ('Agrícola Palma','rhorrach@gmail.com', '12345', 'foto.jpg', 1, 630513222, 1, now(),1);
 
 insert into post (texto_post, autor) values ('Esto es un post de prueba', 1);
 
@@ -198,6 +200,9 @@ insert into formato (nombre) values ('Kg');
 insert into producto (nombre, descripcion, foto, precio, vendedor, stock, vendido, categoria, formato,venta_online) 
 	values ('Naranjas de Sóller', 'Naranjas traídas de Sóller', 'naranjas.jpg', 0.50, 1,100,0,1,1,1);
     
+insert into producto (nombre, descripcion, foto, precio, vendedor, stock, vendido, categoria, formato,venta_online) 
+	values ('Plátanos de Canarias', 'Plátanos de Canarias autétincos', 'platanos.jpg', 0.580, 1,100,0,1,1,1);
+    
 insert into valoracion_producto (valoracion, cliente, producto) values (10,1,1);
 
 insert into pedido (fecha_pedido, fecha_entrega,cliente, destino, estado) values (now(), now() +1,1,1,'Pendiente');
@@ -206,16 +211,70 @@ insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto
 insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
 insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
 insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
+insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,2,0.580,5,0);
 
 
+/*---------------------------SELECT PARA VER TODOS LOS PEDIDOS DETALLADOS DE UN VENDEDOR-----------------------------*/
 
-select * 
+select 
+    pedido.id_pedido, 
+    pedido.fecha_pedido,
+    pedido.fecha_entrega, 
+    precio_unidad, 
+    sum(cantidad) as cantidad, 
+    precio_unidad * sum(cantidad) as precio_final,    
+    concat(cliente.nombre, ' ' ,cliente.apellido) as Cliente,
+    poblacion.nombre as Poblacion,
+    direccion.direccion,
+    producto.nombre,
+	producto.descripcion
 from pedido
 inner join detalle_pedido
 	on pedido.id_pedido = detalle_pedido.id_pedido
 inner join producto
-	on detalle_pedido.id_producto = producto.id_producto;
+	on detalle_pedido.id_producto = producto.id_producto
+inner join direccion
+	on direccion.id_direccion = pedido.destino
+inner join poblacion
+	on poblacion.id_poblacion = direccion.poblacion
+inner join cliente
+	on cliente.id_cliente = pedido.cliente
+inner join vendedor
+	on vendedor.id_vendedor = producto.vendedor
+where vendedor.id_vendedor = 1
+group by pedido.id_pedido,producto.nombre, producto.descripcion,detalle_pedido.precio_unidad;
+
+
+/*---------------------------SELECT PARA OBTENER TODOS LOS PRODUCTOS DE UN VENDEDOR------------------------*/
+
+select producto.nombre, producto.descripcion, producto.foto, producto.precio,formato.nombre as Formato
+from producto
+inner join vendedor
+	on vendedor.id_vendedor = producto.vendedor
+inner join formato
+	on formato.id_formato = producto.formato
+where vendedor.id_vendedor = 1;
+
+/*---------------------------SELECT PARA OBTENER EL DETALLE DE UN PRODUCTO DE UN VENDEDOR--------------*/
+
+select producto.nombre, producto.descripcion, producto.foto, producto.precio,formato.nombre as Formato
+from producto
+inner join vendedor
+	on vendedor.id_vendedor = producto.vendedor
+inner join formato
+	on formato.id_formato = producto.formato
+where vendedor.id_vendedor = 1 and
+producto.id_producto = 2;
+
+/*--------------------------SELECT PARA OBTENER TODOS LOS POST DE UN VENDEDOR----------------------------*/
+
+select vendedor.nombre, post.texto_post, valoracion_post.valoracion
+from post
+inner join vendedor
+	on vendedor.id_vendedor = post.autor
+inner join valoracion_post
+	on valoracion_post.id_post = post.id_post
+where vendedor.id_vendedor = 1;
+
+
     
-    
-select * from vendedor;
-select * from cliente;
