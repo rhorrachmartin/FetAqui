@@ -3,14 +3,7 @@
 <configuration>
 	<properties resource='jdbc.properties' />
 	<typeAliases>
-		<typeAlias type='modelo.pojo.Accidente' alias='Accidente'></typeAlias>
-		<typeAlias type='modelo.pojo.Distrito' alias='Distrito'></typeAlias>
-		<typeAlias type='modelo.pojo.TipoAccidente' alias='TipoAccidente'></typeAlias>
-		<typeAlias type='modelo.pojo.TipoVehiculo' alias='TipoVehiculo'></typeAlias>
-		<typeAlias type='modelo.pojo.TipoSexo' alias='TipoSexo'></typeAlias>
-		<typeAlias type='modelo.pojo.Estadistica' alias='Estadistica'></typeAlias>
-		<typeAlias type='modelo.pojo.Usuario' alias='Usuario'></typeAlias>
-	</typeAliases>
+		<typeAlias type='' alias=''></typeAlias>
 	<environments default='development'>
 		<environment id='development'>
 			<transactionManager type='JDBC' />
@@ -24,11 +17,5 @@
 	</environments>
 	<mappers>
 		<mapper resource='modelo/dao/mappers/EstadisticasMapper.xml' />
-		<mapper resource='modelo/dao/mappers/UsuariosMapper.xml' />
-		<mapper resource='modelo/dao/mappers/AccidentesMapper.xml' />
-		<mapper resource='modelo/dao/mappers/DistritosMapper.xml' />
-		<mapper resource='modelo/dao/mappers/TipoVehiculosMapper.xml' />
-		<mapper resource='modelo/dao/mappers/TipoAccidentesMapper.xml' />
-		<mapper resource='modelo/dao/mappers/TipoSexosMapper.xml' />
 	</mappers>
 </configuration>
