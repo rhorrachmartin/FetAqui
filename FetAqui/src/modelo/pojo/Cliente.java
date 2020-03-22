@@ -7,7 +7,9 @@ public class Cliente {
 	String nombre;
 	String apellido;
 	Integer telefono;
-	Integer direccion;
+	String poblacion;
+	String direccion;
+	Integer idDireccion;
 	String password;
 	String foto;
 	
@@ -15,7 +17,7 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(Integer id, String email, String nombre, String apellido, Integer telefono, Integer direccion,
+	public Cliente(Integer id, String email, String nombre, String apellido, Integer telefono, Integer idDireccion,
 			String password, String foto) {
 		super();
 		this.id = id;
@@ -23,7 +25,7 @@ public class Cliente {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.telefono = telefono;
-		this.direccion = direccion;
+		this.idDireccion = idDireccion;
 		this.password = password;
 		this.foto = foto;
 	}
@@ -69,11 +71,11 @@ public class Cliente {
 	}
 
 	public Integer getDireccion() {
-		return direccion;
+		return idDireccion;
 	}
 
-	public void setDireccion(Integer direccion) {
-		this.direccion = direccion;
+	public void setDireccion(Integer idDireccion) {
+		this.idDireccion = idDireccion;
 	}
 
 	public String getPassword() {

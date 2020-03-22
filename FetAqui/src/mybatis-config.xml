@@ -3,7 +3,8 @@
 <configuration>
 	<properties resource='jdbc.properties' />
 	<typeAliases>
-		<typeAlias type='' alias=''></typeAlias>
+		<typeAlias type='modelo.pojo.Cliente' alias='Cliente'></typeAlias>
+	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
 			<transactionManager type='JDBC' />
@@ -16,6 +17,6 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource='modelo/dao/mappers/EstadisticasMapper.xml' />
+		<mapper resource='modelo/dao/mappers/ClientesMapper.xml' />
 	</mappers>
 </configuration>
