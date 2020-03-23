@@ -10,6 +10,7 @@ public class Producto {
 	Integer stock;
 	Integer vendido;
 	Integer id_categoria;
+	String categoria;
 	Integer id_formato;
 	Integer venta_online;
 	String formato;
@@ -18,25 +19,6 @@ public class Producto {
 	
 	public Producto() {
 		
-	}
-	
-	public Producto(Integer id, String nombre, String descripcion, String foto, double precio, Integer stock,
-			Integer vendido, Integer id_categoria, Integer id_formato, Integer venta_online, String formato,
-			Integer id_vendedor, String nombre_vendedor) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.foto = foto;
-		this.precio = precio;
-		this.stock = stock;
-		this.vendido = vendido;
-		this.id_categoria = id_categoria;
-		this.id_formato = id_formato;
-		this.venta_online = venta_online;
-		this.formato = formato;
-		this.id_vendedor = id_vendedor;
-		this.nombre_vendedor = nombre_vendedor;
 	}
 
 	public Integer getId() {
@@ -103,6 +85,14 @@ public class Producto {
 		this.id_categoria = id_categoria;
 	}
 
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
 	public Integer getId_formato() {
 		return id_formato;
 	}
@@ -144,5 +134,4 @@ public class Producto {
 	}
 	
 	
-
 }

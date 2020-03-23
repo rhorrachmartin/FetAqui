@@ -4,37 +4,32 @@
 
 <mapper namespace='modelo.dao.mappers.ProductosMapper'>
 
-	<resultMap type='Producto' id='getProductosVendedor'>
+	<resultMap type='Producto' id='getProductosBusqueda'>
 		<result property='id' column='id_producto' />
 		<result property='nombre' column='nombre' />
 		<result property='descripcion' column='descripcion' />
 		<result property='foto' column='foto' />
 		<result property='precio' column='precio' />
+		<result property='categoria' column='categoria' />
 		<result property='formato' column='formato' />
-		<result property='id_vendedor' column='id_vendedor' />
 		<result property='nombre_vendedor' column='vendedor' />
-		<result property='venta_online' column='venta_online' />
 	</resultMap>
 
 
-	<select id="getProductosVendedor"
-		resultMap="getProductosVendedor">
-		select 
-			producto.nombre, producto.descripcion, producto.foto,
-			producto.precio,formato.nombre as Formato,
-			vendedor.id_vendedor, vendedor.nombre as vendedor, producto.venta_online
-		from 
-			producto
-		inner join 
-			vendedor
-		on 
-			vendedor.id_vendedor = producto.vendedor
-		inner join 
-			formato
-		on 
-			formato.id_formato = producto.formato
-		where 
-			vendedor.id_vendedor = #{id_vendedor};
+	<select id="getProductosBusqueda"
+		resultMap="getProductosBusqueda">
+		select id_producto, producto.nombre, producto.descripcion,
+		producto.foto,
+		producto.precio, categoria.nombre as categoria,
+		formato.nombre as formato, vendedor.nombre as vendedor
+		from producto
+		inner join vendedor
+		on vendedor.id_vendedor = producto.vendedor
+		inner join categoria
+		on categoria.id_categoria = producto.categoria
+		inner join formato
+		on formato.id_formato = producto.formato
+		where producto.nombre like #{busqueda};
 	</select>
 
 
