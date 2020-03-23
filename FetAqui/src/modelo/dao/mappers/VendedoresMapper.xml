@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.VendedoresMapper'>
+
+	<resultMap type='Vendedor' id='getVendedores'>
+		<result property='id' column='id_vendedor' />
+		<result property='nombre' column='nombre' />
+		<result property='email' column='email' />
+		<result property='telefono' column='telefono' />
+		<result property='foto' column='foto' />
+		<result property='direccion' column='direccion' />
+		<result property='nombre_vendedor' column='vendedor' />
+		<result property='poblacion' column='poblacion' />
+		<result property='venta_online' column='venta_online' />
+	</resultMap>
+
+
+	<select id="getVendedores" resultMap="getVendedores">
+		select
+		id_vendedor, vendedor.nombre, email,
+		telefono,foto, direccion.direccion,
+		poblacion.nombre as poblacion,venta_online
+		from
+		vendedor
+		inner join
+		direccion
+		on
+		direccion.id_direccion = vendedor.direccion
+		inner join
+		poblacion
+		on poblacion.id_poblacion = direccion.poblacion;
+	</select>
+
+	<resultMap type='Producto' id='getProductosVendedor'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='formato' column='formato' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='nombre_vendedor' column='vendedor' />
+		<result property='venta_online' column='venta_online' />
+	</resultMap>
+
+
+	<select id="getProductosVendedor"
+		resultMap="getProductosVendedor">
+		select
+		producto.nombre, producto.descripcion, producto.foto,
+		producto.precio,formato.nombre as Formato,
+		vendedor.id_vendedor, vendedor.nombre as vendedor, producto.venta_online
+		from
+		producto
+		inner join
+		vendedor
+		on
+		vendedor.id_vendedor = producto.vendedor
+		inner join
+		formato
+		on
+		formato.id_formato = producto.formato
+		where
+		vendedor.id_vendedor = #{id_vendedor};
+	</select>
+
+	<select id="getProductoVendedor" resultType="Producto">
+		select
+		producto.nombre, producto.descripcion, producto.foto,
+		producto.precio,formato.nombre as Formato
+		from producto
+		inner join vendedor
+		on vendedor.id_vendedor = producto.vendedor
+		inner join formato
+		on formato.id_formato = producto.formato
+		where vendedor.id_vendedor = #{id_vendedor} and
+		producto.id_producto = #{id_producto};
+	</select>
+
+
+</mapper>
