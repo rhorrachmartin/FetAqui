@@ -19,7 +19,8 @@
 
 	<select id="getVendedores" resultMap="getVendedores">
 		select
-		id_vendedor, vendedor.nombre, email,
+		id_vendedor,
+		vendedor.nombre, email,
 		telefono,foto, direccion.direccion,
 		poblacion.nombre as poblacion,venta_online
 		from
@@ -31,6 +32,25 @@
 		inner join
 		poblacion
 		on poblacion.id_poblacion = direccion.poblacion;
+	</select>
+	
+	<select id="getVendedor" resultType="Vendedor">
+		select
+		id_vendedor,
+		vendedor.nombre, email,
+		telefono,foto, direccion.direccion,
+		poblacion.nombre as poblacion,venta_online
+		from
+		vendedor
+		inner join
+		direccion
+		on
+		direccion.id_direccion = vendedor.direccion
+		inner join
+		poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		where 
+			id_vendedor = #{id_vendedor};
 	</select>
 
 	<resultMap type='Producto' id='getProductosVendedor'>
@@ -51,10 +71,12 @@
 		select
 		producto.nombre, producto.descripcion, producto.foto,
 		producto.precio,formato.nombre as Formato,
-		vendedor.id_vendedor, vendedor.nombre as vendedor, producto.venta_online
+		vendedor.id_vendedor,
+		vendedor.nombre as vendedor, producto.venta_online
 		from
 		producto
-		inner join
+		inner
+		join
 		vendedor
 		on
 		vendedor.id_vendedor = producto.vendedor
@@ -71,13 +93,67 @@
 		producto.nombre, producto.descripcion, producto.foto,
 		producto.precio,formato.nombre as Formato
 		from producto
-		inner join vendedor
+		inner join
+		vendedor
 		on vendedor.id_vendedor = producto.vendedor
 		inner join formato
 		on formato.id_formato = producto.formato
-		where vendedor.id_vendedor = #{id_vendedor} and
+		where vendedor.id_vendedor =
+		#{id_vendedor} and
 		producto.id_producto = #{id_producto};
 	</select>
+
+	<resultMap type='PedidoDetallado' id='getPedidosDetallados'>
+		<result property='idPedido' column='id_pedido' />
+		<result property='producto' column='producto' />
+		<result property='fechaPedido' column='fecha_pedido' />
+		<result property='fechaEntrega' column='fecha_entrega' />
+		<result property='precioUnitario' column='precio_unidad' />
+		<result property='cantidad' column='cantidad' />
+		<result property='precioFinal' column='precio_final' />
+		<result property='nombreCliente' column='cliente' />
+		<result property='poblacion' column='poblacion' />
+		<result property='direccion' column='direccion' />
+		<result property='estado' column='estado' />
+	</resultMap>
+
+
+	<select id="getPedidosDetallados"
+		resultMap="getPedidosDetallados">
+		select
+			pedido.id_pedido,
+			producto.nombre as producto,
+			pedido.fecha_pedido,
+			pedido.fecha_entrega,
+			precio_unidad,
+			sum(cantidad) as cantidad,
+			precio_unidad * sum(cantidad) as precio_final,
+			concat(cliente.nombre, ' ' ,cliente.apellido) as cliente,
+			poblacion.nombre as poblacion,
+			direccion.direccion,			
+			pedido.estado
+		from 
+			pedido
+		inner join detalle_pedido
+			on pedido.id_pedido = detalle_pedido.id_pedido
+		inner join producto
+			on detalle_pedido.id_producto = producto.id_producto
+		inner join direccion
+			on direccion.id_direccion = pedido.destino
+		inner join poblacion
+			on poblacion.id_poblacion = direccion.poblacion
+		inner join cliente
+			on cliente.id_cliente = pedido.cliente
+		inner join vendedor
+			on vendedor.id_vendedor = producto.vendedor
+		where 
+			vendedor.id_vendedor = #{id_vendedor}
+		group by 
+			pedido.id_pedido,producto.nombre,
+			producto.descripcion,detalle_pedido.precio_unidad;
+
+	</select>
+
 
 
 </mapper>

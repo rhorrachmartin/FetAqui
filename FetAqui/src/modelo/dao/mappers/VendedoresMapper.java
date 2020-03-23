@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import modelo.pojo.PedidoDetallado;
 import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
@@ -15,6 +16,13 @@ import modelo.pojo.Vendedor;
  *
  */
 public interface VendedoresMapper {
+	
+	/**
+	 * Método para obtener los detalles de un vendedor
+	 * @param id_vendedor recibe la id del vendedor
+	 * @return devuelve un pojo vendedor
+	 */
+	public Vendedor getVendedor(@Param("id_vendedor") Integer id_vendedor);
 
 	/**
 	 * Método para obtener las direcciones de una población
@@ -36,6 +44,11 @@ public interface VendedoresMapper {
 	 */
 	public Producto getProductoVendedor(@Param("id_vendedor") Integer id_vendedor, @Param("id_producto") Integer id_producto);
 	
-	
+	/**
+	 * Método para obtener todos los pedidos detallados de un vendedor
+	 * @param id_vendedor recibe la id del vendedor
+	 * @return devuelve un arraylist de PedidoDetallado
+	 */
+	public ArrayList<PedidoDetallado> getPedidosDetallados(@Param("id_vendedor") Integer id_vendedor);
 
 }
