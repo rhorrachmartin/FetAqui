@@ -6,9 +6,20 @@
 
 
 	<select id="getCliente" resultType="Cliente">
-		SELECT * FROM cliente WHERE
-		email = #{email} and password = #{password};
+		select 
+			id_cliente, cliente.nombre, apellido, telefono,email,password,
+			poblacion.nombre, direccion.direccion
+		from 
+			cliente
+		inner join 
+			direccion
+				on cliente.direccion = direccion.id_direccion
+		inner join 
+			poblacion
+				on direccion.poblacion = poblacion.id_poblacion
+		where 
+			email = #{email} and password = #{password};
 	</select>
 
-	
+
 </mapper>

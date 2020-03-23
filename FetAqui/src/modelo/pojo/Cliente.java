@@ -29,6 +29,20 @@ public class Cliente {
 		this.password = password;
 		this.foto = foto;
 	}
+	
+	
+
+	public String getPoblacion() {
+		return poblacion;
+	}
+
+	public void setPoblacion(String poblacion) {
+		this.poblacion = poblacion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
 
 	public Integer getId() {
 		return id;
@@ -70,11 +84,11 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 
-	public Integer getDireccion() {
+	public Integer getidDireccion() {
 		return idDireccion;
 	}
 
-	public void setDireccion(Integer idDireccion) {
+	public void setidDireccion(Integer idDireccion) {
 		this.idDireccion = idDireccion;
 	}
 
