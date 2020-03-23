@@ -16,9 +16,9 @@ import modelo.pojo.Producto;
 public interface ProductosMapper {
 
 	/**
-	 * Método para obtener las productos de un vendedor
+	 * Método para obtener las productos en función de una busqueda por el nombre de producto
 	 * @return ArrayList<Producto> 
 	 */
-	public ArrayList<Producto> getProductosVendedor(@Param("id_vendedor") Integer id_vendedor);
+	public ArrayList<Producto> getProductosBusqueda(@Param("busqueda") String busqueda);
 
 }

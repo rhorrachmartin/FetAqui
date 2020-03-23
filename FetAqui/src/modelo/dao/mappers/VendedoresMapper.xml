@@ -31,7 +31,72 @@
 		direccion.id_direccion = vendedor.direccion
 		inner join
 		poblacion
-		on poblacion.id_poblacion = direccion.poblacion;
+		on poblacion.id_poblacion = direccion.poblacion
+		where vendedor.activado = 1;
+	</select>
+	
+	<resultMap type='Vendedor' id='getVendedoresPoblacion'>
+		<result property='id' column='id_vendedor' />
+		<result property='nombre' column='nombre' />
+		<result property='email' column='email' />
+		<result property='telefono' column='telefono' />
+		<result property='foto' column='foto' />
+		<result property='direccion' column='direccion' />
+		<result property='nombre_vendedor' column='vendedor' />
+		<result property='poblacion' column='poblacion' />
+		<result property='venta_online' column='venta_online' />
+	</resultMap>
+
+
+	<select id="getVendedoresPoblacion" resultMap="getVendedoresPoblacion">
+		select
+		id_vendedor,
+		vendedor.nombre as vendedor, email,
+		telefono,foto, direccion.direccion,
+		poblacion.nombre as poblacion,venta_online
+		from
+		vendedor
+		inner join
+		direccion
+		on
+		direccion.id_direccion = vendedor.direccion
+		inner join
+		poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		where poblacion.nombre like #{poblacion}
+		and activado = 1;
+	</select>
+	
+	<resultMap type='Vendedor' id='getVendedoresNombre'>
+		<result property='id' column='id_vendedor' />
+		<result property='nombre' column='nombre' />
+		<result property='email' column='email' />
+		<result property='telefono' column='telefono' />
+		<result property='foto' column='foto' />
+		<result property='direccion' column='direccion' />
+		<result property='nombre_vendedor' column='vendedor' />
+		<result property='poblacion' column='poblacion' />
+		<result property='venta_online' column='venta_online' />
+	</resultMap>
+
+
+	<select id="getVendedoresNombre" resultMap="getVendedoresNombre">
+		select
+		id_vendedor,
+		vendedor.nombre as vendedor, email,
+		telefono,foto, direccion.direccion,
+		poblacion.nombre as poblacion,venta_online
+		from
+		vendedor
+		inner join
+		direccion
+		on
+		direccion.id_direccion = vendedor.direccion
+		inner join
+		poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		where vendedor.nombre like #{vendedor}
+		and activado = 1;
 	</select>
 	
 	<select id="getVendedor" resultType="Vendedor">

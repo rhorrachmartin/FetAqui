@@ -31,6 +31,20 @@ public interface VendedoresMapper {
 	public ArrayList<Vendedor> getVendedores();
 	
 	/**
+	 * Método para buscar vendedores por poblacion
+	 * @param poblacion recibe string con la poblacion
+	 * @return
+	 */
+	public ArrayList<Vendedor> getVendedoresPoblacion(@Param("poblacion") String poblacion);
+	
+	/**
+	 * Método para buscar vendedores por nombre
+	 * @param nombre recibe string con el nombre
+	 * @return
+	 */
+	public ArrayList<Vendedor> getVendedoresNombre(@Param("nombre") String nombre);
+	
+	/**
 	 * Método para obtener los productos de un vendedor
 	 * @return ArrayList<Producto> 
 	 */
@@ -75,5 +89,7 @@ public interface VendedoresMapper {
 	 * @param v Recibe un pojo vendedor
 	 */
 	public void desactivarVentaOnline(Vendedor v);
+	
+	
 
 }
