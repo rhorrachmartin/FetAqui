@@ -4,6 +4,11 @@
 	<properties resource='jdbc.properties' />
 	<typeAliases>
 		<typeAlias type='modelo.pojo.Cliente' alias='Cliente'></typeAlias>
+		<typeAlias type='modelo.pojo.Vendedor' alias='Vendedor'></typeAlias>
+		<typeAlias type='modelo.pojo.Poblacion' alias='Poblacion'></typeAlias>
+		<typeAlias type='modelo.pojo.Direccion' alias='Direccion'></typeAlias>
+		<typeAlias type='modelo.pojo.Producto' alias='Producto'></typeAlias>
+		<typeAlias type='modelo.pojo.PedidoDetallado' alias='PedidoDetallado'></typeAlias>
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
@@ -18,5 +23,9 @@
 	</environments>
 	<mappers>
 		<mapper resource='modelo/dao/mappers/ClientesMapper.xml' />
+		<mapper resource='modelo/dao/mappers/DireccionesMapper.xml' />
+		<mapper resource='modelo/dao/mappers/PoblacionesMapper.xml' />
+		<mapper resource='modelo/dao/mappers/ProductosMapper.xml' />
+		<mapper resource='modelo/dao/mappers/VendedoresMapper.xml' />
 	</mappers>
 </configuration>

@@ -6,20 +6,60 @@
 
 
 	<select id="getCliente" resultType="Cliente">
-		select 
-			id_cliente, cliente.nombre, apellido, telefono,email,password,
-			poblacion.nombre, direccion.direccion
-		from 
-			cliente
-		inner join 
-			direccion
-				on cliente.direccion = direccion.id_direccion
-		inner join 
-			poblacion
-				on direccion.poblacion = poblacion.id_poblacion
-		where 
-			email = #{email} and password = #{password};
+		select
+		id_cliente, cliente.nombre, apellido, telefono,email,password,
+		poblacion.nombre, direccion.direccion
+		from
+		cliente
+		inner join
+		direccion
+		on cliente.direccion = direccion.id_direccion
+		inner join
+		poblacion
+		on direccion.poblacion = poblacion.id_poblacion
+		where
+		email = #{email} and password = #{password};
 	</select>
 
+	<resultMap type='PedidoDetallado' id='getPedidos'>
+		<result property='idPedido' column='id_pedido' />
+		<result property='fechaPedido' column='fecha_pedido' />
+		<result property='fechaEntrega' column='fecha_entrega' />
+		<result property='estado' column='estado' />
+		<result property='vendedor' column='vendedor' />
+		<result property='producto' column='producto' />
+		<result property='precioUnitario' column='precio_unidad' />
+		<result property='cantidad' column='cantidad' />
+		<result property='precioFinal' column='precio_total' />
+		<result property='direccion' column='direccion' />
+		<result property='poblacion' column='poblacion' />
+
+	</resultMap>
+
+
+	<select id="getPedidos" resultMap="getPedidos">
+		select
+		pedido.id_pedido,pedido.fecha_pedido, pedido.fecha_entrega,
+		pedido.estado, vendedor.nombre as vendedor,producto.nombre as
+		producto, detalle_pedido.precio_unidad,
+		detalle_pedido.cantidad, detalle_pedido.precio_unidad * detalle_pedido.cantidad as
+		precio_total
+		,direccion.direccion, poblacion.nombre
+		from cliente
+		inner join pedido
+		on pedido.cliente = cliente.id_cliente
+		inner join detalle_pedido
+		on detalle_pedido.id_pedido = pedido.id_pedido
+		inner join producto
+		on producto.id_producto = detalle_pedido.id_producto
+		inner join direccion
+		on direccion.id_direccion = pedido.destino
+		inner join poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		inner join vendedor
+		on vendedor.id_vendedor = producto.vendedor
+		where cliente.id_cliente = #{id_cliente};
+
+	</select>
 
 </mapper>
