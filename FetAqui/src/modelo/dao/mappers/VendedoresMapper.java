@@ -50,5 +50,30 @@ public interface VendedoresMapper {
 	 * @return devuelve un arraylist de PedidoDetallado
 	 */
 	public ArrayList<PedidoDetallado> getPedidosDetallados(@Param("id_vendedor") Integer id_vendedor);
+	
+	/**
+	 * Método para insertar un vendedor
+	 * @param v REcibe un pojo vendedor
+	 */
+	public void insertarVendedor(Vendedor v);
+	
+	
+	/**
+	 * Método para activar un vendedor
+	 * @param v Recibe un pojo vendedor
+	 */
+	public void activarVendedor(Vendedor v);
+	
+	/**
+	 * Método para activar venta onlinde un vendedor
+	 * @param v Recibe un pojo vendedor
+	 */
+	public void activarVentaOnline(Vendedor v);
+	
+	/**
+	 * Método para desactivar venta onlinde un vendedor
+	 * @param v Recibe un pojo vendedor
+	 */
+	public void desactivarVentaOnline(Vendedor v);
 
 }

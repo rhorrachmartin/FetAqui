@@ -153,7 +153,23 @@
 			producto.descripcion,detalle_pedido.precio_unidad;
 
 	</select>
-
-
+	
+	<insert id="insertarVendedor" parameterType="Vendedor" useGeneratedKeys="true"
+    keyProperty="id">
+		insert into vendedor (nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
+		values (#{nombre}, #{email}, #{password}, #{foto}, #{direccion}, #{telefono}, 0,#{fecha_alta},#{venta_online});
+	</insert>
+	
+	<update id="activarVendedor" parameterType="Vendedor">
+		update vendedor set activado = 1  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="activarVentaOnline" parameterType="Vendedor">
+		update vendedor set venta_online = 1  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="desactivarVentaOnline" parameterType="Vendedor">
+		update vendedor set venta_online = 0 where vendedor.id_vendedor = #{id_vendedor};
+	</update>
 
 </mapper>
