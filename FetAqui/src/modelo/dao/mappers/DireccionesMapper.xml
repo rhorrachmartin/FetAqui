@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.DireccionesMapper'>
+
+	<resultMap type='Direccion' id='getDireccionesPorPoblacion'>
+		<result property='id' column='id_direccion' />
+		<result property='direccion' column='direccion' />
+		<result property='poblacion' column='poblacion' />
+	</resultMap>
+
+
+	<select id="getDireccionesPorPoblacion"
+		resultMap="getDireccionesPorPoblacion">
+		select 
+			id_direccion, direccion.direccion, poblacion.nombre	as poblacion
+		from 
+			poblacion
+		inner join 
+			direccion
+		on 
+			poblacion.id_poblacion = direccion.poblacion
+		where 
+			poblacion.id_poblacion = #{id_poblacion};
+	</select>
+
+
+</mapper>
