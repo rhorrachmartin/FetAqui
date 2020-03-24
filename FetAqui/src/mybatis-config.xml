@@ -12,6 +12,7 @@
 		<typeAlias type='modelo.pojo.Formato' alias='Formato'></typeAlias>
 		<typeAlias type='modelo.pojo.DetallePedido' alias='DetallePedido'></typeAlias>
 		<typeAlias type='modelo.pojo.PedidoDetallado' alias='PedidoDetallado'></typeAlias>
+		<typeAlias type='modelo.pojo.CodigoActivacionVendedor' alias='CodigoActivacionVendedor'></typeAlias>
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
@@ -30,5 +31,6 @@
 		<mapper resource='modelo/dao/mappers/PoblacionesMapper.xml' />
 		<mapper resource='modelo/dao/mappers/ProductosMapper.xml' />
 		<mapper resource='modelo/dao/mappers/VendedoresMapper.xml' />
+		<mapper resource='modelo/dao/mappers/CodigosActivacionVendedorMapper.xml' />
 	</mappers>
 </configuration>

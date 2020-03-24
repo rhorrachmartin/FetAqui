@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.loginPanel {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+}
+
+.panelEleccionRegistro{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 150px;
+}
+

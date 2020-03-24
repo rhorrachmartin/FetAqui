@@ -11,7 +11,7 @@ public class Vendedor {
 	String password;
 	String foto;
 	Integer id_direccion;
-	Integer telefono;
+	String telefono;
 	Integer activado;
 	Timestamp fecha_alta;
 	Integer venta_online;
@@ -22,12 +22,12 @@ public class Vendedor {
 		
 	}
 	
-	public Vendedor(Integer id, String nif, String nombre, String email, String password, String foto,
-			Integer id_direccion, Integer telefono, Integer activado, Timestamp fecha_alta, Integer venta_online,
-			String direccion, String poblacion) {
+	
+	
+
+	public Vendedor(String nombre, String email, String password, String foto, Integer id_direccion, String telefono,
+			Integer activado, Timestamp fecha_alta, Integer venta_online) {
 		super();
-		this.id = id;
-		this.nif = nif;
 		this.nombre = nombre;
 		this.email = email;
 		this.password = password;
@@ -37,9 +37,10 @@ public class Vendedor {
 		this.activado = activado;
 		this.fecha_alta = fecha_alta;
 		this.venta_online = venta_online;
-		this.direccion = direccion;
-		this.poblacion = poblacion;
 	}
+
+
+
 
 	public Integer getId() {
 		return id;
@@ -97,11 +98,11 @@ public class Vendedor {
 		this.id_direccion = id_direccion;
 	}
 
-	public Integer getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(Integer telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 

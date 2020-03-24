@@ -117,6 +117,15 @@
 		where 
 			id_vendedor = #{id_vendedor};
 	</select>
+	
+	<select id="getVendedorEmailPass" resultType="Vendedor">
+		select
+			*
+		from
+			vendedor
+		where 
+			email = #{email} and password = #{password};
+	</select>
 
 	<resultMap type='Producto' id='getProductosVendedor'>
 		<result property='id' column='id_producto' />
@@ -236,5 +245,9 @@
 	<update id="desactivarVentaOnline" parameterType="Vendedor">
 		update vendedor set venta_online = 0 where vendedor.id_vendedor = #{id_vendedor};
 	</update>
+	
+	<select id="comprobarMailVendedor" resultType="Vendedor">
+		select * from vendedor where vendedor.email = #{email};
+	</select>
 
 </mapper>
