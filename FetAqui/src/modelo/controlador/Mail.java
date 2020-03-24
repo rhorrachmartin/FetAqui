@@ -52,10 +52,9 @@ public class Mail extends HttpServlet {
 		
 		try {
 			//Recogemos los atributos necesarios
-			String vista = request.getParameter("vista");
 			String para = request.getParameter("email");
 			String remitente = "rhorrach@gmail.com";
-			String asunto = "Email de confirmación de registro en Calcula tu IMC";
+			String asunto = "Email de confirmación de registro en FET AQUI";
 			int codigo = Integer.parseInt(request.getParameter("codigo"));
 			
 			//Generamos el mensaje
@@ -64,16 +63,15 @@ public class Mail extends HttpServlet {
 			//Si los parámetros necesarios no están vacíos
 			if ((para != null)  && (mensaje != null)) {
 				//Enviamos el email
-				mailOfficeEJB.sendMail(para, remitente, asunto, mensaje,
-						this.getServletContext().getRealPath("/imc.png"));
+				mailOfficeEJB.sendMail2(para, remitente, asunto, mensaje);
 			}
 			//Si el parámetro vista es igual a "n" redirigimos a Mail2.jsp
-			if(vista.equals("n")) {
-				rs = getServletContext().getRequestDispatcher(MAIL_JSP2);
-			}
+//			if(vista.equals("n")) {
+//				rs = getServletContext().getRequestDispatcher(MAIL_JSP2);
+//			}
 			//Introducimos en la request el parámetro "para" que es un el correo del usuario registrado 
-			request.setAttribute("para", para);
-			rs.forward(request, response);
+//			request.setAttribute("para", para);
+//			rs.forward(request, response);
 		} catch (Exception e) {
 			logger.setErrorLogger(e.getMessage());
 		}

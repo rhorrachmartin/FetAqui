@@ -6,7 +6,6 @@ import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -16,23 +15,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.ejb.CodigoVendedorEJB;
-import modelo.ejb.CodigosEJB;
 import modelo.ejb.ImagenesEJB;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.SesionVendedorEJB;
-import modelo.ejb.SesionesEJB;
-import modelo.ejb.UsuariosEJB;
 import modelo.ejb.VendedorEJB;
-import modelo.pojo.Codigo;
-import modelo.pojo.Usuario;
+import modelo.pojo.CodigoActivacionVendedor;
 import modelo.pojo.Vendedor;
 
 /**
  * Servlet implementation class Registro
  */
-@WebServlet("/Registro")
+@WebServlet("/Principal")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
-public class Registro extends HttpServlet {
+public class Principal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * EJB para trabajar con Usuarios
@@ -62,7 +57,7 @@ public class Registro extends HttpServlet {
 	LoggersEJB logger;
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-	static final String REGISTRO_JSP = "/Registro.jsp";
+	static final String HOME_JSP = "/Home.jsp";
 	static final String REGISTRO_JSP2 = "/Registro2.jsp";
 
 	/**
@@ -74,7 +69,7 @@ public class Registro extends HttpServlet {
 			throws ServletException, IOException {
 
 		// Creamos el RequestDispatcher por defecto hacia Registro.jsp
-		RequestDispatcher rs = getServletContext().getRequestDispatcher(REGISTRO_JSP);
+		RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_JSP);
 		response.setContentType(CONTENT_TYPE);
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
@@ -95,13 +90,6 @@ public class Registro extends HttpServlet {
 		} else {
 			// No está logeado, mostramos página de login
 
-			String vista = request.getParameter("vista");
-
-			if (vista != null && vista.equals("n")) {
-				rs = getServletContext().getRequestDispatcher(REGISTRO_JSP2);
-
-			}
-
 			rs.forward(request, response);
 		}
 
@@ -116,7 +104,7 @@ public class Registro extends HttpServlet {
 		response.setContentType(CONTENT_TYPE);
 
 		// Recogemos el contexto
-		ServletContext contexto = getServletContext();
+//		ServletContext contexto = getServletContext();
 
 		// Recogemos los parámetros necesarios
 		String nombre = request.getParameter("nombre");
@@ -129,7 +117,7 @@ public class Registro extends HttpServlet {
 			
 			String imagen = "FotoPorDefecto";
 			int direccion = 1;
-			String telefono = "TelfDefecto";
+			String telefono = "TelfDef";
 			int activado = 0;
 			int venta_online = 0;
 			// Recogemos la fecha actual
@@ -141,10 +129,10 @@ public class Registro extends HttpServlet {
 			// Comprobamos si el correo ya existe en la BD
 			// No vamos a permitir que haya dos usuarios con el mismo correo
 
-			if (vendedorEJB.comprobarMailVendedor(v.getEmail())) {
+			if (vendedorEJB.getVendedorEmail(v.getEmail()) != null) {
 
 				// Si ya existe mostramos el error
-				response.sendRedirect("Registro?error=Correo ya existente");
+				response.sendRedirect("Principal?error=Correo ya existente");
 
 			} else {
 				// Si se ha puesto bien el correo dos veces y la contraseña también
@@ -154,27 +142,27 @@ public class Registro extends HttpServlet {
 					// Recogemos el usuario insertado en BD
 					Vendedor vendedor = vendedorEJB.getVendedorEmailPass(email2, password2);
 					// Generamos el código de activación
-					int codigo = codigosEJB.generarCodigo();
+					int codigo = codigoVendedorEJB.generarCodigoVendedor();
 					// Comprobamos si el código generado existe en BD
-					boolean existe = codigosEJB.existeCodigo(codigo);
+					boolean existe = codigoVendedorEJB.existeCodigo(codigo);
 					// Siempre que exista el codigo sumamos uno al mismo
 					while (existe) {
 						codigo++;
-						existe = codigosEJB.existeCodigo(codigo);
+						existe = codigoVendedorEJB.existeCodigo(codigo);
 					}
 
 					// Creamos el pojo código
-					Codigo c = new Codigo(codigo, usuario.getId());
+					CodigoActivacionVendedor c = new CodigoActivacionVendedor(codigo, vendedor.getId());
 
 					// Insertamos el código en BD
-					codigosEJB.insertCodigo(c);
+					codigoVendedorEJB.insertCodigo(c);
 					// Reenviamos la información al servlet de enviar mail para enviar el codigo al
 					// user
-					response.sendRedirect("Mail?email=" + email2 + "&codigo=" + codigo + "&vista=" + vista + "");
+					response.sendRedirect("Mail?email=" + email2 + "&codigo=" + codigo + "");
 
 				} else {
 					// Si no coindicen el password o el mail mostramos el error
-					response.sendRedirect("Registro?error=Usuario o Password no coinciden&vista=" + vista);
+					response.sendRedirect("Principal?error=Usuario o Password no coinciden");
 				}
 			}
 		} catch (Exception e) {

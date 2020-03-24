@@ -41,24 +41,15 @@ public class VendedorDAO {
 		}
 	}
 
-	public boolean comprobarMailVendedor(String email) {
+	public Vendedor getVendedorEmail(String email) {
 		// Abrimos la sesión
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
 
 		try {
-			Vendedor v = null;
-			boolean existe;
 			// Obtenemos el mapper
 			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
 			// Insertamos el usuario
-			v = vendedoresMapper.comprobarMailVendedor(email);
-
-			if (v != null) {
-				existe = false;
-			} else {
-				existe = true;
-			}
-			return existe;
+			return vendedoresMapper.getVendedorEmail(email);
 
 		} finally {
 			// Cerramos sesión

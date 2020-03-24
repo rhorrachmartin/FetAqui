@@ -21,7 +21,7 @@
 		useGeneratedKeys='true' keyProperty='id'>
 		insert into codigo_act_vendedor (id,
 		vendedor)
-		VALUES(#{codigo},#{vendedor})
+		VALUES(#{id},#{vendedor})
 	</insert>
 
 	

@@ -1,5 +1,7 @@
 package modelo.ejb;
 
+import java.util.Random;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -34,6 +36,17 @@ public class CodigoVendedorEJB {
 		CodigoVendedorDAO codigoVendedorDAO = new CodigoVendedorDAO();
 		
 		return codigoVendedorDAO.buscarVendedorPorCodigo(codigo);
+	}
+	
+	/**
+	 * Método EJB para generar un código, número entero hasta el 5000;
+	 * 
+	 * @return
+	 */
+	public int generarCodigoVendedor() {
+		Random r = new Random();
+		return r.nextInt(5000);
+
 	}
 
 }

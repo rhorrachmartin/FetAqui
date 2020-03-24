@@ -25,6 +25,13 @@ public interface VendedoresMapper {
 	public Vendedor getVendedor(@Param("id_vendedor") Integer id_vendedor);
 	
 	/**
+	 * Método para obtener un vendedor a traves de su mail
+	 * @param email
+	 * @return
+	 */
+	public Vendedor getVendedorEmail(@Param("email") String email);
+	
+	/**
 	 * Método para obtener un Vendedor a partir de su email y password
 	 * @param email recibe String email
 	 * @param password Recibe String password
@@ -98,11 +105,6 @@ public interface VendedoresMapper {
 	 */
 	public void desactivarVentaOnline(Vendedor v);
 	
-	/**
-	 * Método para comprobar si ya existe un vendedor con un cierto email
-	 * @param email recibe email
-	 * @return devuelve un pojo vendedor
-	 */
-	public Vendedor comprobarMailVendedor(@Param("email") String email);
+	
 
 }

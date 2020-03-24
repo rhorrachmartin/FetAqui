@@ -126,6 +126,15 @@
 		where 
 			email = #{email} and password = #{password};
 	</select>
+	
+	<select id="getVendedorEmail" resultType="Vendedor">
+		select
+			*
+		from
+			vendedor
+		where 
+			email = #{email};
+	</select>
 
 	<resultMap type='Producto' id='getProductosVendedor'>
 		<result property='id' column='id_producto' />
@@ -231,7 +240,7 @@
 	<insert id="insertarVendedor" parameterType="Vendedor" useGeneratedKeys="true"
     keyProperty="id">
 		insert into vendedor (nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
-		values (#{nombre}, #{email}, #{password}, #{foto}, #{direccion}, #{telefono}, 0,#{fecha_alta},#{venta_online});
+		values (#{nombre}, #{email}, #{password}, #{foto}, #{id_direccion}, #{telefono}, 0,#{fecha_alta},#{venta_online});
 	</insert>
 	
 	<update id="activarVendedor" parameterType="Vendedor">
@@ -246,7 +255,7 @@
 		update vendedor set venta_online = 0 where vendedor.id_vendedor = #{id_vendedor};
 	</update>
 	
-	<select id="comprobarMailVendedor" resultType="Vendedor">
+	<select id="comprobarMailVendedor" resultType="boolean">
 		select * from vendedor where vendedor.email = #{email};
 	</select>
 

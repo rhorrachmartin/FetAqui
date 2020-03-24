@@ -18,10 +18,10 @@ public class VendedorEJB {
 		vendedorDAO.insertVendedor(v);
 	};
 	
-	public boolean comprobarMailVendedor(String email) {
+	public Vendedor getVendedorEmail(String email) {
 		VendedorDAO vendedorDAO = new VendedorDAO();
 		
-		return vendedorDAO.comprobarMailVendedor(email);
+		return vendedorDAO.getVendedorEmail(email);
 	}
 	
 	

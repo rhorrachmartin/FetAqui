@@ -76,7 +76,7 @@
 
 
 				<div class="modal-body">
-					<form class="was-validated" action="Registro" method="post">
+					<form class="was-validated" action="Principal" method="post">
 						<div class="form-group">
 							<label for="nombre">Nombre:</label> <input type="text"
 								class="form-control" id="nombre"
