@@ -107,13 +107,11 @@ public class Principal extends HttpServlet {
 
 		// Recogemos los parámetros necesarios
 		String nombre = request.getParameter("nombre");
-		String email1 = request.getParameter("email1");
-		String email2 = request.getParameter("email2");
-		String password1 = request.getParameter("password1");
-		String password2 = request.getParameter("password2");
-		
+		String email = request.getParameter("email");
+		String password1 = request.getParameter("password");
+
 		try {
-			
+
 			String imagen = "FotoPorDefecto";
 			int direccion = 1;
 			String telefono = "TelfDef";
@@ -125,7 +123,7 @@ public class Principal extends HttpServlet {
 			// Creamos el pojo usuario
 			Vendedor v = new Vendedor();
 			v.setNombre(nombre);
-			v.setEmail(email1);
+			v.setEmail(email);
 			v.setPassword(password1);
 			v.setFoto(imagen);
 			v.setId_direccion(direccion);
@@ -133,7 +131,7 @@ public class Principal extends HttpServlet {
 			v.setActivado(activado);
 			v.setFecha_alta(fecha);
 			v.setVenta_online(venta_online);
-			
+
 			// Comprobamos si el correo ya existe en la BD
 			// No vamos a permitir que haya dos usuarios con el mismo correo
 
@@ -142,39 +140,34 @@ public class Principal extends HttpServlet {
 				response.sendRedirect("Principal?error=Correo ya existente");
 
 			} else {
-				// Si se ha puesto bien el correo dos veces y la contraseña también
-				if (email1.equals(email2) && password1.equals(password2)) {
-					// Insertamos el usuario en BD
-					vendedorEJB.insertarVendedor(v);
-					// Recogemos el usuario insertado en BD
-					Vendedor ve = vendedorEJB.getVendedorEmail(v.getEmail());
-					
-					// Generamos el código de activación
-					int codigo = codigoVendedorEJB.generarCodigoVendedor();
-					
-					// Comprobamos si el código generado existe en BD
-					boolean existe = codigoVendedorEJB.existeCodigo(codigo);
-					// Siempre que exista el codigo sumamos uno al mismo
-					while (existe) {
-						codigo++;
-						existe = codigoVendedorEJB.existeCodigo(codigo);
-					}
 
-					// Creamos el pojo código
-					CodigoActivacionVendedor c = new CodigoActivacionVendedor(codigo, ve.getId_vendedor());
-					
-					System.out.println(c.getId() +", "+ c.getVendedor() );
+				// Insertamos el usuario en BD
+				vendedorEJB.insertarVendedor(v);
+				// Recogemos el usuario insertado en BD
+				Vendedor ve = vendedorEJB.getVendedorEmail(v.getEmail());
 
-					// Insertamos el código en BD
-					codigoVendedorEJB.insertCodigo(c);
-					// Reenviamos la información al servlet de enviar mail para enviar el codigo al
-					// user
-					response.sendRedirect("Mail?email=" + email2 + "&codigo=" + codigo + "");
+				// Generamos el código de activación
+				int codigo = codigoVendedorEJB.generarCodigoVendedor();
 
-				} else {
-					// Si no coindicen el password o el mail mostramos el error
-					response.sendRedirect("Principal?error=Usuario o Password no coinciden");
+				// Comprobamos si el código generado existe en BD
+				boolean existe = codigoVendedorEJB.existeCodigo(codigo);
+				// Siempre que exista el codigo sumamos uno al mismo
+				while (existe) {
+					codigo++;
+					existe = codigoVendedorEJB.existeCodigo(codigo);
 				}
+
+				// Creamos el pojo código
+				CodigoActivacionVendedor c = new CodigoActivacionVendedor(codigo, ve.getId_vendedor());
+
+				System.out.println(c.getId() + ", " + c.getVendedor());
+
+				// Insertamos el código en BD
+				codigoVendedorEJB.insertCodigo(c);
+				// Reenviamos la información al servlet de enviar mail para enviar el codigo al
+				// user
+				response.sendRedirect("Mail?email=" + email + "&codigo=" + codigo + "");
+
 			}
 		} catch (Exception e) {
 			logger.setErrorLogger(e.getMessage());

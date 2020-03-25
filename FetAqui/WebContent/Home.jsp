@@ -7,11 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FET AQUI</title>
 <!--  FONT AWESOME -->
-<link
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-	rel="stylesheet"
-	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
 <!-- BOOTSRAP core CSS -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- Material design bootstrap -->
@@ -98,63 +95,69 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="formularioProfesional">
-		<div class="modal-dialog">
+	<div class="modal fade" id="formularioProfesional" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-
-
-				<div class="modal-header">
-					<h4 class="modal-title">Rellene el formulario para registrarse</h4>
-					<button type="button" class="close" data-dismiss="modal">×</button>
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">Registrarse
+						como vendedor</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-
-
-				<div class="modal-body">
-					<form class="was-validated" action="Principal" method="post">
-						<div class="form-group">
-							<label for="nombre">Nombre:</label> <input type="text"
-								class="form-control" id="nombre"
-								placeholder="Introduzca su nombre" name="nombre" required>
-							<div class="valid-feedback">OK</div>
-							<div class="invalid-feedback">Porfavor rellene este campo.
-								Este nombre será el que veran los otros usuarios</div>
+				<form action="Principal" method="post">
+					<div class="modal-body mx-3">
+						<div class="md-form mb-5">
+							<i class="fas fa-user prefix grey-text"></i> <input type="text"
+								id="orangeForm-name" class="form-control validate" name="nombre"> <label
+								data-error="wrong" data-success="right" for="orangeForm-name"
+								>Su nombre</label>
 						</div>
-						<div class="form-group">
-							<label for="email1">Email:</label> <input type="email"
-								class="form-control" id="email1"
-								placeholder="Introduzca su email" name="email1" required>
-							<input type="email" class="form-control" id="email2"
-								placeholder="Introduzca su email otra vez" name="email2"
-								required>
-							<div class="valid-feedback">OK</div>
-							<div class="invalid-feedback">Porfavor rellene este campo.</div>
+						<div class="md-form mb-5">
+							<i class="fas fa-envelope prefix grey-text"></i> <input
+								type="email" id="orangeForm-email" class="form-control validate" name="email">
+							<label data-error="wrong" data-success="right"
+								for="orangeForm-email" >Su email</label>
 						</div>
 
-						<div class="mf-form">
-							<i class="fas fa-lock prefix"></i> <input type="password"
-								id="inputValidationEx2" class="form-control validate"> <label
-								for="inputValidationEx2" data-error="wrong" data-success="right"
-								style="width: 200px;">Type your password</label>
+						<div class="row my-5">
+							<div class="col-md-4">
+								<div class="md-form">
+									<i class="fas fa-lock prefix"></i> <input type="password"
+										id="inputValidationEx2" class="form-control validate"
+										name="password"> <label for="inputValidationEx2"
+										data-error="wrong" data-success="right" style="width: 200px;">Password</label>
+								</div>
+							</div>
+							<div class="col-md-5">
+
+								<div class="alert alert-warning password-alert" role="alert">
+									<ul>
+										<li class="requirements leng"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 8 caracteres</li>
+										<li class="requirements big-letter"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 letra mayúscula</li>
+										<li class="requirements num"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 número</li>
+										<li class="requirements special-char"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 carácter especial</li>
+									</ul>
+								</div>
+
+							</div>
 						</div>
 
-						<div class="form-group form-check">
-							<label class="form-check-label"> <input
-								class="form-check-input" type="checkbox" name="remember"
-								required> He leído bla bla..
-								<div class="valid-feedback">Valid.</div>
-								<div class="invalid-feedback">Acepte para confirmar
-									registro.</div>
-							</label>
-						</div>
-						<button type="submit" class="btn btn-primary">Aceptar</button>
-					</form>
-				</div>
-
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-				</div>
-
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<button type="submit" class="btn btn-deep-orange">Registrarse</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -163,5 +166,6 @@
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/mdb.min.js"></script>
+	<script src="js/validarPassword.js"></script>
 </body>
 </html>
