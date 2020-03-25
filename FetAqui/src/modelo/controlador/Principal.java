@@ -58,7 +58,6 @@ public class Principal extends HttpServlet {
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String HOME_JSP = "/Home.jsp";
-	static final String REGISTRO_JSP2 = "/Registro2.jsp";
 
 	/**
 	 * Método doGet para mostrar el formulario de registro
@@ -124,13 +123,21 @@ public class Principal extends HttpServlet {
 			Date hoy = new Date();
 			Timestamp fecha = new Timestamp(hoy.getTime());
 			// Creamos el pojo usuario
-			Vendedor v = new Vendedor(nombre,email1, password1, imagen , direccion,telefono,activado, fecha,venta_online);
-
+			Vendedor v = new Vendedor();
+			v.setNombre(nombre);
+			v.setEmail(email1);
+			v.setPassword(password1);
+			v.setFoto(imagen);
+			v.setId_direccion(direccion);
+			v.setTelefono(telefono);
+			v.setActivado(activado);
+			v.setFecha_alta(fecha);
+			v.setVenta_online(venta_online);
+			
 			// Comprobamos si el correo ya existe en la BD
 			// No vamos a permitir que haya dos usuarios con el mismo correo
 
 			if (vendedorEJB.getVendedorEmail(v.getEmail()) != null) {
-
 				// Si ya existe mostramos el error
 				response.sendRedirect("Principal?error=Correo ya existente");
 
@@ -140,9 +147,11 @@ public class Principal extends HttpServlet {
 					// Insertamos el usuario en BD
 					vendedorEJB.insertarVendedor(v);
 					// Recogemos el usuario insertado en BD
-					Vendedor vendedor = vendedorEJB.getVendedorEmailPass(email2, password2);
+					Vendedor ve = vendedorEJB.getVendedorEmail(v.getEmail());
+					
 					// Generamos el código de activación
 					int codigo = codigoVendedorEJB.generarCodigoVendedor();
+					
 					// Comprobamos si el código generado existe en BD
 					boolean existe = codigoVendedorEJB.existeCodigo(codigo);
 					// Siempre que exista el codigo sumamos uno al mismo
@@ -152,7 +161,9 @@ public class Principal extends HttpServlet {
 					}
 
 					// Creamos el pojo código
-					CodigoActivacionVendedor c = new CodigoActivacionVendedor(codigo, vendedor.getId());
+					CodigoActivacionVendedor c = new CodigoActivacionVendedor(codigo, ve.getId_vendedor());
+					
+					System.out.println(c.getId() +", "+ c.getVendedor() );
 
 					// Insertamos el código en BD
 					codigoVendedorEJB.insertCodigo(c);

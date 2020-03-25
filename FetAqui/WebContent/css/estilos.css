@@ -7,10 +7,42 @@
 	height: 200px;
 }
 
+.loginPanelAlerta{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 40px;
+}
+
 .panelEleccionRegistro{
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 150px;
+}
+
+label
+{
+    width: 100px;
+}
+
+.alert
+{
+    display: none;
+}
+
+.requirements
+{
+    list-style-type: none;
+}
+
+.wrong .fa-check
+{
+    display: none;
+}
+
+.good .fa-times
+{
+    display: none;
 }
 

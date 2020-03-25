@@ -127,9 +127,9 @@
 			email = #{email} and password = #{password};
 	</select>
 	
-	<select id="getVendedorEmail" resultType="Vendedor">
+	<select id="getVendedorEmail"  resultType="Vendedor">
 		select
-			*
+			id_vendedor, nif, nombre, email, password, foto, direccion, telefono, activado, fecha_alta, venta_online
 		from
 			vendedor
 		where 

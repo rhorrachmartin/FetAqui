@@ -4,12 +4,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FET AQUI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/bootstrap.css">
+<title>FET AQUI</title>
+<!--  FONT AWESOME -->
+<link
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet"
+	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+	crossorigin="anonymous">
+<!-- BOOTSRAP core CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Material design bootstrap -->
+<link rel="stylesheet" href="css/mdb.min.css">
+<!-- MI CSS -->
 <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
+
+
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 		<a class="navbar-brand" href="#">Navbar</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -25,6 +37,10 @@
 		</div>
 	</nav>
 
+
+	<%
+		if (request.getAttribute("error") == null) {
+	%>
 	<div class="container">
 		<div class="row loginPanel">
 			<div class="lg lg-12 ">
@@ -34,13 +50,32 @@
 			</div>
 		</div>
 	</div>
+	<%
+		} else {
+	%>
+	<div class="container">
 
+		<div class="row loginPanel">
+			<div class="lg lg-12 ">
+				<div class="row loginPanelAlerta">
+					<div class="lg lg-12">
+						<button class="btn btn-danger bnt-lg">CORREO YA EXISTENTE</button>
+					</div>
+				</div>
+				<button class="btn btn-primary btn-lg" data-toggle="modal"
+					data-target="#modalRegistro">Darse de alta</button>
+				<button class="btn btn-success btn-lg">Entrar</button>
+			</div>
+		</div>
+	</div>
 
-	<div class="modal fade" id="modalRegistro">
+	<%
+		}
+	%>
+
+	<div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
-
-
 				<div class="modal-header">
 					<h4 class="modal-title">¿Eres un profesional o un consumidor?</h4>
 					<button type="button" class="close" data-dismiss="modal">×</button>
@@ -69,8 +104,7 @@
 
 
 				<div class="modal-header">
-					<h4 class="modal-title">Relle el formulario para
-						registrarse</h4>
+					<h4 class="modal-title">Rellene el formulario para registrarse</h4>
 					<button type="button" class="close" data-dismiss="modal">×</button>
 				</div>
 
@@ -96,15 +130,11 @@
 							<div class="invalid-feedback">Porfavor rellene este campo.</div>
 						</div>
 
-						<div class="form-group">
-							<label for="pwd">Password:</label> <input type="password"
-								class="form-control" id="password1" placeholder="Enter password"
-								name="password1" required> 
-								<input type="password"
-								class="form-control" id="password2" placeholder="Enter password"
-								name="password2" required>
-							<div class="valid-feedback">OK</div>
-							<div class="invalid-feedback">Porfavor rellene este campo. </div>
+						<div class="mf-form">
+							<i class="fas fa-lock prefix"></i> <input type="password"
+								id="inputValidationEx2" class="form-control validate"> <label
+								for="inputValidationEx2" data-error="wrong" data-success="right"
+								style="width: 200px;">Type your password</label>
 						</div>
 
 						<div class="form-group form-check">
@@ -112,7 +142,8 @@
 								class="form-check-input" type="checkbox" name="remember"
 								required> He leído bla bla..
 								<div class="valid-feedback">Valid.</div>
-								<div class="invalid-feedback">Acepte para confirmar registro.</div>
+								<div class="invalid-feedback">Acepte para confirmar
+									registro.</div>
 							</label>
 						</div>
 						<button type="submit" class="btn btn-primary">Aceptar</button>
@@ -128,9 +159,9 @@
 		</div>
 	</div>
 
-	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/jquery.min.js"></script>
 	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.js"></script>
-
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/mdb.min.js"></script>
 </body>
 </html>
