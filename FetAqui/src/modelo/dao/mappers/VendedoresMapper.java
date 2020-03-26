@@ -91,7 +91,7 @@ public interface VendedoresMapper {
 	 * Método para activar un vendedor
 	 * @param v Recibe un pojo vendedor
 	 */
-	public void activarVendedor(Vendedor v);
+	public void activarVendedor(Integer id_vendedor);
 	
 	/**
 	 * Método para activar venta onlinde un vendedor

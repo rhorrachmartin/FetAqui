@@ -40,6 +40,26 @@ public class VendedorDAO {
 			sqlSession.close();
 		}
 	}
+	
+	/**
+	 * Método para activar un vendedor
+	 * @param id_vendedor recibe el id del vendedor
+	 */
+	public void activarVendedor(Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.activarVendedor(id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 	public Vendedor getVendedorEmail(String email) {
 		// Abrimos la sesión

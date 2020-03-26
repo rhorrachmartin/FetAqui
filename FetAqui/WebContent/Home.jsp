@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,9 +112,9 @@
 					<div class="modal-body mx-3">
 						<div class="md-form mb-5">
 							<i class="fas fa-user prefix grey-text"></i> <input type="text"
-								id="orangeForm-name" class="form-control validate" name="nombrep">
-							<label data-error="wrong" data-success="right"
-								for="orangeForm-name">Su nombre</label>
+								id="orangeForm-name" class="form-control validate"
+								name="nombrep"> <label data-error="wrong"
+								data-success="right" for="orangeForm-name">Su nombre</label>
 						</div>
 						<div class="md-form mb-5">
 							<i class="fas fa-envelope prefix grey-text"></i> <input
@@ -128,7 +129,8 @@
 									<i class="fas fa-lock prefix"></i> <input type="password"
 										id="inputValidationEx2" class="form-control validate"
 										name="passwordp"> <label for="inputValidationEx2"
-										data-error="wrong" data-success="right" style="width: 200px;">Password</label>
+										data-error="Escriba su contraseña correctamente"
+										data-success="OK" style="width: 200px;">Password</label>
 								</div>
 							</div>
 							<div class="col-md-5">
@@ -155,7 +157,8 @@
 
 					</div>
 					<div class="modal-footer d-flex justify-content-center">
-						<button type="submit" class="btn btn-deep-orange">Registrarse</button>
+						<button id="registrarse" type="submit" class="btn btn-deep-orange"
+							disabled>Registrarse</button>
 					</div>
 				</form>
 			</div>
@@ -178,24 +181,26 @@
 					<div class="modal-body mx-3">
 						<div class="md-form mb-5">
 							<i class="fas fa-user prefix grey-text"></i> <input type="text"
-								id="orangeForm-name" class="form-control validate" name="nombrec">
-							<label data-error="wrong" data-success="right"
-								for="orangeForm-name">Su nombre</label>
+								id="orangeForm-name2" class="form-control validate"
+								name="nombrec"> <label data-error="wrong"
+								data-success="right" for="orangeForm-name2">Su nombre</label>
 						</div>
 						<div class="md-form mb-5">
 							<i class="fas fa-envelope prefix grey-text"></i> <input
-								type="email" id="orangeForm-email" class="form-control validate"
-								name="emailc"> <label data-error="wrong"
-								data-success="right" for="orangeForm-email">Su email</label>
+								type="email" id="orangeForm-email2"
+								class="form-control validate" name="emailc"> <label
+								data-error="wrong" data-success="right" for="orangeForm-email2">Su
+								email</label>
 						</div>
 
 						<div class="row my-5">
 							<div class="col-md-4">
 								<div class="md-form">
 									<i class="fas fa-lock prefix"></i> <input type="password"
-										id="inputValidationEx2" class="form-control validate"
-										name="passwordc"> <label for="inputValidationEx2"
-										data-error="wrong" data-success="right" style="width: 200px;">Password</label>
+										id="inputValidationEx3" class="form-control validate"
+										name="passwordc"> <label for="inputValidationEx3"
+										data-error="Escriba su contraseña correctamente"
+										data-success="OK" style="width: 200px;">Password</label>
 								</div>
 							</div>
 							<div class="col-md-5">
@@ -222,10 +227,64 @@
 
 					</div>
 					<div class="modal-footer d-flex justify-content-center">
-						<button type="submit" class="btn btn-deep-orange">Registrarse</button>
+						<button id="registrarse2" type="submit"
+							class="btn btn-deep-orange" disabled>Registrarse</button>
 					</div>
 				</form>
 			</div>
+		</div>
+	</div>
+
+	<!-- MODAL DE CONFIRMACIÓN DE EMAIL -->
+	<%
+		if (request.getAttribute("activado") != null) {
+	%>
+	<script>
+		$(document).ready(function() {
+			$("#centralModalSuccess").modal("show");
+		});
+		
+		alert("hola");
+	</script>
+	<%
+		}
+	%>
+	<!-- Central Modal Medium Success -->
+	<div class="modal fade" id="centralModalSuccess" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-notify modal-success" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead">Modal Success</p>
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+							Impedit iusto nulla aperiam blanditiis ad consequatur in dolores
+							culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga,
+							enim, ab officiis totam.</p>
+					</div>
+				</div>
+
+				<!--Footer-->
+				<div class="modal-footer justify-content-center">
+					<a type="button" class="btn btn-success">Get it now <i
+						class="far fa-gem ml-1 white-text"></i></a> <a type="button"
+						class="btn btn-outline-success waves-effect" data-dismiss="modal">No,
+						thanks</a>
+				</div>
+			</div>
+			<!--/.Content-->
 		</div>
 	</div>
 

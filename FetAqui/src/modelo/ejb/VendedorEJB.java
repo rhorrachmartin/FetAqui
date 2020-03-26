@@ -27,4 +27,14 @@ public class VendedorEJB {
 
 		return vendedorDAO.getVendedorEmailPass(email, password);
 	}
+	
+	/**
+	 * Método para activar un vendedor
+	 * @param v recibe un pojo vendedor
+	 */
+	public void activarVendedor(Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		
+		vendedorDAO.activarVendedor(id_vendedor);
+	}
 }
