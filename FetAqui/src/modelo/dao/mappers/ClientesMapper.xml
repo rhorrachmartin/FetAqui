@@ -4,6 +4,15 @@
 
 <mapper namespace='modelo.dao.mappers.ClientesMapper'>
 
+	<select id="getClienteEmail"  resultType="Cliente">
+		select
+			id_cliente, email, nombre, apellido, telefono, password, foto
+		from
+			cliente
+		where 
+			email = #{email};
+	</select>
+
 
 	<select id="getCliente" resultType="Cliente">
 		select
@@ -61,5 +70,11 @@
 		where cliente.id_cliente = #{id_cliente};
 
 	</select>
+	
+	<insert id="insertarCliente" parameterType="Cliente" useGeneratedKeys="true"
+    keyProperty="id">
+		insert into cliente (email,nombre,apellido, telefono,direccion, password, foto, activado) 
+		values (#{email}, #{nombre}, #{apellido}, #{telefono}, #{idDireccion},#{password}, #{foto}, #{activado});
+	</insert>
 
 </mapper>

@@ -2,54 +2,28 @@ package modelo.pojo;
 
 public class Cliente {
 	
-	Integer id;
+	Integer id_cliente;
 	String email;
 	String nombre;
 	String apellido;
-	Integer telefono;
+	String telefono;
 	String poblacion;
 	String direccion;
 	Integer idDireccion;
 	String password;
 	String foto;
+	Integer activado;
 	
 	public Cliente() {
 		
 	}
-	
-	public Cliente(Integer id, String email, String nombre, String apellido, Integer telefono, Integer idDireccion,
-			String password, String foto) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefono = telefono;
-		this.idDireccion = idDireccion;
-		this.password = password;
-		this.foto = foto;
-	}
-	
-	
 
-	public String getPoblacion() {
-		return poblacion;
+	public Integer getId_cliente() {
+		return id_cliente;
 	}
 
-	public void setPoblacion(String poblacion) {
-		this.poblacion = poblacion;
-	}
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId_cliente(Integer id_cliente) {
+		this.id_cliente = id_cliente;
 	}
 
 	public String getEmail() {
@@ -76,19 +50,35 @@ public class Cliente {
 		this.apellido = apellido;
 	}
 
-	public Integer getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(Integer telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
-	public Integer getidDireccion() {
+	public String getPoblacion() {
+		return poblacion;
+	}
+
+	public void setPoblacion(String poblacion) {
+		this.poblacion = poblacion;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public Integer getIdDireccion() {
 		return idDireccion;
 	}
 
-	public void setidDireccion(Integer idDireccion) {
+	public void setIdDireccion(Integer idDireccion) {
 		this.idDireccion = idDireccion;
 	}
 
@@ -109,7 +99,22 @@ public class Cliente {
 	}
 	
 	
-	
-	
 
+	public Integer getActivado() {
+		return activado;
+	}
+
+	public void setActivado(Integer activado) {
+		this.activado = activado;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id_cliente=" + id_cliente + ", email=" + email + ", nombre=" + nombre + ", apellido="
+				+ apellido + ", telefono=" + telefono + ", poblacion=" + poblacion + ", direccion=" + direccion
+				+ ", idDireccion=" + idDireccion + ", password=" + password + ", foto=" + foto + "]";
+	}
+
+	
+	
 }

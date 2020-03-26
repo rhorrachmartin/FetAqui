@@ -15,7 +15,21 @@ import modelo.pojo.PedidoDetallado;
  *
  */
 public interface ClientesMapper {
-
+	
+	/**Método para insertar un cliente en BD
+	 * 
+	 * @param c Recibe un pojo cliente
+	 */
+	public void insertarCliente(Cliente c);
+	
+	/**
+	 * Método para obtener un cliente a traves de su email
+	 * 
+	 * @param email   Espera recibir String con el email del cliente
+	 * @return Devuelve un pojo Cliente
+	 */
+	public Cliente getClienteEmail(@Param("email") String email);
+	
 	/**
 	 * Método para obtener un cliente
 	 * 
