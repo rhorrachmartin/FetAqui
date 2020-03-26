@@ -36,6 +36,8 @@
 	</nav>
 
 
+
+
 	<%
 		if (request.getAttribute("error") == null) {
 	%>
@@ -236,19 +238,7 @@
 	</div>
 
 	<!-- MODAL DE CONFIRMACIÓN DE EMAIL -->
-	<%
-		if (request.getAttribute("activado") != null) {
-	%>
-	<script>
-		$(document).ready(function() {
-			$("#centralModalSuccess").modal("show");
-		});
-		
-		alert("hola");
-	</script>
-	<%
-		}
-	%>
+
 	<!-- Central Modal Medium Success -->
 	<div class="modal fade" id="centralModalSuccess" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -287,6 +277,25 @@
 			<!--/.Content-->
 		</div>
 	</div>
+	<%
+		boolean activado = false;
+		if (request.getAttribute("activado") != null) {
+			activado = (boolean) request.getAttribute("activado");
+		}
+	%>
+
+	<%
+		if (activado == true) {
+	%>
+	<script>
+		
+		$(document).ready(function(){
+			$("#centralModalSuccess").modal('show');
+		});
+	</script>
+	<%
+		}
+	%>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/popper.min.js"></script>

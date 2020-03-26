@@ -60,19 +60,20 @@ public class ConfirmarUsuario extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 		response.setContentType("text/html; charset=UTF-8");
-		System.out.println("entro");
+		
 		//Si no hay sesión iniciada
 		try {
-			/*INICIA SESIÓN EN ALGÚN SITIO, MIRAR!!!!!%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-			if (session != null) {
+			boolean activado = false;
+			
+			if (session == null) {
 				
 				//Recogemos el código de activación que viene "incrustado" en el link del email recibido por
 				//el usuario
 				int codigo = Integer.parseInt(request.getParameter("codigo"));
-				System.out.println(codigo);
+				
 				int usuario = 0;
 				String error = null;
-				boolean activado;
+				
 				//Comprobamos que existe el código en BD
 				if (codigoVendedorEJB.existeCodigo(codigo)) {
 					//Si existe el código buscamos al usuario al cual pertenece
