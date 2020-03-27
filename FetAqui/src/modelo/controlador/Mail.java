@@ -34,8 +34,7 @@ public class Mail extends HttpServlet {
 	LoggersEJB logger;
 	
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-	static final String MAIL_JSP = "/Mail.jsp";
-	static final String MAIL_JSP2 = "/Mail2.jsp";
+	static final String HOME_JSP = "/Home.jsp";
 	/**
 	 * Método doGet para enviar el correo de confirmación de registro
 	 */
@@ -44,7 +43,7 @@ public class Mail extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType(CONTENT_TYPE);
 		//Creamos el RequestDispatcher por defecto a Mail.jsp
-		RequestDispatcher rs = getServletContext().getRequestDispatcher(MAIL_JSP);
+		RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_JSP);
 		
 		
 		// Instancia de la clase pertinente para mostrar la vista del correo que recibe el usuario
@@ -65,13 +64,8 @@ public class Mail extends HttpServlet {
 				//Enviamos el email
 				mailOfficeEJB.sendMail2(para, remitente, asunto, mensaje);
 			}
-			//Si el parámetro vista es igual a "n" redirigimos a Mail2.jsp
-//			if(vista.equals("n")) {
-//				rs = getServletContext().getRequestDispatcher(MAIL_JSP2);
-//			}
-			//Introducimos en la request el parámetro "para" que es un el correo del usuario registrado 
-//			request.setAttribute("para", para);
-//			rs.forward(request, response);
+			request.setAttribute("email", para);
+			rs.forward(request, response);
 		} catch (Exception e) {
 			logger.setErrorLogger(e.getMessage());
 		}

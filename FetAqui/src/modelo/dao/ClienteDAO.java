@@ -16,6 +16,7 @@ public class ClienteDAO {
 
 	/**
 	 * Método para insertar un cliente en BD
+	 * 
 	 * @param c
 	 */
 	public void insertarCliente(Cliente c) {
@@ -33,9 +34,10 @@ public class ClienteDAO {
 			sqlSession.close();
 		}
 	}
-	
+
 	/**
 	 * Método para obtner un cliente a través de su email
+	 * 
 	 * @param email
 	 * @return
 	 */
@@ -54,7 +56,24 @@ public class ClienteDAO {
 			sqlSession.close();
 		}
 	}
-
 	
+	/**
+	 * Método para activar un cliente en BD
+	 * @param id_cliente Recibe la id de un cliente
+	 */
+	public void activarCliente(Integer id_cliente) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			ClientesMapper clientesMapper = sqlSession.getMapper(ClientesMapper.class);
+			// Insertamos el usuario
+			clientesMapper.activarCliente(id_cliente);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 }

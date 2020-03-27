@@ -23,6 +23,12 @@ public interface ClientesMapper {
 	public void insertarCliente(Cliente c);
 	
 	/**
+	 * Método para activar un cliente 
+	 * @param id_cliente Recibe la id del cliente
+	 */
+	public void activarCliente(Integer id_cliente);
+	
+	/**
 	 * Método para obtener un cliente a traves de su email
 	 * 
 	 * @param email   Espera recibir String con el email del cliente

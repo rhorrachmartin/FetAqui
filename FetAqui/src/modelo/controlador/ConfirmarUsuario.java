@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.ejb.ClienteEJB;
+import modelo.ejb.CodigoClienteEJB;
 import modelo.ejb.CodigoVendedorEJB;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.SesionVendedorEJB;
@@ -30,16 +32,26 @@ public class ConfirmarUsuario extends HttpServlet {
 	 */
 	@EJB
 	VendedorEJB vendedorEJB;
+	
+	@EJB
+	ClienteEJB clienteEJB;
 	/**
 	 * EJB para trabajar con sesiones
 	 */
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
+	
 	/**
-	 * EJB para trabajar con resultados obtenidos del calculo IMC
+	 * EJB para trabajar con los codigos de activación de vendedores
 	 */
 	@EJB
 	CodigoVendedorEJB codigoVendedorEJB;
+	
+	/**
+	 * EJB para trabajar con los codigos de activacion de clientes
+	 */
+	@EJB
+	CodigoClienteEJB codigoClienteEJB;
 	
 	/**
 	 * EJB para trabajar con los logger
@@ -54,12 +66,14 @@ public class ConfirmarUsuario extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		
 		//Creamos el por defecto hacia  ConfirmarUsuario.jsp
 		RequestDispatcher rs = getServletContext().getRequestDispatcher("/Home.jsp");
 		
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
-		response.setContentType("text/html; charset=UTF-8");
+		
 		
 		//Si no hay sesión iniciada
 		try {
@@ -74,7 +88,7 @@ public class ConfirmarUsuario extends HttpServlet {
 				int usuario = 0;
 				String error = null;
 				
-				//Comprobamos que existe el código en BD
+				//Comprobamos que existe el código en la tabla de vendedores
 				if (codigoVendedorEJB.existeCodigo(codigo)) {
 					//Si existe el código buscamos al usuario al cual pertenece
 					usuario = codigoVendedorEJB.buscarVendedorPorCodigo(codigo);
@@ -86,7 +100,22 @@ public class ConfirmarUsuario extends HttpServlet {
 					activado = true;
 					request.setAttribute("activado", activado);
 					rs.forward(request, response);
-
+				
+					//Si no existe en la tabla de vendedores buscamos en la de clientes
+				}
+				
+				if(codigoClienteEJB.existeCodigo(codigo)) {
+					//Si existe el código buscamos al usuario al cual pertenece
+					usuario = codigoClienteEJB.buscarClientePorCodigo(codigo);
+					//Activamos al usuario
+					clienteEJB.activarCliente(usuario);
+					//Borramos el código almacenado en BD relacionado con el usuario
+					codigoClienteEJB.borrarCodigo(usuario);
+					//Metemos el mensaje de activación en la request					
+					activado = true;					
+					request.setAttribute("activado", activado);					
+					rs.forward(request, response);
+					
 				} else {
 					//Si no existe el código en BD mostramos un error.
 					error = "Este código no existe, vuelva a registrarse";

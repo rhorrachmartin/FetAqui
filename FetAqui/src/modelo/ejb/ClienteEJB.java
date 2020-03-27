@@ -30,4 +30,13 @@ public class ClienteEJB {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		return clienteDAO.getClienteEmail(email);
 	}
+	
+	/**
+	 * Método para activar un cliente en BD
+	 * @param id_cliente
+	 */
+	public void activarCliente(Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.activarCliente(id_cliente);
+	}
 }

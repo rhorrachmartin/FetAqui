@@ -16,6 +16,12 @@
 <link rel="stylesheet" href="css/mdb.min.css">
 <!-- MI CSS -->
 <link rel="stylesheet" href="css/estilos.css">
+<!-- -------------------SCRIPTS--------------- -->
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/mdb.min.js"></script>
+<script src="js/validarPassword.js"></script>
 </head>
 <body>
 
@@ -52,14 +58,17 @@
 	</div>
 	<%
 		} else {
+			String error = (String) request.getAttribute("error");
 	%>
+
+
 	<div class="container">
 
 		<div class="row loginPanel">
 			<div class="lg lg-12 ">
 				<div class="row loginPanelAlerta">
 					<div class="lg lg-12">
-						<button class="btn btn-danger bnt-lg">CORREO YA EXISTENTE</button>
+						<button class="btn btn-danger bnt-lg"><%=error%></button>
 					</div>
 				</div>
 				<button class="btn btn-primary btn-lg" data-toggle="modal"
@@ -247,7 +256,7 @@
 			<div class="modal-content">
 				<!--Header-->
 				<div class="modal-header">
-					<p class="heading lead">Modal Success</p>
+					<p class="heading lead">¡Muchas gracias!</p>
 
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
@@ -259,28 +268,34 @@
 				<div class="modal-body">
 					<div class="text-center">
 						<i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Impedit iusto nulla aperiam blanditiis ad consequatur in dolores
-							culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga,
-							enim, ab officiis totam.</p>
+						<p>
+							Ha activado su usuario.<br> Recuerde que su usuario es el <strong>correo
+								electrónico</strong> con el que se ha registrado.
+						</p>
 					</div>
 				</div>
 
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a type="button" class="btn btn-success">Get it now <i
-						class="far fa-gem ml-1 white-text"></i></a> <a type="button"
-						class="btn btn-outline-success waves-effect" data-dismiss="modal">No,
-						thanks</a>
+					<a type="button" class="btn btn-success">Login <i
+						class="fas fa-sign-in-alt"></i></a> <a type="button"
+						class="btn btn-outline-success waves-effect" data-dismiss="modal">Cerrar</a>
 				</div>
 			</div>
 			<!--/.Content-->
 		</div>
 	</div>
+
+
 	<%
 		boolean activado = false;
 		if (request.getAttribute("activado") != null) {
 			activado = (boolean) request.getAttribute("activado");
+		}
+
+		String email = "";
+		if (request.getAttribute("email") != null) {
+			email = (String) request.getAttribute("email");
 		}
 	%>
 
@@ -288,8 +303,7 @@
 		if (activado == true) {
 	%>
 	<script>
-		
-		$(document).ready(function(){
+		$(document).ready(function() {
 			$("#centralModalSuccess").modal('show');
 		});
 	</script>
@@ -297,10 +311,54 @@
 		}
 	%>
 
-	<script src="js/jquery.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/mdb.min.js"></script>
-	<script src="js/validarPassword.js"></script>
+	<%
+		if (!email.equals("")) {
+	%>
+	<script>
+		$(document).ready(function() {
+			$("#centralModalInfo").modal('show');
+		});
+	</script>
+	<%
+		}
+	%>
+
+	<!-- Central Modal Medium Info -->
+	<div class="modal fade" id="centralModalInfo" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-notify modal-info" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead">Información importante</p>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+						<p>
+							Le hemos enviado un correo electrónico para confirmar su usuario.
+							<br> Haga click sobre el enlace que le hemos enviado para
+							activarlo
+						</p>
+					</div>
+				</div>
+
+				<!--Footer-->
+				<div class="modal-footer justify-content-center">
+						<a type="button" class="btn btn-primary" data-dismiss="modal">Entendido</a>
+				</div>
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+
+
 </body>
 </html>

@@ -5,15 +5,8 @@ public class CodigoActivacionCliente {
 	Integer id;
 	Integer cliente;
 	
-	public CodigoActivacionCliente() {
+	public CodigoActivacionCliente() {		
 		
-		
-	}
-	
-	public CodigoActivacionCliente(Integer id, Integer vendedor) {
-		super();
-		this.id = id;
-		this.cliente = vendedor;
 	}
 
 	public Integer getId() {
@@ -24,14 +17,13 @@ public class CodigoActivacionCliente {
 		this.id = id;
 	}
 
-	public Integer getVendedor() {
+	public Integer getCliente() {
 		return cliente;
 	}
 
-	public void setVendedor(Integer vendedor) {
-		this.cliente = vendedor;
+	public void setCliente(Integer cliente) {
+		this.cliente = cliente;
 	}
 	
 	
-
 }

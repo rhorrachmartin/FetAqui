@@ -221,6 +221,7 @@ public class Principal extends HttpServlet {
 
 					// Comprobamos si el código generado existe en BD
 					boolean existe = codigoClienteEJB.existeCodigo(codigo);
+					
 					// Siempre que exista el codigo sumamos uno al mismo
 					while (existe) {
 						codigo++;
@@ -228,10 +229,14 @@ public class Principal extends HttpServlet {
 					}
 
 					// Creamos el pojo código
-					CodigoActivacionCliente cod = new CodigoActivacionCliente(codigo, cl.getId_cliente());
+					CodigoActivacionCliente cod = new CodigoActivacionCliente();
+					cod.setId(codigo);
+					cod.setCliente(cl.getId_cliente());
 
 					// Insertamos el código en BD
 					codigoClienteEJB.insertCodigo(cod);
+					
+					
 					// Reenviamos la información al servlet de enviar mail para enviar el codigo al
 					// user
 					response.sendRedirect("Mail?email=" + emailc + "&codigo=" + codigo + "");

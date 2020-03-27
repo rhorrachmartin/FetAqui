@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.naming.NamingException;
+
 import org.apache.ibatis.session.SqlSession;
 
 import modelo.dao.mappers.CodigosActivacionClienteMapper;
-import modelo.dao.mappers.CodigosActivacionVendedorMapper;
 import modelo.pojo.CodigoActivacionCliente;
-import modelo.pojo.CodigoActivacionVendedor;
 
 /**
  * 
@@ -84,9 +84,9 @@ public class CodigoClienteDAO {
 
 		try {
 			// Obtenemos el mapper
-			CodigosActivacionVendedorMapper codigosActivacionVendedor = sqlSession.getMapper(CodigosActivacionVendedorMapper.class);
+			CodigosActivacionClienteMapper codigosActivacionCliente = sqlSession.getMapper(CodigosActivacionClienteMapper.class);
 			// Obtenemos true o false en función de si existe o no
-			return codigosActivacionVendedor.existeCodigo(codigo);
+			return codigosActivacionCliente.existeCodigo(codigo);
 		} finally {
 			// Cerramos sesión
 			sqlSession.close();
