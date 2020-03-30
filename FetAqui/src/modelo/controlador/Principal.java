@@ -19,6 +19,7 @@ import modelo.ejb.CodigoClienteEJB;
 import modelo.ejb.CodigoVendedorEJB;
 import modelo.ejb.ImagenesEJB;
 import modelo.ejb.LoggersEJB;
+import modelo.ejb.SesionClienteEJB;
 import modelo.ejb.SesionVendedorEJB;
 import modelo.ejb.VendedorEJB;
 import modelo.pojo.Cliente;
@@ -46,10 +47,17 @@ public class Principal extends HttpServlet {
 	ClienteEJB clienteEJB;
 	
 	/**
-	 * EJB para trabajar con sesiones
+	 * EJB para trabajar con sesiones de vendedor
 	 */
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
+	
+	/**
+	 * EJB para trabajar con sesiones de cliente
+	 */
+	@EJB
+	SesionClienteEJB sesionClienteEJB;
+	
 	/**
 	 * EJB para tratar las imágenes
 	 */
@@ -75,6 +83,7 @@ public class Principal extends HttpServlet {
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String HOME_JSP = "/Home.jsp";
+	static final String HOME_LOGEADO_JSP = "/HomeLogeado.jsp";
 
 	/**
 	 * Método doGet para mostrar el formulario de registro
@@ -94,17 +103,21 @@ public class Principal extends HttpServlet {
 		request.setAttribute("error", error);
 		// Intentamos obtener el usuario de la sesión
 		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
+		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		
 		request.setAttribute("v", v);
+		request.setAttribute("c", c);
 		// Si hay sesión
-		if (v != null) {
+		if (v != null || c != null) {
 			// Ya está logeado, lo redirigimos a la principal
 			try {
-				response.sendRedirect("Principal");
+				rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
+				rs.forward(request, response);
 			} catch (Exception e) {
 				logger.setErrorLogger(e.getMessage());
 			}
 		} else {
-			// No está logeado, mostramos página de login
+			// No está logeado, mostramos página principal
 
 			rs.forward(request, response);
 		}
@@ -149,7 +162,7 @@ public class Principal extends HttpServlet {
 				// Comprobamos si el correo ya existe en la BD
 				// No vamos a permitir que haya dos usuarios con el mismo correo
 
-				if (vendedorEJB.getVendedorEmail(v.getEmail()) != null) {
+				if (vendedorEJB.getVendedorEmail(v.getEmail()) != null || clienteEJB.getClienteEmail(emailp) != null) {
 					// Si ya existe mostramos el error
 					
 					response.sendRedirect("Principal?error=Correo ya existente");
@@ -204,7 +217,7 @@ public class Principal extends HttpServlet {
 				// Comprobamos si el correo ya existe en la BD
 				// No vamos a permitir que haya dos usuarios con el mismo correo
 
-				if (clienteEJB.getClienteEmail(emailc)!= null) {
+				if (clienteEJB.getClienteEmail(emailc)!= null || vendedorEJB.getVendedorEmail(emailc) != null) {
 					// Si ya existe mostramos el error
 					
 					response.sendRedirect("Principal?error=Correo ya existente");

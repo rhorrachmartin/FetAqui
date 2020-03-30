@@ -38,6 +38,14 @@
 				<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 			</ul>
+			<ul class="navbar-nav ml-auto nav-flex-icons">
+				<li class="nav-item"><a class="btn btn-success btn-sm"
+					data-toggle="modal" data-target="#modalLogin">LOGIN</a></li>
+				<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+						<img src="img/user.png" class="rounded-circle z-depth-0"
+						alt="avatar image" height="35">
+				</a></li>
+			</ul>
 		</div>
 	</nav>
 
@@ -52,7 +60,8 @@
 			<div class="lg lg-12 ">
 				<button class="btn btn-primary btn-lg" data-toggle="modal"
 					data-target="#modalRegistro">Darse de alta</button>
-				<button class="btn btn-success btn-lg">Entrar</button>
+				<button class="btn btn-success btn-lg" data-toggle="modal"
+					data-target="#modalLogin">Entrar</button>
 			</div>
 		</div>
 	</div>
@@ -73,7 +82,9 @@
 				</div>
 				<button class="btn btn-primary btn-lg" data-toggle="modal"
 					data-target="#modalRegistro">Darse de alta</button>
-				<button class="btn btn-success btn-lg">Entrar</button>
+
+				<button class="btn btn-success btn-lg" data-toggle="modal"
+					data-target="#modalLogin">Entrar</button>
 			</div>
 		</div>
 	</div>
@@ -245,10 +256,45 @@
 			</div>
 		</div>
 	</div>
+	<!-- MODAL DE LOGIN -->
+
+	<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">ENTRAR</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="Login" method="post">
+					<div class="modal-body mx-3">
+
+						<div class="md-form mb-5">
+							<i class="fas fa-envelope prefix grey-text"></i> <input
+								type="email" id="defaultForm-email"
+								class="form-control validate" name="email"> <label
+								data-error="wrong" data-success="right" for="defaultForm-email">Email</label>
+						</div>
+
+						<div class="md-form mb-4">
+							<i class="fas fa-lock prefix grey-text"></i> <input
+								type="password" id="defaultForm-pass"
+								class="form-control validate" name="password"> <label
+								data-error="wrong" data-success="right" for="defaultForm-pass">Password</label>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<button type="submit" class="btn btn-default">Login</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<!-- MODAL DE CONFIRMACIÓN DE EMAIL -->
-
-	<!-- Central Modal Medium Success -->
 	<div class="modal fade" id="centralModalSuccess" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-notify modal-success" role="document">
@@ -352,7 +398,7 @@
 
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-						<a type="button" class="btn btn-primary" data-dismiss="modal">Entendido</a>
+					<a type="button" class="btn btn-primary" data-dismiss="modal">Entendido</a>
 				</div>
 			</div>
 			<!--/.Content-->

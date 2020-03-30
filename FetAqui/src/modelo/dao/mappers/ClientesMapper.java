@@ -36,6 +36,15 @@ public interface ClientesMapper {
 	 */
 	public Cliente getClienteEmail(@Param("email") String email);
 	
+	
+	/**
+	 * Método para obtener un Cliente a partir de su email y password
+	 * @param email recibe String email
+	 * @param password Recibe String password
+	 * @return Devuelve un pojo Cliente
+	 */
+	public Cliente getClienteEmailPass(@Param("email")String email, @Param("password") String password);
+	
 	/**
 	 * Método para obtener un cliente
 	 * 

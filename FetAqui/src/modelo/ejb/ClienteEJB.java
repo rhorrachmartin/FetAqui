@@ -32,6 +32,17 @@ public class ClienteEJB {
 	}
 	
 	/**
+	 * Método para obtener un cliente a través de su email y su password
+	 * @param email
+	 * @param password
+	 * @return Devuelve un pojo Cliente
+	 */
+	public Cliente getClienteEmailPass(String email, String password) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		return clienteDAO.getClienteEmailPass(email, password);
+	}
+	
+	/**
 	 * Método para activar un cliente en BD
 	 * @param id_cliente
 	 */

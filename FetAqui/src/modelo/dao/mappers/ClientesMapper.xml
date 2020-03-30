@@ -12,6 +12,15 @@
 		where 
 			email = #{email};
 	</select>
+	
+	<select id="getClienteEmailPass" resultType="Cliente">
+		select
+			*
+		from
+			cliente
+		where 
+			email = #{email} and password = #{password};
+	</select>
 
 
 	<select id="getCliente" resultType="Cliente">

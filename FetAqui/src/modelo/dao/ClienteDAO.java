@@ -58,7 +58,30 @@ public class ClienteDAO {
 	}
 	
 	/**
+	 * Método para obtener un cliente a través de su email y su password
+	 * @param email
+	 * @param password
+	 * @return
+	 */
+	public Cliente getClienteEmailPass(String email, String password) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ClientesMapper clientesMapper = sqlSession.getMapper(ClientesMapper.class);
+			// Insertamos el usuario
+			return clientesMapper.getClienteEmailPass(email, password);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
+	/**
 	 * Método para activar un cliente en BD
+	 * 
 	 * @param id_cliente Recibe la id de un cliente
 	 */
 	public void activarCliente(Integer id_cliente) {
