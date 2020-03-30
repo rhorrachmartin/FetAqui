@@ -28,6 +28,15 @@ public interface ClientesMapper {
 	 */
 	public void activarCliente(Integer id_cliente);
 	
+	public void updateApellido(@Param("apellido") String apellido, @Param("id_cliente") Integer id_cliente);
+	
+	public void updateTelf(@Param("telefono") String telefono, @Param("id_cliente") Integer id_cliente);
+	
+	public void updatePassword(@Param("password") String password, @Param("id_cliente") Integer id_cliente);
+	
+	public void updateFoto(@Param("foto") String foto, @Param("id_cliente") Integer id_cliente);
+	
+	public void bajaCliente(Integer id_cliente);
 	/**
 	 * Método para obtener un cliente a traves de su email
 	 * 

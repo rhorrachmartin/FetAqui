@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,6 @@ import modelo.pojo.Vendedor;
  * Servlet implementation class Registro
  */
 @WebServlet("/Principal")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class Principal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	/**

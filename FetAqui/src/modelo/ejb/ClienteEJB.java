@@ -3,6 +3,8 @@ package modelo.ejb;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import org.apache.ibatis.annotations.Param;
+
 import modelo.dao.ClienteDAO;
 import modelo.pojo.Cliente;
 
@@ -50,4 +52,66 @@ public class ClienteEJB {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		clienteDAO.activarCliente(id_cliente);
 	}
+	
+	public void updateApellido(String apellido, Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.updateApellido(apellido, id_cliente);
+	}
+	
+	public void updateTelf(String telefono, Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.updateTelf(telefono, id_cliente);
+	}
+	
+	public void updatePassword(String password, Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.updatePassword(password, id_cliente);
+	}
+	
+	public void updateFoto(String foto, Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.updateFoto(foto, id_cliente);
+	}
+	
+	public void bajaCliente(Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.bajaCliente(id_cliente);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

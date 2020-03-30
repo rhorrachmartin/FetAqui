@@ -1,5 +1,6 @@
 package modelo.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 
 import modelo.dao.mappers.ClientesMapper;
@@ -56,9 +57,10 @@ public class ClienteDAO {
 			sqlSession.close();
 		}
 	}
-	
+
 	/**
 	 * Método para obtener un cliente a través de su email y su password
+	 * 
 	 * @param email
 	 * @param password
 	 * @return
@@ -92,6 +94,81 @@ public class ClienteDAO {
 			ClientesMapper clientesMapper = sqlSession.getMapper(ClientesMapper.class);
 			// Insertamos el usuario
 			clientesMapper.activarCliente(id_cliente);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
+	public void updateApellido(@Param("apellido") String apellido, @Param("id_cliente") Integer id_cliente) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			ClientesMapper clientesMapper = sqlSession.getMapper(ClientesMapper.class);
+			// Insertamos el usuario
+			clientesMapper.updateApellido(apellido, id_cliente);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
+	public void updateTelf(@Param("telefono") String telefono, @Param("id_cliente") Integer id_cliente) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			ClientesMapper clientesMapper = sqlSession.getMapper(ClientesMapper.class);
+			// Insertamos el usuario
+			clientesMapper.updateTelf(telefono, id_cliente);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
+	public void updatePassword(@Param("password") String password, @Param("id_cliente") Integer id_cliente) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			ClientesMapper clientesMapper = sqlSession.getMapper(ClientesMapper.class);
+			// Insertamos el usuario
+			clientesMapper.updatePassword(password, id_cliente);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
+	public void updateFoto(@Param("foto") String foto, @Param("id_cliente") Integer id_cliente) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			ClientesMapper clientesMapper = sqlSession.getMapper(ClientesMapper.class);
+			// Insertamos el usuario
+			clientesMapper.updateFoto(foto, id_cliente);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
+	public void bajaCliente(Integer id_cliente) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			ClientesMapper clientesMapper = sqlSession.getMapper(ClientesMapper.class);
+			// Insertamos el usuario
+			clientesMapper.bajaCliente(id_cliente);
 			sqlSession.commit();
 		} finally {
 			// Cerramos sesión

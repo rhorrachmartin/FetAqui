@@ -39,8 +39,10 @@
 				<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto nav-flex-icons">
-			<li class="nav-item"><a class="btn btn-primary btn-sm" href="Perfil">PERFIL</a></li>
-				<li class="nav-item"><a class="btn btn-success btn-sm" href="Logout">SALIR</a></li>
+				<li class="nav-item"><a class="btn btn-primary btn-sm"
+					href="Perfil">PERFIL</a></li>
+				<li class="nav-item"><a class="btn btn-success btn-sm"
+					href="Logout">SALIR</a></li>
 				<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 						<img src="img/user.png" class="rounded-circle z-depth-0"
 						alt="avatar image" height="35">
@@ -91,6 +93,36 @@
 	<%
 		}
 	%>
+
+	<!-- Footer -->
+	<footer
+		class="page-footer font-small unique-color-dark pt-4 fixed-bottom">
+
+		<!-- Footer Elements -->
+		<div class="container">
+
+			<!-- Call to action -->
+			<ul class="list-unstyled list-inline text-center py-2">
+				<li class="list-inline-item">
+					<h5 class="mb-1">Regístrate gratis!</h5>
+				</li>
+				<li class="list-inline-item"><a href="Login"
+					class="btn btn-outline-white btn-rounded" data-toggle="modal"
+					data-target="#modalRegistro">Darse de alta</a></li>
+			</ul>
+			<!-- Call to action -->
+
+		</div>
+		<!-- Footer Elements -->
+
+		<!-- Copyright -->
+		<div class="footer-copyright text-center py-3 ">
+			© 2020 Copyright: <a href="https://fetaqui.com/"> fetaqui.com</a>
+		</div>
+		<!-- Copyright -->
+
+	</footer>
+	<!-- Footer -->
 
 </body>
 </html>
