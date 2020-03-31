@@ -20,5 +20,7 @@ public interface DireccionesMapper {
 	 * @return ArrayList<Direccion> 
 	 */
 	public ArrayList<Direccion> getDireccionesPorPoblacion(@Param("id_poblacion") Integer id_poblacion);
+	
+	public void insertarDireccion(Direccion direccion);
 
 }

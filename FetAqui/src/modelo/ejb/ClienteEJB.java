@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import org.apache.ibatis.annotations.Param;
 
 import modelo.dao.ClienteDAO;
+import modelo.dao.DireccionDAO;
 import modelo.pojo.Cliente;
 
 @Stateless
@@ -33,6 +34,16 @@ public class ClienteEJB {
 		return clienteDAO.getClienteEmail(email);
 	}
 	
+	public Cliente getCliente(String email, String password) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		return clienteDAO.getCliente(email, password);
+	}
+	
+	public Cliente getClientePorId(Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		return clienteDAO.getClientePorId(id_cliente);
+	}
+	
 	/**
 	 * Método para obtener un cliente a través de su email y su password
 	 * @param email
@@ -51,6 +62,10 @@ public class ClienteEJB {
 	public void activarCliente(Integer id_cliente) {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		clienteDAO.activarCliente(id_cliente);
+	}
+	public void updateNombre(String nombre, Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.updateNombre(nombre, id_cliente);
 	}
 	
 	public void updateApellido(String apellido, Integer id_cliente) {
@@ -71,6 +86,11 @@ public class ClienteEJB {
 	public void updateFoto(String foto, Integer id_cliente) {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		clienteDAO.updateFoto(foto, id_cliente);
+	}
+
+	public void updateDireccion(Integer id_cliente) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.updateDireccion(id_cliente);
 	}
 	
 	public void bajaCliente(Integer id_cliente) {

@@ -14,5 +14,11 @@
 		select * from poblacion;
 	</select>
 
+	<insert id="insertarPoblacion" parameterType="Direccion"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into direccion (direccion,poblacion)
+		values (#{direccion},#{poblacion});
+	</insert>
+
 
 </mapper>

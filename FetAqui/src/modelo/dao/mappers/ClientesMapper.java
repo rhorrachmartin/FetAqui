@@ -28,6 +28,8 @@ public interface ClientesMapper {
 	 */
 	public void activarCliente(Integer id_cliente);
 	
+	public void updateNombre(@Param("nombre") String nombre, @Param("id_cliente") Integer id_cliente);
+	
 	public void updateApellido(@Param("apellido") String apellido, @Param("id_cliente") Integer id_cliente);
 	
 	public void updateTelf(@Param("telefono") String telefono, @Param("id_cliente") Integer id_cliente);
@@ -35,6 +37,8 @@ public interface ClientesMapper {
 	public void updatePassword(@Param("password") String password, @Param("id_cliente") Integer id_cliente);
 	
 	public void updateFoto(@Param("foto") String foto, @Param("id_cliente") Integer id_cliente);
+	
+	public void updateDireccion(Integer id_cliente);
 	
 	public void bajaCliente(Integer id_cliente);
 	/**
@@ -44,6 +48,8 @@ public interface ClientesMapper {
 	 * @return Devuelve un pojo Cliente
 	 */
 	public Cliente getClienteEmail(@Param("email") String email);
+	
+	public Cliente getClientePorId(Integer id_cliente);
 	
 	
 	/**

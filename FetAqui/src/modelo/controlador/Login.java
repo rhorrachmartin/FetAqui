@@ -149,11 +149,13 @@ public class Login extends HttpServlet {
 				}
 
 			} else {
-				c = clienteEJB.getClienteEmailPass(email, password);
+				c = clienteEJB.getCliente(email, password);
+				System.out.println(c.toString());
 				if (c.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);
 					sesionClienteEJB.crearSesion(session, c);
+					request.setAttribute("cliente", c);
 					rs.forward(request, response);
 				} else {
 					response.sendRedirect("Principal?error=Usuario no activado");

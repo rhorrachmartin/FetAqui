@@ -1,21 +1,22 @@
 package modelo.pojo;
 
 public class Cliente {
-	
+
 	Integer id_cliente;
 	String email;
 	String nombre;
 	String apellido;
 	String telefono;
 	String poblacion;
+	Integer idPoblacion;
 	String direccion;
 	Integer idDireccion;
 	String password;
 	String foto;
 	Integer activado;
-	
+
 	public Cliente() {
-		
+
 	}
 
 	public Integer getId_cliente() {
@@ -66,6 +67,14 @@ public class Cliente {
 		this.poblacion = poblacion;
 	}
 
+	public Integer getIdPoblacion() {
+		return idPoblacion;
+	}
+
+	public void setIdPoblacion(Integer idPoblacion) {
+		this.idPoblacion = idPoblacion;
+	}
+
 	public String getDireccion() {
 		return direccion;
 	}
@@ -97,8 +106,6 @@ public class Cliente {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-	
-	
 
 	public Integer getActivado() {
 		return activado;
@@ -111,10 +118,11 @@ public class Cliente {
 	@Override
 	public String toString() {
 		return "Cliente [id_cliente=" + id_cliente + ", email=" + email + ", nombre=" + nombre + ", apellido="
-				+ apellido + ", telefono=" + telefono + ", poblacion=" + poblacion + ", direccion=" + direccion
-				+ ", idDireccion=" + idDireccion + ", password=" + password + ", foto=" + foto + "]";
+				+ apellido + ", telefono=" + telefono + ", poblacion=" + poblacion + ", idPoblacion=" + idPoblacion
+				+ ", direccion=" + direccion + ", idDireccion=" + idDireccion + ", password=" + password + ", foto="
+				+ foto + ", activado=" + activado + "]";
 	}
 
 	
-	
+
 }

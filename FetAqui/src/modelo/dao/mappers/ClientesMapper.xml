@@ -19,14 +19,30 @@
 		from
 			cliente
 		where 
-			email = #{email} and password = #{password};
+			cliente.email = #{email} and cliente.password = #{password};
+	</select>
+	
+	<select id="getClientePorId" parameterType="int" resultType="Cliente">
+		select
+		id_cliente, cliente.nombre, apellido, telefono,email,password,
+		poblacion.nombre, direccion.direccion
+		from
+		cliente
+		inner join
+		direccion
+		on cliente.direccion = direccion.id_direccion
+		inner join
+		poblacion
+		on direccion.poblacion = poblacion.id_poblacion
+		where
+		id_cliente = #{id_cliente};
 	</select>
 
 
 	<select id="getCliente" resultType="Cliente">
 		select
-		id_cliente, cliente.nombre, apellido, telefono,email,password,
-		poblacion.nombre, direccion.direccion
+		id_cliente, cliente.nombre, apellido, telefono,email,password, poblacion.id_poblacion as idPoblacion,
+		poblacion.nombre as poblacion, cliente.direccion as idDireccion,direccion.direccion, cliente.foto,cliente.activado
 		from
 		cliente
 		inner join
@@ -90,20 +106,28 @@
 		update cliente set activado = 1  where cliente.id_cliente = #{id_cliente};
 	</update>
 	
+	<update id="updateNombre">
+		update cliente set nombre = #{nombre}  where cliente.id_cliente = #{id_cliente};
+	</update>
+	
 	<update id="updateApellido">
-		update cliente set apellido = #{#apellido}  where cliente.id_cliente = #{id_cliente};
+		update cliente set apellido = #{apellido}  where cliente.id_cliente = #{id_cliente};
 	</update>
 	
 	<update id="updateTelf">
-		update cliente set telefono = #{#telefono}  where cliente.id_cliente = #{id_cliente};
+		update cliente set telefono = #{telefono}  where cliente.id_cliente = #{id_cliente};
 	</update>
 	
 	<update id="updatePassword">
-		update cliente set password = #{#password}  where cliente.id_cliente = #{id_cliente};
+		update cliente set password = #{password}  where cliente.id_cliente = #{id_cliente};
 	</update>
 	
 	<update id="updateFoto">
-		update cliente set foto = #{#foto}  where cliente.id_cliente = #{id_cliente};
+		update cliente set foto = #{foto}  where cliente.id_cliente = #{id_cliente};
+	</update>
+	
+	<update id="updateDireccion" parameterType="int">
+		update cliente set direccion = (select id_direccion from direccion order by id_direccion desc limit 1) where cliente.id_cliente = #{id_cliente};
 	</update>
 	
 	<delete id="bajaCliente" parameterType="int">

@@ -24,6 +24,12 @@
 		where 
 			poblacion.id_poblacion = #{id_poblacion};
 	</select>
+	
+	<insert id="insertarDireccion" parameterType="Direccion"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into direccion (direccion,poblacion)
+		values (#{direccion}, #{id_poblacion});
+	</insert>
 
 
 </mapper>

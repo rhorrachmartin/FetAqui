@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <%@ page import="modelo.pojo.Cliente"%>
-<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="javax.servlet.http.HttpSession"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,15 +28,15 @@
 <body>
 
 
-	<%	
+	<%
 		HttpSession session = request.getSession(false);
 		Cliente cliente = null;
 		if (session.getAttribute("cliente") != null) {
 			cliente = (Cliente) session.getAttribute("cliente");
-			
+
 		}
 	%>
-	
+
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 		<a class="navbar-brand" href="#">Navbar</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -51,7 +51,7 @@
 			</ul>
 			<ul class="navbar-nav ml-auto nav-flex-icons">
 				<li class="nav-item"><a class="btn btn-primary btn-sm"
-					href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
+					href="Perfil">PERFIL</a></li>
 				<li class="nav-item"><a class="btn btn-success btn-sm"
 					href="Logout">SALIR</a></li>
 				<%
@@ -84,10 +84,8 @@
 	<div class="container">
 		<div class="row loginPanel">
 			<div class="lg lg-12 ">
-				<button class="btn btn-primary btn-lg" data-toggle="modal"
-					data-target="#modalRegistro">Darse de alta</button>
-				<button class="btn btn-warning btn-lg" data-toggle="modal"
-					data-target="Logout">SALIR</button>
+				<a class="btn btn-primary btn-lg" href="Perfil">ACTUALIZAR PERFIL</a> <a
+					class="btn btn-info btn-lg" href="Pedidos">PEDIDOS</a>
 			</div>
 		</div>
 	</div>
@@ -99,17 +97,12 @@
 
 	<div class="container">
 
-		<div class="row loginPanel">
+		<div class="row panelOpcionesPerfil">
 			<div class="lg lg-12 ">
-				<div class="row loginPanelAlerta">
-					<div class="lg lg-12">
-						<button class="btn btn-danger bnt-lg"><%=error%></button>
-					</div>
-				</div>
 				<button class="btn btn-primary btn-lg" data-toggle="modal"
-					data-target="#modalRegistro">Darse de alta</button>
+					data-target="PerfilCliente">Actualizar Perfil</button>
 				<button class="btn btn-success btn-lg" data-toggle="modal"
-					data-target="LOGOUT">SALIR</button>
+					data-target="Pedidos">Pedidos</button>
 			</div>
 		</div>
 	</div>
