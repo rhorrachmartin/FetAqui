@@ -104,8 +104,10 @@ public class ActualizarFotoPerfil extends HttpServlet {
 					request.setAttribute("cliente", clienteActualizado);
 					rs.forward(request, response);
 				} else {
-					String error = "Las contraseñas no coinciden";
+					String error = "Contraseña incorrecta";
 					Cliente cliente3 = (Cliente) session.getAttribute("cliente");
+					poblaciones = poblacionEJB.getPoblaciones();
+					request.setAttribute("poblaciones", poblaciones);
 					request.setAttribute("cliente", cliente3);
 					request.setAttribute("error", error);
 					rs.forward(request, response);

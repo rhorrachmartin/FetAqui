@@ -133,6 +133,8 @@ public class ActualizarPerfilCliente extends HttpServlet {
 				} else {
 					String error = "Contraseña incorrecta";
 					Cliente cliente3 = (Cliente)session.getAttribute("cliente");
+					poblaciones = poblacionEJB.getPoblaciones();
+					request.setAttribute("poblaciones", poblaciones);
 					request.setAttribute("cliente", cliente3);
 					request.setAttribute("error", error);
 					rs.forward(request, response);

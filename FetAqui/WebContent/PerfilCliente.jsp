@@ -273,18 +273,7 @@
 					<h5 class="card-header info-color white-text text-center py-4">
 						<strong>Modificación de datos</strong>
 					</h5>
-					<%
-						String error = "";
 
-						if (request.getAttribute("error") != null) {
-							error = (String) request.getAttribute("error");
-					%>
-					<h5 style="color: red">
-						<strong><%=error%></strong>
-					</h5>
-					<%
-						}
-					%>
 
 					<div class="card-body px-lg-5 pt-0">
 
@@ -334,13 +323,30 @@
 								</select>
 							</div>
 
+							<%
+								String error = "";
+
+								if (request.getAttribute("error") != null) {
+									error = (String) request.getAttribute("error");
+							%>
 							<div class="form-group">
 								<label for="passAntiguo">Password actual</label> <input
 									type="password" id="passAntiguo" name="passAntiguo"
 									class="form-control" aria-describedby="password" value=""
 									required> <small id="ayudaPass"
-									class="form-text text-muted">Contraseña actual</small>
+									class="form-text text-muted"><strong style="color: red"><%=error %></strong></small>
 							</div>
+							<%}else{%>
+							<div class="form-group">
+								<label for="passAntiguo">Password actual</label> <input
+									type="password" id="passAntiguo" name="passAntiguo"
+									class="form-control" aria-describedby="password" value=""
+									required> <small id="ayudaPass"
+									class="form-text text-muted">Para guardar los cambios introduzca su contraseña</small>
+							</div>
+							<%} %>
+
+
 
 
 

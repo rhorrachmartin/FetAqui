@@ -72,7 +72,8 @@ public class ActualizarPassword extends HttpServlet {
 	LoggersEJB logger;
 
 	static final String PERFIL_CLIENTE_JSP = "/PerfilCliente.jsp";
-
+	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
@@ -82,14 +83,10 @@ public class ActualizarPassword extends HttpServlet {
 			response.sendRedirect("Principal");
 		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8");
+		response.setContentType(CONTENT_TYPE);
 
 		// Creamos el RequestDispatcher por defecto hacia Registro.jsp
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(PERFIL_CLIENTE_JSP);
@@ -100,15 +97,9 @@ public class ActualizarPassword extends HttpServlet {
 
 		Cliente cliente = (Cliente) session.getAttribute("cliente");
 		Cliente clienteExiste = null;
-		String apellido = request.getParameter("apellido");
-		String nombre = request.getParameter("nombre");
-		String telefono = request.getParameter("telefono");
 		String passAntiguo = request.getParameter("passAntiguo");
 		String passNuevo1 = request.getParameter("passNuevo1");
 		String passNuevo2 = request.getParameter("passNuevo2");
-		String direccion = request.getParameter("direccion");
-		Integer id_poblacion = Integer.valueOf(request.getParameter("poblacion"));
-		Direccion dir = new Direccion();
 		ArrayList<Poblacion> poblaciones = null;
 		try {
 
@@ -116,25 +107,23 @@ public class ActualizarPassword extends HttpServlet {
 				clienteExiste = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
 
 				if (clienteExiste.getPassword().equals(passAntiguo) && passNuevo1.equals(passNuevo2)) {
-					clienteEJB.updateTelf(telefono, clienteExiste.getId_cliente());
-					clienteEJB.updateNombre(nombre, clienteExiste.getId_cliente());
-					clienteEJB.updateApellido(apellido, clienteExiste.getId_cliente());
+					
 					clienteEJB.updatePassword(passNuevo2, clienteExiste.getId_cliente());
-					if(!clienteExiste.getDireccion().equals(direccion)) {
-						dir.setDireccion(direccion);
-						dir.setId_poblacion(id_poblacion);
-						direccionEJB.insertarDireccion(dir);
-						clienteEJB.updateDireccion(clienteExiste.getId_cliente());
-					}
 					
 					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
+					
 					poblaciones = poblacionEJB.getPoblaciones();
+					
 					request.setAttribute("poblaciones", poblaciones);
+					
 					request.setAttribute("cliente", clienteActualizado);
+					
 					rs.forward(request, response);
 				} else {
 					String error = "Las contraseñas no coinciden";
 					Cliente cliente3 = (Cliente)session.getAttribute("cliente");
+					poblaciones = poblacionEJB.getPoblaciones();
+					request.setAttribute("poblaciones", poblaciones);
 					request.setAttribute("cliente", cliente3);
 					request.setAttribute("error", error);
 					rs.forward(request, response);
