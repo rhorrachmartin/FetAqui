@@ -28,9 +28,9 @@ import modelo.pojo.Poblacion;
 /**
  * Servlet implementation class ActualizarPerfilCliente
  */
-@WebServlet("/ActualizarPerfilCliente")
+@WebServlet("/ActualizarPassword")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
-public class ActualizarPerfilCliente extends HttpServlet {
+public class ActualizarPassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -104,6 +104,8 @@ public class ActualizarPerfilCliente extends HttpServlet {
 		String nombre = request.getParameter("nombre");
 		String telefono = request.getParameter("telefono");
 		String passAntiguo = request.getParameter("passAntiguo");
+		String passNuevo1 = request.getParameter("passNuevo1");
+		String passNuevo2 = request.getParameter("passNuevo2");
 		String direccion = request.getParameter("direccion");
 		Integer id_poblacion = Integer.valueOf(request.getParameter("poblacion"));
 		Direccion dir = new Direccion();
@@ -113,12 +115,12 @@ public class ActualizarPerfilCliente extends HttpServlet {
 			if (cliente.getNombre() != null) {
 				clienteExiste = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
 
-				if (clienteExiste.getPassword().equals(passAntiguo)) {
+				if (clienteExiste.getPassword().equals(passAntiguo) && passNuevo1.equals(passNuevo2)) {
 					clienteEJB.updateTelf(telefono, clienteExiste.getId_cliente());
 					clienteEJB.updateNombre(nombre, clienteExiste.getId_cliente());
 					clienteEJB.updateApellido(apellido, clienteExiste.getId_cliente());
-					
-					if(!clienteExiste.getDireccion().equals(direccion) || clienteExiste.getIdPoblacion() != id_poblacion) {
+					clienteEJB.updatePassword(passNuevo2, clienteExiste.getId_cliente());
+					if(!clienteExiste.getDireccion().equals(direccion)) {
 						dir.setDireccion(direccion);
 						dir.setId_poblacion(id_poblacion);
 						direccionEJB.insertarDireccion(dir);
@@ -131,7 +133,7 @@ public class ActualizarPerfilCliente extends HttpServlet {
 					request.setAttribute("cliente", clienteActualizado);
 					rs.forward(request, response);
 				} else {
-					String error = "Contraseña incorrecta";
+					String error = "Las contraseñas no coinciden";
 					Cliente cliente3 = (Cliente)session.getAttribute("cliente");
 					request.setAttribute("cliente", cliente3);
 					request.setAttribute("error", error);

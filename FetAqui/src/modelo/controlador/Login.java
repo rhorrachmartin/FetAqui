@@ -150,7 +150,6 @@ public class Login extends HttpServlet {
 
 			} else {
 				c = clienteEJB.getCliente(email, password);
-				System.out.println(c.toString());
 				if (c.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);

@@ -3,7 +3,7 @@
 <%@ page session="false"%>
 <%@ page import="modelo.pojo.Cliente"%>
 <%@ page import="modelo.pojo.Poblacion"%>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +52,7 @@
 				<li class="nav-item"><a class="btn btn-success btn-sm"
 					href="Logout">SALIR</a></li>
 				<%
-					if (cliente.getFoto().equals("FotoPorDefecto")) {
+					if (cliente.getFoto().equals("desconocido.txt")) {
 				%>
 				<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 						<img src="img/user.png" class="rounded-circle z-depth-0"
@@ -71,6 +71,197 @@
 			</ul>
 		</div>
 	</nav>
+
+	<div class="text-center">
+		<a href="" class="btn aqua-gradient" data-toggle="modal"
+			data-target="#modalLoginAvatar">Cambiar foto de perfil</a>
+	</div>
+	<div class="modal fade" id="modalLoginAvatar" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog cascading-modal modal-avatar modal-sm"
+			role="document">
+			<!--Content-->
+			<div class="modal-content">
+
+				<!--Header-->
+				<div class="modal-header">
+					<img src="Imagenes/<%=cliente.getFoto()%>" alt="avatar"
+						class="rounded-circle img-responsive">
+				</div>
+				<!--Body-->
+
+				<div class="modal-body text-center mb-1">
+
+					<h5 class="mt-1 mb-2"><%=cliente.getNombre() + " " + cliente.getApellido()%></h5>
+
+					<div class="md-form ml-0 mr-0">
+						<form action="ActualizarFotoPerfil" method="post"
+							enctype='multipart/form-data'>
+							<div class="input-group">
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" id="foto"
+										name="foto" aria-describedby="inputGroupFileAddon01" required>
+									<label id="labelFoto" class="custom-file-label"
+										for="inputGroupFile01">Elija su foto de perfil</label>
+								</div>
+							</div>
+							<div class="row my-5">
+								<div class="col-md-4">
+									<div class="md-form">
+										<i class="fas fa-lock prefix"></i> <input type="password"
+											id="inputValidationEx3" class="form-control validate"
+											name="password" required> <label
+											for="inputValidationEx3"
+											data-error="Escriba su contraseña correctamente"
+											data-success="OK" style="width: 200px;">Password</label>
+									</div>
+								</div>
+								<div class="col-md-5">
+
+									<div class="alert alert-warning password-alert" role="alert">
+										<ul>
+											<li class="requirements leng"><i
+												class="fas fa-check green-text"></i><i
+												class="fas fa-times red-text"></i> 8 caracteres</li>
+											<li class="requirements big-letter"><i
+												class="fas fa-check green-text"></i><i
+												class="fas fa-times red-text"></i> 1 letra mayúscula</li>
+											<li class="requirements num"><i
+												class="fas fa-check green-text"></i><i
+												class="fas fa-times red-text"></i> 1 número</li>
+											<li class="requirements special-char"><i
+												class="fas fa-check green-text"></i><i
+												class="fas fa-times red-text"></i> 1 carácter especial</li>
+										</ul>
+									</div>
+
+								</div>
+							</div>
+							<div class="text-center mt-4">
+								<button type="submit" class="btn btn-cyan mt-1">
+									Guardar <i class="fas fa-sign-in ml-1"></i>
+								</button>
+								<button type="button" class="btn btn-danger"
+									data-dismiss="modal">Cerrar</button>
+							</div>
+						</form>
+					</div>
+
+
+				</div>
+
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+
+	<!-- --------------------------------------MODAL DE CAMBIO DE PASSWORD------------------------------------------- -->
+
+	<div class="modal fade" id="modalRegisterForm" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">CAMBIO DE
+						PASSWORD</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body mx-3">
+					<form action="ActualizarPassword" method="post">
+						<div class="form-group">
+							<label for="passAntiguo">Password actual</label> <input
+								type="password" id="passAntiguo" name="passAntiguo"
+								class="form-control" aria-describedby="password" value=""
+								required> <small id="ayudaPass"
+								class="form-text text-muted">Contraseña actual</small>
+						</div>
+
+						<div class="row my-5">
+							<div class="col-md-4">
+								<div class="md-form">
+									<i class="fas fa-lock prefix"></i> <input type="password"
+										id="inputValidationEx3" class="form-control validate"
+										name="passNuevo1"> <label for="inputValidationEx3"
+										data-error="Escriba su contraseña correctamente"
+										data-success="OK" style="width: 200px;">Password</label>
+								</div>
+							</div>
+							<div class="col-md-5">
+
+								<div class="alert alert-warning password-alert" role="alert">
+									<ul>
+										<li class="requirements leng"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 8 caracteres</li>
+										<li class="requirements big-letter"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 letra mayúscula</li>
+										<li class="requirements num"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 número</li>
+										<li class="requirements special-char"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 carácter especial</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						<div class="row my-5">
+							<div class="col-md-4">
+								<div class="md-form">
+									<i class="fas fa-lock prefix"></i> <input type="password"
+										id="inputValidationEx3" class="form-control validate"
+										name="passNuevo2"> <label for="inputValidationEx3"
+										data-error="Escriba su contraseña correctamente"
+										data-success="OK" style="width: 200px;">Password</label>
+								</div>
+							</div>
+							<div class="col-md-5">
+
+								<div class="alert alert-warning password-alert" role="alert">
+									<ul>
+										<li class="requirements leng"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 8 caracteres</li>
+										<li class="requirements big-letter"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 letra mayúscula</li>
+										<li class="requirements num"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 número</li>
+										<li class="requirements special-char"><i
+											class="fas fa-check green-text"></i><i
+											class="fas fa-times red-text"></i> 1 carácter especial</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						<div class="modal-footer d-flex justify-content-center">
+							<button type="submit" class="btn btn-deep-orange">Guardar</button>
+						</div>
+					</form>
+				</div>
+
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="text-center">
+		<a href="" class="btn btn-default btn-rounded mb-4"
+			data-toggle="modal" data-target="#modalRegisterForm">CAMBIAR
+			PASSWORD</a>
+	</div>
+
+	<!-- ------------------------------------------------------------------------------------------------------------------------------ -->
 
 	<div class="container">
 
@@ -98,7 +289,7 @@
 					<div class="card-body px-lg-5 pt-0">
 
 						<form action="ActualizarPerfilCliente" method="post"
-							enctype='multipart/form-data' style="color: #757575;">
+							style="color: #757575;">
 
 							<div class="form-group">
 								<label for="nombre">Nombre</label> <input type="text"
@@ -119,117 +310,48 @@
 									aria-describedby="telefono" value=<%=cliente.getTelefono()%>
 									required>
 							</div>
-							
+
 							<div class="form-group">
 								<label for="direccion">Direccion </label> <input type="text"
 									id="direccion" name="direccion" class="form-control"
-									aria-describedby="direccion" value="<%=cliente.getDireccion()%>"
-									required>
+									aria-describedby="direccion"
+									value="<%=cliente.getDireccion()%>" required>
 							</div>
-							
+
 							<div class="form-group">
-								<label for="poblacion">Poblacion </label> 
-								<select id="poblacion" name="poblacion" class="browser-default custom-select">
-								<option value=<%=cliente.getIdPoblacion() %> selected="selected"><%=cliente.getPoblacion() %></option>
+								<label for="poblacion">Poblacion </label> <select id="poblacion"
+									name="poblacion" class="browser-default custom-select">
+									<option value=<%=cliente.getIdPoblacion()%> selected="selected"><%=cliente.getPoblacion()%></option>
 									<%
-										ArrayList<Poblacion> poblaciones = (ArrayList<Poblacion>)request.getAttribute("poblaciones");
-										
-										for(Poblacion p : poblaciones){
+										ArrayList<Poblacion> poblaciones = (ArrayList<Poblacion>) request.getAttribute("poblaciones");
+
+										for (Poblacion p : poblaciones) {
 									%>
-										<option value=<%=p.getId() %>><%=p.getNombre() %></option>
-									<%} %>
+									<option value=<%=p.getId()%>><%=p.getNombre()%></option>
+									<%
+										}
+									%>
 								</select>
 							</div>
 
 							<div class="form-group">
 								<label for="passAntiguo">Password actual</label> <input
 									type="password" id="passAntiguo" name="passAntiguo"
-									class="form-control" aria-describedby="password"
-									value="" required> 
-									<small id="ayudaPass" class="form-text text-muted">Para
-									actualizar su perfil, introduzca su contraseña.</small>
+									class="form-control" aria-describedby="password" value=""
+									required> <small id="ayudaPass"
+									class="form-text text-muted">Contraseña actual</small>
 							</div>
 
-							<div class="row my-5">
-								<div class="col-md-4">
-									<div class="md-form">
-										<i class="fas fa-lock prefix"></i> <input type="password"
-											id="inputValidationEx3" class="form-control validate"
-											name="passNuevo1" value=<%=cliente.getPassword()%>> <label for="inputValidationEx3"
-											data-error="Escriba su contraseña correctamente"
-											data-success="OK" style="width: 200px;">Password</label>
-									</div>
-								</div>
-								<div class="col-md-5">
 
-									<div class="alert alert-warning password-alert" role="alert">
-										<ul>
-											<li class="requirements leng"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 8 caracteres</li>
-											<li class="requirements big-letter"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 letra mayúscula</li>
-											<li class="requirements num"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 número</li>
-											<li class="requirements special-char"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 carácter especial</li>
-										</ul>
-									</div>
 
-								</div>
-							</div>
-							<div class="row my-5">
-								<div class="col-md-4">
-									<div class="md-form">
-										<i class="fas fa-lock prefix"></i> <input type="password"
-											id="inputValidationEx3" class="form-control validate"
-											name="passNuevo2" value=<%=cliente.getPassword()%>> <label for="inputValidationEx3"
-											data-error="Escriba su contraseña correctamente"
-											data-success="OK" style="width: 200px;">Password</label>
-									</div>
-								</div>
-								<div class="col-md-5">
+							<!--Modal: Login with Avatar Form-->
 
-									<div class="alert alert-warning password-alert" role="alert">
-										<ul>
-											<li class="requirements leng"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 8 caracteres</li>
-											<li class="requirements big-letter"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 letra mayúscula</li>
-											<li class="requirements num"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 número</li>
-											<li class="requirements special-char"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 carácter especial</li>
-										</ul>
-									</div>
-
-								</div>
-							</div>
-
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="inputGroupFileAddon01">Subir
-										foto</span>
-								</div>
-								<div class="custom-file">
-									<input type="file" class="custom-file-input" id="foto"
-										name="foto" aria-describedby="inputGroupFileAddon01" >
-									<label id="labelFoto" class="custom-file-label"
-										for="inputGroupFile01">Elija su foto de perfil</label>
-								</div>
-							</div>
 
 
 							<button id="actualizarPerfil"
 								class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect"
 								type="submit">Guardar</button>
+
 
 						</form>
 					</div>
@@ -239,6 +361,7 @@
 		</div>
 	</div>
 	<hr>
+
 	<div class="container m-5">
 
 		<div class="row">

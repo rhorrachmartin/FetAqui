@@ -2,6 +2,8 @@ package modelo.ejb;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.servlet.ServletContext;
@@ -35,6 +37,8 @@ public class ImagenesEJB {
 			throws IOException, ServletException {
 		//Ruta donde guargar la imagen
 		String uploadPath = contexto.getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+		
+		
 		File uploadDir = new File(uploadPath);
 		
 		//Si el directorio no existe lo creamos
@@ -42,14 +46,15 @@ public class ImagenesEJB {
 			uploadDir.mkdir();
 		}
 		//Obtenemos el nombre de la imagen
-		String fileName = null;
+		ArrayList<String> fileName = new ArrayList<String>();
 		for (Part part : request.getParts()) {
-			fileName = getFileName(part);
+			fileName.add(getFileName(part));
 			//Guardamos el archivo en disco
 			part.write(uploadPath + File.separator + fileName);
 		}
 		//Devolvemos el nombre de la imagen
-		return fileName;
+		return fileName.get(0);
+		
 	}
 	/**
 	 * Método para obtener el nombre de la imagen.

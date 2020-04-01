@@ -55,7 +55,7 @@
 				<li class="nav-item"><a class="btn btn-success btn-sm"
 					href="Logout">SALIR</a></li>
 				<%
-					if (cliente.getFoto().equals("FotoPorDefecto")) {
+					if (cliente.getFoto().equals("desconocido.txt")) {
 				%>
 				<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 						<img src="img/user.png" class="rounded-circle z-depth-0"
