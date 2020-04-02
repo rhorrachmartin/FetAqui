@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.ejb.ClienteEJB;
-import modelo.ejb.CodigoClienteEJB;
-import modelo.ejb.CodigoVendedorEJB;
 import modelo.ejb.ImagenesEJB;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
@@ -76,7 +74,7 @@ public class Perfil extends HttpServlet {
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String PERFIL_CLIENTE_JSP = "/PerfilCliente.jsp";
 	static final String PERFIL_VENDEDOR_JSP = "/PerfilVendedor.jsp";
-	static final String HOME_LOGEADO_JSP = "/HomeLogeado.jsp";
+	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -101,6 +99,8 @@ public class Perfil extends HttpServlet {
 			}else {
 				vendedor = (Vendedor) session.getAttribute("vendedor");
 				request.setAttribute("vendedor", vendedor);
+				poblaciones = poblacionEJB.getPoblaciones();
+				request.setAttribute("poblaciones", poblaciones);
 				rs = getServletContext().getRequestDispatcher(PERFIL_VENDEDOR_JSP);
 				rs.forward(request, response);
 			}

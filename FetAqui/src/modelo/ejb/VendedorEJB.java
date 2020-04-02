@@ -37,4 +37,68 @@ public class VendedorEJB {
 		
 		vendedorDAO.activarVendedor(id_vendedor);
 	}
+	
+	public Vendedor getVendedor(String email, String password) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		return vendedorDAO.getVendedor(email, password);
+	}
+	
+	public void updateNif(String nif, Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		vendedorDAO.updateNif(nif, id_vendedor);
+	}
+	
+	public void updateNombre(String nombre, Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		vendedorDAO.updateNombre(nombre, id_vendedor);
+	}
+	
+	
+	public void updateTelefono(String telefono, Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		vendedorDAO.updateTelefono(telefono, id_vendedor);
+	}
+	
+	
+	public void updatePassword(String password, Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		vendedorDAO.updatePassword(password, id_vendedor);
+	}
+	
+	public void updateFoto(String foto, Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		vendedorDAO.updateFoto(foto, id_vendedor);
+	}
+	
+	
+	public void updateDireccion(Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		vendedorDAO.updateDireccion(id_vendedor);
+	}
+	
+	
+	public void bajaVendedor(Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		vendedorDAO.bajaVendedor(id_vendedor);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

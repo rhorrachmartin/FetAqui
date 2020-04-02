@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<%@ page import="modelo.pojo.Cliente"%>
+<%@ page import="modelo.pojo.Vendedor"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
 <!DOCTYPE html>
 <html>
@@ -30,9 +30,10 @@
 
 	<%
 		HttpSession session = request.getSession(false);
-		Cliente cliente = null;
-		if (session.getAttribute("cliente") != null) {
-			cliente = (Cliente) session.getAttribute("cliente");
+		Vendedor vendedor = null;
+		
+		if (session.getAttribute("vendedor") != null) {
+			vendedor = (Vendedor) session.getAttribute("vendedor");
 
 		}
 	%>
@@ -51,11 +52,11 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="Perfil">PERFIL</a></li>
+						href="OpcionesPerfilVendedor.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
 						href="Logout">SALIR</a></li>
 					<%
-						if (cliente.getFoto().equals("desconocido.txt")) {
+						if (vendedor.getFoto().equals("desconocido.txt")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
@@ -65,7 +66,7 @@
 						} else {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="Imagenes/<%=cliente.getFoto()%>"
+							<img src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
@@ -84,18 +85,43 @@
 		<div class="container">
 			<div class="row loginPanel">
 				<div class="lg lg-12 ">
-					<a class="btn btn-primary btn-lg" href="Perfil">ACTUALIZAR
-						PERFIL</a> <a class="btn btn-info btn-lg" href="Pedidos">PEDIDOS</a>
+					<button class="btn btn-primary btn-lg" data-toggle="modal"
+						data-target="#modalRegistro">Darse de alta</button>
+					<button class="btn btn-warning btn-lg" data-toggle="modal"
+						data-target="Logout">SALIR</button>
 				</div>
 			</div>
 		</div>
 		<%
-			} 
+			} else {
+				String error = (String) request.getAttribute("error");
+		%>
+
+
+		<div class="container">
+
+			<div class="row loginPanel">
+				<div class="lg lg-12 ">
+					<div class="row loginPanelAlerta">
+						<div class="lg lg-12">
+							<button class="btn btn-danger bnt-lg"><%=error%></button>
+						</div>
+					</div>
+					<button class="btn btn-primary btn-lg" data-toggle="modal"
+						data-target="#modalRegistro">Darse de alta</button>
+					<button class="btn btn-success btn-lg" data-toggle="modal"
+						data-target="LOGOUT">SALIR</button>
+				</div>
+			</div>
+		</div>
+
+		<%
+			}
 		%>
 	</div>
 	<!-- Footer -->
 	<footer
-		class="page-footer font-small unique-color-dark pt-4 ">
+		class="page-footer font-small unique-color-dark pt-4">
 
 		<!-- Footer Elements -->
 		<div class="container">

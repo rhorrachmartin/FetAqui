@@ -92,5 +92,135 @@ public class VendedorDAO {
 			sqlSession.close();
 		}
 	}
+	
+	public Vendedor getVendedor(String email, String password) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			return vendedoresMapper.getVendedor(email, password);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	
+	public void updateNombre(String nombre, Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.updateNombre(nombre, id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public void updateTelefono(String telefono, Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.updateTelefono(telefono, id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	
+	public void updatePassword(String password, Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.updatePassword(password, id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public void updateFoto(String foto, Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.updateFoto(foto, id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public void updateDireccion(Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.updateDireccion(id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public void updateNif(String nif,Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.updateNif(nif, id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public void bajaVendedor(Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.bajaVendedor(id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 }

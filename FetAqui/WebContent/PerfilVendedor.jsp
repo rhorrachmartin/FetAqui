@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<%@ page import="modelo.pojo.Cliente"%>
 <%@ page import="modelo.pojo.Poblacion"%>
+<%@ page import="modelo.pojo.Vendedor"%>
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
@@ -28,9 +28,9 @@
 </head>
 <body>
 	<%
-		Cliente cliente = null;
-		if (request.getAttribute("cliente") != null) {
-			cliente = (Cliente) request.getAttribute("cliente");
+		Vendedor vendedor = null;
+		if (request.getAttribute("vendedor") != null) {
+			vendedor = (Vendedor) request.getAttribute("vendedor");
 		}
 	%>
 	<div id="container" style="min-height: 60vh">
@@ -52,7 +52,7 @@
 					<li class="nav-item"><a class="btn btn-success btn-sm"
 						href="Logout">SALIR</a></li>
 					<%
-						if (cliente.getFoto().equals("desconocido.txt")) {
+						if (vendedor.getFoto().equals("desconocido.txt")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
@@ -62,7 +62,7 @@
 						} else {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="Imagenes/<%=cliente.getFoto()%>"
+							<img src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
@@ -112,14 +112,14 @@
 
 					<!--Header-->
 					<div class="modal-header">
-						<img src="Imagenes/<%=cliente.getFoto()%>" alt="avatar"
+						<img src="Imagenes/<%=vendedor.getFoto()%>" alt="avatar"
 							class="rounded-circle img-responsive">
 					</div>
 					<!--Body-->
 
 					<div class="modal-body text-center mb-1">
 
-						<h5 class="mt-1 mb-2"><%=cliente.getNombre()%></h5>
+						<h5 class="mt-1 mb-2"><%=vendedor.getNombre()%></h5>
 
 						<div class="md-form ml-0 mr-0">
 							<form action="ActualizarFotoPerfil" method="post"
@@ -300,26 +300,27 @@
 
 						<div class="card-body px-lg-5 pt-0">
 
-							<form action="ActualizarPerfilCliente" method="post"
+							<form action="ActualizarPerfilVendedor" method="post"
 								style="color: #757575;">
+								
+								<div class="form-group">
+									<label for="nif">NIF</label> <input type="text"
+										id="nif" name="nombre" class="form-control"
+										aria-describedby="nombre" value=<%=vendedor.getNif()%>
+										required>
+								</div>
 
 								<div class="form-group">
 									<label for="nombre">Nombre</label> <input type="text"
 										id="nombre" name="nombre" class="form-control"
-										aria-describedby="nombre" value=<%=cliente.getNombre()%>
-										required>
-								</div>
-								<div class="form-group">
-									<label for="apellido">Apellido</label> <input type="text"
-										id="apellido" name="apellido" class="form-control"
-										aria-describedby="apellido" value=<%=cliente.getApellido()%>
+										aria-describedby="nombre" value=<%=vendedor.getNombre()%>
 										required>
 								</div>
 
 								<div class="form-group">
 									<label for="telefono">Telefono </label> <input type="text"
 										id="telefono" name="telefono" class="form-control"
-										aria-describedby="telefono" value=<%=cliente.getTelefono()%>
+										aria-describedby="telefono" value=<%=vendedor.getTelefono()%>
 										required>
 								</div>
 
@@ -327,15 +328,15 @@
 									<label for="direccion">Direccion </label> <input type="text"
 										id="direccion" name="direccion" class="form-control"
 										aria-describedby="direccion"
-										value="<%=cliente.getDireccion()%>" required>
+										value="<%=vendedor.getDireccion()%>" required>
 								</div>
 
 								<div class="form-group">
 									<label for="poblacion">Poblacion </label> <select
 										id="poblacion" name="poblacion"
 										class="browser-default custom-select">
-										<option value=<%=cliente.getIdPoblacion()%>
-											selected="selected"><%=cliente.getPoblacion()%></option>
+										<option value=<%=vendedor.getIdPoblacion()%>
+											selected="selected"><%=vendedor.getPoblacion()%></option>
 										<%
 											ArrayList<Poblacion> poblaciones = (ArrayList<Poblacion>) request.getAttribute("poblaciones");
 

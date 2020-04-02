@@ -56,7 +56,8 @@ public class Login extends HttpServlet {
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String HOME_LOGEADO = "/HomeLogeado.jsp";
-
+	static final String HOME_LOGEADO_VENDEDOR = "/HomeLogeadoVendedor.jsp";
+	
 	/**
 	 * Método doGet que muestra el formulario de login
 	 */
@@ -137,18 +138,22 @@ public class Login extends HttpServlet {
 				response.sendRedirect("Principal?error=Usuario inexistente");
 
 			} else if (vendedorEJB.getVendedorEmailPass(email, password) != null) {
-				v = vendedorEJB.getVendedorEmailPass(email, password);
+				
+				v = vendedorEJB.getVendedor(email, password);
 
 				if (v.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);
 					sesionVendedorEJB.crearSesion(session, v);
+					request.setAttribute("vendedor", c);
+					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_VENDEDOR);
 					rs.forward(request, response);
 				} else {
 					response.sendRedirect("Principal?error=Usuario no activado");
 				}
 
 			} else {
+				
 				c = clienteEJB.getCliente(email, password);
 				if (c.getActivado() == 1) {
 					// Iniciamos la sesión

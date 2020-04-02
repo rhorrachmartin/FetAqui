@@ -63,13 +63,15 @@ public class ConfirmarUsuario extends HttpServlet {
 	 * Método doGet que confirma la activación de un usuario
 	 */
 	
+	static final String HOME_JSP = "/Home.jsp";
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		//Creamos el por defecto hacia  ConfirmarUsuario.jsp
-		RequestDispatcher rs = getServletContext().getRequestDispatcher("/Home.jsp");
+		RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_JSP);
 		
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);

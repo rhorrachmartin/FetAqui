@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
-<%@ page import="modelo.pojo.Cliente"%>
+<%@ page import="modelo.pojo.Vendedor"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
 <!DOCTYPE html>
 <html>
@@ -30,9 +30,10 @@
 
 	<%
 		HttpSession session = request.getSession(false);
-		Cliente cliente = null;
-		if (session.getAttribute("cliente") != null) {
-			cliente = (Cliente) session.getAttribute("cliente");
+		Vendedor vendedor = null;
+
+		if (session.getAttribute("vendedor") != null) {
+			vendedor = (Vendedor) session.getAttribute("vendedor");
 
 		}
 	%>
@@ -55,7 +56,7 @@
 					<li class="nav-item"><a class="btn btn-success btn-sm"
 						href="Logout">SALIR</a></li>
 					<%
-						if (cliente.getFoto().equals("desconocido.txt")) {
+						if (vendedor.getFoto().equals("desconocido.txt")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
@@ -65,7 +66,7 @@
 						} else {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="Imagenes/<%=cliente.getFoto()%>"
+							<img src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
@@ -84,8 +85,9 @@
 		<div class="container">
 			<div class="row loginPanel">
 				<div class="lg lg-12 ">
-					<a class="btn btn-primary btn-lg" href="Perfil">ACTUALIZAR
-						PERFIL</a> <a class="btn btn-info btn-lg" href="Pedidos">PEDIDOS</a>
+					<a class="btn btn-primary btn-lg" href="Perfil">DATOS PERSONALES</a> 
+					<a class="btn btn-info btn-lg" href="#">ADMINISTRAR PÁGINA</a>
+					<a class="btn btn-info btn-lg" href="#">MIS PEDIDOS</a>
 				</div>
 			</div>
 		</div>
@@ -94,8 +96,7 @@
 		%>
 	</div>
 	<!-- Footer -->
-	<footer
-		class="page-footer font-small unique-color-dark pt-4 ">
+	<footer class="page-footer font-small unique-color-dark pt-4 ">
 
 		<!-- Footer Elements -->
 		<div class="container">

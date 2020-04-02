@@ -139,8 +139,9 @@ public class Principal extends HttpServlet {
 				String passwordp = request.getParameter("passwordp");
 
 				String imagen = "FotoPorDefecto";
+				String nif = "NIF";
 				int direccion = 1;
-				String telefono = "TelfDef";
+				String telefono = "Telf";
 				int activado = 0;
 				int venta_online = 0;
 				// Recogemos la fecha actual
@@ -148,11 +149,12 @@ public class Principal extends HttpServlet {
 				Timestamp fecha = new Timestamp(hoy.getTime());
 				// Creamos el pojo usuario
 				Vendedor v = new Vendedor();
+				v.setNif(nif);
 				v.setNombre(nombrep);
 				v.setEmail(emailp);
 				v.setPassword(passwordp);
 				v.setFoto(imagen);
-				v.setId_direccion(direccion);
+				v.setIdDireccion(direccion);
 				v.setTelefono(telefono);
 				v.setActivado(activado);
 				v.setFecha_alta(fecha);

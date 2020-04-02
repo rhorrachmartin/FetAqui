@@ -101,21 +101,31 @@
 	
 	<select id="getVendedor" resultType="Vendedor">
 		select
-		id_vendedor,
-		vendedor.nombre, email,
-		telefono,foto, direccion.direccion,
-		poblacion.nombre as poblacion,venta_online
+			id_vendedor,
+			nif,
+			vendedor.nombre,
+			telefono,			 
+			email,
+			password,
+			poblacion.id_poblacion,
+			poblacion.nombre as poblacion,
+			vendedor.direccion as idDireccion,
+			direccion.direccion,
+			vendedor.foto, 
+			vendedor.activado,			
+			venta_online
 		from
-		vendedor
+			vendedor
 		inner join
-		direccion
+			direccion
 		on
-		direccion.id_direccion = vendedor.direccion
+			vendedor.direccion = direccion.id_direccion
 		inner join
-		poblacion
-		on poblacion.id_poblacion = direccion.poblacion
+			poblacion
+		on 
+			direccion.poblacion = poblacion.id_poblacion 
 		where 
-			id_vendedor = #{id_vendedor};
+			email = #{email} and password = #{password};
 	</select>
 	
 	<select id="getVendedorEmailPass" resultType="Vendedor">
@@ -239,8 +249,8 @@
 	
 	<insert id="insertarVendedor" parameterType="Vendedor" useGeneratedKeys="true"
     keyProperty="id">
-		insert into vendedor (nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
-		values (#{nombre}, #{email}, #{password}, #{foto}, #{id_direccion}, #{telefono}, 0,#{fecha_alta},#{venta_online});
+		insert into vendedor (nif,nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
+		values (#{nif},#{nombre}, #{email}, #{password}, #{foto}, #{id_direccion}, #{telefono}, #{activado},#{fecha_alta},#{venta_online});
 	</insert>
 	
 	<update id="activarVendedor" parameterType="int">
@@ -258,5 +268,34 @@
 	<select id="comprobarMailVendedor" resultType="boolean">
 		select * from vendedor where vendedor.email = #{email};
 	</select>
+	
+	<update id="updateNif">
+		update vendedor set nif = #{nif}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="updateNombre">
+		update vendedor set nombre = #{nombre}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	
+	<update id="updateTelf">
+		update vendedor set telefono = #{telefono}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="updatePassword">
+		update vendedor set password = #{password}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="updateFoto">
+		update vendedor set foto = #{foto}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="updateDireccion" parameterType="int">
+		update vendedor set direccion = (select id_direccion from direccion order by id_direccion desc limit 1) where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<delete id="bajaVendedor" parameterType="int">
+		delete from vendedor  where vendedor.id_vendedor = #{id_vendedor};
+	</delete>
 
 </mapper>
