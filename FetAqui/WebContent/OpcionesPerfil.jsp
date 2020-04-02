@@ -36,84 +36,84 @@
 
 		}
 	%>
-
-	<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-		<a class="navbar-brand" href="#">Navbar</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#collapsibleNavbar">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-			</ul>
-			<ul class="navbar-nav ml-auto nav-flex-icons">
-				<li class="nav-item"><a class="btn btn-primary btn-sm"
-					href="Perfil">PERFIL</a></li>
-				<li class="nav-item"><a class="btn btn-success btn-sm"
-					href="Logout">SALIR</a></li>
-				<%
-					if (cliente.getFoto().equals("desconocido.txt")) {
-				%>
-				<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-						<img src="img/user.png" class="rounded-circle z-depth-0"
-						alt="avatar image" height="35">
-				</a></li>
-				<%
-					} else {
-				%>
-				<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-						<img src="Imagenes/<%=cliente.getFoto()%>"
-						class="rounded-circle z-depth-0" alt="avatar image" height="35">
-				</a></li>
-				<%
-					}
-				%>
-			</ul>
-		</div>
-	</nav>
-
-
+	<div id="container" style="min-height: 60vh">
+		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+			<a class="navbar-brand" href="#">Navbar</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+				</ul>
+				<ul class="navbar-nav ml-auto nav-flex-icons">
+					<li class="nav-item"><a class="btn btn-primary btn-sm"
+						href="Perfil">PERFIL</a></li>
+					<li class="nav-item"><a class="btn btn-success btn-sm"
+						href="Logout">SALIR</a></li>
+					<%
+						if (cliente.getFoto().equals("desconocido.txt")) {
+					%>
+					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+							<img src="img/user.png" class="rounded-circle z-depth-0"
+							alt="avatar image" height="35">
+					</a></li>
+					<%
+						} else {
+					%>
+					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+							<img src="Imagenes/<%=cliente.getFoto()%>"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
+					</a></li>
+					<%
+						}
+					%>
+				</ul>
+			</div>
+		</nav>
 
 
-	<%
-		if (request.getAttribute("error") == null) {
-	%>
-	<div class="container">
-		<div class="row loginPanel">
-			<div class="lg lg-12 ">
-				<a class="btn btn-primary btn-lg" href="Perfil">ACTUALIZAR PERFIL</a> <a
-					class="btn btn-info btn-lg" href="Pedidos">PEDIDOS</a>
+
+
+		<%
+			if (request.getAttribute("error") == null) {
+		%>
+		<div class="container">
+			<div class="row loginPanel">
+				<div class="lg lg-12 ">
+					<a class="btn btn-primary btn-lg" href="Perfil">ACTUALIZAR
+						PERFIL</a> <a class="btn btn-info btn-lg" href="Pedidos">PEDIDOS</a>
+				</div>
 			</div>
 		</div>
-	</div>
-	<%
-		} else {
-			String error = (String) request.getAttribute("error");
-	%>
+		<%
+			} else {
+				String error = (String) request.getAttribute("error");
+		%>
 
 
-	<div class="container">
+		<div class="container">
 
-		<div class="row panelOpcionesPerfil">
-			<div class="lg lg-12 ">
-				<button class="btn btn-primary btn-lg" data-toggle="modal"
-					data-target="PerfilCliente">Actualizar Perfil</button>
-				<button class="btn btn-success btn-lg" data-toggle="modal"
-					data-target="Pedidos">Pedidos</button>
+			<div class="row panelOpcionesPerfil">
+				<div class="lg lg-12 ">
+					<button class="btn btn-primary btn-lg" data-toggle="modal"
+						data-target="PerfilCliente">Actualizar Perfil</button>
+					<button class="btn btn-success btn-lg" data-toggle="modal"
+						data-target="Pedidos">Pedidos</button>
+				</div>
 			</div>
 		</div>
+
+		<%
+			}
+		%>
 	</div>
-
-	<%
-		}
-	%>
-
 	<!-- Footer -->
 	<footer
-		class="page-footer font-small unique-color-dark pt-4 fixed-bottom">
+		class="page-footer font-small unique-color-dark pt-4 ">
 
 		<!-- Footer Elements -->
 		<div class="container">

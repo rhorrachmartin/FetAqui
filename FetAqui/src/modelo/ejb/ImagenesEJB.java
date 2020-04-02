@@ -46,14 +46,24 @@ public class ImagenesEJB {
 			uploadDir.mkdir();
 		}
 		//Obtenemos el nombre de la imagen
-		ArrayList<String> fileName = new ArrayList<String>();
-		for (Part part : request.getParts()) {
-			fileName.add(getFileName(part));
+//		ArrayList<String> fileName = new ArrayList<String>();
+		String fileName = "";
+		
+		ArrayList<Part> parts = new ArrayList<>();
+		parts = (ArrayList<Part>) request.getParts();
+		fileName = parts.get(0).toString();
+		parts.get(0).write(uploadPath + File.separator + fileName);
+		
+//		for (Part part : request.getParts()) {
+//			fileName.add(getFileName(part));
+//			fileName = getFileName(part);
 			//Guardamos el archivo en disco
-			part.write(uploadPath + File.separator + fileName);
-		}
+//			part.write(uploadPath + File.separator + fileName);
+//		}
+		
+		System.out.println("imagenesEJB: " + fileName);
 		//Devolvemos el nombre de la imagen
-		return fileName.get(0);
+		return fileName;
 		
 	}
 	/**

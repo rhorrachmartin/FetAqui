@@ -72,7 +72,8 @@ public class ActualizarPerfilCliente extends HttpServlet {
 	LoggersEJB logger;
 
 	static final String PERFIL_CLIENTE_JSP = "/PerfilCliente.jsp";
-
+	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
@@ -89,7 +90,8 @@ public class ActualizarPerfilCliente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8");
+		
+		response.setContentType(CONTENT_TYPE);
 
 		// Creamos el RequestDispatcher por defecto hacia Registro.jsp
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(PERFIL_CLIENTE_JSP);
@@ -126,7 +128,12 @@ public class ActualizarPerfilCliente extends HttpServlet {
 					}
 					
 					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
+					
+					
+					request.getSession().setAttribute("cliente", clienteActualizado);
+					
 					poblaciones = poblacionEJB.getPoblaciones();
+					
 					request.setAttribute("poblaciones", poblaciones);
 					request.setAttribute("cliente", clienteActualizado);
 					rs.forward(request, response);

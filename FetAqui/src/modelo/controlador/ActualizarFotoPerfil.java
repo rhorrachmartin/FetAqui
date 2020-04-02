@@ -59,8 +59,12 @@ public class ActualizarFotoPerfil extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		if (session == null) {
-			response.sendRedirect("Principal");
+		try {
+			if (session == null) {
+				response.sendRedirect("Principal");
+			}
+		} catch (Exception e) {
+			e.getMessage();
 		}
 	}
 
@@ -86,24 +90,28 @@ public class ActualizarFotoPerfil extends HttpServlet {
 		Cliente clienteExiste = null;
 		String password = request.getParameter("password");
 		ArrayList<Poblacion> poblaciones = null;
-		try {
-			String foto = imagenesEJB.guardarImagen(request, contexto);
-			if (foto == null) {
-				foto = "FotoPorDefecto";
-			}
-			
-			if (cliente.getNombre() != null) {
-				clienteExiste = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
 
-				if (clienteExiste.getPassword().equals(password)) {
+		if (cliente.getNombre() != null) {
+			clienteExiste = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
+
+			if (clienteExiste.getPassword().equals(password)) {
+
+				try {
+					String foto = imagenesEJB.guardarImagen(request, contexto);
 					clienteEJB.updateFoto(foto, clienteExiste.getId_cliente());
 
 					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
+					request.getSession().setAttribute("cliente", clienteActualizado);
 					poblaciones = poblacionEJB.getPoblaciones();
 					request.setAttribute("poblaciones", poblaciones);
 					request.setAttribute("cliente", clienteActualizado);
 					rs.forward(request, response);
-				} else {
+				} catch (Exception e) {
+					e.getMessage();
+				}
+
+			} else {
+				try {
 					String error = "Contraseña incorrecta";
 					Cliente cliente3 = (Cliente) session.getAttribute("cliente");
 					poblaciones = poblacionEJB.getPoblaciones();
@@ -111,13 +119,17 @@ public class ActualizarFotoPerfil extends HttpServlet {
 					request.setAttribute("cliente", cliente3);
 					request.setAttribute("error", error);
 					rs.forward(request, response);
+				} catch (Exception e) {
+					e.getMessage();
 				}
-
-			} else {
-				response.sendRedirect("Principal");
 			}
-		} catch (Exception e) {
-			e.getMessage();
+
+		} else {
+			try {
+				response.sendRedirect("Principal");
+			} catch (Exception e) {
+				e.getMessage();
+			}
 		}
 
 	}

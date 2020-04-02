@@ -86,6 +86,7 @@ public class ActualizarPassword extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		response.setContentType(CONTENT_TYPE);
 
 		// Creamos el RequestDispatcher por defecto hacia Registro.jsp
@@ -110,7 +111,9 @@ public class ActualizarPassword extends HttpServlet {
 					
 					clienteEJB.updatePassword(passNuevo2, clienteExiste.getId_cliente());
 					
-					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
+					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), passNuevo2);
+					
+					request.getSession().setAttribute("cliente", clienteActualizado);
 					
 					poblaciones = poblacionEJB.getPoblaciones();
 					
