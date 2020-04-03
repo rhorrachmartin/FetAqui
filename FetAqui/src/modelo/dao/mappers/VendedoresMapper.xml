@@ -278,7 +278,7 @@
 	</update>
 	
 	
-	<update id="updateTelf">
+	<update id="updateTelefono">
 		update vendedor set telefono = #{telefono}  where vendedor.id_vendedor = #{id_vendedor};
 	</update>
 	

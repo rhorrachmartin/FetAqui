@@ -37,25 +37,25 @@ public class Principal extends HttpServlet {
 	 */
 	@EJB
 	VendedorEJB vendedorEJB;
-	
+
 	/**
 	 * EJB para trabajar con Clientes
 	 */
 	@EJB
 	ClienteEJB clienteEJB;
-	
+
 	/**
 	 * EJB para trabajar con sesiones de vendedor
 	 */
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
-	
+
 	/**
 	 * EJB para trabajar con sesiones de cliente
 	 */
 	@EJB
 	SesionClienteEJB sesionClienteEJB;
-	
+
 	/**
 	 * EJB para tratar las imágenes
 	 */
@@ -66,7 +66,7 @@ public class Principal extends HttpServlet {
 	 */
 	@EJB
 	CodigoVendedorEJB codigoVendedorEJB;
-	
+
 	/**
 	 * EJB para tratar los códigos de activación
 	 */
@@ -82,6 +82,7 @@ public class Principal extends HttpServlet {
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String HOME_JSP = "/Home.jsp";
 	static final String HOME_LOGEADO_JSP = "/HomeLogeado.jsp";
+	static final String HOME_LOGEADO_VENDEDOR_JSP = "/HomeLogeadoVendedor.jsp";
 
 	/**
 	 * Método doGet para mostrar el formulario de registro
@@ -102,15 +103,21 @@ public class Principal extends HttpServlet {
 		// Intentamos obtener el usuario de la sesión
 		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
 		Cliente c = sesionClienteEJB.clienteLogeado(session);
-		
-		request.setAttribute("v", v);
-		request.setAttribute("c", c);
+
+		request.setAttribute("vendedor", v);
+		request.setAttribute("cliente", c);
 		// Si hay sesión
 		if (v != null || c != null) {
 			// Ya está logeado, lo redirigimos a la principal
 			try {
-				rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
-				rs.forward(request, response);
+
+				if (c != null) {
+					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
+					rs.forward(request, response);
+				} else {
+					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_VENDEDOR_JSP);
+					rs.forward(request, response);
+				}
 			} catch (Exception e) {
 				logger.setErrorLogger(e.getMessage());
 			}
@@ -132,7 +139,8 @@ public class Principal extends HttpServlet {
 
 		try {
 
-			if (request.getParameter("nombrep") != null && request.getParameter("emailp") != null && request.getParameter("passwordp") != null) {
+			if (request.getParameter("nombrep") != null && request.getParameter("emailp") != null
+					&& request.getParameter("passwordp") != null) {
 				// Recogemos los parámetros necesarios
 				String nombrep = request.getParameter("nombrep");
 				String emailp = request.getParameter("emailp");
@@ -164,7 +172,7 @@ public class Principal extends HttpServlet {
 
 				if (vendedorEJB.getVendedorEmail(v.getEmail()) != null || clienteEJB.getClienteEmail(emailp) != null) {
 					// Si ya existe mostramos el error
-					
+
 					response.sendRedirect("Principal?error=Correo ya existente");
 
 				} else {
@@ -195,7 +203,7 @@ public class Principal extends HttpServlet {
 					response.sendRedirect("Mail?email=" + emailp + "&codigo=" + codigo + "");
 				}
 
-			}else {
+			} else {
 				// Recogemos los parámetros necesarios
 				String nombrec = request.getParameter("nombrec");
 				String emailc = request.getParameter("emailc");
@@ -217,9 +225,9 @@ public class Principal extends HttpServlet {
 				// Comprobamos si el correo ya existe en la BD
 				// No vamos a permitir que haya dos usuarios con el mismo correo
 
-				if (clienteEJB.getClienteEmail(emailc)!= null || vendedorEJB.getVendedorEmail(emailc) != null) {
+				if (clienteEJB.getClienteEmail(emailc) != null || vendedorEJB.getVendedorEmail(emailc) != null) {
 					// Si ya existe mostramos el error
-					
+
 					response.sendRedirect("Principal?error=Correo ya existente");
 
 				} else {
@@ -228,13 +236,13 @@ public class Principal extends HttpServlet {
 					clienteEJB.insertarCliente(c);
 					// Recogemos el usuario insertado en BD
 					Cliente cl = clienteEJB.getClienteEmail(emailc);
-					
+
 					// Generamos el código de activación
 					int codigo = codigoClienteEJB.generarCodigoCliente();
 
 					// Comprobamos si el código generado existe en BD
 					boolean existe = codigoClienteEJB.existeCodigo(codigo);
-					
+
 					// Siempre que exista el codigo sumamos uno al mismo
 					while (existe) {
 						codigo++;
@@ -248,8 +256,7 @@ public class Principal extends HttpServlet {
 
 					// Insertamos el código en BD
 					codigoClienteEJB.insertCodigo(cod);
-					
-					
+
 					// Reenviamos la información al servlet de enviar mail para enviar el codigo al
 					// user
 					response.sendRedirect("Mail?email=" + emailc + "&codigo=" + codigo + "");

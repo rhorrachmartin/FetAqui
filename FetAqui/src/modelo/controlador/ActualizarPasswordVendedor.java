@@ -13,24 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.ejb.ClienteEJB;
-import modelo.ejb.CodigoClienteEJB;
-import modelo.ejb.CodigoVendedorEJB;
 import modelo.ejb.DireccionEJB;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
 import modelo.ejb.SesionVendedorEJB;
 import modelo.ejb.VendedorEJB;
-import modelo.pojo.Direccion;
 import modelo.pojo.Poblacion;
 import modelo.pojo.Vendedor;
 
 /**
  * Servlet implementation class ActualizarPerfilCliente
  */
-@WebServlet("/ActualizarPerfilVendedor")
+@WebServlet("/ActualizarPasswordVendedor")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
-public class ActualizarPerfilVendedor extends HttpServlet {
+public class ActualizarPasswordVendedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -38,26 +34,11 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 	 */
 	@EJB
 	VendedorEJB vendedorEJB;
-
-	@EJB
-	ClienteEJB clienteEJB;
 	/**
 	 * EJB para trabajar con sesiones
 	 */
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
-
-	/**
-	 * EJB para trabajar con los codigos de activación de vendedores
-	 */
-	@EJB
-	CodigoVendedorEJB codigoVendedorEJB;
-
-	/**
-	 * EJB para trabajar con los codigos de activacion de clientes
-	 */
-	@EJB
-	CodigoClienteEJB codigoClienteEJB;
 
 	@EJB
 	DireccionEJB direccionEJB;
@@ -84,10 +65,6 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -101,42 +78,32 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 
 		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 		Vendedor vendedorExiste = null;
-		String nif = request.getParameter("nif");
-		String nombre = request.getParameter("nombre");
-		String telefono = request.getParameter("telefono");
 		String passAntiguo = request.getParameter("passAntiguo");
-		String direccion = request.getParameter("direccion");
-
-		Direccion dir = new Direccion();
+		String passNuevo1 = request.getParameter("passNuevo1");
+		String passNuevo2 = request.getParameter("passNuevo2");
 		ArrayList<Poblacion> poblaciones = null;
 		try {
-			Integer id_poblacion = Integer.valueOf(request.getParameter("poblacion"));
+
 			if (vendedor.getNombre() != null) {
 				vendedorExiste = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
-				if (vendedorExiste.getPassword().equals(passAntiguo)) {
-					vendedorEJB.updateTelefono(telefono, vendedorExiste.getId_vendedor());
-					vendedorEJB.updateNombre(nombre, vendedorExiste.getId_vendedor());
-					vendedorEJB.updateNif(nif, vendedorExiste.getId_vendedor());
 
-					if (!vendedorExiste.getDireccion().equals(direccion)
-							|| vendedorExiste.getIdPoblacion() != id_poblacion) {
-						dir.setDireccion(direccion);
-						dir.setId_poblacion(id_poblacion);
-						direccionEJB.insertarDireccion(dir);
-						vendedorEJB.updateDireccion(vendedorExiste.getId_vendedor());
-					}
+				if (vendedorExiste.getPassword().equals(passAntiguo) && passNuevo1.equals(passNuevo2)) {
 
-					Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
+					vendedorEJB.updatePassword(passNuevo2, vendedorExiste.getId_vendedor());
+
+					Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), passNuevo2);
 
 					request.getSession().setAttribute("vendedor", vendedorActualizado);
 
 					poblaciones = poblacionEJB.getPoblaciones();
 
 					request.setAttribute("poblaciones", poblaciones);
+
 					request.setAttribute("vendedor", vendedorActualizado);
+
 					rs.forward(request, response);
 				} else {
-					String error = "Contraseña incorrecta";
+					String error = "Las contraseñas no coinciden";
 					Vendedor vendedor3 = (Vendedor) session.getAttribute("vendedor");
 					poblaciones = poblacionEJB.getPoblaciones();
 					request.setAttribute("poblaciones", poblaciones);

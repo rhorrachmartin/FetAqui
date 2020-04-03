@@ -48,7 +48,7 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="Perfil">PERFIL</a></li>
+						href="OpcionesPerfilVendedor.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
 						href="Logout">SALIR</a></li>
 					<%
@@ -61,7 +61,7 @@
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfilVendedor.jsp">
 							<img src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
@@ -72,7 +72,7 @@
 			</div>
 		</nav>
 
-		<div class="container">
+		<div class="container" id="botonesPerfil">
 
 			<div class="row">
 
@@ -122,7 +122,7 @@
 						<h5 class="mt-1 mb-2"><%=vendedor.getNombre()%></h5>
 
 						<div class="md-form ml-0 mr-0">
-							<form action="ActualizarFotoPerfil" method="post"
+							<form action="ActualizarFotoPerfilVendedor" method="post"
 								enctype='multipart/form-data'>
 								<div class="input-group">
 									<div class="custom-file">
@@ -197,7 +197,7 @@
 						</button>
 					</div>
 					<div class="modal-body mx-3">
-						<form action="ActualizarPassword" method="post">
+						<form action="ActualizarPasswordVendedor" method="post">
 							<div class="form-group">
 								<label for="passAntiguo">Password actual</label> <input
 									type="password" id="passAntiguo" name="passAntiguo"
@@ -305,7 +305,7 @@
 								
 								<div class="form-group">
 									<label for="nif">NIF</label> <input type="text"
-										id="nif" name="nombre" class="form-control"
+										id="nif" name="nif" class="form-control"
 										aria-describedby="nombre" value=<%=vendedor.getNif()%>
 										required>
 								</div>

@@ -72,7 +72,7 @@
 			</div>
 		</nav>
 
-		<div class="container">
+		<div class="container" id="botonesPerfil">
 
 			<div class="row">
 
