@@ -257,7 +257,7 @@
 		update vendedor set activado = 1  where vendedor.id_vendedor = #{id_vendedor};
 	</update>
 	
-	<update id="activarVentaOnline" parameterType="Vendedor">
+	<update id="activarVentaOnline" parameterType="int">
 		update vendedor set venta_online = 1  where vendedor.id_vendedor = #{id_vendedor};
 	</update>
 	

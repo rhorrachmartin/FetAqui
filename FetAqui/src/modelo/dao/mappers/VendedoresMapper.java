@@ -108,14 +108,14 @@ public interface VendedoresMapper {
 	 * 
 	 * @param v Recibe un pojo vendedor
 	 */
-	public void activarVentaOnline(Vendedor v);
+	public void activarVentaOnline(Integer id_vendedor);
 
 	/**
 	 * Método para desactivar venta onlinde un vendedor
 	 * 
 	 * @param v Recibe un pojo vendedor
 	 */
-	public void desactivarVentaOnline(Vendedor v);
+	public void desactivarVentaOnline(Integer id_vendedor);
 	
 	public void updateNif(@Param("nif") String nif, @Param("id_vendedor") Integer id_vendedor);
 

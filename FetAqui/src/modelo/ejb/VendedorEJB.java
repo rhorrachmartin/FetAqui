@@ -38,6 +38,19 @@ public class VendedorEJB {
 		vendedorDAO.activarVendedor(id_vendedor);
 	}
 	
+	public void activarVentaOnline(Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		
+		vendedorDAO.activarVentaOnline(id_vendedor);
+	}
+	
+	public void desactivarVentaOnline(Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		
+		vendedorDAO.desactivarVentaOnline(id_vendedor);
+	}
+	
+	
 	public Vendedor getVendedor(String email, String password) {
 		VendedorDAO vendedorDAO = new VendedorDAO();
 		return vendedorDAO.getVendedor(email, password);

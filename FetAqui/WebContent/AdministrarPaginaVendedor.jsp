@@ -1,3 +1,4 @@
+<%@page import="modelo.controlador.VentasOnline"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
@@ -31,9 +32,11 @@
 	<%
 		HttpSession session = request.getSession(false);
 		Vendedor vendedor = null;
+		int ventaOnline = 0;
 
 		if (session.getAttribute("vendedor") != null) {
 			vendedor = (Vendedor) session.getAttribute("vendedor");
+			ventaOnline = vendedor.getVenta_online();
 
 		}
 	%>
@@ -58,15 +61,16 @@
 					<%
 						if (vendedor.getFoto().equals("desconocido.txt")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfilVendedor.jsp">
-							<img src="img/user.png" class="rounded-circle z-depth-0"
-							alt="avatar image" height="35">
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfilVendedor.jsp">
-							<img src="Imagenes/<%=vendedor.getFoto()%>"
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img
+							src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
@@ -82,17 +86,53 @@
 		<%
 			if (request.getAttribute("error") == null) {
 		%>
+		<%
+			if (ventaOnline == 1) {
+		%>
 		<div class="container">
 			<div class="row loginPanel">
 				<div class="lg lg-12 ">
-					<a class="btn btn-primary btn-lg" href="Perfil">DATOS PERSONALES</a> 
-					<a class="btn btn-info btn-lg" href="AdministrarPaginaVendedor.jsp">ADMINISTRAR PÁGINA</a>
-					<a class="btn btn-info btn-lg" href="#">MIS PEDIDOS</a>
+					<a class="btn btn-primary btn-lg" href="Perfil">AÑADIR
+						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="#">MODIFICAR
+						PRODUCTOS</a>
+					<div class="custom-control custom-switch">
+						<form id="ventaOnline" action="VentasOnline" method="post">
+							<input type="checkbox" class="custom-control-input"
+								id="customSwitch1" name="ventaOnline" checked> <label
+								id="labelCheckBox" class="custom-control-label"
+								for="customSwitch1">Ventas online activadas</label>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
 		<%
-			} 
+			} else {
+		%>
+		<div class="container">
+			<div class="row loginPanel">
+				<div class="lg lg-12 ">
+					<a class="btn btn-primary btn-lg" href="Perfil">AÑADIR
+						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="#">MODIFICAR
+						PRODUCTOS</a>
+					<div class="custom-control custom-switch">
+						<form id="ventaOnline" action="VentasOnline" method="post">
+							<input type="checkbox" class="custom-control-input"
+								id="customSwitch1" name="ventaOnline"> <label
+								id="labelCheckBox" class="custom-control-label"
+								for="customSwitch1">Ventas online desactivadas</label>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<%
+			}
+		%>
+		<%
+			}
 		%>
 	</div>
 	<!-- Footer -->
@@ -123,6 +163,20 @@
 
 	</footer>
 	<!-- Footer -->
+	<script type="text/javascript">
+		function submit() {
+
+			$('#ventaOnline').submit();
+
+		}
+
+		$(function() {
+			$('#customSwitch1').on('change', function() {
+				submit();
+			});
+		});
+	</script>
+
 
 </body>
 </html>

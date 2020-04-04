@@ -60,6 +60,38 @@ public class VendedorDAO {
 			sqlSession.close();
 		}
 	}
+	
+	public void activarVentaOnline(Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.activarVentaOnline(id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public void desactivarVentaOnline(Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			vendedoresMapper.desactivarVentaOnline(id_vendedor);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 	public Vendedor getVendedorEmail(String email) {
 		// Abrimos la sesión
