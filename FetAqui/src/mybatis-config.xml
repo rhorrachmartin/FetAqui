@@ -30,6 +30,8 @@
 		<mapper resource='modelo/dao/mappers/ClientesMapper.xml' />
 		<mapper resource='modelo/dao/mappers/DireccionesMapper.xml' />
 		<mapper resource='modelo/dao/mappers/PoblacionesMapper.xml' />
+		<mapper resource='modelo/dao/mappers/CategoriasMapper.xml' />
+		<mapper resource='modelo/dao/mappers/FormatosMapper.xml' />
 		<mapper resource='modelo/dao/mappers/ProductosMapper.xml' />
 		<mapper resource='modelo/dao/mappers/VendedoresMapper.xml' />
 		<mapper resource='modelo/dao/mappers/CodigosActivacionVendedorMapper.xml' />

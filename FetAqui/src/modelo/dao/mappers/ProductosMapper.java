@@ -20,5 +20,8 @@ public interface ProductosMapper {
 	 * @return ArrayList<Producto> 
 	 */
 	public ArrayList<Producto> getProductosBusqueda(@Param("busqueda") String busqueda);
+	
+	
+	public void insertarProducto(Producto producto);
 
 }

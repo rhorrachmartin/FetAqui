@@ -48,7 +48,7 @@ public class VentasOnline extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		if (session == null) {
+		if (session == null && session.getAttribute("vendedor") == null && session.getAttribute("cliente") == null) {
 			response.sendRedirect("Principal");
 		}
 	}
@@ -69,31 +69,42 @@ public class VentasOnline extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+		
+		Vendedor vendedorActualizado = null;
+		
 		ArrayList<Poblacion> poblaciones = null;
+		
 		try {
-			Boolean ventaOnline = Boolean.parseBoolean(request.getParameter("ventaOnline"));
-			System.out.println(ventaOnline);
+			
 			if (vendedor.getNombre() != null) {
-				
-				if (!ventaOnline) {
+
+				if (vendedor.getVenta_online() == 0) {
+					
 					vendedorEJB.activarVentaOnline(vendedor.getId_vendedor());
 
-					Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
+					vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
 
 					request.getSession().setAttribute("vendedor", vendedorActualizado);
 
 					poblaciones = poblacionEJB.getPoblaciones();
 
 					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("vendedor", vendedorActualizado);
+					
+					request.getSession().setAttribute("vendedor", vendedorActualizado);
+					
 					rs.forward(request, response);
+
 				} else {
 					vendedorEJB.desactivarVentaOnline(vendedor.getId_vendedor());
 
-					Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
+					vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
+					
 					poblaciones = poblacionEJB.getPoblaciones();
+					
 					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("vendedor", vendedorActualizado);
+					
+					request.getSession().setAttribute("vendedor", vendedorActualizado);
+					
 					rs.forward(request, response);
 				}
 

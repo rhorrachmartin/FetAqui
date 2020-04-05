@@ -31,6 +31,13 @@
 		on formato.id_formato = producto.formato
 		where producto.nombre like #{busqueda};
 	</select>
+	
+	<insert id="insertarProducto" parameterType="Producto"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into producto (nombre,descripcion,foto,precio,vendedor,stock, categoria,formato,venta_online)
+		values (#{nombre}, #{descripcion}, #{foto}, #{precio}, #{id_vendedor}, #{stock}, #{id_categoria}
+		, #{id_formato}, #{venta_online});
+	</insert>
 
 
 </mapper>

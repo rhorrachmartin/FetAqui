@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.FormatosMapper'>
+
+	<resultMap type='Formato' id='getFormatos'>
+		<result property='id' column='id_formato' />
+		<result property='nombre' column='nombre' />
+	</resultMap>
+
+
+	<select id="getFormatos" resultMap="getFormatos">
+		select * from formato;
+	</select>
+
+	<insert id="insertarFormato" parameterType="Formato"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into formato (nombre)
+		values (#{nombre});
+	</insert>
+
+
+</mapper>

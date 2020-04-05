@@ -135,6 +135,17 @@ public class Vendedor {
 		this.poblacion = poblacion;
 	}
 
+	@Override
+	public String toString() {
+		return "Vendedor [id_vendedor=" + id_vendedor + ", nif=" + nif + ", nombre=" + nombre + ", email=" + email
+				+ ", password=" + password + ", foto=" + foto + ", idDireccion=" + idDireccion + ", telefono="
+				+ telefono + ", activado=" + activado + ", fecha_alta=" + fecha_alta + ", venta_online=" + venta_online
+				+ ", direccion=" + direccion + ", idPoblacion=" + idPoblacion + ", poblacion=" + poblacion + "]";
+	}
+	
+	
+	
+
 	
 
 }

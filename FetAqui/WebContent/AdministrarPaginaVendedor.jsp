@@ -92,7 +92,7 @@
 		<div class="container">
 			<div class="row loginPanel">
 				<div class="lg lg-12 ">
-					<a class="btn btn-primary btn-lg" href="Perfil">AÑADIR
+					<a class="btn btn-primary btn-lg" href="AñadirProducto">AÑADIR
 						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="#">MODIFICAR
 						PRODUCTOS</a>
 					<div class="custom-control custom-switch">
@@ -112,7 +112,7 @@
 		<div class="container">
 			<div class="row loginPanel">
 				<div class="lg lg-12 ">
-					<a class="btn btn-primary btn-lg" href="Perfil">AÑADIR
+					<a class="btn btn-primary btn-lg" href="AñadirProducto">AÑADIR
 						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="#">MODIFICAR
 						PRODUCTOS</a>
 					<div class="custom-control custom-switch">
