@@ -93,7 +93,7 @@
 			<div class="row loginPanel">
 				<div class="lg lg-12 ">
 					<a class="btn btn-primary btn-lg" href="AñadirProducto">AÑADIR
-						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="#">MODIFICAR
+						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="ObtenerProductosVendedor">MODIFICAR
 						PRODUCTOS</a>
 					<div class="custom-control custom-switch">
 						<form id="ventaOnline" action="VentasOnline" method="post">
@@ -113,7 +113,7 @@
 			<div class="row loginPanel">
 				<div class="lg lg-12 ">
 					<a class="btn btn-primary btn-lg" href="AñadirProducto">AÑADIR
-						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="#">MODIFICAR
+						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="ObtenerProductosVendedor">MODIFICAR
 						PRODUCTOS</a>
 					<div class="custom-control custom-switch">
 						<form id="ventaOnline" action="VentasOnline" method="post">

@@ -35,19 +35,36 @@ public class ProductoDAO {
 	public void insertarProducto(Producto producto) {
 		// Abrimos la sesión
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
-		
+
 		try {
 			// Obtenemos el mapper
 			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
-			
+
 			productosMapper.insertarProducto(producto);
-			
+
 			sqlSession.commit();
 
 		} finally {
 			// Cerramos sesión
 			sqlSession.close();
 		}
+	}
+
+	public ArrayList<Producto> getProductosVendedor(Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+			// Devolvemos el arraylist de poblacion
+			return productosMapper.getProductosVendedor(id_vendedor);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+
 	}
 
 }

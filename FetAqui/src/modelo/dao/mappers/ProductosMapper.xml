@@ -38,6 +38,22 @@
 		values (#{nombre}, #{descripcion}, #{foto}, #{precio}, #{id_vendedor}, #{stock}, #{id_categoria}
 		, #{id_formato}, #{venta_online});
 	</insert>
+	
+	<resultMap type='Producto' id='getProductosVendedor'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='id_categoria' column='categoria' />
+		<result property='id_formato' column='formato' />
+		<result property='venta_online' column='venta_online' />
+		<result property='stock' column='stock' />
+	</resultMap>
+	
+	<select id="getProductosVendedor" parameterType="int" resultMap="getProductosVendedor">
+		select * from producto where producto.vendedor = #{id_vendedor};
+	</select>
 
 
 </mapper>

@@ -23,5 +23,8 @@ public interface ProductosMapper {
 	
 	
 	public void insertarProducto(Producto producto);
+	
+	
+	public ArrayList<Producto> getProductosVendedor(Integer id_vendedor);
 
 }
