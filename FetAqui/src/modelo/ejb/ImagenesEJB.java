@@ -9,8 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+
 /**
  * Clase EJB encargada de guardar las imágenes de los usuarios
+ * 
  * @author ramon
  *
  */
@@ -22,9 +24,10 @@ public class ImagenesEJB {
 	 * Directorio donde guardar las imágenes
 	 */
 	private static final String UPLOAD_DIRECTORY = "Imagenes";
-	
+
 	/**
-	 * 	Método para guardar la imagen
+	 * Método para guardar la imagen
+	 * 
 	 * @param request
 	 * @param contexto
 	 * @return
@@ -33,34 +36,41 @@ public class ImagenesEJB {
 	 */
 	public String guardarImagen(HttpServletRequest request, ServletContext contexto)
 			throws IOException, ServletException {
-		//Ruta donde guargar la imagen
+		// Ruta donde guargar la imagen
 		String uploadPath = contexto.getRealPath("") + File.separator + UPLOAD_DIRECTORY;
 		File uploadDir = new File(uploadPath);
-		
-		//Si el directorio no existe lo creamos
+
+		// Si el directorio no existe lo creamos
 		if (!uploadDir.exists()) {
 			uploadDir.mkdir();
 		}
-		//Obtenemos el nombre de la imagen
+		// Obtenemos el nombre de la imagen
 		String fileName = null;
 		int contador = 0;
 		for (Part part : request.getParts()) {
-			contador ++;
-			fileName = getFileName(part);
-			System.out.println("Parte :" + contador + ", fichero: " + fileName);
-			//Guardamos el archivo en disco
-			part.write(uploadPath + File.separator + fileName);
+
+			if (!getFileName(part).equals("desconocido.txt") || getFileName(part) == null) {
+				contador++;
+				System.out.println("Parte :" + contador + ", fichero: " + fileName);
+				fileName = getFileName(part);
+				part.write(uploadPath + File.separator + fileName);
+			}
+
+			// Guardamos el archivo en disco
+
 		}
-		
-		//Devolvemos el nombre de la imagen
+
+		// Devolvemos el nombre de la imagen
 		return fileName;
 	}
+
 	/**
 	 * Método para obtener el nombre de la imagen.
+	 * 
 	 * @param part
 	 * @return
 	 */
-	private  String getFileName(Part part) {
+	private String getFileName(Part part) {
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename"))
 				return content.substring(content.indexOf('=') + 2, content.length() - 1);

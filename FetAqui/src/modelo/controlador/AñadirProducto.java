@@ -60,7 +60,7 @@ public class AñadirProducto extends HttpServlet {
 	LoggersEJB logger;
 
 	@EJB
-	ImagenesEJB2 imagenesEJB;
+	ImagenesEJB imagenesEJB;
 
 	static final String AÑADIR_PRODUCTOS_JSP = "/AñadirProductos.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";

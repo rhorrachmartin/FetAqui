@@ -61,8 +61,9 @@
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfilVendedor.jsp">
-							<img src="Imagenes/<%=vendedor.getFoto()%>"
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img
+							src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
@@ -302,12 +303,11 @@
 
 							<form action="ActualizarPerfilVendedor" method="post"
 								style="color: #757575;">
-								
+
 								<div class="form-group">
-									<label for="nif">NIF</label> <input type="text"
-										id="nif" name="nif" class="form-control"
-										aria-describedby="nombre" value=<%=vendedor.getNif()%>
-										required>
+									<label for="nif">NIF</label> <input type="text" id="nif"
+										name="nif" class="form-control" aria-describedby="nombre"
+										value=<%=vendedor.getNif()%> required>
 								</div>
 
 								<div class="form-group">

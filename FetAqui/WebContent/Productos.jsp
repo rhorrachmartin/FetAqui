@@ -71,7 +71,9 @@
 						} else {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0"
-						href="OpcionesPerfilVendedor.jsp"> <img	src="Imagenes/<%=vendedor.getFoto()%>"	class="rounded-circle z-depth-0" alt="avatar image" height="35">
+						href="OpcionesPerfilVendedor.jsp"> <img
+							src="Imagenes/<%=vendedor.getFoto()%>"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
 						}
@@ -105,49 +107,50 @@
 					<div class="col col-lg12" style="height: 50px"></div>
 				</div>
 			</div>
+			<div class="container">
+				<!-- Card deck -->
+				<div class="row row-cols-1 row-cols-md-2">
 
-			<!-- Card deck -->
-			<div class="card-deck">
+					<%
+						for (Producto pro : productos) {
+					%>
 
-				<%
-					for (Producto pro : productos) {
-				%>
+					<!-- Card -->
+					<div class="card m-2">
 
-				<!-- Card -->
-				<div class="card mb-4">
-
-					<!--Card image-->
-					<div class="view overlay">
-						<img class="card-img-top" src="Imagenes/<%=pro.getFoto()%>"	alt="Card image cap" height="35">
+						<!--Card image-->
+						<div class="view overlay">
+							<img class="card-img-top" src="Imagenes/<%=pro.getFoto()%>"
+								alt="Card image cap">
 							<div class="mask rgba-white-slight"></div>
+						</div>
+
+						<!--Card content-->
+						<div class="card-body">
+
+							<!--Title-->
+							<h4 class="card-title"><%=pro.getNombre()%></h4>
+							<!--Text-->
+							<p class="card-text"><%=pro.getDescripcion()%></p>
+							<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+							<button type="button" class="btn btn-light-blue btn-md">Read
+								more</button>
+
+						</div>
+
 					</div>
+					<!-- Card -->
 
-					<!--Card content-->
-					<div class="card-body">
+					<%
+						}
+					%>
 
-						<!--Title-->
-						<h4 class="card-title"><%=pro.getNombre() %></h4>
-						<!--Text-->
-						<p class="card-text"><%= pro.getDescripcion() %></p>
-						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-						<button type="button" class="btn btn-light-blue btn-md">Read
-							more</button>
 
-					</div>
+
 
 				</div>
-				<!-- Card -->
-
-				<%
-					}
-				%>
-
-
-
-
+				<!-- Card deck -->
 			</div>
-			<!-- Card deck -->
-
 
 		</div>
 		<!-- Footer -->
