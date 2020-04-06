@@ -119,10 +119,17 @@ public class AñadirProducto extends HttpServlet {
 			Integer categoria = Integer.valueOf(request.getParameter("categoria"));
 			String descripcion = request.getParameter("descripcion");
 			Double precio = Double.valueOf(request.getParameter("precio"));
-			String formato = request.getParameter("formato");
+			Integer formato = Integer.valueOf(request.getParameter("formato"));
+			System.out.println(formato);
 			Integer stock = Integer.valueOf(request.getParameter("stock"));
 			String foto = imagenesEJB.guardarImagen(request, contexto);
-			boolean estadoVentaOnline = Boolean.valueOf(request.getParameter("ventaOnline"));
+			
+			if(foto == null) {
+				foto = "desconocido.txt";
+			}
+			
+			boolean estadoVentaOnline = "on".equals(request.getParameter("ventaOnline")) ? true : false;
+			System.out.println(estadoVentaOnline);
 			Integer ventaOnline = 1;
 			Integer vendedorProducto = vendedor.getId_vendedor();
 			
@@ -134,7 +141,7 @@ public class AñadirProducto extends HttpServlet {
 			producto.setId_categoria(categoria);
 			producto.setDescripcion(descripcion);
 			producto.setPrecio(precio);
-			producto.setFormato(formato);
+			producto.setId_formato(formato);
 			producto.setStock(stock);
 			producto.setFoto(foto);
 			producto.setVenta_online(ventaOnline);

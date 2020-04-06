@@ -126,7 +126,7 @@
 								<div class="form-group">
 									<label for="precio">Precio </label> <input type="number"
 										id="precio" name="precio" class="form-control"
-										aria-describedby="precio" required>
+										aria-describedby="precio" step="0.01" min="0" max="10000" required>
 										<small id="ayudaVentaOnline"
 										class="form-text text-muted">Precio por formato elegido. P.E= 2€/KG</small>
 								</div>
@@ -154,7 +154,7 @@
 
 								<div class="custom-file">
 									<input type="file" class="custom-file-input" id="foto"
-										name="foto" aria-describedby="inputGroupFileAddon01" required>
+										name="foto" aria-describedby="inputGroupFileAddon01">
 									<label id="labelFoto" class="custom-file-label"
 										for="inputGroupFile01">Foto del producto</label>
 										<small id="ayudaFoto"
