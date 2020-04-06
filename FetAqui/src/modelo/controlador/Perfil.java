@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.ejb.ClienteEJB;
-import modelo.ejb.ImagenesEJB;
+import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
 import modelo.ejb.SesionClienteEJB;
@@ -63,7 +63,7 @@ public class Perfil extends HttpServlet {
 	 * EJB para tratar las imágenes
 	 */
 	@EJB
-	ImagenesEJB imagenesEJB;
+	ImagenesEJB2 imagenesEJB;
 
 	/**
 	 * EJB para trabajar con los logger

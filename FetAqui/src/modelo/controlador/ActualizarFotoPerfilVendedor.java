@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.ejb.ImagenesEJB;
+import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
 import modelo.ejb.VendedorEJB;
@@ -45,7 +45,7 @@ public class ActualizarFotoPerfilVendedor extends HttpServlet {
 	LoggersEJB logger;
 
 	@EJB
-	ImagenesEJB imagenesEJB;
+	ImagenesEJB2 imagenesEJB;
 
 	static final String PERFIL_VENDEDOR_JSP = "/PerfilVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";

@@ -2,6 +2,8 @@ package modelo.ejb;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.servlet.ServletContext;
@@ -17,7 +19,7 @@ import javax.servlet.http.Part;
 @Stateless
 @LocalBean
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
-public class ImagenesEJB {
+public class ImagenesEJB2 {
 	/**
 	 * Directorio donde guardar las imágenes
 	 */
@@ -35,6 +37,8 @@ public class ImagenesEJB {
 			throws IOException, ServletException {
 		//Ruta donde guargar la imagen
 		String uploadPath = contexto.getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+		
+		
 		File uploadDir = new File(uploadPath);
 		
 		//Si el directorio no existe lo creamos
@@ -42,18 +46,29 @@ public class ImagenesEJB {
 			uploadDir.mkdir();
 		}
 		//Obtenemos el nombre de la imagen
-		String fileName = null;
-		int contador = 0;
-		for (Part part : request.getParts()) {
-			contador ++;
-			fileName = getFileName(part);
-			System.out.println("Parte :" + contador + ", fichero: " + fileName);
-			//Guardamos el archivo en disco
-			part.write(uploadPath + File.separator + fileName);
-		}
+//		ArrayList<String> fileName = new ArrayList<String>();
+		String fileName = "";
 		
+		ArrayList<Part> parts = new ArrayList<>();
+		parts = (ArrayList<Part>) request.getParts();
+		
+		Part part = parts.get(0);
+		fileName = getFileName(part);
+		
+		System.out.println(fileName);
+		parts.get(0).write(uploadPath + File.separator + fileName);
+		
+//		for (Part part : request.getParts()) {
+//			fileName.add(getFileName(part));
+//			fileName = getFileName(part);
+			//Guardamos el archivo en disco
+//			part.write(uploadPath + File.separator + fileName);
+//		}
+		
+		System.out.println("imagenesEJB: " + fileName);
 		//Devolvemos el nombre de la imagen
 		return fileName;
+		
 	}
 	/**
 	 * Método para obtener el nombre de la imagen.

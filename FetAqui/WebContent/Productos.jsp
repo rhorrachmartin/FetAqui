@@ -118,9 +118,8 @@
 
 					<!--Card image-->
 					<div class="view overlay">
-						<img class="card-img-top" src="Imagenes/<%=pro.getFoto()%>"	alt="Card image cap" height="35"> <a href="#!">
+						<img class="card-img-top" src="Imagenes/<%=pro.getFoto()%>"	alt="Card image cap" height="35">
 							<div class="mask rgba-white-slight"></div>
-						</a>
 					</div>
 
 					<!--Card content-->

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import modelo.ejb.CategoriaEJB;
 import modelo.ejb.FormatoEJB;
 import modelo.ejb.ImagenesEJB;
+import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
 import modelo.ejb.ProductoEJB;
@@ -59,7 +60,7 @@ public class AñadirProducto extends HttpServlet {
 	LoggersEJB logger;
 
 	@EJB
-	ImagenesEJB imagenesEJB;
+	ImagenesEJB2 imagenesEJB;
 
 	static final String AÑADIR_PRODUCTOS_JSP = "/AñadirProductos.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
@@ -118,18 +119,19 @@ public class AñadirProducto extends HttpServlet {
 			String nombre = request.getParameter("nombre");
 			Integer categoria = Integer.valueOf(request.getParameter("categoria"));
 			String descripcion = request.getParameter("descripcion");
+			
+			// Si en la descripción hay tabulaciones o
+			// saltos de línea se reemplazan
+			descripcion.replace("\n", "").replace("\t", "").replace("\r", "");
+			
 			Double precio = Double.valueOf(request.getParameter("precio"));
 			Integer formato = Integer.valueOf(request.getParameter("formato"));
-			System.out.println(formato);
 			Integer stock = Integer.valueOf(request.getParameter("stock"));
 			String foto = imagenesEJB.guardarImagen(request, contexto);
 			
-			if(foto == null) {
-				foto = "desconocido.txt";
-			}
+			
 			
 			boolean estadoVentaOnline = "on".equals(request.getParameter("ventaOnline")) ? true : false;
-			System.out.println(estadoVentaOnline);
 			Integer ventaOnline = 1;
 			Integer vendedorProducto = vendedor.getId_vendedor();
 			
