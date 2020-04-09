@@ -46,6 +46,14 @@ label
 	width: 100% !important;
 }
 
+#descripcionProducto{
+	height: 120px !important;
+}
+
+.labelCheckBox{
+	width: 32% !important;
+}
+
 .alert
 {
     display: none;

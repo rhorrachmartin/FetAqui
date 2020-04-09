@@ -46,13 +46,17 @@ public class ImagenesEJB {
 		}
 		// Obtenemos el nombre de la imagen
 		String fileName = null;
-		int contador = 0;
 		for (Part part : request.getParts()) {
 
 			if (!getFileName(part).equals("desconocido.txt") || getFileName(part) == null) {
-				contador++;
-				System.out.println("Parte :" + contador + ", fichero: " + fileName);
+				
 				fileName = getFileName(part);
+				System.out.println("--> " + fileName);
+				
+				if(fileName.equals("")) {
+					fileName="producto.png";
+				}
+				
 				part.write(uploadPath + File.separator + fileName);
 			}
 

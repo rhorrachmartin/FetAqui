@@ -36,5 +36,9 @@ public class ProductoEJB {
 		ProductoDAO productoDAO = new ProductoDAO();
 		productoDAO.desactivarVentaOnline(id_producto);
 	}
+	public void borrarProducto(Integer id_producto) {
+		ProductoDAO productoDAO = new ProductoDAO();
+		productoDAO.borrarProducto(id_producto);
+	}
 
 }

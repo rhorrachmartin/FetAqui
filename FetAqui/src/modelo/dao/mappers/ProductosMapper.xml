@@ -66,6 +66,10 @@
 	<update id="desactivarVentaOnline">
 		update producto set venta_online = 0  where producto.id_producto = #{id_producto};
 	</update>
+	
+	<delete id='borrarProducto' parameterType='int'>
+		delete from producto where producto.id_producto = #{id_producto};
+	</delete>
 
 
 </mapper>

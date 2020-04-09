@@ -32,5 +32,7 @@ public interface ProductosMapper {
 	public void desactivarVentaOnline(Integer id_producto);
 	
 	public Producto getProductoPorId(Integer id_producto);
+	
+	public void borrarProducto(Integer id_producto);
 
 }

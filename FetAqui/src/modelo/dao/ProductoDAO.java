@@ -119,5 +119,23 @@ public class ProductoDAO {
 			sqlSession.close();
 		}
 	}
+	
+	public void borrarProducto(Integer id_producto) {
+		// Abrimos la sesión
+				SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+				try {
+					// Obtenemos el mapper
+					ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+
+					productosMapper.borrarProducto(id_producto);
+
+					sqlSession.commit();
+
+				} finally {
+					// Cerramos sesión
+					sqlSession.close();
+				}
+	}
 
 }

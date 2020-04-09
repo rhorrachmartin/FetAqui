@@ -120,7 +120,7 @@
 								<div class="form-group">
 									<label for="descripcion">Descripcion del producto</label>
 									<textarea rows="5" cols="25" id="descripcion"
-										name="descripcion" class="form-control"></textarea>
+										name="descripcion" class="form-control" maxlength="200"></textarea>
 								</div>
 
 								<div class="form-group">

@@ -113,133 +113,165 @@
 				<!-- Card deck -->
 				<div class="row row-cols-1 row-cols-md-3">
 
-						<%
-							for (Producto pro : productos) {
-								contadorCheckBox++;
-						%>
-						<%
-							if (pro.getVenta_online() == 1) {
-						%>
-						
-						<form class="ventaOnlineProducto" id="ventaOnlineProducto<%=pro.getId()%>"
-							action="VentaOnlineProducto" method="post">
-							<!-- Card -->
-							<div class="col mb-4">
-								<div class="card h-100">
-									<!--Card image-->
-									<div id="contenedorImagenProducto" class="view overlay zoom">
-										<img id="imagenProducto" class="img-fluid z-depth-1"
-											src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
-										<div class="mask rgba-white-slight"></div>
-									</div>
+					<%
+						for (Producto pro : productos) {
+							contadorCheckBox++;
+					%>
+					<%
+						if (pro.getVenta_online() == 1) {
+					%>
 
-									<!--Card content-->
-									<div class="card-body">
 
-										<!--Title-->
-										<h4 class="card-title"><%=pro.getNombre()%></h4>
-										<!--Text-->
-										<p class="card-text"><%=pro.getDescripcion()%></p>
-										<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-										<div class="row">
+					<!-- Card -->
+					<div class="col mb-4">
+						<div class="card h-100">
+							<!--Card image-->
+							<div id="contenedorImagenProducto" class="view overlay zoom">
+							<%if(pro.getFoto().equals("producto.png")) {%>
+								<img id="imagenProducto" class="img-fluid z-depth-1"
+									src="img/<%=pro.getFoto()%>" alt="Card image cap">
+									
+							<%}else{ %>
+								<img id="imagenProducto" class="img-fluid z-depth-1"
+									src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
+							<%} %>
+								<div class="mask rgba-white-slight"></div>
+							</div>
 
-											<div class="col col-lg-4">
-												<div class="custom-control custom-switch">
-													<input type="hidden" name="producto"
-														value="<%=pro.getId()%>"> <input type="checkbox"
-														class="custom-control-input"
-														id="customSwitch<%=contadorCheckBox%>" name="ventaOnline"
-														checked onchange="submit(<%=pro.getId()%>)"> <label
-														class="custom-control-label labelCheckBox"
-														for="customSwitch<%=contadorCheckBox%>">ON</label>
-												</div>
-											</div>
+							<!--Card content-->
+							<div class="card-body text-center">
 
-											<div class="col col-lg-4">
-												<button type="button" class="btn btn-light-blue btn-md">
-													<i class="far fa-trash-alt"></i>
-												</button>
-											</div>
+								<!--Title-->
+								<h4 class="card-title"><%=pro.getNombre()%></h4>
+								<!--Text-->
+								<p id="descripcionProducto" class="card-text"><%=pro.getDescripcion()%></p>
+								<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+								<div class="row">
 
-											<div class="col col-lg-4">
-												<button type="button" class="btn btn-light-blue btn-md">
-													<i class="far fa-edit"></i>
-												</button>
-											</div>
+									<div class="col col-lg-6">
 
+										<div class="custom-control custom-switch">
+											<form class="ventaOnlineProducto"
+												id="ventaOnlineProducto<%=pro.getId()%>"
+												action="VentaOnlineProducto" method="post">
+												<input type="hidden" name="producto"
+													value="<%=pro.getId()%>"> <input type="checkbox"
+													class="custom-control-input"
+													id="customSwitch<%=contadorCheckBox%>" name="ventaOnline"
+													checked onchange="submit(<%=pro.getId()%>)"> <label
+													class="custom-control-label labelCheckBox"
+													for="customSwitch<%=contadorCheckBox%>">ON</label>
+											</form>
 										</div>
-
 									</div>
+
+									<div class="col col-lg-6">
+										<form action="EliminarProducto" method="post">
+											<input type="hidden" name="producto" value="<%=pro.getId()%>">
+											<button type="submit" class="btn btn-light-blue btn-md">
+												<a data-toggle="tooltip" title="ELIMINAR"><i class="far fa-trash-alt"></i></a>
+											</button>
+										</form>
+									</div>
+
+									<div class="col col-lg-6">
+										<button type="button" class="btn btn-light-blue btn-md">
+											<a data-toggle="tooltip" title="EDITAR INFORMACIÓN"><i class="far fa-edit"></i></a>
+										</button>
+									</div>
+									
+									<div class="col col-lg-6">
+										<button type="button" class="btn btn-light-blue btn-md">
+											<a data-toggle="tooltip" title="CAMBIAR IMAGEN"><i class="far fa-images"></i></a>
+										</button>
+									</div>
+
 								</div>
 							</div>
-						</form>
-						<!-- Card -->
-						<%
-							} else {
-						%>
-						<form class="ventaOnlineProducto" id="ventaOnlineProducto<%=pro.getId()%>"
-							action="VentaOnlineProducto" method="post">
-							<!-- Card -->
-							<div class="col mb-4">
-								<div class="card h-100">
-									<!--Card image-->
-									<div id="contenedorImagenProducto" class="view overlay zoom">
-										<img id="imagenProducto" class="img-fluid z-depth-1"
-											src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
-										<div class="mask rgba-white-slight"></div>
-									</div>
+						</div>
+					</div>
 
-									<!--Card content-->
-									<div class="card-body">
-
-										<!--Title-->
-										<h4 class="card-title"><%=pro.getNombre()%></h4>
-										<!--Text-->
-										<p class="card-text"><%=pro.getDescripcion()%></p>
-										<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-										<div class="row">
-
-											<div class="col col-lg-4">
-
-												<div class="custom-control custom-switch">
-
-													<input type="hidden" name="producto"
-														value="<%=pro.getId()%>"> <input type="checkbox"
-														class="custom-control-input"
-														id="customSwitch<%=contadorCheckBox%>" name="ventaOnline" onchange="submit(<%=pro.getId()%>)">
-													<label class="custom-control-label labelCheckBox"
-														for="customSwitch<%=contadorCheckBox%>">OFF</label>
-
-												</div>
-											</div>
-
-											<div class="col col-lg-4">
-												<button type="button" class="btn btn-light-blue btn-md">
-													<i class="far fa-trash-alt"></i>
-												</button>
-											</div>
-
-											<div class="col col-lg-4">
-												<button type="button" class="btn btn-light-blue btn-md">
-													<i class="far fa-edit"></i>
-												</button>
-											</div>
-
-										</div>
-
-									</div>
-								</div>
+					<!-- Card -->
+					<%
+						} else {
+					%>
+					<!-- Card -->
+					<div class="col mb-4">
+						<div class="card h-100">
+							<!--Card image-->
+							<div id="contenedorImagenProducto" class="view overlay zoom">
+								<%if(pro.getFoto().equals("producto.png")) {%>
+								<img id="imagenProducto" class="img-fluid z-depth-1"
+									src="img/<%=pro.getFoto()%>" alt="Card image cap">
+									
+							<%}else{ %>
+								<img id="imagenProducto" class="img-fluid z-depth-1"
+									src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
+							<%} %>
+								<div class="mask rgba-white-slight"></div>
 							</div>
-							<!-- Card -->
-						</form>
-						<%
-							}
-						%>
 
-						<%
-							}
-						%>
-					
+							<!--Card content-->
+							<div class="card-body text-center">
+
+								<!--Title-->
+								<h4 class="card-title"><%=pro.getNombre()%></h4>
+								<!--Text-->
+								<p id="descripcionProducto" class="card-text"><%=pro.getDescripcion()%></p>
+								<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+								<div class="row">
+
+									<div class="col col-lg-6">
+										<div class="custom-control custom-switch">
+											<form class="ventaOnlineProducto"
+												id="ventaOnlineProducto<%=pro.getId()%>"
+												action="VentaOnlineProducto" method="post">
+												<input type="hidden" name="producto"
+													value="<%=pro.getId()%>"> <input type="checkbox"
+													class="custom-control-input"
+													id="customSwitch<%=contadorCheckBox%>" name="ventaOnline"
+													onchange="submit(<%=pro.getId()%>)"> <label
+													class="custom-control-label labelCheckBox"
+													for="customSwitch<%=contadorCheckBox%>">OFF</label>
+											</form>
+										</div>
+									</div>
+
+									<div class="col col-lg-6">
+										<form action="EliminarProducto" method="post">
+											<input type="hidden" name="producto" value="<%=pro.getId()%>">
+											<button type="submit" class="btn btn-light-blue btn-md">
+												<a data-toggle="tooltip" title="ELIMINAR"><i class="far fa-trash-alt"></i></a>
+											</button>
+										</form>
+									</div>
+
+									<div class="col col-lg-6">
+										<button type="button" class="btn btn-light-blue btn-md">
+											<a data-toggle="tooltip" title="EDITAR INFORMACIÓN"><i class="far fa-edit"></i></a>
+										</button>
+									</div>
+									
+									<div class="col col-lg-6">
+										<button type="button" class="btn btn-light-blue btn-md">
+											<a data-toggle="tooltip" title="CAMBIAR IMAGEN"><i class="far fa-images"></i></a>
+										</button>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- Card -->
+					<%
+						}
+					%>
+
+					<%
+						}
+					%>
+
 				</div>
 				<!-- Card deck -->
 			</div>
