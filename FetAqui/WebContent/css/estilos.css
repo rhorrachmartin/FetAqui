@@ -35,6 +35,17 @@ label
 	width: 500px;
 }
 
+.labelCheckBox{
+	width: 100% !important;
+}
+
+#contenedorImagenProducto{
+	max-height: 182px !important;
+}
+#imangenProducto{
+	width: 100% !important;
+}
+
 .alert
 {
     display: none;

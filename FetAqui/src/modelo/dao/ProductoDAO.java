@@ -66,5 +66,58 @@ public class ProductoDAO {
 		}
 
 	}
+	
+	public Producto getProductoPorId(Integer id_producto) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+			// Devolvemos el arraylist de poblacion
+			return productosMapper.getProductoPorId(id_producto);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+
+	}
+
+	public void activarVentaOnline(Integer id_producto) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+
+			productosMapper.activarVentaOnline(id_producto);
+
+			sqlSession.commit();
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public void desactivarVentaOnline(Integer id_producto) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+
+			productosMapper.desactivarVentaOnline(id_producto);
+
+			sqlSession.commit();
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 }

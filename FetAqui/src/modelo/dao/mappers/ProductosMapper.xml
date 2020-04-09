@@ -54,6 +54,18 @@
 	<select id="getProductosVendedor" parameterType="int" resultMap="getProductosVendedor">
 		select * from producto where producto.vendedor = #{id_vendedor};
 	</select>
+	
+	<select id="getProductoPorId" parameterType="int" resultType="Producto">
+		select * from producto where producto.id_producto = #{id_producto};
+	</select>
+	
+	<update id="activarVentaOnline">
+		update producto set venta_online = 1  where producto.id_producto = #{id_producto};
+	</update>
+	
+	<update id="desactivarVentaOnline">
+		update producto set venta_online = 0  where producto.id_producto = #{id_producto};
+	</update>
 
 
 </mapper>

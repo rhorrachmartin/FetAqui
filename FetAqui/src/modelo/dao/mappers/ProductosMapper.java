@@ -26,5 +26,11 @@ public interface ProductosMapper {
 	
 	
 	public ArrayList<Producto> getProductosVendedor(Integer id_vendedor);
+	
+	public void activarVentaOnline(Integer id_producto);
+	
+	public void desactivarVentaOnline(Integer id_producto);
+	
+	public Producto getProductoPorId(Integer id_producto);
 
 }

@@ -35,6 +35,7 @@
 		ArrayList<Categoria> categorias = null;
 		ArrayList<Formato> formatos = null;
 		ArrayList<Producto> productos = null;
+		int contadorCheckBox = 0;
 		if (request.getAttribute("vendedor") != null) {
 			vendedor = (Vendedor) request.getAttribute("vendedor");
 			categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
@@ -83,7 +84,7 @@
 		</nav>
 
 
-		<div class="container">
+		<main class="container">
 
 			<div class="row mt-5">
 
@@ -99,7 +100,7 @@
 
 			</div>
 			<hr>
-
+			<!-- ESPACIO EN BLANCO -->
 			<div class="container m-5">
 
 				<div class="row">
@@ -107,79 +108,177 @@
 					<div class="col col-lg12" style="height: 50px"></div>
 				</div>
 			</div>
+			<!-- FIN ESPACIO EN BLANCO -->
 			<div class="container">
 				<!-- Card deck -->
-				<div class="row row-cols-1 row-cols-md-2">
+				<div class="row row-cols-1 row-cols-md-3">
 
-					<%
-						for (Producto pro : productos) {
-					%>
+						<%
+							for (Producto pro : productos) {
+								contadorCheckBox++;
+						%>
+						<%
+							if (pro.getVenta_online() == 1) {
+						%>
+						
+						<form class="ventaOnlineProducto" id="ventaOnlineProducto<%=pro.getId()%>"
+							action="VentaOnlineProducto" method="post">
+							<!-- Card -->
+							<div class="col mb-4">
+								<div class="card h-100">
+									<!--Card image-->
+									<div id="contenedorImagenProducto" class="view overlay zoom">
+										<img id="imagenProducto" class="img-fluid z-depth-1"
+											src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
+										<div class="mask rgba-white-slight"></div>
+									</div>
 
-					<!-- Card -->
-					<div class="card m-2">
+									<!--Card content-->
+									<div class="card-body">
 
-						<!--Card image-->
-						<div class="view overlay">
-							<img class="card-img-top" src="Imagenes/<%=pro.getFoto()%>"
-								alt="Card image cap">
-							<div class="mask rgba-white-slight"></div>
-						</div>
+										<!--Title-->
+										<h4 class="card-title"><%=pro.getNombre()%></h4>
+										<!--Text-->
+										<p class="card-text"><%=pro.getDescripcion()%></p>
+										<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+										<div class="row">
 
-						<!--Card content-->
-						<div class="card-body">
+											<div class="col col-lg-4">
+												<div class="custom-control custom-switch">
+													<input type="hidden" name="producto"
+														value="<%=pro.getId()%>"> <input type="checkbox"
+														class="custom-control-input"
+														id="customSwitch<%=contadorCheckBox%>" name="ventaOnline"
+														checked onchange="submit(<%=pro.getId()%>)"> <label
+														class="custom-control-label labelCheckBox"
+														for="customSwitch<%=contadorCheckBox%>">ON</label>
+												</div>
+											</div>
 
-							<!--Title-->
-							<h4 class="card-title"><%=pro.getNombre()%></h4>
-							<!--Text-->
-							<p class="card-text"><%=pro.getDescripcion()%></p>
-							<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-							<button type="button" class="btn btn-light-blue btn-md">Read
-								more</button>
+											<div class="col col-lg-4">
+												<button type="button" class="btn btn-light-blue btn-md">
+													<i class="far fa-trash-alt"></i>
+												</button>
+											</div>
 
-						</div>
+											<div class="col col-lg-4">
+												<button type="button" class="btn btn-light-blue btn-md">
+													<i class="far fa-edit"></i>
+												</button>
+											</div>
 
-					</div>
-					<!-- Card -->
+										</div>
 
-					<%
-						}
-					%>
+									</div>
+								</div>
+							</div>
+						</form>
+						<!-- Card -->
+						<%
+							} else {
+						%>
+						<form class="ventaOnlineProducto" id="ventaOnlineProducto<%=pro.getId()%>"
+							action="VentaOnlineProducto" method="post">
+							<!-- Card -->
+							<div class="col mb-4">
+								<div class="card h-100">
+									<!--Card image-->
+									<div id="contenedorImagenProducto" class="view overlay zoom">
+										<img id="imagenProducto" class="img-fluid z-depth-1"
+											src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
+										<div class="mask rgba-white-slight"></div>
+									</div>
 
+									<!--Card content-->
+									<div class="card-body">
 
+										<!--Title-->
+										<h4 class="card-title"><%=pro.getNombre()%></h4>
+										<!--Text-->
+										<p class="card-text"><%=pro.getDescripcion()%></p>
+										<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+										<div class="row">
 
+											<div class="col col-lg-4">
 
+												<div class="custom-control custom-switch">
+
+													<input type="hidden" name="producto"
+														value="<%=pro.getId()%>"> <input type="checkbox"
+														class="custom-control-input"
+														id="customSwitch<%=contadorCheckBox%>" name="ventaOnline" onchange="submit(<%=pro.getId()%>)">
+													<label class="custom-control-label labelCheckBox"
+														for="customSwitch<%=contadorCheckBox%>">OFF</label>
+
+												</div>
+											</div>
+
+											<div class="col col-lg-4">
+												<button type="button" class="btn btn-light-blue btn-md">
+													<i class="far fa-trash-alt"></i>
+												</button>
+											</div>
+
+											<div class="col col-lg-4">
+												<button type="button" class="btn btn-light-blue btn-md">
+													<i class="far fa-edit"></i>
+												</button>
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<!-- Card -->
+						</form>
+						<%
+							}
+						%>
+
+						<%
+							}
+						%>
+					
 				</div>
 				<!-- Card deck -->
 			</div>
+		</main>
+
+	</div>
+	<!-- Footer -->
+	<footer class="page-footer font-small unique-color-dark pt-4 ">
+
+		<!-- Footer Elements -->
+		<div class="container">
+
+			<!-- Call to action -->
+			<ul class="list-unstyled list-inline text-center py-2">
+				<li class="list-inline-item">
+					<h5 class="mb-1">Regístrate gratis!</h5>
+				</li>
+				<li class="list-inline-item"><a href="Login"
+					class="btn btn-outline-white btn-rounded" data-toggle="modal"
+					data-target="#modalRegistro">Darse de alta</a></li>
+			</ul>
+			<!-- Call to action -->
 
 		</div>
-		<!-- Footer -->
-		<footer class="page-footer font-small unique-color-dark pt-4 ">
+		<!-- Footer Elements -->
 
-			<!-- Footer Elements -->
-			<div class="container">
+		<!-- Copyright -->
+		<div class="footer-copyright text-center py-3 ">
+			© 2020 Copyright: <a href="https://fetaqui.com/"> fetaqui.com</a>
+		</div>
+		<!-- Copyright -->
 
-				<!-- Call to action -->
-				<ul class="list-unstyled list-inline text-center py-2">
-					<li class="list-inline-item">
-						<h5 class="mb-1">Regístrate gratis!</h5>
-					</li>
-					<li class="list-inline-item"><a href="Login"
-						class="btn btn-outline-white btn-rounded" data-toggle="modal"
-						data-target="#modalRegistro">Darse de alta</a></li>
-				</ul>
-				<!-- Call to action -->
+	</footer>
+	<!-- Footer -->
 
-			</div>
-			<!-- Footer Elements -->
-
-			<!-- Copyright -->
-			<div class="footer-copyright text-center py-3 ">
-				© 2020 Copyright: <a href="https://fetaqui.com/"> fetaqui.com</a>
-			</div>
-			<!-- Copyright -->
-
-		</footer>
-		<!-- Footer -->
+	<script type="text/javascript">
+		function submit(idProducto) {
+			document.gelElementById('ventaOnlineProducto'+idProducto).submit();
+		}
+	</script>
 </body>
 </html>
