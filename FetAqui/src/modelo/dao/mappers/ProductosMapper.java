@@ -38,5 +38,7 @@ public interface ProductosMapper {
 	public void actualizarProducto(Producto producto);
 	
 	public void actualizarImagenProducto(Producto producto);
+	
+	public ArrayList<Producto> getProductos();
 
 }

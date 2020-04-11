@@ -35,12 +35,25 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+					<li class="nav-item"><a class="nav-link" href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link" href="Vendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
+					<%
+						if (request.getAttribute("error") != null) {
+							String error = (String) request.getAttribute("error");
+					%>
+					<li class="nav-item"><a class="btn btn-danger btn-sm"
+						data-toggle="modal" data-target="#"><%=error%></a></li>
+					<%
+						}
+					%>
+					<li class="nav-item"><a class="btn btn-primary btn-sm"
+						data-toggle="modal" data-target="#modalRegistro">REGISTRARSE</a></li>
+
 					<li class="nav-item"><a class="btn btn-success btn-sm"
 						data-toggle="modal" data-target="#modalLogin">LOGIN</a></li>
+
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
 							alt="avatar image" height="35">
@@ -48,50 +61,6 @@
 				</ul>
 			</div>
 		</nav>
-
-
-
-
-		<%
-			if (request.getAttribute("error") == null) {
-		%>
-		<div class="container">
-			<div class="row loginPanel">
-				<div class="lg lg-12 ">
-					<button class="btn btn-primary btn-lg" data-toggle="modal"
-						data-target="#modalRegistro">Darse de alta</button>
-					<button class="btn btn-success btn-lg" data-toggle="modal"
-						data-target="#modalLogin">Entrar</button>
-				</div>
-			</div>
-		</div>
-		<%
-			} else {
-				String error = (String) request.getAttribute("error");
-		%>
-
-
-		<div class="container">
-
-			<div class="row loginPanel">
-				<div class="lg lg-12 ">
-					<div class="row loginPanelAlerta">
-						<div class="lg lg-12">
-							<button class="btn btn-danger bnt-lg"><%=error%></button>
-						</div>
-					</div>
-					<button class="btn btn-primary btn-lg" data-toggle="modal"
-						data-target="#modalRegistro">Darse de alta</button>
-
-					<button class="btn btn-success btn-lg" data-toggle="modal"
-						data-target="#modalLogin">Entrar</button>
-				</div>
-			</div>
-		</div>
-
-		<%
-			}
-		%>
 		<!------------------------------------------------------MODAL DE ELECCION DE TIPO DE REGISTRO------------------------------------------------------------------------>
 		<div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
@@ -407,8 +376,7 @@
 		</div>
 	</div>
 	<!-- Footer -->
-	<footer
-		class="page-footer font-small unique-color-dark pt-4">
+	<footer class="page-footer font-small unique-color-dark pt-4">
 
 		<!-- Footer Elements -->
 		<div class="container">

@@ -51,5 +51,10 @@ public class ProductoEJB {
 		ProductoDAO productoDAO = new ProductoDAO();
 		productoDAO.actualizarImagenProducto(producto);
 	}
+	
+	public ArrayList<Producto> getProductos() {
+		ProductoDAO productoDAO = new ProductoDAO();
+		return productoDAO.getProductos();
+	}
 
 }

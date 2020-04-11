@@ -174,4 +174,20 @@ public class ProductoDAO {
 		}
 	}
 
+	public ArrayList<Producto> getProductos() {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+			// Devolvemos el arraylist de poblacion
+			return productosMapper.getProductos();
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
 }

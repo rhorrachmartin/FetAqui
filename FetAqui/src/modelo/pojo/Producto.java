@@ -1,12 +1,13 @@
 package modelo.pojo;
 
 public class Producto {
-	
+
 	Integer id;
 	String nombre;
 	String descripcion;
 	String foto;
 	double precio;
+	double valoracion;
 	Integer stock;
 	Integer vendido;
 	Integer id_categoria;
@@ -16,9 +17,9 @@ public class Producto {
 	String formato;
 	Integer id_vendedor;
 	String nombre_vendedor;
-	
+
 	public Producto() {
-		
+
 	}
 
 	public Integer getId() {
@@ -59,6 +60,14 @@ public class Producto {
 
 	public void setPrecio(double precio) {
 		this.precio = precio;
+	}
+
+	public double getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(double valoracion) {
+		this.valoracion = valoracion;
 	}
 
 	public Integer getStock() {
@@ -132,6 +141,5 @@ public class Producto {
 	public void setNombre_vendedor(String nombre_vendedor) {
 		this.nombre_vendedor = nombre_vendedor;
 	}
-	
-	
+
 }

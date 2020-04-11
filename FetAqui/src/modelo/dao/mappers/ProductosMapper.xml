@@ -74,6 +74,52 @@
         	producto.vendedor = #{id_vendedor};
 	</select>
 	
+	<resultMap type='Producto' id='getProductos'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='id_categoria' column='id_categoria' />
+		<result property='categoria' column='categoria' />
+		<result property='id_formato' column='id_formato' />
+		<result property='formato' column='formato' />
+		<result property='venta_online' column='venta_online' />
+		<result property='stock' column='stock' />
+	</resultMap>
+	
+	<select id="getProductos"  resultMap="getProductos">
+		select 
+			producto.id_producto,
+			producto.nombre,
+            producto.descripcion,
+            producto.foto,
+            producto.precio,
+            producto.vendedor as id_vendedor,
+            producto.stock,
+            producto.categoria as id_categoria,
+            producto.formato as id_formato,
+            producto.venta_online,
+            avg(valoracion_producto.valoracion) as valoracion,
+            categoria.nombre as categoria,
+            formato.nombre as formato
+        from producto
+        inner join 
+			valoracion_producto
+        on 
+			producto.id_producto = valoracion_producto.producto
+        inner join 
+        	categoria
+        on 
+        	producto.categoria = categoria.id_categoria
+        inner join 
+        	formato
+        on 
+        	producto.formato = formato.id_formato
+        group by producto.id_producto;
+	</select>
+	
 	<select id="getProductoPorId" parameterType="int" resultType="Producto">
 		select * from producto where producto.id_producto = #{id_producto};
 	</select>

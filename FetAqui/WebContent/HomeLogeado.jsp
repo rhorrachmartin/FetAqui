@@ -46,8 +46,8 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+					<li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link" href="Vendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
@@ -74,49 +74,6 @@
 				</ul>
 			</div>
 		</nav>
-
-
-
-
-		<%
-			if (request.getAttribute("error") == null) {
-		%>
-		<div class="container">
-			<div class="row loginPanel">
-				<div class="lg lg-12 ">
-					<button class="btn btn-primary btn-lg" data-toggle="modal"
-						data-target="#modalRegistro">Darse de alta</button>
-					<button class="btn btn-warning btn-lg" data-toggle="modal"
-						data-target="Logout">SALIR</button>
-				</div>
-			</div>
-		</div>
-		<%
-			} else {
-				String error = (String) request.getAttribute("error");
-		%>
-
-
-		<div class="container">
-
-			<div class="row loginPanel">
-				<div class="lg lg-12 ">
-					<div class="row loginPanelAlerta">
-						<div class="lg lg-12">
-							<button class="btn btn-danger bnt-lg"><%=error%></button>
-						</div>
-					</div>
-					<button class="btn btn-primary btn-lg" data-toggle="modal"
-						data-target="#modalRegistro">Darse de alta</button>
-					<button class="btn btn-success btn-lg" data-toggle="modal"
-						data-target="LOGOUT">SALIR</button>
-				</div>
-			</div>
-		</div>
-
-		<%
-			}
-		%>
 	</div>
 	<!-- Footer -->
 	<footer
