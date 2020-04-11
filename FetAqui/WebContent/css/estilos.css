@@ -22,6 +22,10 @@
 	height: 150px;
 }
 
+.modalEditarProducto{
+	max-width: 100% !important;
+}
+
 label
 {
     width: 100px;
@@ -37,6 +41,10 @@ label
 
 .labelCheckBox{
 	width: 100% !important;
+}
+
+.modalLoginAvatar{
+	max-width: 100% !important;
 }
 
 #contenedorImagenProducto{

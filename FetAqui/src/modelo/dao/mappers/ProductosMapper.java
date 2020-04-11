@@ -34,5 +34,9 @@ public interface ProductosMapper {
 	public Producto getProductoPorId(Integer id_producto);
 	
 	public void borrarProducto(Integer id_producto);
+	
+	public void actualizarProducto(Producto producto);
+	
+	public void actualizarImagenProducto(Producto producto);
 
 }

@@ -66,7 +66,7 @@ public class ProductoDAO {
 		}
 
 	}
-	
+
 	public Producto getProductoPorId(Integer id_producto) {
 		// Abrimos la sesión
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -101,7 +101,7 @@ public class ProductoDAO {
 			sqlSession.close();
 		}
 	}
-	
+
 	public void desactivarVentaOnline(Integer id_producto) {
 		// Abrimos la sesión
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
@@ -119,23 +119,59 @@ public class ProductoDAO {
 			sqlSession.close();
 		}
 	}
-	
+
 	public void borrarProducto(Integer id_producto) {
 		// Abrimos la sesión
-				SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
 
-				try {
-					// Obtenemos el mapper
-					ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
 
-					productosMapper.borrarProducto(id_producto);
+			productosMapper.borrarProducto(id_producto);
 
-					sqlSession.commit();
+			sqlSession.commit();
 
-				} finally {
-					// Cerramos sesión
-					sqlSession.close();
-				}
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
+	public void actualizarProducto(Producto producto) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+
+			productosMapper.actualizarProducto(producto);
+
+			sqlSession.commit();
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+
+	public void actualizarImagenProducto(Producto producto) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+
+			productosMapper.actualizarImagenProducto(producto);
+
+			sqlSession.commit();
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
 	}
 
 }

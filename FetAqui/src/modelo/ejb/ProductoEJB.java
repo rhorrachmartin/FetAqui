@@ -21,24 +21,35 @@ public class ProductoEJB {
 		ProductoDAO productoDAO = new ProductoDAO();
 		return productoDAO.getProductosVendedor(id_vendedor);
 	}
-	
+
 	public Producto getProductoPorId(Integer id_producto) {
 		ProductoDAO productoDAO = new ProductoDAO();
 		return productoDAO.getProductoPorId(id_producto);
 	}
-	
+
 	public void activarVentaOnline(Integer id_producto) {
 		ProductoDAO productoDAO = new ProductoDAO();
 		productoDAO.activarVentaOnline(id_producto);
 	}
-	
+
 	public void desactivarVentaOnline(Integer id_producto) {
 		ProductoDAO productoDAO = new ProductoDAO();
 		productoDAO.desactivarVentaOnline(id_producto);
 	}
+
 	public void borrarProducto(Integer id_producto) {
 		ProductoDAO productoDAO = new ProductoDAO();
 		productoDAO.borrarProducto(id_producto);
+	}
+
+	public void actualizarProducto(Producto producto) {
+		ProductoDAO productoDAO = new ProductoDAO();
+		productoDAO.actualizarProducto(producto);
+	}
+	
+	public void actualizarImagenProducto(Producto producto) {
+		ProductoDAO productoDAO = new ProductoDAO();
+		productoDAO.actualizarImagenProducto(producto);
 	}
 
 }

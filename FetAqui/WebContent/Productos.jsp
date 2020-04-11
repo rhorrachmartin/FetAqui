@@ -127,14 +127,20 @@
 						<div class="card h-100">
 							<!--Card image-->
 							<div id="contenedorImagenProducto" class="view overlay zoom">
-							<%if(pro.getFoto().equals("producto.png")) {%>
+								<%
+									if (pro.getFoto().equals("producto.png")) {
+								%>
 								<img id="imagenProducto" class="img-fluid z-depth-1"
 									src="img/<%=pro.getFoto()%>" alt="Card image cap">
-									
-							<%}else{ %>
+
+								<%
+									} else {
+								%>
 								<img id="imagenProducto" class="img-fluid z-depth-1"
 									src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
-							<%} %>
+								<%
+									}
+								%>
 								<div class="mask rgba-white-slight"></div>
 							</div>
 
@@ -169,20 +175,25 @@
 										<form action="EliminarProducto" method="post">
 											<input type="hidden" name="producto" value="<%=pro.getId()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
-												<a data-toggle="tooltip" title="ELIMINAR"><i class="far fa-trash-alt"></i></a>
+												<a data-toggle="tooltip" title="ELIMINAR"><i
+													class="far fa-trash-alt"></i></a>
 											</button>
 										</form>
 									</div>
 
 									<div class="col col-lg-6">
 										<button type="button" class="btn btn-light-blue btn-md">
-											<a data-toggle="tooltip" title="EDITAR INFORMACIÓN"><i class="far fa-edit"></i></a>
+											<a data-toggle="modal"
+												data-target="#modalEditarProducto<%=pro.getId()%>"><i
+												class="far fa-edit"></i></a>
 										</button>
 									</div>
-									
+
 									<div class="col col-lg-6">
 										<button type="button" class="btn btn-light-blue btn-md">
-											<a data-toggle="tooltip" title="CAMBIAR IMAGEN"><i class="far fa-images"></i></a>
+											<a data-toggle="modal"
+												data-target="#modalLoginAvatar<%=pro.getId()%>"><i
+												class="far fa-images"></i></a>
 										</button>
 									</div>
 
@@ -192,6 +203,161 @@
 					</div>
 
 					<!-- Card -->
+
+					<!-- MODAL DE EDICIÓN DE PRODUCTO -->
+
+					<div class="modal fade modalEditarProducto"
+						id="modalEditarProducto<%=pro.getId()%>" tabindex="-1"
+						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header text-center">
+									<h4 class="modal-title w-100 font-weight-bold">EDITAR
+										PRODUCTO</h4>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body mx-3">
+									<form action="ActualizarProducto" method="post">
+										<input type="hidden" name="idProducto"
+											value="<%=pro.getId()%>">
+										<div class="form-group">
+											<label for="nombre">Nombre</label> <input type="text"
+												id="nombre" name="nombre" class="form-control"
+												aria-describedby="nombre" value="<%=pro.getNombre()%>"
+												required> <small id="ayudaNombre"
+												class="form-text text-muted">Nombre del producto</small>
+										</div>
+
+										<div class="form-group">
+											<label for="categoria">Categoria</label> <select
+												id="categoria" name="categoria" required>
+												<option value="<%=pro.getId_categoria()%>" selected>
+													<%=pro.getCategoria()%></option>
+												<%
+													for (Categoria ca : categorias) {
+												%>
+												<option value=<%=ca.getId()%>>
+													<%=ca.getNombre()%></option>
+												<%
+													}
+												%>
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="descripcion">Descripcion del producto</label>
+											<textarea rows="5" cols="25" id="descripcion"
+												name="descripcion" class="form-control" maxlength="200"><%=pro.getDescripcion()%></textarea>
+										</div>
+
+										<div class="form-group">
+											<label for="precio">Precio </label> <input type="number"
+												id="precio" name="precio" class="form-control"
+												aria-describedby="precio" step="0.01" min="0" max="10000"
+												value="<%=pro.getPrecio()%>" required> <small
+												id="ayudaVentaOnline" class="form-text text-muted">Precio
+												por formato elegido. P.E= 2€/KG</small>
+										</div>
+
+										<div class="form-group">
+											<label for="formato">Formato</label> <select id="formato"
+												name="formato" required>
+												<option value="<%=pro.getId_formato()%>" selected>
+													<%=pro.getFormato()%></option>
+												<%
+													for (Formato fo : formatos) {
+												%>
+												<option value=<%=fo.getId()%>>
+													<%=fo.getNombre()%></option>
+												<%
+													}
+												%>
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="stock">Stock </label> <input type="number"
+												id="stock" name="stock" class="form-control"
+												aria-describedby="stock" value="<%=pro.getStock()%>"
+												required> <small id="ayudaStock"
+												class="form-text text-muted">Cantidad disponible
+												para la venta</small>
+										</div>
+
+										<div class="modal-footer d-flex justify-content-center">
+											<button type="submit" class="btn btn-deep-orange">Guardar</button>
+										</div>
+									</form>
+								</div>
+
+
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<!-- FIN MODAL DE EDICIÓN DE PRODUCTO -->
+
+					<!-- MODAL DE CAMBIO DE IMAGEN DE PRODUCTO -->
+
+					<div class="modal fade modalLoginAvatar"
+						id="modalLoginAvatar<%=pro.getId()%>" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog cascading-modal modal-avatar modal-sm"
+							role="document">
+							<!--Content-->
+							<div class="modal-content">
+
+								<!--Header-->
+								<div class="modal-header">
+									<img src="Imagenes/<%=pro.getFoto()%>" alt="avatar"
+										class="rounded-circle img-responsive">
+								</div>
+								<!--Body-->
+
+								<div class="modal-body text-center mb-1">
+
+									<h5 class="mt-1 mb-2"><%=pro.getNombre()%></h5>
+
+									<div class="md-form ml-0 mr-0">
+										<form action="ActualizarFotoProducto" method="post"
+											enctype='multipart/form-data'>
+											<div class="input-group">
+												<div class="custom-file">
+													<input type="hidden" name="idProducto"
+														value="<%=pro.getId()%>"> <input type="file"
+														class="custom-file-input" id="foto" name="foto"
+														aria-describedby="inputGroupFileAddon01" required>
+													<label id="labelFoto" class="custom-file-label"
+														for="inputGroupFile01">Elija la imagen del
+														producto</label>
+												</div>
+											</div>
+
+											<div class="text-center mt-4">
+												<button type="submit" class="btn btn-cyan mt-1">
+													Guardar <i class="fas fa-sign-in ml-1"></i>
+												</button>
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">Cerrar</button>
+											</div>
+										</form>
+									</div>
+
+
+								</div>
+
+							</div>
+							<!--/.Content-->
+						</div>
+					</div>
+
+					<!-- FIN MODAL DE CAMBIO DE IMAGEN DE PRODUCTO -->
 					<%
 						} else {
 					%>
@@ -200,14 +366,20 @@
 						<div class="card h-100">
 							<!--Card image-->
 							<div id="contenedorImagenProducto" class="view overlay zoom">
-								<%if(pro.getFoto().equals("producto.png")) {%>
+								<%
+									if (pro.getFoto().equals("producto.png")) {
+								%>
 								<img id="imagenProducto" class="img-fluid z-depth-1"
 									src="img/<%=pro.getFoto()%>" alt="Card image cap">
-									
-							<%}else{ %>
+
+								<%
+									} else {
+								%>
 								<img id="imagenProducto" class="img-fluid z-depth-1"
 									src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
-							<%} %>
+								<%
+									}
+								%>
 								<div class="mask rgba-white-slight"></div>
 							</div>
 
@@ -241,20 +413,24 @@
 										<form action="EliminarProducto" method="post">
 											<input type="hidden" name="producto" value="<%=pro.getId()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
-												<a data-toggle="tooltip" title="ELIMINAR"><i class="far fa-trash-alt"></i></a>
+												<a data-toggle="tooltip" title="ELIMINAR"><i
+													class="far fa-trash-alt"></i></a>
 											</button>
 										</form>
 									</div>
 
 									<div class="col col-lg-6">
 										<button type="button" class="btn btn-light-blue btn-md">
-											<a data-toggle="tooltip" title="EDITAR INFORMACIÓN"><i class="far fa-edit"></i></a>
+											<a data-toggle="modal"
+												data-target="#modalEditarProducto<%=pro.getId()%>"><i
+												class="far fa-edit"></i></a>
 										</button>
 									</div>
-									
+
 									<div class="col col-lg-6">
 										<button type="button" class="btn btn-light-blue btn-md">
-											<a data-toggle="tooltip" title="CAMBIAR IMAGEN"><i class="far fa-images"></i></a>
+											<a data-toggle="tooltip" title="CAMBIAR IMAGEN"><i
+												class="far fa-images"></i></a>
 										</button>
 									</div>
 
@@ -264,6 +440,161 @@
 						</div>
 					</div>
 					<!-- Card -->
+
+					<!-- MODAL DE EDICIÓN DE PRODUCTO -->
+
+					<div class="modal fade modalEditarProducto"
+						id="modalEditarProducto<%=pro.getId()%>" tabindex="-1"
+						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header text-center">
+									<h4 class="modal-title w-100 font-weight-bold">EDITAR
+										PRODUCTO</h4>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body mx-3">
+									<form action="ActualizarProducto" method="post">
+										<input type="hidden" name="idProducto"
+											value="<%=pro.getId()%>">
+										<div class="form-group">
+											<label for="nombre">Nombre</label> <input type="text"
+												id="nombre" name="nombre" class="form-control"
+												aria-describedby="nombre" value="<%=pro.getNombre()%>"
+												required> <small id="ayudaNombre"
+												class="form-text text-muted">Nombre del producto</small>
+										</div>
+
+										<div class="form-group">
+											<label for="categoria">Categoria</label> <select
+												id="categoria" name="categoria" required>
+												<option value="<%=pro.getId_categoria()%>" selected>
+													<%=pro.getCategoria()%></option>
+												<%
+													for (Categoria ca : categorias) {
+												%>
+												<option value=<%=ca.getId()%>>
+													<%=ca.getNombre()%></option>
+												<%
+													}
+												%>
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="descripcion">Descripcion del producto</label>
+											<textarea rows="5" cols="25" id="descripcion"
+												name="descripcion" class="form-control" maxlength="200"><%=pro.getDescripcion()%></textarea>
+										</div>
+
+										<div class="form-group">
+											<label for="precio">Precio </label> <input type="number"
+												id="precio" name="precio" class="form-control"
+												aria-describedby="precio" step="0.01" min="0" max="10000"
+												value="<%=pro.getPrecio()%>" required> <small
+												id="ayudaVentaOnline" class="form-text text-muted">Precio
+												por formato elegido. P.E= 2€/KG</small>
+										</div>
+
+										<div class="form-group">
+											<label for="formato">Formato</label> <select id="formato"
+												name="formato" required>
+												<option value="<%=pro.getId_formato()%>" selected>
+													<%=pro.getFormato()%></option>
+												<%
+													for (Formato fo : formatos) {
+												%>
+												<option value=<%=fo.getId()%>>
+													<%=fo.getNombre()%></option>
+												<%
+													}
+												%>
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="stock">Stock </label> <input type="number"
+												id="stock" name="stock" class="form-control"
+												aria-describedby="stock" value="<%=pro.getStock()%>"
+												required> <small id="ayudaStock"
+												class="form-text text-muted">Cantidad disponible
+												para la venta</small>
+										</div>
+
+										<div class="modal-footer d-flex justify-content-center">
+											<button type="submit" class="btn btn-deep-orange">Guardar</button>
+										</div>
+									</form>
+								</div>
+
+
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<!-- FIN MODAL DE EDICIÓN DE PRODUCTO -->
+
+					<!-- MODAL DE CAMBIO DE IMAGEN DE PRODUCTO -->
+
+					<div class="modal fade modalLoginAvatar"
+						id="modalLoginAvatar<%=pro.getId()%>" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog cascading-modal modal-avatar modal-sm"
+							role="document">
+							<!--Content-->
+							<div class="modal-content">
+
+								<!--Header-->
+								<div class="modal-header">
+									<img src="Imagenes/<%=pro.getFoto()%>" alt="avatar"
+										class="rounded-circle img-responsive">
+								</div>
+								<!--Body-->
+
+								<div class="modal-body text-center mb-1">
+
+									<h5 class="mt-1 mb-2"><%=pro.getNombre()%></h5>
+
+									<div class="md-form ml-0 mr-0">
+										<form action="ActualizarFotoProducto" method="post"
+											enctype='multipart/form-data'>
+											<div class="input-group">
+												<div class="custom-file">
+													<input type="hidden" name="idProducto"
+														value="<%=pro.getId()%>"> <input type="file"
+														class="custom-file-input" id="foto" name="foto"
+														aria-describedby="inputGroupFileAddon01" required>
+													<label id="labelFoto" class="custom-file-label"
+														for="inputGroupFile01">Elija la imagen del
+														producto</label>
+												</div>
+											</div>
+
+											<div class="text-center mt-4">
+												<button type="submit" class="btn btn-cyan mt-1">
+													Guardar <i class="fas fa-sign-in ml-1"></i>
+												</button>
+												<button type="button" class="btn btn-danger"
+													data-dismiss="modal">Cerrar</button>
+											</div>
+										</form>
+									</div>
+
+
+								</div>
+
+							</div>
+							<!--/.Content-->
+						</div>
+					</div>
+
+					<!-- FIN MODAL DE CAMBIO DE IMAGEN DE PRODUCTO -->
 					<%
 						}
 					%>
@@ -275,6 +606,9 @@
 				</div>
 				<!-- Card deck -->
 			</div>
+
+
+
 		</main>
 
 	</div>

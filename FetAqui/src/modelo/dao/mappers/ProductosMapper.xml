@@ -45,14 +45,33 @@
 		<result property='descripcion' column='descripcion' />
 		<result property='foto' column='foto' />
 		<result property='precio' column='precio' />
-		<result property='id_categoria' column='categoria' />
-		<result property='id_formato' column='formato' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='id_categoria' column='id_categoria' />
+		<result property='categoria' column='categoria' />
+		<result property='id_formato' column='id_formato' />
+		<result property='formato' column='formato' />
 		<result property='venta_online' column='venta_online' />
 		<result property='stock' column='stock' />
 	</resultMap>
 	
 	<select id="getProductosVendedor" parameterType="int" resultMap="getProductosVendedor">
-		select * from producto where producto.vendedor = #{id_vendedor};
+		select 
+			producto.id_producto, producto.nombre, producto.descripcion,
+        	producto.foto, producto.precio, producto.vendedor, producto.stock, 
+        	producto.vendido, producto.venta_online, producto.categoria as id_categoria, 
+        	categoria.nombre as categoria, producto.formato as id_formato, formato.nombre as formato
+        from 
+        	producto 
+        inner join 
+        	categoria
+        on 
+        	producto.categoria = categoria.id_categoria
+        inner join 
+        	formato
+        on 
+        	producto.formato = formato.id_formato
+        where 
+        	producto.vendedor = #{id_vendedor};
 	</select>
 	
 	<select id="getProductoPorId" parameterType="int" resultType="Producto">
@@ -65,6 +84,29 @@
 	
 	<update id="desactivarVentaOnline">
 		update producto set venta_online = 0  where producto.id_producto = #{id_producto};
+	</update>
+	
+	<update id="actualizarProducto" parameterType='Producto'>
+		update 
+			producto 
+		set 
+			nombre = #{nombre}, 
+			categoria = #{id_categoria},
+			descripcion = #{descripcion}, 
+			precio = #{precio}, 
+			formato = #{id_formato},
+			stock = #{stock}		
+		where 
+			producto.id_producto = #{id};
+	</update>
+	
+	<update id="actualizarImagenProducto" parameterType='Producto'>
+		update 
+			producto 
+		set 
+			foto = #{foto}		
+		where 
+			producto.id_producto = #{id};
 	</update>
 	
 	<delete id='borrarProducto' parameterType='int'>
