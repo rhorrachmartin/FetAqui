@@ -14,6 +14,7 @@
 		<typeAlias type='modelo.pojo.PedidoDetallado' alias='PedidoDetallado'></typeAlias>
 		<typeAlias type='modelo.pojo.CodigoActivacionVendedor' alias='CodigoActivacionVendedor'></typeAlias>
 		<typeAlias type='modelo.pojo.CodigoActivacionCliente' alias='CodigoActivacionCliente'></typeAlias>
+		<typeAlias type='modelo.pojo.ValoracionProducto' alias='ValoracionProducto'></typeAlias>
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
@@ -36,5 +37,6 @@
 		<mapper resource='modelo/dao/mappers/VendedoresMapper.xml' />
 		<mapper resource='modelo/dao/mappers/CodigosActivacionVendedorMapper.xml' />
 		<mapper resource='modelo/dao/mappers/CodigosActivacionClienteMapper.xml' />
+		<mapper resource='modelo/dao/mappers/ValoracionesProductoMapper.xml' />
 	</mappers>
 </configuration>

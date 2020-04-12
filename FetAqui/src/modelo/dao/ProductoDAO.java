@@ -32,17 +32,19 @@ public class ProductoDAO {
 		}
 	}
 
-	public void insertarProducto(Producto producto) {
+	public Integer insertarProducto(Producto producto) {
 		// Abrimos la sesión
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
-
+		Integer id_producto = 0;
 		try {
 			// Obtenemos el mapper
 			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
 
-			productosMapper.insertarProducto(producto);
+			id_producto = productosMapper.insertarProducto(producto);
 
 			sqlSession.commit();
+			
+			return id_producto;
 
 		} finally {
 			// Cerramos sesión

@@ -12,9 +12,9 @@ import modelo.pojo.Producto;
 @LocalBean
 public class ProductoEJB {
 
-	public void insertarProducto(Producto producto) {
+	public Integer insertarProducto(Producto producto) {
 		ProductoDAO productoDAO = new ProductoDAO();
-		productoDAO.insertarProducto(producto);
+		return productoDAO.insertarProducto(producto);
 	}
 
 	public ArrayList<Producto> getProductosVendedor(Integer id_vendedor) {

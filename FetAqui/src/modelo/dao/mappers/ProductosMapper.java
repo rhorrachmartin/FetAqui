@@ -22,7 +22,7 @@ public interface ProductosMapper {
 	public ArrayList<Producto> getProductosBusqueda(@Param("busqueda") String busqueda);
 	
 	
-	public void insertarProducto(Producto producto);
+	public Integer insertarProducto(Producto producto);
 	
 	
 	public ArrayList<Producto> getProductosVendedor(Integer id_vendedor);

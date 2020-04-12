@@ -21,13 +21,14 @@ import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
 import modelo.ejb.ProductoEJB;
+import modelo.ejb.ValoracionProductoEJB;
 import modelo.ejb.VendedorEJB;
 
 import modelo.pojo.Categoria;
 import modelo.pojo.Formato;
 import modelo.pojo.Vendedor;
 import modelo.pojo.Producto;
-
+import modelo.pojo.ValoracionProducto;
 /**
  * Servlet implementation class AñadirProducto
  */
@@ -53,6 +54,9 @@ public class AñadirProducto extends HttpServlet {
 	
 	@EJB
 	ProductoEJB productoEJB;
+	
+	@EJB
+	ValoracionProductoEJB valoracionProductoEJB;
 	/**
 	 * EJB para trabajar con los logger
 	 */
@@ -111,6 +115,8 @@ public class AñadirProducto extends HttpServlet {
 
 		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 		Producto producto = new Producto();
+		ValoracionProducto valoracionProducto = new ValoracionProducto();
+		
 		if (session != null && vendedor.getNombre() != null) {
 
 			ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
@@ -150,6 +156,13 @@ public class AñadirProducto extends HttpServlet {
 			producto.setId_vendedor(vendedorProducto);
 			
 			productoEJB.insertarProducto(producto);
+			
+			Integer valoracion = 5;
+			valoracionProducto.setCliente(vendedor.getId_vendedor());
+			valoracionProducto.setProducto(producto.getId());
+			valoracionProducto.setValoracion(valoracion);
+			
+			valoracionProductoEJB.insertarValoracionProducto(valoracionProducto);
 			
 			request.setAttribute("vendedor", vendedor);
 			request.setAttribute("categorias", categorias);
