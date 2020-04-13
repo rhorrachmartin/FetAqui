@@ -51,7 +51,6 @@ public class ImagenesEJB {
 			if (!getFileName(part).equals("desconocido.txt") || getFileName(part) == null) {
 				
 				fileName = getFileName(part);
-				System.out.println("--> " + fileName);
 				
 				if(fileName.equals("")) {
 					fileName="producto.png";

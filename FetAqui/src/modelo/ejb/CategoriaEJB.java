@@ -18,6 +18,12 @@ public class CategoriaEJB {
 		
 		return categoriaDAO.getCategorias();
 	}
+	
+	public Categoria getCategoriaPorId(Integer id_categoria) {
+		CategoriaDAO categoriaDAO = new CategoriaDAO();
+		
+		return categoriaDAO.getCategoriaPorId(id_categoria);
+	}
 
 	
 }

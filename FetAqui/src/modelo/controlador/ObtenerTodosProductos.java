@@ -69,13 +69,39 @@ public class ObtenerTodosProductos extends HttpServlet {
 
 		response.setContentType(CONTENT_TYPE);
 
-		ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-		ArrayList<Producto> productos = productoEJB.getProductos();
+		try {
+			if (request.getParameter("selectCategorias") == null) {
 
-		request.setAttribute("productos", productos);
-		request.setAttribute("categorias", categorias);
+				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+				ArrayList<Producto> productos = productoEJB.getProductos();
 
-		rs.forward(request, response);
+				request.setAttribute("productos", productos);
+				request.setAttribute("categorias", categorias);
+
+				rs.forward(request, response);
+
+			} else {
+				Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
+				
+				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+				ArrayList<Producto> productos = productoEJB.getProductosCategoria(id_categoria);
+				Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
+				
+				if(productos.isEmpty()) {
+					String error = "No existen productos en esta categoría.";
+					request.setAttribute("categoria", categoria);
+					request.setAttribute("error", error);
+				}
+				request.setAttribute("categoria", categoria);
+				request.setAttribute("productos", productos);
+				request.setAttribute("categorias", categorias);
+
+				rs.forward(request, response);
+
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 

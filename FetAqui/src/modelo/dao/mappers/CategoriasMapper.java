@@ -3,6 +3,8 @@ package modelo.dao.mappers;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import modelo.pojo.Categoria;
 
 /**
@@ -18,5 +20,7 @@ public interface CategoriasMapper {
 	 * @return ArrayList<Categoria> 
 	 */
 	public ArrayList<Categoria> getCategorias();
+	
+	public Categoria getCategoriaPorId(@Param("id_categoria") Integer id_categoria);
 
 }

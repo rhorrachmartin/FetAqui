@@ -43,6 +43,10 @@ label
 	width: 100% !important;
 }
 
+.labelCheckBox2{
+	width: 300px !important;
+
+}
 .modalLoginAvatar{
 	max-width: 100% !important;
 }

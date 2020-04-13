@@ -32,6 +32,22 @@ public class CategoriaDAO {
 			sqlSession.close();
 		}
 	}
+	
+	public Categoria getCategoriaPorId(Integer id_categoria) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			CategoriasMapper categoriasMapper = sqlSession.getMapper(CategoriasMapper.class);
+			//Devolvemos el arraylist de poblacion
+			return categoriasMapper.getCategoriaPorId(id_categoria);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 	
 

@@ -95,11 +95,11 @@
 					<a class="btn btn-primary btn-lg" href="AñadirProducto">AÑADIR
 						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="ObtenerProductosVendedor">MODIFICAR
 						PRODUCTOS</a>
-					<div class="custom-control custom-switch">
+					<div class="custom-control custom-switch text-center">
 						<form id="ventaOnline" action="VentasOnline" method="post">
-							<input type="checkbox" class="custom-control-input"
+							<input type="checkbox" class="custom-control-input "
 								id="customSwitch1" name="ventaOnline" checked> <label
-								id="labelCheckBox" class="custom-control-label"
+								id="labelCheckBox" class="custom-control-label labelCheckBox2"
 								for="customSwitch1">Ventas online activadas</label>
 						</form>
 					</div>
@@ -115,11 +115,11 @@
 					<a class="btn btn-primary btn-lg" href="AñadirProducto">AÑADIR
 						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="ObtenerProductosVendedor">MODIFICAR
 						PRODUCTOS</a>
-					<div class="custom-control custom-switch">
+					<div class="custom-control custom-switch text-center">
 						<form id="ventaOnline" action="VentasOnline" method="post">
 							<input type="checkbox" class="custom-control-input"
 								id="customSwitch1" name="ventaOnline"> <label
-								id="labelCheckBox" class="custom-control-label"
+								id="labelCheckBox" class="custom-control-label labelCheckBox2"
 								for="customSwitch1">Ventas online desactivadas</label>
 						</form>
 					</div>
