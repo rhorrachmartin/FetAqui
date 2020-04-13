@@ -84,6 +84,23 @@ public class ProductoDAO {
 		}
 
 	}
+	
+	public ArrayList<Producto> getProductosVendedorCategoria(Integer id_vendedor, Integer id_categoria) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			ProductosMapper productosMapper = sqlSession.getMapper(ProductosMapper.class);
+			// Devolvemos el arraylist de poblacion
+			return productosMapper.getProductosVendedorCategoria(id_vendedor, id_categoria);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+
+	}
 
 	public Producto getProductoPorId(Integer id_producto) {
 		// Abrimos la sesión

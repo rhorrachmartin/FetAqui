@@ -23,6 +23,9 @@ public interface VendedoresMapper {
 	 * @return devuelve un pojo vendedor
 	 */
 	public Vendedor getVendedor(@Param("email") String email, @Param("password") String password);
+	
+	
+	public Vendedor getVendedorPorId(@Param("id_vendedor") Integer id_vendedor);
 
 	/**
 	 * Método para obtener un vendedor a traves de su mail

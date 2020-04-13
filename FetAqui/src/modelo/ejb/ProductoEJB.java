@@ -22,6 +22,11 @@ public class ProductoEJB {
 		return productoDAO.getProductosVendedor(id_vendedor);
 	}
 	
+	public ArrayList<Producto> getProductosVendedorCategoria(Integer id_vendedor, Integer id_categoria) {
+		ProductoDAO productoDAO = new ProductoDAO();
+		return productoDAO.getProductosVendedorCategoria(id_vendedor, id_categoria);
+	}
+	
 	public ArrayList<Producto> getProductosCategoria(Integer id_categoria) {
 		ProductoDAO productoDAO = new ProductoDAO();
 		return productoDAO.getProductosCategoria(id_categoria);

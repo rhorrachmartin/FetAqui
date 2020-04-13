@@ -128,6 +128,35 @@
 			email = #{email} and password = #{password};
 	</select>
 	
+	<select id="getVendedorPorId" parameterType="int" resultType="Vendedor">
+		select
+			id_vendedor,
+			nif,
+			vendedor.nombre,
+			telefono,			 
+			email,
+			password,
+			poblacion.id_poblacion,
+			poblacion.nombre as poblacion,
+			vendedor.direccion as idDireccion,
+			direccion.direccion,
+			vendedor.foto, 
+			vendedor.activado,			
+			venta_online
+		from
+			vendedor
+		inner join
+			direccion
+		on
+			vendedor.direccion = direccion.id_direccion
+		inner join
+			poblacion
+		on 
+			direccion.poblacion = poblacion.id_poblacion 
+		where 
+			id_vendedor = #{id_vendedor};
+	</select>
+	
 	<select id="getVendedorEmailPass" resultType="Vendedor">
 		select
 			*

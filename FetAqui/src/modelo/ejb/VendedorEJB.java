@@ -56,6 +56,11 @@ public class VendedorEJB {
 		return vendedorDAO.getVendedor(email, password);
 	}
 	
+	public Vendedor getVendedorPorId(Integer id_vendedor) {
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		return vendedorDAO.getVendedorPorId(id_vendedor);
+	}
+	
 	public void updateNif(String nif, Integer id_vendedor) {
 		VendedorDAO vendedorDAO = new VendedorDAO();
 		vendedorDAO.updateNif(nif, id_vendedor);

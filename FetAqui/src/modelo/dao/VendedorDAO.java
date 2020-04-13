@@ -108,6 +108,22 @@ public class VendedorDAO {
 			sqlSession.close();
 		}
 	}
+	
+	public Vendedor getVendedorPorId(Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			return vendedoresMapper.getVendedorPorId(id_vendedor);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 	public Vendedor getVendedorEmailPass(String email, String password) {
 		// Abrimos la sesión
