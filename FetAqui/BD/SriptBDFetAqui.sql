@@ -1,4 +1,4 @@
-create schema fetaqui;
+CREATE DATABASE fetaqui CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 use fetaqui;
 
@@ -13,20 +13,19 @@ create table direccion(
     poblacion int not null,
     foreign key(poblacion) references poblacion(id_poblacion)
 		on update cascade
-        on delete restrict
 );
 
 
 
 create table vendedor(
 	id_vendedor int not null primary key auto_increment,
-    nif varchar(9),
+    nif varchar(9) not null,
     nombre varchar(32) not null,/*no es necesaria en caso de que un vendedor no desee vender online, en caso de que lo desee deberá updatear el atributo*/
     email varchar(64) not null,
     password varchar(32) not null,
     foto varchar(100) not null,
     direccion int not null,
-    telefono int(9) not null,
+    telefono varchar(9) not null,
     activado tinyint not null default 0,
     fecha_alta timestamp not null,
     venta_online tinyint not null,
@@ -47,8 +46,7 @@ create table post(
     texto_post varchar(200) not null,
     autor int not null,
     foreign key(autor) references vendedor(id_vendedor)
-        on update cascade
-        on delete restrict
+        on delete cascade
 );
 
 create table cliente(
@@ -56,12 +54,12 @@ create table cliente(
     email varchar(32) not null unique,
     nombre varchar(32) not null,
     apellido varchar(32) not null,
-    telefono int (9) unsigned not null , /*unsigned no admite signo, por tanto siempre es positivo*/
+    telefono varchar (9) not null , 
     direccion int not null,
     password varchar(32) not null,
     foto varchar(100),
+    activado tinyint not null default 0,
     foreign key(direccion) references direccion(id_direccion)
-		on delete cascade
         on update cascade    
 );
 
@@ -79,7 +77,7 @@ create table valoracion_post(
     foreign key(id_cliente) references cliente(id_cliente)
 		on update cascade,
 	foreign key(id_post) references post(id_post)
-		on update cascade
+		on delete cascade
 );
 
 
@@ -91,7 +89,7 @@ create table valoracioncv(
     foreign key(id_cliente) references cliente(id_cliente)
 		on update cascade,
 	foreign key(id_vendedor) references vendedor(id_vendedor)
-		on update cascade
+		on delete cascade
 );
 
 create table valoracionvc(
@@ -100,9 +98,9 @@ create table valoracionvc(
 	id_cliente int not null,
     id_vendedor int not null,    
     foreign key(id_cliente) references cliente(id_cliente)
-		on update cascade,
+		on delete cascade,
 	foreign key(id_vendedor) references vendedor(id_vendedor)
-		on update cascade
+		on delete cascade
 );
 
 create table categoria(
@@ -132,7 +130,7 @@ create table producto(
 	foreign key (formato) references formato(id_formato)
 		on update cascade,
 	foreign key (vendedor) references vendedor(id_vendedor)
-		on update cascade
+		on delete cascade
 );
 
 create table valoracion_producto(
@@ -141,9 +139,9 @@ create table valoracion_producto(
     cliente int not null,
     producto int not null,
     foreign key (cliente) references cliente (id_cliente)
-		on update cascade,
+		on delete cascade,
 	foreign key (producto) references producto(id_producto)
-		on update cascade
+		on delete cascade
 );
 
 create table pedido(
@@ -154,7 +152,7 @@ create table pedido(
     destino int not null,
     estado varchar(32) not null,
     foreign key (cliente) references cliente(id_cliente)
-		on update cascade,
+		on delete cascade,
 	foreign key (destino) references direccion(id_direccion)
 		on update cascade
 );
@@ -167,25 +165,29 @@ create table detalle_pedido(
     cantidad int not null,
     dto int,
     foreign key (id_pedido) references pedido(id_pedido)
-		on update cascade,
+		on delete cascade,
 	foreign key (id_producto) references producto(id_producto)
-		on update cascade
+		on delete cascade
 );
 
 
-insert into poblacion (nombre) values ('Palma');
-insert into poblacion (nombre) values ('Santa Maria');
+insert into poblacion (nombre) values ('Alaró'),('Alcudia'),('Algaida'),('Andratx'),('Ariany'),
+('Artá'),('Bañalbufar'),('Binissalem'),('Búger'),('Buñola'),('Calviá'),('Campanet'),('Campos'),('Capdepera'),
+('Consell'),('Costitx'),('Deiá'),('Escorca'),('Eporlas'),('Estellencs'),('Felanitx'),('Fronalutx'),('Inca'),
+('Lloret de Vistalegre'),('Lloseta'),('Llubí'),('Llucmajor'),('Manacor'),('Mnacor de la Vall'),('Maria de la Salut'),('Montuiri'),('Muro'),
+('Petra'),('Sa Pobla'),('Palma'),('Pollença'),('Porreres'),('Puigpunyent'),('Ses Salines'),('Sant Joan'),('Sant Llorenç des Cardassar'),('Santa Eugenia'),
+('Santa Maria'),('Santa Margalida'),('Santanyí'),('Selva'),('Sencelles'),('Sineu'),('Sóller'),('Son Servera'),('Valldemossa'),('Villafranca de Bonany');
 
 insert into direccion (direccion,poblacion) values ('Avenida Argentina 1 3º c', 1);
 insert into direccion (direccion,poblacion) values ('Major 2 1 b', 2);
 
-insert into vendedor (nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
-	values ('Agrícola Palma','rhorrach@gmail.com', '12345', 'foto.jpg', 1, 630513222, 1, now(),1);
+insert into vendedor (nif,nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
+	values ('NIF','Agrícola Palma','vendedor@gmail.com', 'Vendedor!1986', 'foto.jpg', 1, 630513222, 1, now(),1);
 
 insert into post (texto_post, autor) values ('Esto es un post de prueba', 1);
 
-insert into cliente (email, nombre, apellido, telefono,direccion, password, foto) 
-	values ('rhorrachmartin@gmail.com', 'Ramon', 'Horrach', 630513222, 2, '12345','foto2.jpg');
+insert into cliente (email, nombre, apellido, telefono,direccion, password, foto, activado) 
+	values ('cliente@gmail.com', 'Ramon', 'Horrach', 630513222, 2, 'Cliente!1986','foto2.jpg',1);
     
 insert into valoracion_post (valoracion, id_cliente, id_post) values (10, 1, 1);
 
@@ -193,9 +195,10 @@ insert into valoracioncv (valoracion, id_cliente, id_vendedor) values (10,1,1);
 
 insert into valoracionvc (valoracion, id_cliente, id_vendedor) values (10,1,1);
 
-insert into categoria (nombre) values ('Fruta');
+insert into categoria (nombre) values ('Frutas'),('Verduras'),('Carnes'),('Pescados'),('Conservas'),('Pan'),('Leches'),('Cafés'),('Espirituosas'),
+										('Aguas'),('Refrescos'),('Embutidos'),('Dulce/Pasteleria'),('Otros');
 
-insert into formato (nombre) values ('Kg');
+insert into formato (nombre) values ('100 GR.'),('200 GR.'),('400 GR.'),('500 GR.'),('KG'),('LATA'),('BOTELLA'),('BARRA'),('UNIDAD');
 
 insert into producto (nombre, descripcion, foto, precio, vendedor, stock, vendido, categoria, formato,venta_online) 
 	values ('Naranjas de Sóller', 'Naranjas traídas de Sóller', 'naranjas.jpg', 0.50, 1,100,0,1,1,1);
@@ -214,67 +217,3 @@ insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto
 insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,2,0.580,5,0);
 
 
-/*---------------------------SELECT PARA VER TODOS LOS PEDIDOS DETALLADOS DE UN VENDEDOR-----------------------------*/
-
-select 
-    pedido.id_pedido, 
-    pedido.fecha_pedido,
-    pedido.fecha_entrega, 
-    precio_unidad, 
-    sum(cantidad) as cantidad, 
-    precio_unidad * sum(cantidad) as precio_final,    
-    concat(cliente.nombre, ' ' ,cliente.apellido) as Cliente,
-    poblacion.nombre as Poblacion,
-    direccion.direccion,
-    producto.nombre,
-	producto.descripcion
-from pedido
-inner join detalle_pedido
-	on pedido.id_pedido = detalle_pedido.id_pedido
-inner join producto
-	on detalle_pedido.id_producto = producto.id_producto
-inner join direccion
-	on direccion.id_direccion = pedido.destino
-inner join poblacion
-	on poblacion.id_poblacion = direccion.poblacion
-inner join cliente
-	on cliente.id_cliente = pedido.cliente
-inner join vendedor
-	on vendedor.id_vendedor = producto.vendedor
-where vendedor.id_vendedor = 1
-group by pedido.id_pedido,producto.nombre, producto.descripcion,detalle_pedido.precio_unidad;
-
-
-/*---------------------------SELECT PARA OBTENER TODOS LOS PRODUCTOS DE UN VENDEDOR------------------------*/
-
-select producto.nombre, producto.descripcion, producto.foto, producto.precio,formato.nombre as Formato
-from producto
-inner join vendedor
-	on vendedor.id_vendedor = producto.vendedor
-inner join formato
-	on formato.id_formato = producto.formato
-where vendedor.id_vendedor = 1;
-
-/*---------------------------SELECT PARA OBTENER EL DETALLE DE UN PRODUCTO DE UN VENDEDOR--------------*/
-
-select producto.nombre, producto.descripcion, producto.foto, producto.precio,formato.nombre as Formato
-from producto
-inner join vendedor
-	on vendedor.id_vendedor = producto.vendedor
-inner join formato
-	on formato.id_formato = producto.formato
-where vendedor.id_vendedor = 1 and
-producto.id_producto = 2;
-
-/*--------------------------SELECT PARA OBTENER TODOS LOS POST DE UN VENDEDOR----------------------------*/
-
-select vendedor.nombre, post.texto_post, valoracion_post.valoracion
-from post
-inner join vendedor
-	on vendedor.id_vendedor = post.autor
-inner join valoracion_post
-	on valoracion_post.id_post = post.id_post
-where vendedor.id_vendedor = 1;
-
-
-    
