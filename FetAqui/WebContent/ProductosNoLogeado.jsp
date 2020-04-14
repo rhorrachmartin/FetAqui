@@ -228,7 +228,7 @@
 									<input type="hidden" name="id_vendedor"
 										value="<%=pro.getId_vendedor()%>">
 									<button type="submit" class="btn btn-light-blue btn-md">
-										PÁGINA DEL VENDEDOR</button>
+										VENDEDOR</button>
 								</form>
 							</div>
 

@@ -47,7 +47,7 @@
 
 			categoria = (Categoria) request.getAttribute("categoria");
 		}
-		
+
 		if (request.getAttribute("vendedor") != null) {
 
 			vendedor = (Vendedor) request.getAttribute("vendedor");
@@ -95,184 +95,188 @@
 		<!-- FIN NAVEGADOR -->
 
 		<!-- CONTENEDOR PRINCIPAL -->
-		<div class="container">
+		<div class="container-fluid">
 
-			<div id="lateral" class="container">
-			
-				<img src="Imagenes/<%=vendedor.getFoto() %>">
+			<div class="row">
 
-				<h5>TIENDA DE <%=vendedor.getNombre() %></h5>
+				<div id="lateral" class="col col-lg-2">
 
-
-			</div>
-
-
-
-			<!-- DIV ELECCION CATEGORÍA -->
-			<%
-				if (categoria != null) {
-			%>
-
-			<div class="container">
-				<!-- DIV BUSQUEDA POR CATEGORÍA -->
-				<div class="row">
-
-					<div class="col col-lg-12 m-5 text-center">
-						<h3>BUSCAR POR CATEGORÍAS</h3>
-						<form id="categorias" action="ObtenerTodosProductos" method="get">
-							<select name="selectCategorias" id="selectCategorias"
-								class="browser-default custom-select">
-								<option value="<%=categoria.getId()%>"><%=categoria.getNombre()%></option>
-								<%
-									for (Categoria ca : categorias) {
-								%>
-								<option value=<%=ca.getId()%>>
-									<%=ca.getNombre()%></option>
-								<%
-									}
-								%>
-							</select>
-						</form>
+					<div>
+						<img id="imagenVendedor" src="Imagenes/<%=vendedor.getFoto()%>">
+					</div>
+					<hr>
+					<div>
+						<h5><%=vendedor.getNombre()%></h5>
 					</div>
 
 
 				</div>
-				<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
-			</div>
-			<!-- FIN DIV ELECCION CATEGORÍA -->
 
-			<%
-				} else {
-			%>
+				<div id="main" class="col col-lg-10 text-center">
 
-			<div class="container">
-				<!-- DIV BUSQUEDA POR CATEGORÍA -->
-				<div class="row">
+					<!-- DIV ELECCION CATEGORÍA -->
+					<%
+						if (categoria != null) {
+					%>
 
-					<div class="col col-lg-12 m-5 text-center">
-						<h3>BUSCAR POR CATEGORÍAS</h3>
-						<form id="categorias" action="ObtenerTodosProductos" method="get">
-							<select name="selectCategorias" id="selectCategorias"
-								class="browser-default custom-select">
-								<option selected>ELIJA UNA CATEGORÍA</option>
-								<%
-									for (Categoria ca : categorias) {
-								%>
-								<option value=<%=ca.getId()%>>
-									<%=ca.getNombre()%></option>
-								<%
-									}
-								%>
-							</select>
-						</form>
-					</div>
+					<div class="container">
+						<!-- DIV BUSQUEDA POR CATEGORÍA -->
+						<div class="row">
 
-
-				</div>
-				<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
-			</div>
-			<!-- FIN DIV ELECCION CATEGORÍA -->
-
-			<%
-				}
-			%>
+							<div class="col col-lg-12 m-5 text-center">
+								<h3>BUSCAR POR CATEGORÍAS</h3>
+								<form id="categorias" action="ObtenerTodosProductos"
+									method="get">
+									<select name="selectCategorias" id="selectCategorias"
+										class="browser-default custom-select">
+										<option value="<%=categoria.getId()%>"><%=categoria.getNombre()%></option>
+										<%
+											for (Categoria ca : categorias) {
+										%>
+										<option value=<%=ca.getId()%>>
+											<%=ca.getNombre()%></option>
+										<%
+											}
+										%>
+									</select>
+								</form>
+							</div>
 
 
-			<%
-				if (request.getAttribute("error") != null) {
-					String error = (String) request.getAttribute("error");
-			%>
-
-			<div class="container">
-				<!-- DIV ERROR-->
-				<div class="row">
-
-					<div class="col col-lg-12 m-5 text-center">
-						<h3><%=error%></h3>
-					</div>
-
-
-				</div>
-				<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
-			</div>
-			<!-- FIN DIV ELECCION CATEGORÍA -->
-
-			<%
-				} else {
-			%>
-
-			<!-- Card deck -->
-			<div class="row row-cols-1 row-cols-md-5 m-5">
-
-				<%
-					for (Producto pro : productos) {
-				%>
-
-
-				<!-- Card -->
-				<div class="col mb-4">
-					<div class="card h-100">
-						<!--Card image-->
-						<div id="contenedorImagenProducto" class="view overlay zoom">
-							<%
-								if (pro.getFoto().equals("producto.png")) {
-							%>
-							<img id="imagenProducto" class="img-fluid z-depth-1"
-								src="img/<%=pro.getFoto()%>" alt="Card image cap">
-
-							<%
-								} else {
-							%>
-							<img id="imagenProducto" class="img-fluid z-depth-1"
-								src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
-							<%
-								}
-							%>
-							<div class="mask rgba-white-slight"></div>
 						</div>
+						<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
+					</div>
+					<!-- FIN DIV ELECCION CATEGORÍA -->
 
-						<!--Card content-->
-						<div class="card-body text-center">
+					<%
+						} else {
+					%>
 
-							<!--Title-->
-							<h4 class="card-title"><%=pro.getNombre()%></h4>
-							<!--Text-->
-							<p id="descripcionProducto" class="card-text"><%=pro.getDescripcion()%></p>
-							<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-							<div class="row">
+					<div class="container">
+						<!-- DIV BUSQUEDA POR CATEGORÍA -->
+						<div class="row">
 
-								<div class="col col-lg-6">
-									<form action="PaginaVendedor" method="post">
-										<input type="hidden" name="id_vendedor"
-											value="<%=pro.getId_vendedor()%>">
-										<button type="submit" class="btn btn-light-blue btn-md">
-											VENDEDOR</button>
-									</form>
+							<div class="col col-lg-12 m-5 text-center">
+								<h3>BUSCAR POR CATEGORÍAS</h3>
+								<form id="categorias" action="ObtenerTodosProductos"
+									method="get">
+									<select name="selectCategorias" id="selectCategorias"
+										class="browser-default custom-select">
+										<option selected>ELIJA UNA CATEGORÍA</option>
+										<%
+											for (Categoria ca : categorias) {
+										%>
+										<option value=<%=ca.getId()%>>
+											<%=ca.getNombre()%></option>
+										<%
+											}
+										%>
+									</select>
+								</form>
+							</div>
+
+
+						</div>
+						<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
+					</div>
+					<!-- FIN DIV ELECCION CATEGORÍA -->
+
+					<%
+						}
+					%>
+
+
+					<%
+						if (request.getAttribute("error") != null) {
+							String error = (String) request.getAttribute("error");
+					%>
+
+					<div class="container">
+						<!-- DIV ERROR-->
+						<div class="row">
+
+							<div class="col col-lg-12 m-5 text-center">
+								<h3><%=error%></h3>
+							</div>
+
+
+						</div>
+						<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
+					</div>
+					<!-- FIN DIV ELECCION CATEGORÍA -->
+
+					<%
+						} else {
+					%>
+
+					<!-- Card deck -->
+					<div class="row row-cols-1 row-cols-md-5">
+
+						<%
+							for (Producto pro : productos) {
+						%>
+
+
+						<!-- Card -->
+						<div class="col mb-4">
+							<div class="card h-100">
+								<!--Card image-->
+								<div id="contenedorImagenProducto" class="view overlay zoom">
+									<%
+										if (pro.getFoto().equals("producto.png")) {
+									%>
+									<img id="imagenProducto" class="img-fluid z-depth-1"
+										src="img/<%=pro.getFoto()%>" alt="Card image cap">
+
+									<%
+										} else {
+									%>
+									<img id="imagenProducto" class="img-fluid z-depth-1"
+										src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
+									<%
+										}
+									%>
+									<div class="mask rgba-white-slight"></div>
 								</div>
 
-								<div class="col col-lg-6">
-									<form action="Producto" method="post">
-										<input type="hidden" name="id_vendedor"
-											value="<%=pro.getId()%>">
-										<button type="submit" class="btn btn-light-blue btn-md">
-											PRODUCTO</button>
-									</form>
-								</div>
+								<!--Card content-->
+								<div class="card-body text-center">
 
+									<!--Title-->
+									<h4 class="card-title"><%=pro.getNombre()%></h4>
+									<!--Text-->
+									<p id="descripcionProducto" class="card-text"><%=pro.getDescripcion()%></p>
+									<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+									<div class="container">
+										<div class="row">
+
+											<div class="col col-lg-12 text-center">
+												<form action="Producto" method="post">
+													<input type="hidden" name="id_vendedor"
+														value="<%=pro.getId()%>">
+													<button type="submit" class="btn btn-light-blue btn-md">
+														VER PRODUCTO</button>
+												</form>
+											</div>
+
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
 
-				<%
-					}
-				%>
-				<%
-					}
-				%>
-				<!-- Card -->
+						<%
+							}
+						%>
+						<%
+							}
+						%>
+						<!-- Card -->
+					</div>
+					<!-- Card deck -->
+
+				</div>
 			</div>
-			<!-- Card deck -->
 		</div>
 
 		<!------------------------------------------------------MODAL DE ELECCION DE TIPO DE REGISTRO------------------------------------------------------------------------>
@@ -440,7 +444,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- MODAL DE LOGIN -->
+		<!------------------------------------------------------ MODAL DE LOGIN ------------------------------------------------------------------------------------------->
 
 		<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">

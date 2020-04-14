@@ -7,7 +7,7 @@
 	height: 200px;
 }
 
-.loginPanelAlerta{
+.loginPanelAlerta {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -15,78 +15,83 @@
 	margin-bottom: 15px;
 }
 
-.panelEleccionRegistro{
+.panelEleccionRegistro {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 150px;
 }
 
-.modalEditarProducto{
+.modalEditarProducto {
 	max-width: 100% !important;
 }
 
-label
-{
-    width: 100px;
+label {
+	width: 100px;
 }
 
-#botonesPerfil{
+#botonesPerfil {
 	margin-top: 30px !important;
 }
 
-#labelFoto{
+#labelFoto {
 	width: 500px;
 }
 
-.labelCheckBox{
-	width: 100% !important;
+#lateral {
+	-webkit-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	-moz-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
 }
 
-.labelCheckBox2{
-	width: 300px !important;
-
-}
-.modalLoginAvatar{
+#imagenVendedor {
 	max-width: 100% !important;
 }
 
-#contenedorImagenProducto{
-	max-height: 182px !important;
-}
-#imangenProducto{
+.labelCheckBox {
 	width: 100% !important;
 }
 
-#descripcionProducto{
+.labelCheckBox2 {
+	width: 300px !important;
+}
+
+.modalLoginAvatar {
+	max-width: 100% !important;
+}
+
+#contenedorImagenProducto {
+	max-height: 182px !important;
+}
+
+#imangenProducto {
+	width: 100% !important;
+}
+
+#descripcionProducto {
 	height: 120px !important;
 }
 
-.labelCheckBox{
+.labelCheckBox {
 	width: 32% !important;
 }
 
-.alert
-{
-    display: none;
+.alert {
+	display: none;
 }
 
-.requirements
-{
-    list-style-type: none;
+.requirements {
+	list-style-type: none;
 }
 
-.wrong .fa-check
-{
-    display: none;
+.wrong .fa-check {
+	display: none;
 }
 
-.good .fa-times
-{
-    display: none;
+.good .fa-times {
+	display: none;
 }
 
-.modal-dialog{
+.modal-dialog {
 	max-width: 1000px !important;
 }
-
