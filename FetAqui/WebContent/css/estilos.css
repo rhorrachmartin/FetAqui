@@ -7,6 +7,16 @@
 	height: 200px;
 }
 
+.imagenProducto {
+	max-width: 30%;
+}
+
+#contenedorProducto {
+	-webkit-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75) !important;
+	-moz-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75) !important;
+	box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75) !important;
+}
+
 .loginPanelAlerta {
 	display: flex;
 	justify-content: center;

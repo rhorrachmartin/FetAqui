@@ -83,19 +83,43 @@ public class PaginaVendedor extends HttpServlet {
 
 				rs.forward(request, response);
 			} else {
-				Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
-				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-				ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor, id_categoria);
-				Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+				
+				if(!request.getParameter("selectCategorias").equals("todos")) {
+					Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
+					
+					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+					ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor, id_categoria);
+					
+					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+					Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
+					
+					if(productos.isEmpty()) {
+						String error = "No hay productos en esta categoría";
+						request.setAttribute("error", error);
+					}
+					
+					request.setAttribute("categoria", categoria);
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("productos", productos);
+					request.setAttribute("categorias", categorias);
 
-				request.setAttribute("vendedor", vendedor);
-				request.setAttribute("productos", productos);
-				request.setAttribute("categorias", categorias);
+					rs.forward(request, response);
+				}else {
+					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+					ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
+					
+					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+					
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("productos", productos);
+					request.setAttribute("categorias", categorias);
 
-				rs.forward(request, response);
+					rs.forward(request, response);
+				}
+				
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 	}

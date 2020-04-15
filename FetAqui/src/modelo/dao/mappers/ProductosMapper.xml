@@ -205,7 +205,19 @@
 	</select>
 	
 	<select id="getProductoPorId" parameterType="int" resultType="Producto">
-		select * from producto where producto.id_producto = #{id_producto};
+		select 
+			producto.id_producto, 
+			producto.nombre,
+			producto.descripcion,
+			producto.foto,
+			producto.precio,
+			producto.vendedor as id_vendedor,
+			formato.nombre as formato
+		from 
+			producto
+		inner join formato
+			on producto.formato = formato.id_formato
+		where producto.id_producto = #{id_producto};
 	</select>
 	
 	<update id="activarVentaOnline">

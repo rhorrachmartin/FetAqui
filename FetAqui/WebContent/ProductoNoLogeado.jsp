@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <%@ page import="modelo.pojo.Producto"%>
-<%@ page import="modelo.pojo.Categoria"%>
-<%@ page import="java.util.ArrayList"%>
+<%@ page import="modelo.pojo.Vendedor"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +26,18 @@
 <script src="js/validarPassword.js"></script>
 </head>
 <body>
+	<%
+		Producto producto = null;
+		Vendedor vendedor = null;
+
+		if (request.getAttribute("producto") != null) {
+			producto = (Producto) request.getAttribute("producto");
+		}
+
+		if (request.getAttribute("vendedor") != null) {
+			vendedor = (Vendedor) request.getAttribute("vendedor");
+		}
+	%>
 
 	<div id="container" style="min-height: 80vh">
 
@@ -40,7 +51,8 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosProductos">Productos</a></li>
 					<li class="nav-item"><a class="nav-link" href="Vendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
@@ -68,198 +80,103 @@
 		</nav>
 		<!-- FIN NAVEGADOR -->
 
-		<!-- DIV ELECCION CATEGORÍA -->
+		<div id="contenedorProducto" class="container mt-5 mb-5">
 
-		<%
-			ArrayList<Categoria> categorias = null;
-			ArrayList<Producto> productos = null;
-			Categoria categoria = null;
-
-			if (request.getAttribute("categorias") != null) {
-				categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
-			}
-
-			if (request.getAttribute("productos") != null) {
-				productos = (ArrayList<Producto>) request.getAttribute("productos");
-			}
-
-			if (request.getAttribute("categoria") != null) {
-
-				categoria = (Categoria) request.getAttribute("categoria");
-			}
-		%>
-
-
-
-		<%
-			if (categoria != null) {
-		%>
-
-		<div class="container">
-			<!-- DIV BUSQUEDA POR CATEGORÍA -->
 			<div class="row">
 
-				<div class="col col-lg-12 m-5 text-center">
-					<h3>BUSCAR POR CATEGORÍAS</h3>
-					<form id="categorias" action="ObtenerTodosProductos" method="get">
-						<select name="selectCategorias" id="selectCategorias"
-							class="browser-default custom-select">
-							<option value="<%=categoria.getId()%>"><%=categoria.getNombre()%></option>
-							<%
-								for (Categoria ca : categorias) {
-							%>
-							<option value=<%=ca.getId()%>>
-								<%=ca.getNombre()%></option>
-							<%
-								}
-							%>
-						</select>
-					</form>
+				<div class="col col-lg-2">
+
+					<a type="button"
+						class="btn btn-light-blue btn-md"
+						href="ObtenerTodosProductos">Volver</a>
+
 				</div>
 
-
 			</div>
-			<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
-		</div>
-		<!-- FIN DIV ELECCION CATEGORÍA -->
 
-		<%
-			} else {
-		%>
-
-		<div class="container">
-			<!-- DIV BUSQUEDA POR CATEGORÍA -->
+			<!-- CABECERA PRODUCTO -->
 			<div class="row">
 
-				<div class="col col-lg-12 m-5 text-center">
-					<h3>BUSCAR POR CATEGORÍAS</h3>
-					<form id="categorias" action="ObtenerTodosProductos" method="get">
-						<select name="selectCategorias" id="selectCategorias"
-							class="browser-default custom-select">
-							<option selected>ELIJA UNA CATEGORÍA</option>
-							<%
-								for (Categoria ca : categorias) {
-							%>
-							<option value=<%=ca.getId()%>>
-								<%=ca.getNombre()%></option>
-							<%
-								}
-							%>
-						</select>
-					</form>
+
+
+				<div class="col col-lg-12 text-center">
+					<h3><%=producto.getNombre()%></h3>
+					<h5><%=vendedor.getNombre()%></h5>
 				</div>
 
-
 			</div>
-			<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
-		</div>
-		<!-- FIN DIV ELECCION CATEGORÍA -->
-
-		<%
-			}
-		%>
-
-
-		<%
-			if (request.getAttribute("error") != null) {
-				String error = (String) request.getAttribute("error");
-		%>
-
-		<div class="container">
-			<!-- DIV ERROR-->
+			<!-- FIN CABECERA PRODUCTO -->
+			<hr>
+			<!-- FOTO PRODUCTO -->
 			<div class="row">
-
-				<div class="col col-lg-12 m-5 text-center">
-					<h3><%=error%></h3>
-				</div>
-
-
-			</div>
-			<!-- FIN DIV BUSQUEDA POR CATEGORÍA -->
-		</div>
-		<!-- FIN DIV ELECCION CATEGORÍA -->
-
-		<%
-			} else {
-		%>
-
-		<!-- Card deck -->
-		<div class="row row-cols-1 row-cols-md-5 m-5">
-
-			<%
-				for (Producto pro : productos) {
-			%>
-
-
-			<!-- Card -->
-			<div class="col mb-4">
-				<div class="card h-100">
-					<!--Card image-->
-					<div id="contenedorImagenProducto" class="view overlay zoom">
-						<%
-							if (pro.getFoto().equals("producto.png")) {
-						%>
-						<img id="imagenProducto" class="img-fluid z-depth-1"
-							src="img/<%=pro.getFoto()%>" alt="Card image cap">
-
-						<%
-							} else {
-						%>
-						<img id="imagenProducto" class="img-fluid z-depth-1"
-							src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
-						<%
-							}
-						%>
-						<div class="mask rgba-white-slight"></div>
-					</div>
-
-					<!--Card content-->
-					<div class="card-body text-center">
-
-						<!--Title-->
-						<h4 class="card-title"><%=pro.getNombre()%></h4>
-						<!--Text-->
-						<p id="descripcionProducto" class="card-text"><%=pro.getDescripcion()%></p>
-						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-						<div class="row">
-
-							<div class="col col-lg-6">
-								<form action="PaginaVendedor" method="get">
-									<input type="hidden" name="id_vendedor"
-										value="<%=pro.getId_vendedor()%>">
-									<button type="submit" class="btn btn-light-blue btn-md">
-										IR AL VENDEDOR</button>
-								</form>
-							</div>
-
-							<div class="col col-lg-6">
-								<form action="PaginaProducto" method="get">
-									<input type="hidden" name="id_vendedor"
-										value="<%=pro.getId_vendedor()%>">
-										<input type="hidden" name="id_producto"
-										value="<%=pro.getId()%>">
-									<button type="submit" class="btn btn-light-blue btn-md">
-										IR AL PRODUCTO</button>
-								</form>
-							</div>
-
-						</div>
-					</div>
+				<div class="col col-lg-12 text-center">
+					<img class="imagenProducto" src="Imagenes/<%=producto.getFoto()%>">
 				</div>
 			</div>
+			<!-- FIN FOTO PRODUCTO -->
+			<hr>
+			<!-- DESCRIPCIÓN DEL PRODUCTO -->
+			<div class="row">
+				<div class="col col-lg-12 text-center">
+					<h3>Descripción del producto</h3>
+					<p><%=producto.getDescripcion()%></p>
+				</div>
+			</div>
+			<!-- FIN DESCRIPCIÓN DEL PRODUCTO -->
+			<hr>
 
-			<%
-				}
-			%>
-			<%
-				}
-			%>
-			<!-- Card -->
+			<!-- PRECIO PRODUCTO -->
+			<div class="row">
+				<div class="col col-lg-12 text-center">
+					<h3>PRECIO</h3>
+					<p><%=producto.getPrecio()%>
+						€/
+						<%=producto.getFormato()%></p>
+				</div>
+			</div>
+			<!-- FIN PRECIO PRODUCTO -->
+
+			<div class="col col-lg-6">
+				<form action="PaginaVendedor" method="get">
+					<input type="hidden" name="id_vendedor"
+						value="<%=producto.getId_vendedor()%>">
+					<button type="submit" class="btn btn-light-blue btn-md">
+						IR AL VENDEDOR</button>
+				</form>
+			</div>
 		</div>
-		<!-- Card deck -->
-	</div>
-	
-	<!------------------------------------------------------MODAL DE ELECCION DE TIPO DE REGISTRO------------------------------------------------------------------------>
+
+		<!-- Footer -->
+		<footer class="page-footer font-small unique-color-dark pt-4">
+
+			<!-- Footer Elements -->
+			<div class="container">
+
+				<!-- Call to action -->
+				<ul class="list-unstyled list-inline text-center py-2">
+					<li class="list-inline-item">
+						<h5 class="mb-1">Regístrate gratis!</h5>
+					</li>
+					<li class="list-inline-item"><a href="Login"
+						class="btn btn-outline-white btn-rounded" data-toggle="modal"
+						data-target="#modalRegistro">Darse de alta</a></li>
+				</ul>
+				<!-- Call to action -->
+
+			</div>
+			<!-- Footer Elements -->
+
+			<!-- Copyright -->
+			<div class="footer-copyright text-center py-3 ">
+				© 2020 Copyright: <a href="https://fetaqui.com/"> fetaqui.com</a>
+			</div>
+			<!-- Copyright -->
+
+		</footer>
+		<!-- Footer -->
+
+
+		<!------------------------------------------------------MODAL DE ELECCION DE TIPO DE REGISTRO------------------------------------------------------------------------>
 		<div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -461,48 +378,118 @@
 				</div>
 			</div>
 		</div>
-	<!-- Footer -->
-	<footer class="page-footer font-small unique-color-dark pt-4">
 
-		<!-- Footer Elements -->
-		<div class="container">
+		<!-- MODAL DE CONFIRMACIÓN DE EMAIL -->
+		<div class="modal fade" id="centralModalSuccess" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-notify modal-success" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead">¡Muchas gracias!</p>
 
-			<!-- Call to action -->
-			<ul class="list-unstyled list-inline text-center py-2">
-				<li class="list-inline-item">
-					<h5 class="mb-1">Regístrate gratis!</h5>
-				</li>
-				<li class="list-inline-item"><a href="Login"
-					class="btn btn-outline-white btn-rounded" data-toggle="modal"
-					data-target="#modalRegistro">Darse de alta</a></li>
-			</ul>
-			<!-- Call to action -->
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true" class="white-text">&times;</span>
+						</button>
+					</div>
 
+					<!--Body-->
+					<div class="modal-body">
+						<div class="text-center">
+							<i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+							<p>
+								Ha activado su usuario.<br> Recuerde que su usuario es el <strong>correo
+									electrónico</strong> con el que se ha registrado.
+							</p>
+						</div>
+					</div>
+
+					<!--Footer-->
+					<div class="modal-footer justify-content-center">
+						<a type="button" class="btn btn-success">Login <i
+							class="fas fa-sign-in-alt"></i></a> <a type="button"
+							class="btn btn-outline-success waves-effect" data-dismiss="modal">Cerrar</a>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
 		</div>
-		<!-- Footer Elements -->
 
-		<!-- Copyright -->
-		<div class="footer-copyright text-center py-3 ">
-			© 2020 Copyright: <a href="https://fetaqui.com/"> fetaqui.com</a>
-		</div>
-		<!-- Copyright -->
 
-	</footer>
-	<!-- Footer -->
+		<%
+			boolean activado = false;
+			if (request.getAttribute("activado") != null) {
+				activado = (boolean) request.getAttribute("activado");
+			}
 
-	<script type="text/javascript">
-		function submit() {
+			String email = "";
+			if (request.getAttribute("email") != null) {
+				email = (String) request.getAttribute("email");
+			}
+		%>
 
-			$('#categorias').submit();
-
-		}
-
-		$(function() {
-			$('#selectCategorias').on('change', function() {
-				submit();
+		<%
+			if (activado == true) {
+		%>
+		<script>
+			$(document).ready(function() {
+				$("#centralModalSuccess").modal('show');
 			});
-		});
-	</script>
+		</script>
+		<%
+			}
+		%>
+
+		<%
+			if (!email.equals("")) {
+		%>
+		<script>
+			$(document).ready(function() {
+				$("#centralModalInfo").modal('show');
+			});
+		</script>
+		<%
+			}
+		%>
+
+		<!-- Central Modal Medium Info -->
+		<div class="modal fade" id="centralModalInfo" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-notify modal-info" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead">Información importante</p>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true" class="white-text">&times;</span>
+						</button>
+					</div>
+
+					<!--Body-->
+					<div class="modal-body">
+						<div class="text-center">
+							<i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+							<p>
+								Le hemos enviado un correo electrónico para confirmar su
+								usuario. <br> Haga click sobre el enlace que le hemos
+								enviado para activarlo
+							</p>
+						</div>
+					</div>
+
+					<!--Footer-->
+					<div class="modal-footer justify-content-center">
+						<a type="button" class="btn btn-primary" data-dismiss="modal">Entendido</a>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+	</div>
 
 
 </body>

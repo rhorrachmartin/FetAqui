@@ -66,7 +66,7 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link" href="ObtenerTodosProductos">Productos</a></li>
 					<li class="nav-item"><a class="nav-link" href="Vendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
@@ -106,8 +106,42 @@
 					</div>
 					<hr>
 					<div>
-						<h5><%=vendedor.getNombre()%></h5>
+						<h2><%=vendedor.getNombre()%></h2>
 					</div>
+					<hr>
+					<div>
+						<h4>LOCALIZACIÓN</h4>
+					</div>
+					<hr>
+					<div>
+						<p><%=vendedor.getPoblacion()%></p>
+						<hr>
+						<p><%=vendedor.getDireccion()%></p>
+					</div>
+					<hr>
+					<div>
+						<h4>CONTACTO</h4>
+					</div>
+					<hr>
+					<p><%=vendedor.getTelefono()%></p>
+					<hr>
+					<p><%=vendedor.getEmail()%></p>
+					<hr>
+					<div>
+						<h4>¿VENDE ONLINE?</h4>
+						<%
+							if (vendedor.getVenta_online() == 1) {
+						%>
+						<h5>SI</h5>
+						<%
+							} else {
+						%>
+						<h5>NO</h5>
+						<%
+							}
+						%>
+					</div>
+
 
 
 				</div>
@@ -125,11 +159,14 @@
 
 							<div class="col col-lg-12 m-5 text-center">
 								<h3>BUSCAR POR CATEGORÍAS</h3>
-								<form id="categorias" action="ObtenerTodosProductos"
+								<form id="categorias" action="PaginaVendedor"
 									method="get">
+									<input type="hidden" name="id_vendedor" value="<%=vendedor.getId_vendedor() %>">
 									<select name="selectCategorias" id="selectCategorias"
 										class="browser-default custom-select">
-										<option value="<%=categoria.getId()%>"><%=categoria.getNombre()%></option>
+										
+										<option value="<%=categoria.getId()%>" selected><%=categoria.getNombre()%></option>
+										<option value="todos">TODOS LOS PRODUCTOS</option>
 										<%
 											for (Categoria ca : categorias) {
 										%>
@@ -158,11 +195,12 @@
 
 							<div class="col col-lg-12 m-5 text-center">
 								<h3>BUSCAR POR CATEGORÍAS</h3>
-								<form id="categorias" action="ObtenerTodosProductos"
+								<form id="categorias" action="PaginaVendedor"
 									method="get">
+									<input type="hidden" name="id_vendedor" value="<%=vendedor.getId_vendedor() %>">
 									<select name="selectCategorias" id="selectCategorias"
 										class="browser-default custom-select">
-										<option selected>ELIJA UNA CATEGORÍA</option>
+										<option value="todos" selected>TODOS LOS PRODUCTOS</option>
 										<%
 											for (Categoria ca : categorias) {
 										%>
@@ -251,12 +289,7 @@
 										<div class="row">
 
 											<div class="col col-lg-12 text-center">
-												<form action="Producto" method="post">
-													<input type="hidden" name="id_vendedor"
-														value="<%=pro.getId()%>">
-													<button type="submit" class="btn btn-light-blue btn-md">
-														VER PRODUCTO</button>
-												</form>
+												<h5>Precio: <%=pro.getPrecio()%>€ / <%=pro.getFormato()%></h5>
 											</div>
 
 										</div>
