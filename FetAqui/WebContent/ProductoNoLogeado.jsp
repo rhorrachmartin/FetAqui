@@ -86,8 +86,7 @@
 
 				<div class="col col-lg-2">
 
-					<a type="button"
-						class="btn btn-light-blue btn-md"
+					<a type="button" class="btn btn-light-blue btn-md"
 						href="ObtenerTodosProductos">Volver</a>
 
 				</div>
@@ -117,9 +116,14 @@
 			<hr>
 			<!-- DESCRIPCIÓN DEL PRODUCTO -->
 			<div class="row">
-				<div class="col col-lg-12 text-center">
+
+				<div class="text-center" style="width: 100%;">
 					<h3>Descripción del producto</h3>
-					<p><%=producto.getDescripcion()%></p>
+				</div>
+
+				<div class="col col-lg-12"
+					style="margin: 1px; word-wrap: break-word;">
+					<p><%=producto.getDescripcion()%><p>
 				</div>
 			</div>
 			<!-- FIN DESCRIPCIÓN DEL PRODUCTO -->
