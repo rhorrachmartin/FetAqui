@@ -1,6 +1,7 @@
 package modelo.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.NamingException;
 
@@ -118,6 +119,38 @@ public class VendedorDAO {
 			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
 			// Insertamos el usuario
 			return vendedoresMapper.getVendedorPorId(id_vendedor);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public ArrayList<Vendedor> getVendedoresPoblacion(Integer id_poblacion) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			return vendedoresMapper.getVendedoresPoblacion(id_poblacion);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public ArrayList<Vendedor> getVendedores() {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+
+		try {
+			// Obtenemos el mapper
+			VendedoresMapper vendedoresMapper = sqlSession.getMapper(VendedoresMapper.class);
+			// Insertamos el usuario
+			return vendedoresMapper.getVendedores();
 
 		} finally {
 			// Cerramos sesión

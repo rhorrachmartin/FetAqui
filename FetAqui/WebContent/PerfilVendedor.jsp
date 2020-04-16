@@ -35,7 +35,7 @@
 	%>
 	<div id="container" style="min-height: 60vh">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">Navbar</a>
+			<a class="navbar-brand" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -313,14 +313,14 @@
 								<div class="form-group">
 									<label for="nombre">Nombre</label> <input type="text"
 										id="nombre" name="nombre" class="form-control"
-										aria-describedby="nombre" value=<%=vendedor.getNombre()%>
+										aria-describedby="nombre" value="<%=vendedor.getNombre()%>"
 										required>
 								</div>
 
 								<div class="form-group">
 									<label for="telefono">Telefono </label> <input type="text"
 										id="telefono" name="telefono" class="form-control"
-										aria-describedby="telefono" value=<%=vendedor.getTelefono()%>
+										aria-describedby="telefono" value="<%=vendedor.getTelefono()%>"
 										required>
 								</div>
 

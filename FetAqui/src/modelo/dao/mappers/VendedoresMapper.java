@@ -57,7 +57,7 @@ public interface VendedoresMapper {
 	 * @param poblacion recibe string con la poblacion
 	 * @return
 	 */
-	public ArrayList<Vendedor> getVendedoresPoblacion(@Param("poblacion") String poblacion);
+	public ArrayList<Vendedor> getVendedoresPoblacion(@Param("id_poblacion") Integer id_poblacion);
 
 	/**
 	 * Método para buscar vendedores por nombre

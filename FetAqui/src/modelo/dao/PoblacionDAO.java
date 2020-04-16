@@ -32,6 +32,22 @@ public class PoblacionDAO {
 			sqlSession.close();
 		}
 	}
+	
+	public Poblacion getPoblacionPorId(Integer id_poblacion) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		
+		try {
+			// Obtenemos el mapper
+			PoblacionesMapper poblacionesMapper = sqlSession.getMapper(PoblacionesMapper.class);
+			//Devolvemos el arraylist de poblacion
+			return poblacionesMapper.getPoblacionPorId(id_poblacion);
+
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 	
 

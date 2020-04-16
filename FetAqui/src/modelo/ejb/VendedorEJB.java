@@ -1,5 +1,7 @@
 package modelo.ejb;
 
+import java.util.ArrayList;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -54,6 +56,16 @@ public class VendedorEJB {
 	public Vendedor getVendedor(String email, String password) {
 		VendedorDAO vendedorDAO = new VendedorDAO();
 		return vendedorDAO.getVendedor(email, password);
+	}
+	
+	public ArrayList<Vendedor> getVendedores(){
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		return vendedorDAO.getVendedores();
+	}
+	
+	public ArrayList<Vendedor> getVendedoresPoblacion(Integer id_poblacion){
+		VendedorDAO vendedorDAO = new VendedorDAO();
+		return vendedorDAO.getVendedoresPoblacion(id_poblacion);
 	}
 	
 	public Vendedor getVendedorPorId(Integer id_vendedor) {

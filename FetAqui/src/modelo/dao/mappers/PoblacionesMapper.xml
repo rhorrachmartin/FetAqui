@@ -13,6 +13,10 @@
 	<select id="getPoblaciones" resultMap="getPoblaciones">
 		select * from poblacion;
 	</select>
+	
+	<select id="getPoblacionPorId" parameterType="int" resultType="Poblacion">
+		select * from poblacion where poblacion.id_poblacion = #{id_poblacion};
+	</select>
 
 	<insert id="insertarPoblacion" parameterType="Direccion"
 		useGeneratedKeys="true" keyProperty="id">

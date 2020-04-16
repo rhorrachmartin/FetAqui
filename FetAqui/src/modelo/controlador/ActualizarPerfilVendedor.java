@@ -103,53 +103,58 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 		Vendedor vendedorExiste = null;
 		String nif = request.getParameter("nif");
 		String nombre = request.getParameter("nombre");
+		System.out.println(nombre);
 		String telefono = request.getParameter("telefono");
 		String passAntiguo = request.getParameter("passAntiguo");
 		String direccion = request.getParameter("direccion");
 
 		Direccion dir = new Direccion();
 		ArrayList<Poblacion> poblaciones = null;
-		try {
-			Integer id_poblacion = Integer.valueOf(request.getParameter("poblacion"));
-			if (vendedor.getNombre() != null) {
-				vendedorExiste = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
-				if (vendedorExiste.getPassword().equals(passAntiguo)) {
-					vendedorEJB.updateTelefono(telefono, vendedorExiste.getId_vendedor());
-					vendedorEJB.updateNombre(nombre, vendedorExiste.getId_vendedor());
-					vendedorEJB.updateNif(nif, vendedorExiste.getId_vendedor());
 
-					if (!vendedorExiste.getDireccion().equals(direccion)
-							|| vendedorExiste.getIdPoblacion() != id_poblacion) {
-						dir.setDireccion(direccion);
-						dir.setId_poblacion(id_poblacion);
-						direccionEJB.insertarDireccion(dir);
-						vendedorEJB.updateDireccion(vendedorExiste.getId_vendedor());
-					}
+		Integer id_poblacion = Integer.valueOf(request.getParameter("poblacion"));
+		if (vendedor.getNombre() != null) {
+			vendedorExiste = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
+			System.out.println(vendedorExiste.getNombre());
+			
+			if (vendedorExiste.getPassword().equals(passAntiguo)) {
+				
+				vendedorEJB.updateTelefono(telefono, vendedorExiste.getId_vendedor());
+				vendedorEJB.updateNombre(nombre, vendedorExiste.getId_vendedor());
+				vendedorEJB.updateNif(nif, vendedorExiste.getId_vendedor());
 
-					Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
-
-					request.getSession().setAttribute("vendedor", vendedorActualizado);
-
-					poblaciones = poblacionEJB.getPoblaciones();
-
-					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("vendedor", vendedorActualizado);
-					rs.forward(request, response);
-				} else {
-					String error = "Contraseña incorrecta";
-					Vendedor vendedor3 = (Vendedor) session.getAttribute("vendedor");
-					poblaciones = poblacionEJB.getPoblaciones();
-					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("vendedor", vendedor3);
-					request.setAttribute("error", error);
-					rs.forward(request, response);
+				if (!vendedorExiste.getDireccion().equals(direccion)
+						|| vendedorExiste.getIdPoblacion() != id_poblacion) {
+					dir.setDireccion(direccion);
+					dir.setId_poblacion(id_poblacion);
+					direccionEJB.insertarDireccion(dir);
+					vendedorEJB.updateDireccion(vendedorExiste.getId_vendedor());
 				}
 
+				Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
+				
+				System.out.println(vendedorActualizado.getNombre());
+
+				request.getSession().setAttribute("vendedor", vendedorActualizado);
+
+				poblaciones = poblacionEJB.getPoblaciones();
+
+				request.setAttribute("poblaciones", poblaciones);
+				request.setAttribute("vendedor", vendedorActualizado);
+				rs.forward(request, response);
+				
 			} else {
-				response.sendRedirect("Principal");
+				
+				String error = "Contraseña incorrecta";
+				Vendedor vendedor3 = (Vendedor) session.getAttribute("vendedor");
+				poblaciones = poblacionEJB.getPoblaciones();
+				request.setAttribute("poblaciones", poblaciones);
+				request.setAttribute("vendedor", vendedor3);
+				request.setAttribute("error", error);
+				rs.forward(request, response);
 			}
-		} catch (Exception e) {
-			e.getMessage();
+
+		} else {
+			response.sendRedirect("Principal");
 		}
 
 	}

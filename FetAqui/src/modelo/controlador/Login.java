@@ -145,7 +145,7 @@ public class Login extends HttpServlet {
 					// Iniciamos la sesión
 					session = request.getSession(true);
 					sesionVendedorEJB.crearSesion(session, v);
-					request.setAttribute("vendedor", c);
+					request.setAttribute("vendedor", v);
 					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_VENDEDOR);
 					rs.forward(request, response);
 				} else {

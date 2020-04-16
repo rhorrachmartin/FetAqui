@@ -3,6 +3,8 @@ package modelo.dao.mappers;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import modelo.pojo.Poblacion;
 
 /**
@@ -18,5 +20,7 @@ public interface PoblacionesMapper {
 	 * @return ArrayList<Poblacion> 
 	 */
 	public ArrayList<Poblacion> getPoblaciones();
+	
+	public Poblacion getPoblacionPorId(@Param("id_poblacion") Integer id_poblacion);
 
 }

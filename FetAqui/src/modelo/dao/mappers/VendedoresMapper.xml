@@ -5,7 +5,7 @@
 <mapper namespace='modelo.dao.mappers.VendedoresMapper'>
 
 	<resultMap type='Vendedor' id='getVendedores'>
-		<result property='id' column='id_vendedor' />
+		<result property='id_vendedor' column='id_vendedor' />
 		<result property='nombre' column='nombre' />
 		<result property='email' column='email' />
 		<result property='telefono' column='telefono' />
@@ -36,7 +36,7 @@
 	</select>
 	
 	<resultMap type='Vendedor' id='getVendedoresPoblacion'>
-		<result property='id' column='id_vendedor' />
+		<result property='id_vendedor' column='id_vendedor' />
 		<result property='nombre' column='nombre' />
 		<result property='email' column='email' />
 		<result property='telefono' column='telefono' />
@@ -48,10 +48,10 @@
 	</resultMap>
 
 
-	<select id="getVendedoresPoblacion" resultMap="getVendedoresPoblacion">
+	<select id="getVendedoresPoblacion" parameterType="int" resultMap="getVendedoresPoblacion">
 		select
 		id_vendedor,
-		vendedor.nombre as vendedor, email,
+		vendedor.nombre, email,
 		telefono,foto, direccion.direccion,
 		poblacion.nombre as poblacion,venta_online
 		from
@@ -63,7 +63,7 @@
 		inner join
 		poblacion
 		on poblacion.id_poblacion = direccion.poblacion
-		where poblacion.nombre like #{poblacion}
+		where poblacion.id_poblacion = #{id_poblacion}
 		and activado = 1;
 	</select>
 	
@@ -107,7 +107,7 @@
 			telefono,			 
 			email,
 			password,
-			poblacion.id_poblacion,
+			poblacion.id_poblacion as idPoblacion,
 			poblacion.nombre as poblacion,
 			vendedor.direccion as idDireccion,
 			direccion.direccion,
