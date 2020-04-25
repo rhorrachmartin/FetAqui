@@ -55,7 +55,7 @@ public class ActualizarFotoPerfil extends HttpServlet {
 	static final String PERFIL_CLIENTE_JSP = "/PerfilCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	/**
-	 * cambiamos carpeta
+	 * cambiamos carpeta y repositorio
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
