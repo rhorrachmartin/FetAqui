@@ -1,5 +1,5 @@
 CREATE DATABASE fetaqui CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
+ALTER DATABASE fetaqui CHARACTER SET utf8 COLLATE utf8_general_ci;
 use fetaqui;
 
 create table poblacion(
@@ -20,7 +20,7 @@ create table direccion(
 create table vendedor(
 	id_vendedor int not null primary key auto_increment,
     nif varchar(9) not null,
-    nombre varchar(32) not null,/*no es necesaria en caso de que un vendedor no desee vender online, en caso de que lo desee deberá updatear el atributo*/
+    nombre varchar(32) not null,
     email varchar(64) not null,
     password varchar(32) not null,
     foto varchar(100) not null,
