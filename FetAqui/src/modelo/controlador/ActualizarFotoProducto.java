@@ -18,9 +18,7 @@ import modelo.ejb.CategoriaEJB;
 import modelo.ejb.FormatoEJB;
 import modelo.ejb.ImagenesEJB;
 import modelo.ejb.LoggersEJB;
-import modelo.ejb.PoblacionEJB;
 import modelo.ejb.ProductoEJB;
-import modelo.ejb.VendedorEJB;
 import modelo.pojo.Categoria;
 import modelo.pojo.Formato;
 import modelo.pojo.Producto;
@@ -37,11 +35,7 @@ public class ActualizarFotoProducto extends HttpServlet {
 	/**
 	 * EJB para trabajar con Usuarios
 	 */
-	@EJB
-	VendedorEJB vendedorEJB;
-
-	@EJB
-	PoblacionEJB poblacionEJB;
+	
 	
 	@EJB
 	CategoriaEJB categoriaEJB;

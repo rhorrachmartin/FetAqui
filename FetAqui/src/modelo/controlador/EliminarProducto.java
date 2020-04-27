@@ -1,10 +1,8 @@
 package modelo.controlador;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,10 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.ejb.LoggersEJB;
-import modelo.ejb.PoblacionEJB;
 import modelo.ejb.ProductoEJB;
-import modelo.ejb.VendedorEJB;
-import modelo.pojo.Poblacion;
 import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
@@ -27,15 +22,7 @@ import modelo.pojo.Vendedor;
 public class EliminarProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
-	@EJB
-	VendedorEJB vendedorEJB;
-
-	@EJB
-	PoblacionEJB poblacionEJB;
-
+	
 	@EJB
 	ProductoEJB productoEJB;
 

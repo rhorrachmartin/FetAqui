@@ -16,10 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import modelo.ejb.ClienteEJB;
 import modelo.ejb.ImagenesEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
-import modelo.ejb.VendedorEJB;
 import modelo.pojo.Cliente;
 import modelo.pojo.Poblacion;
 
@@ -34,8 +32,7 @@ public class ActualizarFotoPerfil extends HttpServlet {
 	/**
 	 * EJB para trabajar con Usuarios
 	 */
-	@EJB
-	VendedorEJB vendedorEJB;
+	
 
 	@EJB
 	ClienteEJB clienteEJB;

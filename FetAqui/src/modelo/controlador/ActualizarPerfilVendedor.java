@@ -13,13 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.ejb.ClienteEJB;
-import modelo.ejb.CodigoClienteEJB;
-import modelo.ejb.CodigoVendedorEJB;
 import modelo.ejb.DireccionEJB;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
-import modelo.ejb.SesionVendedorEJB;
 import modelo.ejb.VendedorEJB;
 import modelo.pojo.Direccion;
 import modelo.pojo.Poblacion;
@@ -38,26 +34,6 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 	 */
 	@EJB
 	VendedorEJB vendedorEJB;
-
-	@EJB
-	ClienteEJB clienteEJB;
-	/**
-	 * EJB para trabajar con sesiones
-	 */
-	@EJB
-	SesionVendedorEJB sesionVendedorEJB;
-
-	/**
-	 * EJB para trabajar con los codigos de activación de vendedores
-	 */
-	@EJB
-	CodigoVendedorEJB codigoVendedorEJB;
-
-	/**
-	 * EJB para trabajar con los codigos de activacion de clientes
-	 */
-	@EJB
-	CodigoClienteEJB codigoClienteEJB;
 
 	@EJB
 	DireccionEJB direccionEJB;

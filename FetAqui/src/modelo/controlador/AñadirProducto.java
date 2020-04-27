@@ -17,18 +17,14 @@ import javax.servlet.http.HttpSession;
 import modelo.ejb.CategoriaEJB;
 import modelo.ejb.FormatoEJB;
 import modelo.ejb.ImagenesEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
-import modelo.ejb.PoblacionEJB;
 import modelo.ejb.ProductoEJB;
 import modelo.ejb.ValoracionProductoEJB;
-import modelo.ejb.VendedorEJB;
-
 import modelo.pojo.Categoria;
 import modelo.pojo.Formato;
-import modelo.pojo.Vendedor;
 import modelo.pojo.Producto;
 import modelo.pojo.ValoracionProducto;
+import modelo.pojo.Vendedor;
 /**
  * Servlet implementation class AñadirProducto
  */
@@ -37,14 +33,6 @@ import modelo.pojo.ValoracionProducto;
 public class AñadirProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
-	@EJB
-	VendedorEJB vendedorEJB;
-
-	@EJB
-	PoblacionEJB poblacionEJB;
 
 	@EJB
 	CategoriaEJB categoriaEJB;

@@ -57,60 +57,6 @@ public class Login extends HttpServlet {
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String HOME_LOGEADO = "/HomeLogeado.jsp";
 	static final String HOME_LOGEADO_VENDEDOR = "/HomeLogeadoVendedor.jsp";
-	
-	/**
-	 * Método doGet que muestra el formulario de login
-	 */
-
-//	@Override
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		
-//		response.setContentType(CONTENT_TYPE);
-//		//Creamos el por defecto hacia Login.jsp
-//		RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_LOGEADO);
-//		
-//		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-//		HttpSession session = request.getSession(false);
-//
-//		// Recogemos los datos necesarios
-//		String error = request.getParameter("error");
-//		String activado = request.getParameter("activado");
-//		
-//		//Insertamos los datos necesarios en la request
-//		request.setAttribute("error", error);
-//		request.setAttribute("activado", activado);
-//		
-//		// Intentamos obtener el usuario de la sesión
-//		Usuario u = sesionesEJB.usuarioLogeado(session);
-//		
-//		//Insertamos al mismo en la request
-//		request.setAttribute("usuario", u);
-//		
-//		try {
-//			if (u != null) {
-//				// Ya está logeado, lo redirigimos a la principal
-//				response.sendRedirect("Principal");
-//			} else {
-//				// No está logeado, mostramos página de login
-//				
-//				
-//				//Recogemos el parámetro vista 
-//				String vista = request.getParameter("vista");
-//				
-//				
-//				if (vista != null && vista.equals("n")) {
-//					//Si no es null y es igual a "n" redirigimos hacia Login2.jsp
-//						rs = getServletContext().getRequestDispatcher(HOME_LOGEADO);
-//				}
-//				
-//				rs.forward(request, response);
-//			}
-//		} catch (Exception e) {
-//			logger.setErrorLogger(e.getMessage());
-//		}
-//
-//	}
 
 	/**
 	 * Método doPost que Logea al usuario en la APP

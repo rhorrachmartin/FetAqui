@@ -15,7 +15,6 @@ import modelo.ejb.ClienteEJB;
 import modelo.ejb.CodigoClienteEJB;
 import modelo.ejb.CodigoVendedorEJB;
 import modelo.ejb.LoggersEJB;
-import modelo.ejb.SesionVendedorEJB;
 import modelo.ejb.VendedorEJB;
 
 /**
@@ -35,11 +34,6 @@ public class ConfirmarUsuario extends HttpServlet {
 	
 	@EJB
 	ClienteEJB clienteEJB;
-	/**
-	 * EJB para trabajar con sesiones
-	 */
-	@EJB
-	SesionVendedorEJB sesionVendedorEJB;
 	
 	/**
 	 * EJB para trabajar con los codigos de activación de vendedores

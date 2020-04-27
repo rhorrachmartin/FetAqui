@@ -15,11 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import modelo.ejb.CategoriaEJB;
 import modelo.ejb.FormatoEJB;
-import modelo.ejb.ImagenesEJB;
 import modelo.ejb.LoggersEJB;
-import modelo.ejb.PoblacionEJB;
 import modelo.ejb.ProductoEJB;
-import modelo.ejb.VendedorEJB;
 import modelo.pojo.Categoria;
 import modelo.pojo.Formato;
 import modelo.pojo.Producto;
@@ -32,15 +29,7 @@ import modelo.pojo.Vendedor;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ActualizarProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
-	@EJB
-	VendedorEJB vendedorEJB;
-
-	@EJB
-	PoblacionEJB poblacionEJB;
+	
 
 	@EJB
 	CategoriaEJB categoriaEJB;
@@ -55,9 +44,6 @@ public class ActualizarProducto extends HttpServlet {
 	 */
 	@EJB
 	LoggersEJB logger;
-
-	@EJB
-	ImagenesEJB imagenesEJB;
 
 	static final String PRODUCTOS_JSP = "/Productos.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";

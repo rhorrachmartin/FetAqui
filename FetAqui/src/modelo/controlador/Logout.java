@@ -24,7 +24,7 @@ public class Logout extends HttpServlet {
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String LOGIN_JSP = "/Login.jsp";
 
-	// EJB's necesarios
+	
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
 	

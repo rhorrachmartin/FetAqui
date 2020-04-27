@@ -13,10 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.ejb.DireccionEJB;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
-import modelo.ejb.SesionVendedorEJB;
 import modelo.ejb.VendedorEJB;
 import modelo.pojo.Poblacion;
 import modelo.pojo.Vendedor;
@@ -34,14 +32,6 @@ public class ActualizarPasswordVendedor extends HttpServlet {
 	 */
 	@EJB
 	VendedorEJB vendedorEJB;
-	/**
-	 * EJB para trabajar con sesiones
-	 */
-	@EJB
-	SesionVendedorEJB sesionVendedorEJB;
-
-	@EJB
-	DireccionEJB direccionEJB;
 
 	@EJB
 	PoblacionEJB poblacionEJB;
