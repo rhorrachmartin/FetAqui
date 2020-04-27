@@ -12,12 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import modelo.ejb.CategoriaEJB;
-import modelo.ejb.FormatoEJB;
 import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
-import modelo.ejb.PoblacionEJB;
 import modelo.ejb.ProductoEJB;
-import modelo.ejb.VendedorEJB;
 import modelo.pojo.Categoria;
 import modelo.pojo.Producto;
 
@@ -28,20 +25,9 @@ import modelo.pojo.Producto;
 public class ObtenerTodosProductos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
-	@EJB
-	VendedorEJB vendedorEJB;
-
-	@EJB
-	PoblacionEJB poblacionEJB;
-
+	
 	@EJB
 	CategoriaEJB categoriaEJB;
-
-	@EJB
-	FormatoEJB formatoEJB;
 
 	@EJB
 	ProductoEJB productoEJB;
@@ -50,9 +36,6 @@ public class ObtenerTodosProductos extends HttpServlet {
 	 */
 	@EJB
 	LoggersEJB logger;
-
-	@EJB
-	ImagenesEJB2 imagenesEJB;
 
 	static final String PRODUCTOS_NO_LOGEADO_JSP = "/ProductosNoLogeado.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";

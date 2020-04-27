@@ -13,13 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.ejb.ClienteEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
-import modelo.ejb.SesionClienteEJB;
-import modelo.ejb.SesionVendedorEJB;
-import modelo.ejb.VendedorEJB;
 import modelo.pojo.Cliente;
 import modelo.pojo.Poblacion;
 import modelo.pojo.Vendedor;
@@ -31,43 +26,10 @@ import modelo.pojo.Vendedor;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class Perfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * EJB para trabajar con Vendedores
-	 */
-	@EJB
-	VendedorEJB vendedorEJB;
-
-	/**
-	 * EJB para trabajar con Clientes
-	 */
-	@EJB
-	ClienteEJB clienteEJB;
 	
 	@EJB
 	PoblacionEJB poblacionEJB;
-
-	/**
-	 * EJB para trabajar con sesiones de vendedor
-	 */
-	@EJB
-	SesionVendedorEJB sesionVendedorEJB;
-
-	/**
-	 * EJB para trabajar con sesiones de cliente
-	 */
-	@EJB
-	SesionClienteEJB sesionClienteEJB;
-
-	/**
-	 * EJB para tratar las imágenes
-	 */
-	@EJB
-	ImagenesEJB2 imagenesEJB;
-
-	/**
-	 * EJB para trabajar con los logger
-	 */
+	 
 	@EJB
 	LoggersEJB logger;
 
