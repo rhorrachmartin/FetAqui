@@ -142,4 +142,15 @@ public class Producto {
 		this.nombre_vendedor = nombre_vendedor;
 	}
 
+	@Override
+	public String toString() {
+		return "Producto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", foto=" + foto
+				+ ", precio=" + precio + ", valoracion=" + valoracion + ", stock=" + stock + ", vendido=" + vendido
+				+ ", id_categoria=" + id_categoria + ", categoria=" + categoria + ", id_formato=" + id_formato
+				+ ", venta_online=" + venta_online + ", formato=" + formato + ", id_vendedor=" + id_vendedor
+				+ ", nombre_vendedor=" + nombre_vendedor + "]";
+	}
+	
+	
+
 }

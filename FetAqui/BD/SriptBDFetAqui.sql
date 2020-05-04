@@ -5,7 +5,7 @@ use fetaqui;
 create table poblacion(
 	id_poblacion int not null primary key auto_increment,
     nombre varchar (32) not null
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table direccion(
 	id_direccion int not null primary key auto_increment,
@@ -13,7 +13,7 @@ create table direccion(
     poblacion int not null,
     foreign key(poblacion) references poblacion(id_poblacion)
 		on update cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
 
@@ -32,13 +32,13 @@ create table vendedor(
 	foreign key(direccion) references direccion(id_direccion)
         on update cascade
         on delete restrict
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table codigo_act_vendedor(
 	id int not null primary key,
     vendedor int not null,
     foreign key (vendedor) references vendedor(id_vendedor)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
 create table post(
@@ -47,7 +47,7 @@ create table post(
     autor int not null,
     foreign key(autor) references vendedor(id_vendedor)
         on delete cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table cliente(
 	id_cliente int not null primary key auto_increment,
@@ -61,13 +61,13 @@ create table cliente(
     activado tinyint not null default 0,
     foreign key(direccion) references direccion(id_direccion)
         on update cascade    
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table codigo_act_cliente(
 	id int not null primary key,
     cliente int not null,
     foreign key (cliente) references cliente(id_cliente)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table valoracion_post(
 	id_valoracion_post int not null primary key auto_increment,
@@ -78,7 +78,7 @@ create table valoracion_post(
 		on update cascade,
 	foreign key(id_post) references post(id_post)
 		on delete cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
 create table valoracioncv(
@@ -90,7 +90,7 @@ create table valoracioncv(
 		on update cascade,
 	foreign key(id_vendedor) references vendedor(id_vendedor)
 		on delete cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table valoracionvc(
 	id_valoracionvc int not null primary key auto_increment,
@@ -101,17 +101,17 @@ create table valoracionvc(
 		on delete cascade,
 	foreign key(id_vendedor) references vendedor(id_vendedor)
 		on delete cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table categoria(
 	id_categoria int not null primary key auto_increment,
     nombre varchar(32) not null
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table formato(
 	id_formato int not null primary key auto_increment,
     nombre varchar(32)
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table producto(
 	id_producto int not null primary key auto_increment,
@@ -131,7 +131,7 @@ create table producto(
 		on update cascade,
 	foreign key (vendedor) references vendedor(id_vendedor)
 		on delete cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table valoracion_producto(
 	id_valoracion_producto int not null primary key auto_increment,
@@ -142,7 +142,7 @@ create table valoracion_producto(
 		on delete cascade,
 	foreign key (producto) references producto(id_producto)
 		on delete cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table pedido(
 	id_pedido int not null primary key auto_increment,
@@ -155,7 +155,7 @@ create table pedido(
 		on delete cascade,
 	foreign key (destino) references direccion(id_direccion)
 		on update cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 create table detalle_pedido(
 	id_detalle int not null primary key auto_increment,
@@ -168,7 +168,7 @@ create table detalle_pedido(
 		on delete cascade,
 	foreign key (id_producto) references producto(id_producto)
 		on delete cascade
-);
+)DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
 insert into poblacion (nombre) values ('Alaró'),('Alcudia'),('Algaida'),('Andratx'),('Ariany'),
