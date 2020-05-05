@@ -73,7 +73,7 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("password");
 
 		// Buscamos al usuario en BD
-		Vendedor v = null;
+		Vendedor vendedor = null;
 		Cliente c = null;
 
 		try {
@@ -85,15 +85,14 @@ public class Login extends HttpServlet {
 
 			} else if (vendedorEJB.getVendedorEmailPass(email, password) != null) {
 				
-				v = vendedorEJB.getVendedor(email, password);
+				vendedor = vendedorEJB.getVendedor(email, password);
 
-				if (v.getActivado() == 1) {
+				if (vendedor.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);
-					sesionVendedorEJB.crearSesion(session, v);
-					request.setAttribute("vendedor", v);
-					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_VENDEDOR);
-					rs.forward(request, response);
+					sesionVendedorEJB.crearSesion(session, vendedor);
+					request.setAttribute("vendedor", vendedor);
+					response.sendRedirect("PaginaPropioVendedor");
 				} else {
 					response.sendRedirect("Principal?error=Usuario no activado");
 				}
