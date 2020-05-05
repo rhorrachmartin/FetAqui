@@ -51,7 +51,7 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
+						href="Perfil">PERFIL</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
 						href="Logout">SALIR</a></li>
 					<%
