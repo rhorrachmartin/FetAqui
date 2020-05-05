@@ -1,6 +1,7 @@
 package modelo.controlador;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -11,12 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.ejb.CategoriaEJB;
 import modelo.ejb.ClienteEJB;
+import modelo.ejb.FormatoEJB;
 import modelo.ejb.LoggersEJB;
+import modelo.ejb.ProductoEJB;
 import modelo.ejb.SesionClienteEJB;
 import modelo.ejb.SesionVendedorEJB;
 import modelo.ejb.VendedorEJB;
+import modelo.pojo.Categoria;
 import modelo.pojo.Cliente;
+import modelo.pojo.Formato;
+import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
 /**
@@ -56,7 +63,7 @@ public class Login extends HttpServlet {
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String HOME_LOGEADO = "/HomeLogeado.jsp";
-	static final String HOME_LOGEADO_VENDEDOR = "/HomeLogeadoVendedor.jsp";
+	
 
 	/**
 	 * Método doPost que Logea al usuario en la APP
@@ -73,7 +80,7 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("password");
 
 		// Buscamos al usuario en BD
-		Vendedor v = null;
+		Vendedor vendedor = null;
 		Cliente c = null;
 
 		try {
@@ -85,15 +92,14 @@ public class Login extends HttpServlet {
 
 			} else if (vendedorEJB.getVendedorEmailPass(email, password) != null) {
 				
-				v = vendedorEJB.getVendedor(email, password);
+				vendedor = vendedorEJB.getVendedor(email, password);
 
-				if (v.getActivado() == 1) {
+				if (vendedor.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);
-					sesionVendedorEJB.crearSesion(session, v);
-					request.setAttribute("vendedor", v);
-					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_VENDEDOR);
-					rs.forward(request, response);
+					sesionVendedorEJB.crearSesion(session, vendedor);
+					
+					response.sendRedirect("PaginaPropioVendedor");
 				} else {
 					response.sendRedirect("Principal?error=Usuario no activado");
 				}

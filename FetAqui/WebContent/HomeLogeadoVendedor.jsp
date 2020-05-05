@@ -50,9 +50,12 @@
 					<li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
 					<li class="nav-item"><a class="nav-link" href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
+				
 				<ul class="navbar-nav ml-auto nav-flex-icons">
+				<li class="nav-item"><a class="btn btn-primary btn-sm"
+						href="PaginaPropioVendedor">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="OpcionesPerfilVendedor.jsp">MI PÁGINA</a></li>
+						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
 						href="Logout">SALIR</a></li>
 					<%
