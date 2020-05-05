@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import modelo.ejb.ClienteEJB;
 import modelo.ejb.CodigoClienteEJB;
 import modelo.ejb.CodigoVendedorEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.SesionClienteEJB;
 import modelo.ejb.SesionVendedorEJB;
@@ -55,12 +54,6 @@ public class Principal extends HttpServlet {
 	 */
 	@EJB
 	SesionClienteEJB sesionClienteEJB;
-
-	/**
-	 * EJB para tratar las imágenes
-	 */
-	@EJB
-	ImagenesEJB2 imagenesEJB;
 	/**
 	 * EJB para tratar los códigos de activación
 	 */

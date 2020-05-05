@@ -11,17 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelo.ejb.CategoriaEJB;
-import modelo.ejb.FormatoEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
-import modelo.ejb.ProductoEJB;
 import modelo.ejb.VendedorEJB;
-import modelo.pojo.Categoria;
-import modelo.pojo.Producto;
-import modelo.pojo.Vendedor;
 import modelo.pojo.Poblacion;
+import modelo.pojo.Vendedor;
 
 /**
  * Servlet implementation class AñadirProducto
@@ -39,22 +33,9 @@ public class ObtenerTodosVendedores extends HttpServlet {
 	@EJB
 	PoblacionEJB poblacionEJB;
 
-	@EJB
-	CategoriaEJB categoriaEJB;
-
-	@EJB
-	FormatoEJB formatoEJB;
-
-	@EJB
-	ProductoEJB productoEJB;
-	/**
-	 * EJB para trabajar con los logger
-	 */
+	
 	@EJB
 	LoggersEJB logger;
-
-	@EJB
-	ImagenesEJB2 imagenesEJB;
 
 	static final String VENDEDORES_NO_LOGEADO_JSP = "/VendedoresNoLogeado.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
