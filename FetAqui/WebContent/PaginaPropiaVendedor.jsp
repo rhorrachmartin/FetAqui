@@ -70,23 +70,23 @@
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="ObtenerTodosVendedores">Vendedores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="FetAqui/Productos">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="FetAqui/ObtenerTodosVendedores">Vendedores</a></li>
                 </ul>
                 
                 <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item"><a class="btn btn-primary btn-sm"
-                        href="PaginaPropioVendedor">MI PÁGINA</a></li>
+                        href="FetAqui/PaginaPropioVendedor">MI PÁGINA</a></li>
                     <li class="nav-item"><a class="btn btn-primary btn-sm"
-                        href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
+                        href="FetAqui/OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
                     <li class="nav-item"><a class="btn btn-success btn-sm"
-                        href="Logout">SALIR</a></li>
+                        href="FetAqui/Logout">SALIR</a></li>
                     <%
                         if (vendedor.getFoto().equals("desconocido.txt")) {
                     %>
                     <li class="nav-item avatar"><a class="nav-link p-0"
-                        href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
+                        href="FetAqui/OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
                             class="rounded-circle z-depth-0" alt="avatar image" height="35">
                     </a></li>
                     <%
@@ -170,7 +170,7 @@
  
                             <div class="col col-lg-12 m-5 text-center">
                                 <h3>BUSCAR POR CATEGORÍAS</h3>
-                                <form id="categorias" action="PaginaPropioVendedor"
+                                <form id="categorias" action="FetAqui/PaginaPropioVendedor"
                                     method="get">
                                     <input type="hidden" name="id_vendedor" value="<%=vendedor.getId_vendedor() %>">
                                     <select name="selectCategorias" id="selectCategorias"
@@ -206,7 +206,7 @@
  
                             <div class="col col-lg-12 m-5 text-center">
                                 <h3>BUSCAR POR CATEGORÍAS</h3>
-                                <form id="categorias" action="PaginaPropioVendedor"
+                                <form id="categorias" action="FetAqui/PaginaPropioVendedor"
                                     method="get">
                                     <input type="hidden" name="id_vendedor" value="<%=vendedor.getId_vendedor() %>">
                                     <select name="selectCategorias" id="selectCategorias"
@@ -363,7 +363,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="Principal" method="post">
+                    <form action="FetAqui/Principal" method="post">
                         <div class="modal-body mx-3">
                             <div class="md-form mb-5">
                                 <i class="fas fa-user prefix grey-text"></i> <input type="text"
@@ -433,7 +433,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="Principal" method="post">
+                    <form action="FetAqui/Principal" method="post">
                         <div class="modal-body mx-3">
                             <div class="md-form mb-5">
                                 <i class="fas fa-user prefix grey-text"></i> <input type="text"

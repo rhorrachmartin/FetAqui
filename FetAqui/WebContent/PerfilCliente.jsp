@@ -46,15 +46,15 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="Perfil">PERFIL</a></li>
+						href="FetAqui/Perfil">PERFIL</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
-						href="Logout">SALIR</a></li>
+						href="FetAqui/Logout">SALIR</a></li>
 					<%
 						if (cliente.getFoto().equals("desconocido.txt")) {
 					%>
@@ -126,7 +126,7 @@
 						<h5 class="mt-1 mb-2"><%=cliente.getNombre()%></h5>
 
 						<div class="md-form ml-0 mr-0">
-							<form action="ActualizarFotoPerfil" method="post"
+							<form action="FetAqui/ActualizarFotoPerfil" method="post"
 								enctype='multipart/form-data'>
 								<div class="input-group">
 									<div class="custom-file">
@@ -201,7 +201,7 @@
 						</button>
 					</div>
 					<div class="modal-body mx-3">
-						<form action="ActualizarPassword" method="post">
+						<form action="FetAqui/ActualizarPassword" method="post">
 							<div class="form-group">
 								<label for="passAntiguo">Password actual</label> <input
 									type="password" id="passAntiguo" name="passAntiguo"
@@ -304,7 +304,7 @@
 
 						<div class="card-body px-lg-5 pt-0">
 
-							<form action="ActualizarPerfilCliente" method="post"
+							<form action="FetAqui/ActualizarPerfilCliente" method="post"
 								style="color: #757575;">
 
 								<div class="form-group">

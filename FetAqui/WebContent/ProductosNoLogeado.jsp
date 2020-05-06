@@ -43,9 +43,9 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="ObtenerTodosProductos">Productos</a></li>
-					<li class="nav-item"><a class="nav-link" href="ObtenerTodosVendedores">Vendedores</a></li>
+					<li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="FetAqui/ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link" href="FetAqui/ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<%
@@ -105,7 +105,7 @@
 
 				<div class="col col-lg-12 m-5 text-center">
 					<h3>BUSCAR POR CATEGORÍAS</h3>
-					<form id="categorias" action="ObtenerTodosProductos" method="get">
+					<form id="categorias" action="FetAqui/ObtenerTodosProductos" method="get">
 						<select name="selectCategorias" id="selectCategorias"
 							class="browser-default custom-select">
 							<option value="<%=categoria.getId()%>"><%=categoria.getNombre()%></option>
@@ -137,7 +137,7 @@
 
 				<div class="col col-lg-12 m-5 text-center">
 					<h3>BUSCAR POR CATEGORÍAS</h3>
-					<form id="categorias" action="ObtenerTodosProductos" method="get">
+					<form id="categorias" action="FetAqui/ObtenerTodosProductos" method="get">
 						<select name="selectCategorias" id="selectCategorias"
 							class="browser-default custom-select">
 							<option selected>ELIJA UNA CATEGORÍA</option>
@@ -301,7 +301,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="Principal" method="post">
+					<form action="FetAqui/Principal" method="post">
 						<div class="modal-body mx-3">
 							<div class="md-form mb-5">
 								<i class="fas fa-user prefix grey-text"></i> <input type="text"
@@ -371,7 +371,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="Principal" method="post">
+					<form action="FetAqui/Principal" method="post">
 						<div class="modal-body mx-3">
 							<div class="md-form mb-5">
 								<i class="fas fa-user prefix grey-text"></i> <input type="text"
@@ -441,7 +441,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="Login" method="post">
+					<form action="FetAqui/Login" method="post">
 						<div class="modal-body mx-3">
 
 							<div class="md-form mb-5">
