@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.PoblacionesMapper'>
+
+	<resultMap type='Poblacion' id='getPoblaciones'>
+		<result property='id' column='id_poblacion' />
+		<result property='nombre' column='nombre' />
+	</resultMap>
+
+
+	<select id="getPoblaciones" resultMap="getPoblaciones">
+		select * from poblacion;
+	</select>
+	
+	<select id="getPoblacionPorId" parameterType="int" resultType="Poblacion">
+		select * from poblacion where poblacion.id_poblacion = #{id_poblacion};
+	</select>
+
+	<insert id="insertarPoblacion" parameterType="Direccion"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into direccion (direccion,poblacion)
+		values (#{direccion},#{poblacion});
+	</insert>
+
+
+</mapper>

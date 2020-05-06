@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.CodigosActivacionVendedorMapper'>
+
+	<select id='existeCodigo' parameterType='int' resultType='boolean'>
+		select exists(select * from codigo_act_vendedor where id = #{codigo})
+	</select>
+	
+	<delete id='borrarCodigo' parameterType='int'>
+		delete from codigo_act_vendedor where codigo_act_vendedor.vendedor = #{id_vendedor};
+	</delete>
+
+	<select id='buscarVendedorPorCodigo' parameterType='int' resultType='int'>
+		select vendedor from codigo_act_vendedor
+		where id = #{codigo};
+	</select>
+	
+	<insert id='insertCodigo' parameterType='CodigoActivacionVendedor'
+		useGeneratedKeys='true' keyProperty='id'>
+		insert into codigo_act_vendedor (id,
+		vendedor)
+		VALUES(#{id},#{vendedor})
+	</insert>
+
+	
+</mapper>

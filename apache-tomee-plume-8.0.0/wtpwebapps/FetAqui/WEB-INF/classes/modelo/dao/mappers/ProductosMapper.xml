@@ -1,0 +1,259 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.ProductosMapper'>
+
+	<resultMap type='Producto' id='getProductosBusqueda'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='categoria' column='categoria' />
+		<result property='formato' column='formato' />
+		<result property='nombre_vendedor' column='vendedor' />
+	</resultMap>
+
+
+	<select id="getProductosBusqueda"
+		resultMap="getProductosBusqueda">
+		select id_producto, producto.nombre, producto.descripcion,
+		producto.foto,
+		producto.precio, categoria.nombre as categoria,
+		formato.nombre as formato, vendedor.nombre as vendedor
+		from producto
+		inner join vendedor
+		on vendedor.id_vendedor = producto.vendedor
+		inner join categoria
+		on categoria.id_categoria = producto.categoria
+		inner join formato
+		on formato.id_formato = producto.formato
+		where producto.nombre like #{busqueda};
+	</select>
+	
+	<insert id="insertarProducto" parameterType="Producto"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into producto (nombre,descripcion,foto,precio,vendedor,stock, categoria,formato,venta_online)
+		values (#{nombre}, #{descripcion}, #{foto}, #{precio}, #{id_vendedor}, #{stock}, #{id_categoria}
+		, #{id_formato}, #{venta_online});
+	</insert>
+	
+	<resultMap type='Producto' id='getProductosVendedor'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='id_categoria' column='id_categoria' />
+		<result property='categoria' column='categoria' />
+		<result property='id_formato' column='id_formato' />
+		<result property='formato' column='formato' />
+		<result property='venta_online' column='venta_online' />
+		<result property='stock' column='stock' />
+	</resultMap>
+	
+	<select id="getProductosVendedor" parameterType="int" resultMap="getProductosVendedor">
+		select 
+			producto.id_producto, producto.nombre, producto.descripcion,
+        	producto.foto, producto.precio, producto.vendedor, producto.stock, 
+        	producto.vendido, producto.venta_online, producto.categoria as id_categoria, 
+        	categoria.nombre as categoria, producto.formato as id_formato, formato.nombre as formato
+        from 
+        	producto 
+        inner join 
+        	categoria
+        on 
+        	producto.categoria = categoria.id_categoria
+        inner join 
+        	formato
+        on 
+        	producto.formato = formato.id_formato
+        where 
+        	producto.vendedor = #{id_vendedor};
+	</select>
+	
+	<resultMap type='Producto' id='getProductosVendedorCategoria'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='id_categoria' column='id_categoria' />
+		<result property='categoria' column='categoria' />
+		<result property='id_formato' column='id_formato' />
+		<result property='formato' column='formato' />
+		<result property='venta_online' column='venta_online' />
+		<result property='stock' column='stock' />
+	</resultMap>
+	
+	<select id="getProductosVendedorCategoria" resultMap="getProductosVendedorCategoria">
+		select 
+			producto.id_producto, producto.nombre, producto.descripcion,
+        	producto.foto, producto.precio, producto.vendedor, producto.stock, 
+        	producto.vendido, producto.venta_online, producto.categoria as id_categoria, 
+        	categoria.nombre as categoria, producto.formato as id_formato, formato.nombre as formato
+        from 
+        	producto 
+        inner join 
+        	categoria
+        on 
+        	producto.categoria = categoria.id_categoria
+        inner join 
+        	formato
+        on 
+        	producto.formato = formato.id_formato
+        where 
+        	producto.vendedor = #{id_vendedor} and
+        	categoria.id_categoria = #{id_categoria};
+	</select>
+	
+	<resultMap type='Producto' id='getProductos'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='id_categoria' column='id_categoria' />
+		<result property='categoria' column='categoria' />
+		<result property='id_formato' column='id_formato' />
+		<result property='formato' column='formato' />
+		<result property='venta_online' column='venta_online' />
+		<result property='stock' column='stock' />
+	</resultMap>
+	
+	<select id="getProductos"  resultMap="getProductos">
+		select 
+			producto.id_producto,
+			producto.nombre,
+            producto.descripcion,
+            producto.foto,
+            producto.precio,
+            producto.vendedor as id_vendedor,
+            producto.stock,
+            producto.categoria as id_categoria,
+            producto.formato as id_formato,
+            producto.venta_online,
+            avg(valoracion_producto.valoracion) as valoracion,
+            categoria.nombre as categoria,
+            formato.nombre as formato
+        from producto
+        inner join 
+			valoracion_producto
+        on 
+			producto.id_producto = valoracion_producto.producto
+        inner join 
+        	categoria
+        on 
+        	producto.categoria = categoria.id_categoria
+        inner join 
+        	formato
+        on 
+        	producto.formato = formato.id_formato
+        group by producto.id_producto;
+	</select>
+	
+	<resultMap type='Producto' id='getProductosCategoria'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='id_categoria' column='id_categoria' />
+		<result property='categoria' column='categoria' />
+		<result property='id_formato' column='id_formato' />
+		<result property='formato' column='formato' />
+		<result property='venta_online' column='venta_online' />
+		<result property='stock' column='stock' />
+	</resultMap>
+	
+	<select id="getProductosCategoria" parameterType="int" resultMap="getProductosCategoria">
+		select 
+			producto.id_producto,
+			producto.nombre,
+            producto.descripcion,
+            producto.foto,
+            producto.precio,
+            producto.vendedor as id_vendedor,
+            producto.stock,
+            producto.categoria as id_categoria,
+            producto.formato as id_formato,
+            producto.venta_online,
+            avg(valoracion_producto.valoracion) as valoracion,
+            categoria.nombre as categoria,
+            formato.nombre as formato
+        from producto
+        inner join 
+			valoracion_producto
+        on 
+			producto.id_producto = valoracion_producto.producto
+        inner join 
+        	categoria
+        on 
+        	producto.categoria = categoria.id_categoria
+        inner join 
+        	formato
+        on 
+        	producto.formato = formato.id_formato
+        where
+			categoria.id_categoria = #{id_categoria}
+        group by producto.id_producto;
+	</select>
+	
+	<select id="getProductoPorId" parameterType="int" resultType="Producto">
+		select 
+			producto.id_producto, 
+			producto.nombre,
+			producto.descripcion,
+			producto.foto,
+			producto.precio,
+			producto.vendedor as id_vendedor,
+			formato.nombre as formato
+		from 
+			producto
+		inner join formato
+			on producto.formato = formato.id_formato
+		where producto.id_producto = #{id_producto};
+	</select>
+	
+	<update id="activarVentaOnline">
+		update producto set venta_online = 1  where producto.id_producto = #{id_producto};
+	</update>
+	
+	<update id="desactivarVentaOnline">
+		update producto set venta_online = 0  where producto.id_producto = #{id_producto};
+	</update>
+	
+	<update id="actualizarProducto" parameterType='Producto'>
+		update 
+			producto 
+		set 
+			nombre = #{nombre}, 
+			categoria = #{id_categoria},
+			descripcion = #{descripcion}, 
+			precio = #{precio}, 
+			formato = #{id_formato},
+			stock = #{stock}		
+		where 
+			producto.id_producto = #{id};
+	</update>
+	
+	<update id="actualizarImagenProducto" parameterType='Producto'>
+		update 
+			producto 
+		set 
+			foto = #{foto}		
+		where 
+			producto.id_producto = #{id};
+	</update>
+	
+	<delete id='borrarProducto' parameterType='int'>
+		delete from producto where producto.id_producto = #{id_producto};
+	</delete>
+
+
+</mapper>

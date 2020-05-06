@@ -1,0 +1,330 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.VendedoresMapper'>
+
+	<resultMap type='Vendedor' id='getVendedores'>
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='nombre' column='nombre' />
+		<result property='email' column='email' />
+		<result property='telefono' column='telefono' />
+		<result property='foto' column='foto' />
+		<result property='direccion' column='direccion' />
+		<result property='nombre_vendedor' column='vendedor' />
+		<result property='poblacion' column='poblacion' />
+		<result property='venta_online' column='venta_online' />
+	</resultMap>
+
+
+	<select id="getVendedores" resultMap="getVendedores">
+		select
+		id_vendedor,
+		vendedor.nombre, email,
+		telefono,foto, direccion.direccion,
+		poblacion.nombre as poblacion,venta_online
+		from
+		vendedor
+		inner join
+		direccion
+		on
+		direccion.id_direccion = vendedor.direccion
+		inner join
+		poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		where vendedor.activado = 1;
+	</select>
+	
+	<resultMap type='Vendedor' id='getVendedoresPoblacion'>
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='nombre' column='nombre' />
+		<result property='email' column='email' />
+		<result property='telefono' column='telefono' />
+		<result property='foto' column='foto' />
+		<result property='direccion' column='direccion' />
+		<result property='nombre_vendedor' column='vendedor' />
+		<result property='poblacion' column='poblacion' />
+		<result property='venta_online' column='venta_online' />
+	</resultMap>
+
+
+	<select id="getVendedoresPoblacion" parameterType="int" resultMap="getVendedoresPoblacion">
+		select
+		id_vendedor,
+		vendedor.nombre, email,
+		telefono,foto, direccion.direccion,
+		poblacion.nombre as poblacion,venta_online
+		from
+		vendedor
+		inner join
+		direccion
+		on
+		direccion.id_direccion = vendedor.direccion
+		inner join
+		poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		where poblacion.id_poblacion = #{id_poblacion}
+		and activado = 1;
+	</select>
+	
+	<resultMap type='Vendedor' id='getVendedoresNombre'>
+		<result property='id' column='id_vendedor' />
+		<result property='nombre' column='nombre' />
+		<result property='email' column='email' />
+		<result property='telefono' column='telefono' />
+		<result property='foto' column='foto' />
+		<result property='direccion' column='direccion' />
+		<result property='nombre_vendedor' column='vendedor' />
+		<result property='poblacion' column='poblacion' />
+		<result property='venta_online' column='venta_online' />
+	</resultMap>
+
+
+	<select id="getVendedoresNombre" resultMap="getVendedoresNombre">
+		select
+		id_vendedor,
+		vendedor.nombre as vendedor, email,
+		telefono,foto, direccion.direccion,
+		poblacion.nombre as poblacion,venta_online
+		from
+		vendedor
+		inner join
+		direccion
+		on
+		direccion.id_direccion = vendedor.direccion
+		inner join
+		poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		where vendedor.nombre like #{vendedor}
+		and activado = 1;
+	</select>
+	
+	<select id="getVendedor" resultType="Vendedor">
+		select
+			id_vendedor,
+			nif,
+			vendedor.nombre,
+			telefono,			 
+			email,
+			password,
+			poblacion.id_poblacion as idPoblacion,
+			poblacion.nombre as poblacion,
+			vendedor.direccion as idDireccion,
+			direccion.direccion,
+			vendedor.foto, 
+			vendedor.activado,			
+			venta_online
+		from
+			vendedor
+		inner join
+			direccion
+		on
+			vendedor.direccion = direccion.id_direccion
+		inner join
+			poblacion
+		on 
+			direccion.poblacion = poblacion.id_poblacion 
+		where 
+			email = #{email} and password = #{password};
+	</select>
+	
+	<select id="getVendedorPorId" parameterType="int" resultType="Vendedor">
+		select
+			id_vendedor,
+			nif,
+			vendedor.nombre,
+			telefono,			 
+			email,
+			password,
+			poblacion.id_poblacion,
+			poblacion.nombre as poblacion,
+			vendedor.direccion as idDireccion,
+			direccion.direccion,
+			vendedor.foto, 
+			vendedor.activado,			
+			venta_online
+		from
+			vendedor
+		inner join
+			direccion
+		on
+			vendedor.direccion = direccion.id_direccion
+		inner join
+			poblacion
+		on 
+			direccion.poblacion = poblacion.id_poblacion 
+		where 
+			id_vendedor = #{id_vendedor};
+	</select>
+	
+	<select id="getVendedorEmailPass" resultType="Vendedor">
+		select
+			*
+		from
+			vendedor
+		where 
+			email = #{email} and password = #{password};
+	</select>
+	
+	<select id="getVendedorEmail"  resultType="Vendedor">
+		select
+			id_vendedor, nif, nombre, email, password, foto, direccion, telefono, activado, fecha_alta, venta_online
+		from
+			vendedor
+		where 
+			email = #{email};
+	</select>
+
+	<resultMap type='Producto' id='getProductosVendedor'>
+		<result property='id' column='id_producto' />
+		<result property='nombre' column='nombre' />
+		<result property='descripcion' column='descripcion' />
+		<result property='foto' column='foto' />
+		<result property='precio' column='precio' />
+		<result property='formato' column='formato' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='nombre_vendedor' column='vendedor' />
+		<result property='venta_online' column='venta_online' />
+	</resultMap>
+
+
+	<select id="getProductosVendedor"
+		resultMap="getProductosVendedor">
+		select
+		producto.nombre, producto.descripcion, producto.foto,
+		producto.precio,formato.nombre as Formato,
+		vendedor.id_vendedor,
+		vendedor.nombre as vendedor, producto.venta_online
+		from
+		producto
+		inner
+		join
+		vendedor
+		on
+		vendedor.id_vendedor = producto.vendedor
+		inner join
+		formato
+		on
+		formato.id_formato = producto.formato
+		where
+		vendedor.id_vendedor = #{id_vendedor};
+	</select>
+
+	<select id="getProductoVendedor" resultType="Producto">
+		select
+		producto.nombre, producto.descripcion, producto.foto,
+		producto.precio,formato.nombre as Formato
+		from producto
+		inner join
+		vendedor
+		on vendedor.id_vendedor = producto.vendedor
+		inner join formato
+		on formato.id_formato = producto.formato
+		where vendedor.id_vendedor =
+		#{id_vendedor} and
+		producto.id_producto = #{id_producto};
+	</select>
+
+	<resultMap type='PedidoDetallado' id='getPedidosDetallados'>
+		<result property='idPedido' column='id_pedido' />
+		<result property='producto' column='producto' />
+		<result property='fechaPedido' column='fecha_pedido' />
+		<result property='fechaEntrega' column='fecha_entrega' />
+		<result property='precioUnitario' column='precio_unidad' />
+		<result property='cantidad' column='cantidad' />
+		<result property='precioFinal' column='precio_final' />
+		<result property='nombreCliente' column='cliente' />
+		<result property='poblacion' column='poblacion' />
+		<result property='direccion' column='direccion' />
+		<result property='estado' column='estado' />
+	</resultMap>
+
+
+	<select id="getPedidosDetallados"
+		resultMap="getPedidosDetallados">
+		select
+			pedido.id_pedido,
+			producto.nombre as producto,
+			pedido.fecha_pedido,
+			pedido.fecha_entrega,
+			precio_unidad,
+			sum(cantidad) as cantidad,
+			precio_unidad * sum(cantidad) as precio_final,
+			concat(cliente.nombre, ' ' ,cliente.apellido) as cliente,
+			poblacion.nombre as poblacion,
+			direccion.direccion,			
+			pedido.estado
+		from 
+			pedido
+		inner join detalle_pedido
+			on pedido.id_pedido = detalle_pedido.id_pedido
+		inner join producto
+			on detalle_pedido.id_producto = producto.id_producto
+		inner join direccion
+			on direccion.id_direccion = pedido.destino
+		inner join poblacion
+			on poblacion.id_poblacion = direccion.poblacion
+		inner join cliente
+			on cliente.id_cliente = pedido.cliente
+		inner join vendedor
+			on vendedor.id_vendedor = producto.vendedor
+		where 
+			vendedor.id_vendedor = #{id_vendedor}
+		group by 
+			pedido.id_pedido,producto.nombre,
+			producto.descripcion,detalle_pedido.precio_unidad;
+
+	</select>
+	
+	<insert id="insertarVendedor" parameterType="Vendedor" useGeneratedKeys="true"
+    keyProperty="id">
+		insert into vendedor (nif,nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
+		values (#{nif},#{nombre}, #{email}, #{password}, #{foto}, #{id_direccion}, #{telefono}, #{activado},#{fecha_alta},#{venta_online});
+	</insert>
+	
+	<update id="activarVendedor" parameterType="int">
+		update vendedor set activado = 1  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="activarVentaOnline" parameterType="int">
+		update vendedor set venta_online = 1  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="desactivarVentaOnline" parameterType="Vendedor">
+		update vendedor set venta_online = 0 where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<select id="comprobarMailVendedor" resultType="boolean">
+		select * from vendedor where vendedor.email = #{email};
+	</select>
+	
+	<update id="updateNif">
+		update vendedor set nif = #{nif}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="updateNombre">
+		update vendedor set nombre = #{nombre}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	
+	<update id="updateTelefono">
+		update vendedor set telefono = #{telefono}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="updatePassword">
+		update vendedor set password = #{password}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="updateFoto">
+		update vendedor set foto = #{foto}  where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<update id="updateDireccion" parameterType="int">
+		update vendedor set direccion = (select id_direccion from direccion order by id_direccion desc limit 1) where vendedor.id_vendedor = #{id_vendedor};
+	</update>
+	
+	<delete id="bajaVendedor" parameterType="int">
+		delete from vendedor  where vendedor.id_vendedor = #{id_vendedor};
+	</delete>
+
+</mapper>

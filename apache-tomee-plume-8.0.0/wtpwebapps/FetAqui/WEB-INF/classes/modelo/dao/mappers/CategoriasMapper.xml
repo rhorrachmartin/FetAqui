@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.CategoriasMapper'>
+
+	<resultMap type='Categoria' id='getCategorias'>
+		<result property='id' column='id_categoria' />
+		<result property='nombre' column='nombre' />
+	</resultMap>
+
+
+	<select id="getCategorias" resultMap="getCategorias">
+		select * from categoria;
+	</select>
+	
+	<select id="getCategoriaPorId" parameterType="int" resultType="Categoria">
+		select * from categoria where id_categoria = #{id_categoria};
+	</select>
+
+	<insert id="insertarCategoria" parameterType="Categoria"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into categoria (nombre)
+		values (#{nombre});
+	</insert>
+
+
+</mapper>
