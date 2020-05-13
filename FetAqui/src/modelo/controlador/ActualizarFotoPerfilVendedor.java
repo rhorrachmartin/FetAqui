@@ -31,7 +31,7 @@ public class ActualizarFotoPerfilVendedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * EJB para trabajar con Usuarios
+	 * EJB para trabajar con Usuariosas as
 	 */
 	@EJB
 	VendedorEJB vendedorEJB;
@@ -92,10 +92,10 @@ public class ActualizarFotoPerfilVendedor extends HttpServlet {
 		if (vendedor.getNombre() != null) {
 			vendedorExiste = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
 
-			if (vendedorExiste.getPassword().equals(password)) {
-
+			if (vendedorExiste != null) {
 				try {
 					String foto = imagenesEJB.guardarImagen(request, contexto);
+					
 					vendedorEJB.updateFoto(foto, vendedorExiste.getId_vendedor());
 
 					Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());

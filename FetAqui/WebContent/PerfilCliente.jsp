@@ -37,7 +37,7 @@
 			cliente = (Cliente) request.getAttribute("cliente");
 		}
 	%>
-	<div id="container" style="min-height: 60vh">
+	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 			<a class="navbar-brand" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -46,15 +46,19 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="FetAqui/Perfil">PERFIL</a></li>
+						href="#"><i class="fas fa-shopping-basket"></i> CESTA (0)</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm"
+						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
-						href="FetAqui/Logout">SALIR</a></li>
+						href="Logout">SALIR</a></li>
 					<%
 						if (cliente.getFoto().equals("desconocido.txt")) {
 					%>
@@ -126,7 +130,7 @@
 						<h5 class="mt-1 mb-2"><%=cliente.getNombre()%></h5>
 
 						<div class="md-form ml-0 mr-0">
-							<form action="FetAqui/ActualizarFotoPerfil" method="post"
+							<form action="ActualizarFotoPerfil" method="post"
 								enctype='multipart/form-data'>
 								<div class="input-group">
 									<div class="custom-file">
@@ -201,7 +205,7 @@
 						</button>
 					</div>
 					<div class="modal-body mx-3">
-						<form action="FetAqui/ActualizarPassword" method="post">
+						<form action="ActualizarPassword" method="post">
 							<div class="form-group">
 								<label for="passAntiguo">Password actual</label> <input
 									type="password" id="passAntiguo" name="passAntiguo"
@@ -304,7 +308,7 @@
 
 						<div class="card-body px-lg-5 pt-0">
 
-							<form action="FetAqui/ActualizarPerfilCliente" method="post"
+							<form action="ActualizarPerfilCliente" method="post"
 								style="color: #757575;">
 
 								<div class="form-group">

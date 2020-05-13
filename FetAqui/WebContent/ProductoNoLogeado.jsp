@@ -43,7 +43,7 @@
 		}
 	%>
 
-	<div id="container" style="min-height: 80vh">
+	<div id="container" >
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
@@ -54,10 +54,10 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="FetAqui/ObtenerTodosProductos">Productos</a></li>
-					<li class="nav-item"><a class="nav-link" href="FetAqui/ObtenerTodosVendedores">Vendedores</a></li>
+						href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link" href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<%
@@ -145,7 +145,7 @@
 			<!-- FIN PRECIO PRODUCTO -->
 
 			<div class="col col-lg-6">
-				<form action="FetAqui/PaginaVendedor" method="get">
+				<form action="PaginaVendedor" method="get">
 					<input type="hidden" name="id_vendedor"
 						value="<%=producto.getId_vendedor()%>">
 					<button type="submit" class="btn btn-light-blue btn-md">
@@ -222,7 +222,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="FetAqui/Principal" method="post">
+					<form action="Principal" method="post">
 						<div class="modal-body mx-3">
 							<div class="md-form mb-5">
 								<i class="fas fa-user prefix grey-text"></i> <input type="text"
@@ -292,7 +292,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="FetAqui/Principal" method="post">
+					<form action="Principal" method="post">
 						<div class="modal-body mx-3">
 							<div class="md-form mb-5">
 								<i class="fas fa-user prefix grey-text"></i> <input type="text"
@@ -362,7 +362,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="FetAqui/Login" method="post">
+					<form action="Login" method="post">
 						<div class="modal-body mx-3">
 
 							<div class="md-form mb-5">

@@ -62,9 +62,11 @@ public class VentaOnlineProducto extends HttpServlet {
 			Integer idProducto = Integer.valueOf(request.getParameter("producto"));
 
 			Producto producto = productoEJB.getProductoPorId(idProducto);
+			
+			System.out.println("id del producto en la request: "+idProducto +" nombre "+producto.getNombre() +", id: " + producto.getId() + ", venta: " + producto.getVenta_online());
 
 			if (vendedor.getNombre() != null) {
-
+				System.out.println(vendedor.getNombre());
 				if (producto.getVenta_online() == 0) {
 
 					productoEJB.activarVentaOnline(idProducto);

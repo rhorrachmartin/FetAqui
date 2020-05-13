@@ -30,7 +30,7 @@
 </head>
 <body>
 
-	<div id="container" style="min-height: 80vh">
+	<div id="container" >
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 			<a class="navbar-brand" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"

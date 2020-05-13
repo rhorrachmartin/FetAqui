@@ -1,3 +1,7 @@
+#container {
+	min-height: 80vh;
+}
+
 #loginPanel {
 	display: flex;
 	justify-content: center;
@@ -6,7 +10,41 @@
 }
 
 .imagenProducto {
-	max-width: 30%;
+	max-width: 70%;
+}
+
+.sombraProductoInicio {
+	-webkit-box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 1);
+	-moz-box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 1);
+	box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 1);
+}
+
+.descripcionProducto {
+	overflow: auto;
+	min-height: 82px;
+	max-height: 82px;
+}
+
+.crop {
+	height: 300px;
+	/*width: 400px;*/
+	overflow: hidden;
+}
+
+.crop img {
+	height: auto;
+	width: 100%;
+}
+
+.cropInicio {
+	height: 100px;
+	/*width: 400px;*/
+	overflow: hidden;
+}
+
+.cropInicio img {
+	height: auto;
+	width: 100%;
 }
 
 #contenedorProducto {
@@ -15,8 +53,8 @@
 	box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75) !important;
 }
 
-#selectCategorias{
-	width: 25% !important;
+#selectCategorias {
+	width: 60% !important;
 }
 
 .loginPanelAlerta {
@@ -56,8 +94,25 @@ label {
 	box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
 }
 
+#lateral2 {
+	-webkit-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	-moz-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+}
+
+#lateralProductosPrincipal {
+	-webkit-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	-moz-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	min-height: 90vh;
+}
+
 #imagenVendedor {
 	max-width: 100% !important;
+}
+
+.nombreProducto {
+	min-height: 70px;
 }
 
 .labelCheckBox {
@@ -73,15 +128,23 @@ label {
 }
 
 #contenedorImagenProducto {
-	max-height: 182px !important;
+	max-height: 100px !important;
 }
 
 #imangenProducto {
 	width: 100% !important;
 }
 
-#descripcionProducto {
+.descripcionProducto {
 	height: 120px !important;
+}
+
+.productoLateralPrincipal {
+	width: 150px !important;
+}
+
+.colSinPading {
+	padding: 0;
 }
 
 .labelCheckBox {
@@ -106,4 +169,37 @@ label {
 
 .modal-dialog {
 	max-width: 1000px !important;
+}
+
+.cantidad {
+  padding-top: 20px;
+}
+.cantidad input {
+  -webkit-appearance: none;
+  border: none;
+  text-align: center;
+  width: 32px;
+  font-size: 16px;
+  color: #43484D;
+  font-weight: 300;
+}
+ 
+boton[class*=boton] {
+  width: 30px;
+  height: 30px;
+  background-color: #E1E8EE;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.minus-boton img {
+  margin-bottom: 3px;
+}
+.plus-boton img {
+  margin-top: 2px;
+}
+ 
+button:focus,
+input:focus {
+  outline:0;
 }

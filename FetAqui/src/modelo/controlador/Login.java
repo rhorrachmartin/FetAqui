@@ -56,7 +56,6 @@ public class Login extends HttpServlet {
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String HOME_LOGEADO = "/HomeLogeado.jsp";
-	static final String HOME_LOGEADO_VENDEDOR = "/HomeLogeadoVendedor.jsp";
 
 	/**
 	 * Método doPost que Logea al usuario en la APP
@@ -99,7 +98,7 @@ public class Login extends HttpServlet {
 
 			} else {
 				
-				c = clienteEJB.getCliente(email, password);
+				c = clienteEJB.getClienteEmailPass(email, password);
 				if (c.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);

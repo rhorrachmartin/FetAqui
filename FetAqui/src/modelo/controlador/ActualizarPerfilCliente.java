@@ -88,22 +88,29 @@ public class ActualizarPerfilCliente extends HttpServlet {
 		try {
 
 			if (cliente.getNombre() != null) {
-				clienteExiste = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
-
+				
+				clienteExiste = clienteEJB.getClienteEmailPass(cliente.getEmail(), cliente.getPassword());
+				
 				if (clienteExiste.getPassword().equals(passAntiguo)) {
 					clienteEJB.updateTelf(telefono, clienteExiste.getId_cliente());
 					clienteEJB.updateNombre(nombre, clienteExiste.getId_cliente());
 					clienteEJB.updateApellido(apellido, clienteExiste.getId_cliente());
 					
-					if(!clienteExiste.getDireccion().equals(direccion) || clienteExiste.getIdPoblacion() != id_poblacion) {
+					if(clienteExiste.getDireccion() == null || !clienteExiste.getDireccion().equals(direccion) || clienteExiste.getIdPoblacion() != id_poblacion) {
+						
 						dir.setDireccion(direccion);
 						dir.setId_poblacion(id_poblacion);
 						direccionEJB.insertarDireccion(dir);
 						clienteEJB.updateDireccion(clienteExiste.getId_cliente());
+						
+						//El atriuto error de la sesión se refiere a si existe algún error relacionado con la intención de realizar pedido
+						// sin que el cliente tenga una dirección en su perfil, al actualizar la dirección removemos este atributo de la sesión
+						if(session.getAttribute("error") != null) {
+							session.removeAttribute("error");
+						}
 					}
 					
 					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
-					
 					
 					request.getSession().setAttribute("cliente", clienteActualizado);
 					

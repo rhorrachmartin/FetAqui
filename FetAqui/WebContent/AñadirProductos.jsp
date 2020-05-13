@@ -53,7 +53,7 @@
 			formatos = (ArrayList<Formato>) request.getAttribute("formatos");
 		}
 	%>
-	<div id="container" style="min-height: 60vh">
+	<div id="container" >
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 			<a class="navbar-brand" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -62,31 +62,31 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="FetAqui/Productos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="FetAqui/ObtenerTodosVendedores">Vendedores</a></li>
+						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="FetAqui/PaginaPropioVendedor">MI PÁGINA</a></li>
+						href="PaginaPropioVendedor">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="FetAqui/OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
+						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
-						href="FetAqui/Logout">SALIR</a></li>
+						href="Logout">SALIR</a></li>
 					<%
 						if (vendedor.getFoto().equals("desconocido.txt")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0"
-						href="FetAqui/OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
+						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0"
-						href="FetAqui/OpcionesPerfilVendedor.jsp"> <img
+						href="OpcionesPerfilVendedor.jsp"> <img
 							src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
@@ -112,7 +112,7 @@
 
 						<div class="card-body px-lg-5 pt-0">
 
-							<form action="FetAqui/AñadirProducto" method="post"
+							<form action="AñadirProducto" method="post"
 								style="color: #757575;" enctype='multipart/form-data'>
 
 								<div class="form-group">

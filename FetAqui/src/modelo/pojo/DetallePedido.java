@@ -2,10 +2,10 @@ package modelo.pojo;
 
 public class DetallePedido {
 	
-	Integer id;
-	Integer pedido;
-	Integer producto;
-	Integer precioUnitario;
+	Integer id_detalle;
+	Integer id_pedido;
+	Integer id_producto;
+	Double precio_unidad;
 	Integer cantidad;
 	Integer dto;
 	
@@ -13,47 +13,47 @@ public class DetallePedido {
 		
 	}
 	
-	public DetallePedido(Integer id, Integer pedido, Integer producto, Integer precioUnitario, Integer cantidad,
+	public DetallePedido(Integer id_detalle, Integer id_pedido, Integer id_producto, Double precio_unidad, Integer cantidad,
 			Integer dto) {
 		super();
-		this.id = id;
-		this.pedido = pedido;
-		this.producto = producto;
-		this.precioUnitario = precioUnitario;
+		this.id_detalle = id_detalle;
+		this.id_pedido = id_pedido;
+		this.id_producto = id_producto;
+		this.precio_unidad = precio_unidad;
 		this.cantidad = cantidad;
 		this.dto = dto;
 	}
 
 	public Integer getId() {
-		return id;
+		return id_detalle;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(Integer id_detalle) {
+		this.id_detalle = id_detalle;
 	}
 
 	public Integer getPedido() {
-		return pedido;
+		return id_pedido;
 	}
 
-	public void setPedido(Integer pedido) {
-		this.pedido = pedido;
+	public void setPedido(Integer id_pedido) {
+		this.id_pedido = id_pedido;
 	}
 
 	public Integer getProducto() {
-		return producto;
+		return id_producto;
 	}
 
-	public void setProducto(Integer producto) {
-		this.producto = producto;
+	public void setProducto(Integer id_producto) {
+		this.id_producto = id_producto;
 	}
 
-	public Integer getPrecioUnitario() {
-		return precioUnitario;
+	public Double getPrecioUnitario() {
+		return precio_unidad;
 	}
 
-	public void setPrecioUnitario(Integer precioUnitario) {
-		this.precioUnitario = precioUnitario;
+	public void setPrecioUnitario(Double precio_unidad) {
+		this.precio_unidad = precio_unidad;
 	}
 
 	public Integer getCantidad() {

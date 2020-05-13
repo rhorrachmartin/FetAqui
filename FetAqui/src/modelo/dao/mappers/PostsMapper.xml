@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.PostsMapper'>
+
+	<resultMap type='Post' id='getPosts'>
+		<result property='id' column='id_post' />
+		<result property='texto' column='texto_post' />
+		<result property='autor' column='autor' />
+		<result property='nombre_autor' column='nombre_autor' />
+		<result property='valoracion' column='valoracion' />
+	</resultMap>
+
+
+	<select id="getPosts" resultMap="getPosts">
+		select 
+			post.id_post, post.texto_post, post.autor, vendedor.nombre as nombre_autor, valoracion_post.valoracion 
+        from 
+        	post
+        inner join 
+        	vendedor
+        on 
+        	post.autor = vendedor.id_vendedor
+        inner join 
+        	valoracion_post
+        on 
+        	post.id_post = valoracion_post.id_post;
+	</select>
+	
+	<select id="getPostsPorVendedor" parameterType="int" resultMap="getPosts">
+		select * from post where autor = #{id_vendedor};
+	</select>
+
+	<insert id="insertarPost" parameterType="Post"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into post (texto_post, autor)
+		values (#{texto}, #{autor});
+	</insert>
+	
+	<delete id='borrarPost' parameterType='int'>
+		delete from post where post.id_post = #{id_post};
+	</delete>
+	
+	<select id="getPostPorId" parameterType="int" resultType="Post">
+		select * from post where post.id_post = #{id_post};
+	</select>
+	
+	<update id="editarPost" parameterType="Post">
+		update post set texto_post = #{texto}  where post.id_post = #{id};
+	</update>
+
+
+</mapper>

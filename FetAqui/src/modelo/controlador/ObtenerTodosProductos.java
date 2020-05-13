@@ -10,13 +10,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.ejb.CategoriaEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.ProductoEJB;
+import modelo.ejb.SesionClienteEJB;
+import modelo.ejb.SesionVendedorEJB;
 import modelo.pojo.Categoria;
+import modelo.pojo.Cliente;
 import modelo.pojo.Producto;
+import modelo.pojo.Vendedor;
 
 /**
  * Servlet implementation class AñadirProducto
@@ -25,12 +29,20 @@ import modelo.pojo.Producto;
 public class ObtenerTodosProductos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	
 	@EJB
 	CategoriaEJB categoriaEJB;
 
 	@EJB
 	ProductoEJB productoEJB;
+
+	@EJB
+	SesionVendedorEJB sesionVendedorEJB;
+
+	/**
+	 * EJB para trabajar con sesiones de cliente
+	 */
+	@EJB
+	SesionClienteEJB sesionClienteEJB;
 	/**
 	 * EJB para trabajar con los logger
 	 */
@@ -38,17 +50,112 @@ public class ObtenerTodosProductos extends HttpServlet {
 	LoggersEJB logger;
 
 	static final String PRODUCTOS_NO_LOGEADO_JSP = "/ProductosNoLogeado.jsp";
+	static final String PRODUCTOS_LOGEADO_VENDEDOR_JSP = "/ProductosLogeadoVendedor.jsp";
+	static final String PRODUCTOS_LOGEADO_CLIENTE_JSP = "/ProductosLogeadoCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		response.setContentType(CONTENT_TYPE);
 		// Creamos el RequestDispatcher
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(PRODUCTOS_NO_LOGEADO_JSP);
 
-		response.setContentType(CONTENT_TYPE);
+		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
+		HttpSession session = request.getSession(false);
 
-		try {
+		// Intentamos obtener el usuario de la sesión
+		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
+		Cliente c = sesionClienteEJB.clienteLogeado(session);
+
+		request.setAttribute("vendedor", v);
+		request.setAttribute("cliente", c);
+
+		
+
+		if (v != null || c != null) {
+			try {
+
+				if (c != null) {
+					rs = getServletContext().getRequestDispatcher(PRODUCTOS_LOGEADO_CLIENTE_JSP);
+					
+					if (request.getParameter("selectCategorias") == null) {
+						
+						System.out.println("hola 1");
+						
+						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+						ArrayList<Producto> productos = productoEJB.getProductos();
+
+						request.setAttribute("productos", productos);
+						request.setAttribute("categorias", categorias);
+						
+						if(session.getAttribute("error") != null) {
+							String error = (String) session.getAttribute("error");
+							
+							request.setAttribute("error", error);
+						}
+						
+						rs.forward(request, response);
+
+					} else {
+						Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
+
+						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+						ArrayList<Producto> productos = productoEJB.getProductosCategoria(id_categoria);
+						Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
+
+						if (productos.isEmpty()) {
+							String error = "No existen productos en esta categoría.";
+							request.setAttribute("categoria", categoria);
+							request.setAttribute("error", error);
+						}
+						request.setAttribute("categoria", categoria);
+						request.setAttribute("productos", productos);
+						request.setAttribute("categorias", categorias);
+
+						rs.forward(request, response);
+
+					}
+
+				} else {
+					rs = getServletContext().getRequestDispatcher(PRODUCTOS_LOGEADO_VENDEDOR_JSP);
+
+					if (request.getParameter("selectCategorias") == null) {
+
+						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+						ArrayList<Producto> productos = productoEJB.getProductos();
+
+						request.setAttribute("productos", productos);
+						request.setAttribute("categorias", categorias);
+
+						rs.forward(request, response);
+
+					} else {
+						Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
+
+						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+						ArrayList<Producto> productos = productoEJB.getProductosCategoria(id_categoria);
+						Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
+
+						if (productos.isEmpty()) {
+							String error = "No existen productos en esta categoría.";
+							request.setAttribute("categoria", categoria);
+							request.setAttribute("error", error);
+						}
+						request.setAttribute("categoria", categoria);
+						request.setAttribute("productos", productos);
+						request.setAttribute("categorias", categorias);
+
+						rs.forward(request, response);
+
+					}
+
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+		} else {
+			// No está logeado, mostramos página principal
 			if (request.getParameter("selectCategorias") == null) {
 
 				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
@@ -61,12 +168,12 @@ public class ObtenerTodosProductos extends HttpServlet {
 
 			} else {
 				Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
-				
+
 				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 				ArrayList<Producto> productos = productoEJB.getProductosCategoria(id_categoria);
 				Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
-				
-				if(productos.isEmpty()) {
+
+				if (productos.isEmpty()) {
 					String error = "No existen productos en esta categoría.";
 					request.setAttribute("categoria", categoria);
 					request.setAttribute("error", error);
@@ -78,8 +185,6 @@ public class ObtenerTodosProductos extends HttpServlet {
 				rs.forward(request, response);
 
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
 		}
 
 	}

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.PedidosMapper'>
+
+
+	<insert id="insertarPedido" parameterType="Pedido"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into pedido (fecha_pedido,
+		fecha_entrega, cliente, destino, estado)
+		values (#{fecha_pedido},
+		#{fecha_entrega}, #{cliente}, #{destino}, #{estado});
+	</insert>
+
+	<select id="getNumeroProductos" parameterType="int"
+		resultType="int">
+
+		select count(*) as productos 
+			from pedido
+		inner join detalle_pedido
+			on pedido.id_pedido = detalle_pedido.id_pedido
+		inner join producto
+			on producto.id_producto = detalle_pedido.id_producto
+		where pedido.id_pedido = #{id_pedido};
+	</select>
+
+</mapper>

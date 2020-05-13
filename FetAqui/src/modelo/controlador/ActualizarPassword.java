@@ -30,12 +30,10 @@ public class ActualizarPassword extends HttpServlet {
 	/**
 	 * EJB para trabajar con Usuarios
 	 */
-	
 
 	@EJB
-	ClienteEJB clienteEJB;	
-	
-	
+	ClienteEJB clienteEJB;
+
 	@EJB
 	PoblacionEJB poblacionEJB;
 
@@ -47,7 +45,7 @@ public class ActualizarPassword extends HttpServlet {
 
 	static final String PERFIL_CLIENTE_JSP = "/PerfilCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
@@ -57,15 +55,14 @@ public class ActualizarPassword extends HttpServlet {
 			response.sendRedirect("Principal");
 		}
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		response.setContentType(CONTENT_TYPE);
 
 		// Creamos el RequestDispatcher por defecto hacia Registro.jsp
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(PERFIL_CLIENTE_JSP);
-		
 
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
@@ -82,23 +79,23 @@ public class ActualizarPassword extends HttpServlet {
 				clienteExiste = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
 
 				if (clienteExiste.getPassword().equals(passAntiguo) && passNuevo1.equals(passNuevo2)) {
-					
+
 					clienteEJB.updatePassword(passNuevo2, clienteExiste.getId_cliente());
-					
+
 					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), passNuevo2);
-					
+
 					request.getSession().setAttribute("cliente", clienteActualizado);
-					
+
 					poblaciones = poblacionEJB.getPoblaciones();
-					
+
 					request.setAttribute("poblaciones", poblaciones);
-					
+
 					request.setAttribute("cliente", clienteActualizado);
-					
+
 					rs.forward(request, response);
 				} else {
 					String error = "Las contraseñas no coinciden";
-					Cliente cliente3 = (Cliente)session.getAttribute("cliente");
+					Cliente cliente3 = (Cliente) session.getAttribute("cliente");
 					poblaciones = poblacionEJB.getPoblaciones();
 					request.setAttribute("poblaciones", poblaciones);
 					request.setAttribute("cliente", cliente3);

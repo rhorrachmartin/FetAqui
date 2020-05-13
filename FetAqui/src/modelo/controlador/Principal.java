@@ -2,6 +2,7 @@ package modelo.controlador;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.ejb.EJB;
@@ -17,12 +18,16 @@ import modelo.ejb.ClienteEJB;
 import modelo.ejb.CodigoClienteEJB;
 import modelo.ejb.CodigoVendedorEJB;
 import modelo.ejb.LoggersEJB;
+import modelo.ejb.PostEJB;
+import modelo.ejb.ProductoEJB;
 import modelo.ejb.SesionClienteEJB;
 import modelo.ejb.SesionVendedorEJB;
 import modelo.ejb.VendedorEJB;
 import modelo.pojo.Cliente;
 import modelo.pojo.CodigoActivacionCliente;
 import modelo.pojo.CodigoActivacionVendedor;
+import modelo.pojo.Post;
+import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
 /**
@@ -36,6 +41,12 @@ public class Principal extends HttpServlet {
 	 */
 	@EJB
 	VendedorEJB vendedorEJB;
+	
+	@EJB
+	ProductoEJB productoEJB;
+	
+	@EJB
+	PostEJB postEJB;
 
 	/**
 	 * EJB para trabajar con Clientes
@@ -108,6 +119,15 @@ public class Principal extends HttpServlet {
 					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
 					rs.forward(request, response);
 				} else {
+					
+					ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+					ArrayList<Producto> productos = productoEJB.getProductos();
+					ArrayList<Post> posts = postEJB.getPosts();
+					
+					request.setAttribute("vendedores", vendedores);
+					request.setAttribute("productos", productos);
+					request.setAttribute("posts", posts);
+					
 					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_VENDEDOR_JSP);
 					rs.forward(request, response);
 				}
@@ -221,7 +241,7 @@ public class Principal extends HttpServlet {
 				if (clienteEJB.getClienteEmail(emailc) != null || vendedorEJB.getVendedorEmail(emailc) != null) {
 					// Si ya existe mostramos el error
 
-					response.sendRedirect("Principal?error=Correo ya existente");
+					response.sendRedirect("Principal?error=Correo ya existente!");
 
 				} else {
 

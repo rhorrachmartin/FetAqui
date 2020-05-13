@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class Pedido {
 	
-	Integer id;
+	Integer id_pedido;
 	Timestamp fecha_pedido;
 	Timestamp fecha_entrega;
 	Integer cliente;
@@ -15,10 +15,10 @@ public class Pedido {
 		
 	}
 	
-	public Pedido(Integer id, Timestamp fecha_pedido, Timestamp fecha_entrega, Integer cliente, Integer destino,
+	public Pedido(Integer id_pedido, Timestamp fecha_pedido, Timestamp fecha_entrega, Integer cliente, Integer destino,
 			String estado) {
 		super();
-		this.id = id;
+		this.id_pedido = id_pedido;
 		this.fecha_pedido = fecha_pedido;
 		this.fecha_entrega = fecha_entrega;
 		this.cliente = cliente;
@@ -27,11 +27,11 @@ public class Pedido {
 	}
 
 	public Integer getId() {
-		return id;
+		return id_pedido;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(Integer id_pedido) {
+		this.id_pedido = id_pedido;
 	}
 
 	public Timestamp getFecha_pedido() {

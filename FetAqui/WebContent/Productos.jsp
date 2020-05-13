@@ -14,81 +14,92 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FET AQUI</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css"
+	rel="stylesheet">
 <link href="css/estilos.css" type="text/css" rel="stylesheet">
 <!-- -------------------SCRIPTS--------------- -->
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 <script src="js/validarPassword.js"></script>
 </head>
 <body>
 	<%
 		Vendedor vendedor = null;
-		ArrayList<Categoria> categorias = null;
-		ArrayList<Formato> formatos = null;
-		ArrayList<Producto> productos = null;
-		int contadorCheckBox = 0;
-		if (request.getAttribute("vendedor") != null) {
-			vendedor = (Vendedor) request.getAttribute("vendedor");
-			categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
-			formatos = (ArrayList<Formato>) request.getAttribute("formatos");
-			productos = (ArrayList<Producto>) request.getAttribute("productos");
-		}
+	ArrayList<Categoria> categorias = null;
+	ArrayList<Formato> formatos = null;
+	ArrayList<Producto> productos = null;
+	int contadorCheckBox = 0;
+	if (request.getAttribute("vendedor") != null) {
+		vendedor = (Vendedor) request.getAttribute("vendedor");
+		categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
+		formatos = (ArrayList<Formato>) request.getAttribute("formatos");
+		productos = (ArrayList<Producto>) request.getAttribute("productos");
+	}
 	%>
-	<div id="container" style="min-height: 60vh">
+	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-            <a class="navbar-brand" href="#">FET AQUÍ</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="FetAqui/Productos">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="FetAqui/ObtenerTodosVendedores">Vendedores</a></li>
-                </ul>
-                
-                <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item"><a class="btn btn-primary btn-sm"
-                        href="FetAqui/PaginaPropioVendedor">MI PÁGINA</a></li>
-                    <li class="nav-item"><a class="btn btn-primary btn-sm"
-                        href="FetAqui/OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
-                    <li class="nav-item"><a class="btn btn-success btn-sm"
-                        href="FetAqui/Logout">SALIR</a></li>
-                    <%
-                        if (vendedor.getFoto().equals("desconocido.txt")) {
-                    %>
-                    <li class="nav-item avatar"><a class="nav-link p-0"
-                        href="FetAqui/OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
-                            class="rounded-circle z-depth-0" alt="avatar image" height="35">
-                    </a></li>
-                    <%
-                        } else {
-                    %>
-                    <li class="nav-item avatar"><a class="nav-link p-0"
-                        href="FetAqui/OpcionesPerfilVendedor.jsp"> <img
-                            src="Imagenes/<%=vendedor.getFoto()%>"
-                            class="rounded-circle z-depth-0" alt="avatar image" height="35">
-                    </a></li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
-        </nav>
+			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
+				</ul>
+
+				<ul class="navbar-nav ml-auto nav-flex-icons">
+					<li class="nav-item"><a class="btn btn-primary btn-sm"
+						href="PaginaPropioVendedor">MI PÁGINA</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm"
+						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
+					<li class="nav-item"><a class="btn btn-success btn-sm"
+						href="Logout">SALIR</a></li>
+					<%
+						if (vendedor.getFoto().equals("desconocido.txt")) {
+					%>
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
+					</a></li>
+					<%
+						} else {
+					%>
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img
+							src="Imagenes/<%=vendedor.getFoto()%>"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
+					</a></li>
+					<%
+						}
+					%>
+				</ul>
+			</div>
+		</nav>
 
 
 		<main class="container">
@@ -122,7 +133,7 @@
 
 					<%
 						for (Producto pro : productos) {
-							contadorCheckBox++;
+						contadorCheckBox++;
 					%>
 					<%
 						if (pro.getVenta_online() == 1) {
@@ -157,14 +168,16 @@
 								<!--Title-->
 								<h4 class="card-title"><%=pro.getNombre()%></h4>
 								<!--Text-->
-								<p id="descripcionProducto" class="card-text"><%=pro.getDescripcion()%></p>
+								<div class="descripcionProducto">
+									<p class="card-text"><%=pro.getDescripcion()%></p>
+								</div>
 								<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 								<div class="row">
 
 									<div class="col col-lg-6">
 
 										<div class="custom-control custom-switch">
-											<form class="FetAqui/ventaOnlineProducto"
+											<form class="ventaOnlineProducto"
 												id="ventaOnlineProducto<%=pro.getId()%>"
 												action="VentaOnlineProducto" method="post">
 												<input type="hidden" name="producto"
@@ -177,9 +190,11 @@
 											</form>
 										</div>
 									</div>
+									
+									
 
 									<div class="col col-lg-6">
-										<form action="FetAqui/EliminarProducto" method="post">
+										<form action="EliminarProducto" method="post">
 											<input type="hidden" name="producto" value="<%=pro.getId()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
 												<a data-toggle="tooltip" title="ELIMINAR"><i
@@ -227,7 +242,7 @@
 									</button>
 								</div>
 								<div class="modal-body mx-3">
-									<form action="FetAqui/ActualizarProducto" method="post">
+									<form action="ActualizarProducto" method="post">
 										<input type="hidden" name="idProducto"
 											value="<%=pro.getId()%>">
 										<div class="form-group">
@@ -402,7 +417,7 @@
 
 									<div class="col col-lg-6">
 										<div class="custom-control custom-switch">
-											<form class="FetAqui/ventaOnlineProducto"
+											<form class="ventaOnlineProducto"
 												id="ventaOnlineProducto<%=pro.getId()%>"
 												action="VentaOnlineProducto" method="post">
 												<input type="hidden" name="producto"
@@ -464,7 +479,7 @@
 									</button>
 								</div>
 								<div class="modal-body mx-3">
-									<form action="FetAqui/ActualizarProducto" method="post">
+									<form action="ActualizarProducto" method="post">
 										<input type="hidden" name="idProducto"
 											value="<%=pro.getId()%>">
 										<div class="form-group">

@@ -12,53 +12,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FET AQUI</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css"
+	rel="stylesheet">
 <link href="css/estilos.css" type="text/css" rel="stylesheet">
 <!-- -------------------SCRIPTS--------------- -->
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 <script src="js/validarPassword.js"></script>
 </head>
 <body>
 
 	<%
 		ArrayList<Categoria> categorias = null;
-		ArrayList<Producto> productos = null;
-		Categoria categoria = null;
-		Vendedor vendedor = null;
+	ArrayList<Producto> productos = null;
+	Categoria categoria = null;
+	Vendedor vendedor = null;
 
-		if (request.getAttribute("categorias") != null) {
-			categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
-		}
+	if (request.getAttribute("categorias") != null) {
+		categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
+	}
 
-		if (request.getAttribute("productos") != null) {
-			productos = (ArrayList<Producto>) request.getAttribute("productos");
-		}
+	if (request.getAttribute("productos") != null) {
+		productos = (ArrayList<Producto>) request.getAttribute("productos");
+	}
 
-		if (request.getAttribute("categoria") != null) {
+	if (request.getAttribute("categoria") != null) {
 
-			categoria = (Categoria) request.getAttribute("categoria");
-		}
+		categoria = (Categoria) request.getAttribute("categoria");
+	}
 
-		if (request.getAttribute("vendedor") != null) {
+	if (request.getAttribute("vendedor") != null) {
 
-			vendedor = (Vendedor) request.getAttribute("vendedor");
-		}
+		vendedor = (Vendedor) request.getAttribute("vendedor");
+	}
 	%>
 
-	<div id="container" style="min-height: 80vh">
+	<div id="container">
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
@@ -69,14 +79,16 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="FetAqui/ObtenerTodosProductos">Productos</a></li>
-					<li class="nav-item"><a class="nav-link" href="FetAqui/ObtenerTodosVendedores">Vendedores</a></li>
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<%
 						if (request.getAttribute("error") != null) {
-							String error = (String) request.getAttribute("error");
+						String error = (String) request.getAttribute("error");
 					%>
 					<li class="nav-item"><a class="btn btn-danger btn-sm"
 						data-toggle="modal" data-target="#"><%=error%></a></li>
@@ -163,12 +175,12 @@
 
 							<div class="col col-lg-12 m-5 text-center">
 								<h3>BUSCAR POR CATEGORÍAS</h3>
-								<form id="categorias" action="FetAqui/PaginaVendedor"
-									method="get">
-									<input type="hidden" name="id_vendedor" value="<%=vendedor.getId_vendedor() %>">
-									<select name="selectCategorias" id="selectCategorias"
+								<form id="categorias" action="PaginaVendedor" method="get">
+									<input type="hidden" name="id_vendedor"
+										value="<%=vendedor.getId_vendedor()%>"> <select
+										name="selectCategorias" id="selectCategorias"
 										class="browser-default custom-select">
-										
+
 										<option value="<%=categoria.getId()%>" selected><%=categoria.getNombre()%></option>
 										<option value="todos">TODOS LOS PRODUCTOS</option>
 										<%
@@ -199,10 +211,10 @@
 
 							<div class="col col-lg-12 m-5 text-center">
 								<h3>BUSCAR POR CATEGORÍAS</h3>
-								<form id="categorias" action="FetAqui/PaginaVendedor"
-									method="get">
-									<input type="hidden" name="id_vendedor" value="<%=vendedor.getId_vendedor() %>">
-									<select name="selectCategorias" id="selectCategorias"
+								<form id="categorias" action="PaginaVendedor" method="get">
+									<input type="hidden" name="id_vendedor"
+										value="<%=vendedor.getId_vendedor()%>"> <select
+										name="selectCategorias" id="selectCategorias"
 										class="browser-default custom-select">
 										<option value="todos" selected>TODOS LOS PRODUCTOS</option>
 										<%
@@ -230,7 +242,7 @@
 
 					<%
 						if (request.getAttribute("error") != null) {
-							String error = (String) request.getAttribute("error");
+						String error = (String) request.getAttribute("error");
 					%>
 
 					<div class="container">
@@ -287,13 +299,18 @@
 									<!--Title-->
 									<h4 class="card-title"><%=pro.getNombre()%></h4>
 									<!--Text-->
-									<p id="descripcionProducto" class="card-text"><%=pro.getDescripcion()%></p>
+									<div class="descripcionProducto">
+										<p class="card-text"><%=pro.getDescripcion()%></p>
+									</div>
 									<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 									<div class="container">
 										<div class="row">
 
 											<div class="col col-lg-12 text-center">
-												<h5>Precio: <%=pro.getPrecio()%>€ / <%=pro.getFormato()%></h5>
+												<h5>
+													Precio:
+													<%=pro.getPrecio()%>€ /
+													<%=pro.getFormato()%></h5>
 											</div>
 
 										</div>
@@ -354,7 +371,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="FetAqui/Principal" method="post">
+					<form action="Principal" method="post">
 						<div class="modal-body mx-3">
 							<div class="md-form mb-5">
 								<i class="fas fa-user prefix grey-text"></i> <input type="text"
@@ -424,7 +441,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="FetAqui/Principal" method="post">
+					<form action="Principal" method="post">
 						<div class="modal-body mx-3">
 							<div class="md-form mb-5">
 								<i class="fas fa-user prefix grey-text"></i> <input type="text"
@@ -494,7 +511,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form action="FetAqui/Login" method="post">
+					<form action="Login" method="post">
 						<div class="modal-body mx-3">
 
 							<div class="md-form mb-5">

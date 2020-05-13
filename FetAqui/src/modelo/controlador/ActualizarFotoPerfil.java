@@ -30,7 +30,7 @@ public class ActualizarFotoPerfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * EJB para trabajar con Usuarios
+	 * EJB para trabajar con Usuariosa asasz> asdasdas asdasdasd
 	 */
 	
 

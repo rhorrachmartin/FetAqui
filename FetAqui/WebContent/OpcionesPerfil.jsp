@@ -40,7 +40,7 @@
 
 		}
 	%>
-	<div id="container" style="min-height: 60vh">
+	<div id="container" >
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 			<a class="navbar-brand" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -49,15 +49,19 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="FetAqui/Perfil">PERFIL</a></li>
+						href="#"><i class="fas fa-shopping-basket"></i> CESTA (0)</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm"
+						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
-						href="FetAqui/Logout">SALIR</a></li>
+						href="Logout">SALIR</a></li>
 					<%
 						if (cliente.getFoto().equals("desconocido.txt")) {
 					%>
@@ -86,7 +90,7 @@
 			if (request.getAttribute("error") == null) {
 		%>
 		<div class="container">
-			<div class="row loginPanel">
+			<div class="row justify-content-center m-5">
 				<div class="lg lg-12 ">
 					<a class="btn btn-primary btn-lg" href="Perfil">ACTUALIZAR
 						PERFIL</a> <a class="btn btn-info btn-lg" href="Pedidos">PEDIDOS</a>

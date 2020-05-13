@@ -211,6 +211,7 @@
 			producto.descripcion,
 			producto.foto,
 			producto.precio,
+			producto.venta_online,
 			producto.vendedor as id_vendedor,
 			formato.nombre as formato
 		from 

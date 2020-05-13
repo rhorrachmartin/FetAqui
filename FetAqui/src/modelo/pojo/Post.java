@@ -5,16 +5,11 @@ public class Post {
 	Integer id;
 	String texto;
 	Integer autor;
+	Double valoracion;
+	String nombre_autor;
 	
 	public Post() {
 		
-	}
-	
-	public Post(Integer id, String texto, Integer autor) {
-		super();
-		this.id = id;
-		this.texto = texto;
-		this.autor = autor;
 	}
 
 	public Integer getId() {
@@ -40,6 +35,24 @@ public class Post {
 	public void setAutor(Integer autor) {
 		this.autor = autor;
 	}
+
+	public Double getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(Double valoracion) {
+		this.valoracion = valoracion;
+	}
+
+	public String getNombre_autor() {
+		return nombre_autor;
+	}
+
+	public void setNombre_autor(String nombre_autor) {
+		this.nombre_autor = nombre_autor;
+	}
+	
+	
 	
 	
 

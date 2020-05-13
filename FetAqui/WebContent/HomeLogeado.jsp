@@ -10,23 +10,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FET AQUI</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css"
+	rel="stylesheet">
 <link href="css/estilos.css" type="text/css" rel="stylesheet">
 <!-- -------------------SCRIPTS--------------- -->
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 <script src="js/validarPassword.js"></script>
 </head>
 <body>
@@ -34,13 +44,13 @@
 
 	<%
 		HttpSession session = request.getSession(false);
-		Cliente cliente = null;
-		if (session.getAttribute("cliente") != null) {
-			cliente = (Cliente) session.getAttribute("cliente");
+	Cliente cliente = null;
+	if (session.getAttribute("cliente") != null) {
+		cliente = (Cliente) session.getAttribute("cliente");
 
-		}
+	}
 	%>
-	<div id="container" style="min-height: 60vh">
+	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 			<a class="navbar-brand" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -49,15 +59,19 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="FetAqui/Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="FetAqui/Productos">Productos</a></li>
-					<li class="nav-item"><a class="nav-link" href="FetAqui/ObtenerTodosVendedores">Vendedores</a></li>
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="FetAqui/OpcionesPerfil.jsp">MI PÁGINA</a></li>
+						href="#"><i class="fas fa-shopping-basket"></i> CESTA (0)</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm"
+						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
-						href="FetAqui/Logout">SALIR</a></li>
+						href="Logout">SALIR</a></li>
 					<%
 						if (cliente.getFoto().equals("desconocido.txt")) {
 					%>
@@ -80,8 +94,7 @@
 		</nav>
 	</div>
 	<!-- Footer -->
-	<footer
-		class="page-footer font-small unique-color-dark pt-4">
+	<footer class="page-footer font-small unique-color-dark pt-4">
 
 		<!-- Footer Elements -->
 		<div class="container">
