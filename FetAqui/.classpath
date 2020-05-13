@@ -9,12 +9,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0 (2)"/>
-	<classpathentry kind="lib" path="/home/ramon/git/FetAqui2.0/FetAqui/WebContent/WEB-INF/lib/activation.jar"/>
-	<classpathentry kind="lib" path="/home/ramon/git/FetAqui2.0/FetAqui/WebContent/WEB-INF/lib/javax.mail.jar"/>
-	<classpathentry kind="lib" path="/home/ramon/git/FetAqui2.0/FetAqui/WebContent/WEB-INF/lib/logback-classic-1.2.3.jar"/>
-	<classpathentry kind="lib" path="/home/ramon/git/FetAqui2.0/FetAqui/WebContent/WEB-INF/lib/logback-core-1.2.3.jar"/>
-	<classpathentry kind="lib" path="/home/ramon/git/FetAqui2.0/FetAqui/WebContent/WEB-INF/lib/mybatis-3.0.2.jar"/>
-	<classpathentry kind="lib" path="/home/ramon/git/FetAqui2.0/FetAqui/WebContent/WEB-INF/lib/mysql-connector-java-8.0.13.jar"/>
-	<classpathentry kind="lib" path="/home/ramon/git/FetAqui2.0/FetAqui/WebContent/WEB-INF/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="/home/ramon/git/FetAqui/FetAqui/WebContent/WEB-INF/lib/activation.jar"/>
+	<classpathentry kind="lib" path="/home/ramon/git/FetAqui/FetAqui/WebContent/WEB-INF/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="/home/ramon/git/FetAqui/FetAqui/WebContent/WEB-INF/lib/logback-classic-1.2.3.jar"/>
+	<classpathentry kind="lib" path="/home/ramon/git/FetAqui/FetAqui/WebContent/WEB-INF/lib/logback-core-1.2.3.jar"/>
+	<classpathentry kind="lib" path="/home/ramon/git/FetAqui/FetAqui/WebContent/WEB-INF/lib/mybatis-3.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/ramon/git/FetAqui/FetAqui/WebContent/WEB-INF/lib/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry kind="lib" path="/home/ramon/git/FetAqui/FetAqui/WebContent/WEB-INF/lib/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
