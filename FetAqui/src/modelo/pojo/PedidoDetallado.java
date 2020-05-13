@@ -3,110 +3,138 @@ package modelo.pojo;
 import java.sql.Timestamp;
 
 public class PedidoDetallado {
-	
-	Integer idPedido;
-	Timestamp fechaPedido;
-	Timestamp fechaEntrega;
-	Integer precioUnitario;
+
+	Integer id_pedido;
+	Timestamp fecha_pedido;
+	Timestamp fecha_entrega;
+	Integer precio_unidad;
 	Integer cantidad;
-	double precioFinal;
-	String nombreCliente;
+	double precio_final;
+	String cliente;
 	String poblacion;
 	String direccion;
 	String producto;
-	String descripcionProducto;
-	Integer idVendedor;
+	Integer id_vendedor;
 	String estado;
 	String vendedor;
-	
+
 	public PedidoDetallado() {
 		
 	}
-	
-	public Integer getIdPedido() {
-		return idPedido;
+
+	public Integer getId_pedido() {
+		return id_pedido;
 	}
-	public void setIdPedido(Integer idPedido) {
-		this.idPedido = idPedido;
+
+	public void setId_pedido(Integer id_pedido) {
+		this.id_pedido = id_pedido;
 	}
-	public Timestamp getFechaPedido() {
-		return fechaPedido;
+
+	public Timestamp getFecha_pedido() {
+		return fecha_pedido;
 	}
-	public void setFechaPedido(Timestamp fechaPedido) {
-		this.fechaPedido = fechaPedido;
+
+	public void setFecha_pedido(Timestamp fecha_pedido) {
+		this.fecha_pedido = fecha_pedido;
 	}
-	public Timestamp getFechaEntrega() {
-		return fechaEntrega;
+
+	public Timestamp getFecha_entrega() {
+		return fecha_entrega;
 	}
-	public void setFechaEntrega(Timestamp fechaEntrega) {
-		this.fechaEntrega = fechaEntrega;
+
+	public void setFecha_entrega(Timestamp fecha_entrega) {
+		this.fecha_entrega = fecha_entrega;
 	}
-	public Integer getPrecioUnitario() {
-		return precioUnitario;
+
+	public Integer getPrecio_unidad() {
+		return precio_unidad;
 	}
-	public void setPrecioUnitario(Integer precioUnitario) {
-		this.precioUnitario = precioUnitario;
+
+	public void setPrecio_unidad(Integer precio_unidad) {
+		this.precio_unidad = precio_unidad;
 	}
+
 	public Integer getCantidad() {
 		return cantidad;
 	}
+
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
-	public double getPrecioFinal() {
-		return precioFinal;
+
+	public double getPrecio_final() {
+		return precio_final;
 	}
-	public void setPrecioFinal(double precioFinal) {
-		this.precioFinal = precioFinal;
+
+	public void setPrecio_final(double precio_final) {
+		this.precio_final = precio_final;
 	}
-	public String getNombreCliente() {
-		return nombreCliente;
+
+	public String getCliente() {
+		return cliente;
 	}
-	public void setNombreCliente(String nombreCliente) {
-		this.nombreCliente = nombreCliente;
+
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
 	}
+
 	public String getPoblacion() {
 		return poblacion;
 	}
+
 	public void setPoblacion(String poblacion) {
 		this.poblacion = poblacion;
 	}
+
 	public String getDireccion() {
 		return direccion;
 	}
+
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+
 	public String getProducto() {
 		return producto;
 	}
+
 	public void setProducto(String producto) {
 		this.producto = producto;
 	}
-	public String getDescripcionProducto() {
-		return descripcionProducto;
+
+	public Integer getId_vendedor() {
+		return id_vendedor;
 	}
-	public void setDescripcionProducto(String descripcionProducto) {
-		this.descripcionProducto = descripcionProducto;
+
+	public void setId_vendedor(Integer id_vendedor) {
+		this.id_vendedor = id_vendedor;
 	}
-	public Integer getIdVendedor() {
-		return idVendedor;
-	}
-	public void setIdVendedor(Integer idVendedor) {
-		this.idVendedor = idVendedor;
-	}
+
 	public String getEstado() {
 		return estado;
 	}
+
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+
 	public String getVendedor() {
 		return vendedor;
 	}
+
 	public void setVendedor(String vendedor) {
 		this.vendedor = vendedor;
 	}
+
+	@Override
+	public String toString() {
+		return "PedidoDetallado [id_pedido=" + id_pedido + ", fecha_pedido=" + fecha_pedido + ", fecha_entrega="
+				+ fecha_entrega + ", precio_unidad=" + precio_unidad + ", cantidad=" + cantidad + ", precio_final="
+				+ precio_final + ", cliente=" + cliente + ", poblacion=" + poblacion + ", direccion=" + direccion
+				+ ", producto=" + producto + ", id_vendedor=" + id_vendedor + ", estado=" + estado + ", vendedor="
+				+ vendedor + "]";
+	}
 	
 	
+
 }

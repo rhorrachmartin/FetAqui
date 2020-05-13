@@ -16,13 +16,52 @@
 	<select id="getNumeroProductos" parameterType="int"
 		resultType="int">
 
-		select count(*) as productos 
-			from pedido
+		select count(*) as productos
+		from pedido
+		inner join
+		detalle_pedido
+		on pedido.id_pedido = detalle_pedido.id_pedido
+		inner join
+		producto
+		on producto.id_producto = detalle_pedido.id_producto
+		where
+		pedido.id_pedido = #{id_pedido};
+	</select>
+
+	<select id="getPedidoDetalladoPorId" parameterType="int"
+		resultType="PedidoDetallado">
+
+		select
+		pedido.id_pedido,
+		pedido.fecha_pedido,
+		pedido.fecha_entrega,
+		precio_unidad,
+		sum(cantidad) as cantidad,
+		precio_unidad * sum(cantidad) as precio_final,
+		concat(cliente.nombre, ' ' ,cliente.apellido) as cliente,
+		poblacion.nombre as poblacion,
+		direccion.direccion,
+		producto.nombre as producto,
+		vendedor.nombre as vendedor,
+		vendedor.id_vendedor as id_vendedor,
+		pedido.estado
+		from pedido
 		inner join detalle_pedido
-			on pedido.id_pedido = detalle_pedido.id_pedido
+		on pedido.id_pedido = detalle_pedido.id_pedido
 		inner join producto
-			on producto.id_producto = detalle_pedido.id_producto
-		where pedido.id_pedido = #{id_pedido};
+		on detalle_pedido.id_producto = producto.id_producto
+		inner join direccion
+		on direccion.id_direccion = pedido.destino
+		inner join poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		inner join cliente
+		on cliente.id_cliente = pedido.cliente
+		inner join vendedor
+		on vendedor.id_vendedor = producto.vendedor
+		where pedido.id_pedido = #{id_pedido}
+		group by pedido.id_pedido,producto.nombre,
+		vendedor.nombre,vendedor.id_vendedor,producto.descripcion,detalle_pedido.precio_unidad;
+
 	</select>
 
 </mapper>

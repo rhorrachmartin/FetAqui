@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,12 +18,13 @@ import modelo.ejb.SesionClienteEJB;
 import modelo.pojo.Cliente;
 import modelo.pojo.DetallePedido;
 import modelo.pojo.Pedido;
+import modelo.pojo.PedidoDetallado;
 
 /**
  * Servlet implementation class Carrito
  */
-@WebServlet("/Carrito")
-public class Carrito extends HttpServlet {
+@WebServlet("/Cesta")
+public class Cesta extends HttpServlet {
 
 	@EJB
 	SesionClienteEJB sesionClienteEJB;
@@ -35,9 +37,44 @@ public class Carrito extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-
+	static final String CESTA_JSP = "/Cesta.jsp";
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType(CONTENT_TYPE);
+		
+		RequestDispatcher rs = getServletContext().getRequestDispatcher(CESTA_JSP);
+
+		HttpSession session = request.getSession(false);
+
+		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		
+		if (c != null) {
+			
+			request.setAttribute("cliente", c);
+			
+			if(session.getAttribute("pedido")  != null) {
+				Pedido pedido = (Pedido) session.getAttribute("pedido");
+				
+				PedidoDetallado pedidoDetallado = pedidoEJB.getPedidoDetalladoPorId(pedido.getId());
+				
+				
+				request.setAttribute("pedidoDetallado", pedidoDetallado);
+				
+				rs.forward(request, response);
+			}else {
+				String mensaje = "Sin artículos en la cesta";
+				
+				request.setAttribute("error", mensaje);
+				
+				rs.forward(request, response);
+			}
+			
+		}else {
+			response.sendRedirect("Principal");
+		}
+		
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,12 +86,10 @@ public class Carrito extends HttpServlet {
 
 		Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		
-
 		if (c != null) {
 
 			if (session.getAttribute("pedido") == null) {
-				
+
 				if (c.getDireccion() != null) {
 					Timestamp fecha_pedido = new Timestamp(System.currentTimeMillis());
 					Timestamp fecha_entrega = new Timestamp(System.currentTimeMillis());
@@ -95,9 +130,9 @@ public class Carrito extends HttpServlet {
 
 					response.sendRedirect("ObtenerTodosProductos");
 				} else {
-					
+
 					String error = "Para realizar una compra actualice su perfil de usuario";
-					
+
 					session.setAttribute("error", error);
 					response.sendRedirect("ObtenerTodosProductos");
 				}

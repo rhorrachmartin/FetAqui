@@ -78,7 +78,7 @@ public class Login extends HttpServlet {
 		try {
 			// Si el usuario no existe con esos parámetros devolvemos un error
 			if (vendedorEJB.getVendedorEmailPass(email, password) == null
-					&& clienteEJB.getClienteEmailPass(email, password) == null) {
+					&& clienteEJB.getCliente(email, password) == null) {
 
 				response.sendRedirect("Principal?error=Usuario inexistente");
 
@@ -98,7 +98,7 @@ public class Login extends HttpServlet {
 
 			} else {
 				
-				c = clienteEJB.getClienteEmailPass(email, password);
+				c = clienteEJB.getCliente(email, password);
 				if (c.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);

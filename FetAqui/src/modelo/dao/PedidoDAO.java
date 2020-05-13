@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import modelo.dao.mappers.PedidosMapper;
 import modelo.pojo.Pedido;
+import modelo.pojo.PedidoDetallado;
 
 public class PedidoDAO {
 
@@ -31,6 +32,20 @@ public class PedidoDAO {
 			PedidosMapper pedidosMapper = sqlSession.getMapper(PedidosMapper.class);
 			// Insertamos el usuario
 			return pedidosMapper.getNumeroProductos(id_pedido);
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public PedidoDetallado getPedidoDetalladoPorId(Integer id_pedido) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			PedidosMapper pedidosMapper = sqlSession.getMapper(PedidosMapper.class);
+			// Insertamos el usuario
+			return pedidosMapper.getPedidoDetalladoPorId(id_pedido);
 		} finally {
 			// Cerramos sesión
 			sqlSession.close();

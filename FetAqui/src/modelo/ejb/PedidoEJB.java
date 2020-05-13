@@ -5,6 +5,7 @@ import javax.ejb.Stateless;
 
 import modelo.dao.PedidoDAO;
 import modelo.pojo.Pedido;
+import modelo.pojo.PedidoDetallado;
 
 @Stateless
 @LocalBean
@@ -20,6 +21,12 @@ public class PedidoEJB {
 		PedidoDAO pedidoDAO = new PedidoDAO();
 
 		return pedidoDAO.getNumeroProductos(id_pedido);
+	}
+
+	public PedidoDetallado getPedidoDetalladoPorId(Integer id_pedido) {
+		PedidoDAO pedidoDAO = new PedidoDAO();
+
+		return pedidoDAO.getPedidoDetalladoPorId(id_pedido);
 	}
 
 }

@@ -80,8 +80,6 @@ public class ObtenerTodosProductos extends HttpServlet {
 					
 					if (request.getParameter("selectCategorias") == null) {
 						
-						System.out.println("hola 1");
-						
 						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 						ArrayList<Producto> productos = productoEJB.getProductos();
 

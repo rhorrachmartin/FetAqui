@@ -79,7 +79,7 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="#"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
+						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
@@ -287,7 +287,7 @@
 							</div>
 							<div class="col col-lg-12">
 								<div class="cantidad">
-									<form action="Carrito" method="post">
+									<form action="InsertarPedido" method="post">
 
 										<button class="plus-boton" type="button" name="button">
 											<img src="img/plus.svg" alt="" />
