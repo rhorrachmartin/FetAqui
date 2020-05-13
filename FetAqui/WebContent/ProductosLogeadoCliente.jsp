@@ -292,7 +292,7 @@
 										<button class="plus-boton" type="button" name="button">
 											<img src="img/plus.svg" alt="" />
 										</button>
-										<input type="text" class="unidades" name="cantidad" value="1">
+										<input type="text" id="unidades<%=pro.getId() %>" class="unidades" name="cantidad" value="1">
 										<button class="minus-boton" type="button" name="button">
 											<img src="img/minus.svg" alt="" />
 										</button>
