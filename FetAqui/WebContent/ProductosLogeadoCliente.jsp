@@ -234,17 +234,17 @@
 			<div class="col mb-4">
 				<div class="card h-100">
 					<!--Card image-->
-					<div id="contenedorImagenProducto" class="view overlay zoom">
+					<div class="view overlay zoom contenedorImagenProducto">
 						<%
 							if (pro.getFoto().equals("producto.png")) {
 						%>
-						<img id="imagenProducto" class="img-fluid z-depth-1"
+						<img class="img-fluid z-depth-1 imagenProducto"
 							src="img/<%=pro.getFoto()%>" alt="Card image cap">
 
 						<%
 							} else {
 						%>
-						<img id="imagenProducto" class="img-fluid z-depth-1"
+						<img class="img-fluid z-depth-1 imagenProducto"
 							src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
 						<%
 							}
