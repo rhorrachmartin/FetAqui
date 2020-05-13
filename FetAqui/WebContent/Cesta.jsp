@@ -4,6 +4,7 @@
 <%@ page import="modelo.pojo.Cliente"%>
 <%@ page import="modelo.pojo.PedidoDetallado"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
+<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +47,8 @@
 	<%
 		HttpSession session = request.getSession(false);
 	Cliente cliente = null;
-	PedidoDetallado pDetallado = null;
+	ArrayList<PedidoDetallado> pDetallado = null;
+	String error = "";
 
 	if (session.getAttribute("cliente") != null) {
 		cliente = (Cliente) session.getAttribute("cliente");
@@ -54,7 +56,7 @@
 	}
 
 	if (request.getAttribute("pedidoDetallado") != null) {
-		pDetallado = (PedidoDetallado) request.getAttribute("pedidoDetallado");
+		pDetallado = (ArrayList<PedidoDetallado>) request.getAttribute("pedidoDetallado");
 	}
 	%>
 	<div id="container">
@@ -99,43 +101,137 @@
 				</ul>
 			</div>
 		</nav>
-	</div>
 
-	<main class="container">
+		<main class="container">
 
-		<div class="row">
+			<div class="row">
 
-			<div class="col col-lg-12 text-center">
-				<h3>SU PEDIDO</h3>
-			</div>
+				<div class="col col-lg-12 text-center">
+					<h3>SU PEDIDO</h3>
+				</div>
 
-			<hr>
+				<hr>
 
-			<div class="col col-lg-12">
+				<%
+					if (request.getAttribute("error") != null) {
+						error = (String)request.getAttribute("error");
+				%>
+				
+				<div class="col col-lg-12 text-center">
+					<h2><%=error%></h2>
+				</div>
+				<%
+					} else {
+				%>
 
-				<div class="row">
-					<div class="col col-lg-12">
-						<p>
-							<strong>Dirección: </strong><%=pDetallado.getDireccion()%>
-						</p>
+				<div class="col col-lg-12">
+
+					<div class="row">
+						<div class="col col-lg-12">
+							<p>
+								<strong>Dirección: </strong><%=pDetallado.get(0).getDireccion()%>
+							</p>
+						</div>
+						<div class="col col-lg-12">
+							<p>
+								<strong>Población: </strong><%=pDetallado.get(0).getPoblacion()%>
+							</p>
+						</div>
+						<div class="col col-lg-12">
+							<p>
+								<strong>Fecha de entrega: </strong><%=pDetallado.get(0).getFecha_entrega()%>
+							</p>
+						</div>
 					</div>
-					<div class="col col-lg-12">
-						<p>
-							<strong>Población: </strong><%=pDetallado.getPoblacion()%>
-						</p>
-					</div>
-					<div class="col col-lg-12">
-						<p>
-							<strong>Fecha de entrega: </strong><%=pDetallado.getFecha_entrega()%>
-						</p>
+
+				</div>
+				<hr>
+				<div class="col col-lg-12 text-center">
+					<h4>PEDIDO DETALLADO</h4>
+					<div class="row">
+
+
+
+						<div class="col col-lg-12">
+							<div class="table-responsive">
+								<!--Table-->
+								<table class="table">
+									<!--Table head-->
+									<thead>
+										<tr>
+											<th class="th-lg"></th>
+											<th class="th-lg">Producto</th>
+											<th class="th-lg">Cantidad</th>
+											<th class="th-lg">Precio Unitario</th>
+											<th class="th-lg">Precio Total</th>
+											<th class="th-lg"></th>
+										</tr>
+										<!--Table body-->
+									<tbody>
+
+
+										<!--Table head-->
+										<%
+											for (PedidoDetallado pd : pDetallado) {
+										%>
+										<tr>
+											<td>
+												<%
+													if (pd.getFoto().equals("producto.png")) {
+												%>
+												<div class="thumbnail">
+													<img class="img-responsive imagenProductoTabla"
+														src="img/<%=pd.getFoto()%>">
+												</div> <%
+ 	} else {
+ %>
+												<div class="thumbnail">
+													<img class="img-responsive imagenProductoTabla"
+														src="Imagenes/<%=pd.getFoto()%>" alt="Card image cap">
+												</div> <%
+ 	}
+ %>
+											</td>
+											<td><%=pd.getProducto()%></td>
+											<td><%=pd.getCantidad()%></td>
+											<td><%=pd.getPrecio_unidad()%>€</td>
+											<td><%=pd.getPrecio_final()%>€</td>
+											<td>
+
+												<form action="BorrarProductoCesta" method="post">
+													<input type="hidden" name="id_detalle"
+														value="<%=pd.getId_detalle()%>">
+													<button type="submit" class="btn btn-light-blue btn-md">
+														<a data-toggle="tooltip" title="ELIMINAR"><i
+															class="far fa-trash-alt"></i></a>
+													</button>
+
+												</form>
+
+											</td>
+										</tr>
+										<%
+											}
+										%>
+									</tbody>
+									<!--Table body-->
+								</table>
+								<!--Table-->
+
+							</div>
+						</div>
+
+						<%
+							}
+						%>
 					</div>
 				</div>
 
 			</div>
-			<hr>
+		</main>
+	</div>
 
-		</div>
-	</main>
+
 	<!-- Footer -->
 	<footer class="page-footer font-small unique-color-dark pt-4">
 

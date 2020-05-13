@@ -1,6 +1,8 @@
 package modelo.dao.mappers;
 
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 
 import modelo.pojo.Pedido;
@@ -18,6 +20,8 @@ public interface PedidosMapper {
 	
 	public int getNumeroProductos(@Param("id_pedido") Integer id_pedido);
 	
-	public PedidoDetallado getPedidoDetalladoPorId(@Param("id_pedido") Integer id_pedido);
+	public ArrayList<PedidoDetallado> getPedidoDetalladoPorId(@Param("id_pedido") Integer id_pedido);
+	
+	public void borrarProductoCesta(@Param("id_detalle") Integer id_detalle);
 
 }

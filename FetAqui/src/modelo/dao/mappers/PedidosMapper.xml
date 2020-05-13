@@ -27,12 +27,29 @@
 		where
 		pedido.id_pedido = #{id_pedido};
 	</select>
+	
+	<resultMap type='PedidoDetallado' id='getPedidoDetalladoPorId'>
+		<result property='id_pedido' column='id_pedido' />
+		<result property='fecha_pedido' column='fecha_pedido' />
+		<result property='fecha_entrega' column='fecha_entrega' />
+		<result property='precio_unidad' column='precio_unidad' />
+		<result property='cantidad' column='cantidad' />
+		<result property='precio_final' column='precio_final' />
+		<result property='cliente' column='cliente' />
+		<result property='poblacion' column='poblacion' />
+		<result property='direccion' column='direccion' />
+		<result property='producto' column='producto' />
+		<result property='vendedor' column='vendedor' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='estado' column='estado' />
+	</resultMap>
 
 	<select id="getPedidoDetalladoPorId" parameterType="int"
-		resultType="PedidoDetallado">
+		resultMap="getPedidoDetalladoPorId">
 
 		select
 		pedido.id_pedido,
+		detalle_pedido.id_detalle,
 		pedido.fecha_pedido,
 		pedido.fecha_entrega,
 		precio_unidad,
@@ -42,6 +59,7 @@
 		poblacion.nombre as poblacion,
 		direccion.direccion,
 		producto.nombre as producto,
+		producto.foto as foto,
 		vendedor.nombre as vendedor,
 		vendedor.id_vendedor as id_vendedor,
 		pedido.estado
@@ -59,9 +77,13 @@
 		inner join vendedor
 		on vendedor.id_vendedor = producto.vendedor
 		where pedido.id_pedido = #{id_pedido}
-		group by pedido.id_pedido,producto.nombre,
-		vendedor.nombre,vendedor.id_vendedor,producto.descripcion,detalle_pedido.precio_unidad;
+		group by pedido.id_pedido, detalle_pedido.id_detalle,producto.nombre,
+		vendedor.nombre,vendedor.id_vendedor,producto.descripcion,producto.foto,detalle_pedido.precio_unidad;
 
 	</select>
+	
+	<delete id='borrarProductoCesta' parameterType='int'>
+		delete from detalle_pedido where id_detalle = #{id_detalle};
+	</delete>
 
 </mapper>

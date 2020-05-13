@@ -2,6 +2,7 @@ package modelo.controlador;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -38,42 +39,53 @@ public class Cesta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String CESTA_JSP = "/Cesta.jsp";
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType(CONTENT_TYPE);
-		
+
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(CESTA_JSP);
 
 		HttpSession session = request.getSession(false);
 
 		Cliente c = sesionClienteEJB.clienteLogeado(session);
-		
+
 		if (c != null) {
-			
+
 			request.setAttribute("cliente", c);
-			
-			if(session.getAttribute("pedido")  != null) {
+
+			if (session.getAttribute("pedido") != null) {
 				Pedido pedido = (Pedido) session.getAttribute("pedido");
-				
-				PedidoDetallado pedidoDetallado = pedidoEJB.getPedidoDetalladoPorId(pedido.getId());
-				
-				
-				request.setAttribute("pedidoDetallado", pedidoDetallado);
-				
-				rs.forward(request, response);
-			}else {
+
+				ArrayList<PedidoDetallado> pedidoDetallado = pedidoEJB.getPedidoDetalladoPorId(pedido.getId());
+
+				if (pedidoDetallado.isEmpty()) {
+					String mensaje = "Cesta vacía";
+					
+					Integer numProductos = pedidoEJB.getNumeroProductos(pedido.getId());
+
+					session.setAttribute("numProductos", numProductos);
+
+					request.setAttribute("error", mensaje);
+
+					rs.forward(request, response);
+				} else {
+					request.setAttribute("pedidoDetallado", pedidoDetallado);
+
+					rs.forward(request, response);
+				}
+
+			} else {
 				String mensaje = "Sin artículos en la cesta";
-				
+
 				request.setAttribute("error", mensaje);
-				
+
 				rs.forward(request, response);
 			}
-			
-		}else {
+
+		} else {
 			response.sendRedirect("Principal");
 		}
-		
 
 	}
 

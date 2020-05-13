@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class PedidoDetallado {
 
 	Integer id_pedido;
+	Integer id_detalle;
 	Timestamp fecha_pedido;
 	Timestamp fecha_entrega;
 	Integer precio_unidad;
@@ -17,6 +18,7 @@ public class PedidoDetallado {
 	Integer id_vendedor;
 	String estado;
 	String vendedor;
+	String foto;
 
 	public PedidoDetallado() {
 		
@@ -28,6 +30,16 @@ public class PedidoDetallado {
 
 	public void setId_pedido(Integer id_pedido) {
 		this.id_pedido = id_pedido;
+	}
+	
+	
+
+	public Integer getId_detalle() {
+		return id_detalle;
+	}
+
+	public void setId_detalle(Integer id_detalle) {
+		this.id_detalle = id_detalle;
 	}
 
 	public Timestamp getFecha_pedido() {
@@ -100,6 +112,16 @@ public class PedidoDetallado {
 
 	public void setProducto(String producto) {
 		this.producto = producto;
+	}
+	
+	
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 
 	public Integer getId_vendedor() {

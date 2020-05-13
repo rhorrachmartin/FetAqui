@@ -1,5 +1,7 @@
 package modelo.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 
 import modelo.dao.mappers.PedidosMapper;
@@ -23,6 +25,22 @@ public class PedidoDAO {
 			sqlSession.close();
 		}
 	}
+	
+	public void borrarProductoCesta(Integer id_detalle) {
+
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			PedidosMapper pedidosMapper = sqlSession.getMapper(PedidosMapper.class);
+			// Insertamos el usuario
+			pedidosMapper.borrarProductoCesta(id_detalle);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 	public int getNumeroProductos(Integer id_pedido) {
 		// Abrimos la sesión
@@ -38,7 +56,7 @@ public class PedidoDAO {
 		}
 	}
 	
-	public PedidoDetallado getPedidoDetalladoPorId(Integer id_pedido) {
+	public ArrayList<PedidoDetallado> getPedidoDetalladoPorId(Integer id_pedido) {
 		// Abrimos la sesión
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
 		try {
