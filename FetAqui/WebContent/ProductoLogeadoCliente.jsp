@@ -45,6 +45,8 @@
 		Producto producto = null;
 	Vendedor vendedor = null;
 	Cliente c = null;
+	HttpSession session = request.getSession(false);
+	
 	if (request.getAttribute("producto") != null) {
 		producto = (Producto) request.getAttribute("producto");
 	}
@@ -56,6 +58,12 @@
 	if (request.getAttribute("c") != null) {
 
 		c = (Cliente) request.getAttribute("c");
+	}
+	
+	int numProductos = 0;
+
+	if (session.getAttribute("numProductos") != null) {
+		numProductos = (Integer) session.getAttribute("numProductos");
 	}
 	%>
 
@@ -78,7 +86,7 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="#"><i class="fas fa-shopping-basket"></i> CESTA (0)</a></li>
+						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"

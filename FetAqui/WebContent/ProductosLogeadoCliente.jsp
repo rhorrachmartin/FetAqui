@@ -257,7 +257,7 @@
 
 						<!--Title-->
 						<h4 class="card-title"><%=pro.getNombre()%>
-							<%=pro.getPrecio()%>/<%=pro.getFormato()%></h4>
+							<%=pro.getPrecio()%>€/<%=pro.getFormato()%></h4>
 						<!--Text-->
 						<div class="descripcionProducto">
 							<p class="card-text"><%=pro.getDescripcion()%></p>

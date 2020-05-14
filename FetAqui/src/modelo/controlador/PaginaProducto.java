@@ -76,7 +76,7 @@ public class PaginaProducto extends HttpServlet {
 
 			if (c != null) {
 				rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_CLIENTE_JSP);
-				
+
 				try {
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
@@ -92,7 +92,7 @@ public class PaginaProducto extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+
 			} else {
 				rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_VENDEDOR_JSP);
 				try {
@@ -113,7 +113,23 @@ public class PaginaProducto extends HttpServlet {
 			}
 
 		} else {
+			rs = getServletContext().getRequestDispatcher(PRODUCTO_NO_LOGEADO_JSP);
 
+			try {
+				Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+				Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+
+				Producto producto = productoEJB.getProductoPorId(id_producto);
+				Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+
+				request.setAttribute("vendedor", vendedor);
+				request.setAttribute("producto", producto);
+
+				rs.forward(request, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <%@ page import="modelo.pojo.Cliente"%>
+<%@ page import="modelo.pojo.Vendedor"%>
+<%@ page import="modelo.pojo.Post"%>
+<%@ page import="modelo.pojo.Producto"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
 <!DOCTYPE html>
 <html>
@@ -45,9 +49,36 @@
 	<%
 		HttpSession session = request.getSession(false);
 	Cliente cliente = null;
+	
+	ArrayList<Vendedor> vendedores = null;
+	ArrayList<Producto> productos = null;
+	ArrayList<Post> posts = null;
+	
+	
 	if (session.getAttribute("cliente") != null) {
 		cliente = (Cliente) session.getAttribute("cliente");
 
+	}
+	
+	if (request.getAttribute("vendedores") != null) {
+		vendedores = (ArrayList<Vendedor>) request.getAttribute("vendedores");
+
+	}
+
+	if (request.getAttribute("productos") != null) {
+		productos = (ArrayList<Producto>) request.getAttribute("productos");
+
+	}
+
+	if (request.getAttribute("posts") != null) {
+		posts = (ArrayList<Post>) request.getAttribute("posts");
+
+	}
+	
+	int numProductos = 0;
+
+	if (session.getAttribute("numProductos") != null) {
+		numProductos = (Integer) session.getAttribute("numProductos");
 	}
 	%>
 	<div id="container">
@@ -67,7 +98,7 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="#"><i class="fas fa-shopping-basket"></i> CESTA (0)</a></li>
+						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
@@ -92,6 +123,176 @@
 				</ul>
 			</div>
 		</nav>
+		
+		<div class="container-fluid">
+
+			<div class="row row-cols-1 row-cols-md-3">
+
+				<div id="lateralProductosPrincipal"
+					class="col">
+
+					<div class="text-center">
+						<h4>Productos</h4>
+						<hr>
+
+						<!-- Card deck -->
+						<div class="row">
+
+							<%
+								for (Producto pro : productos) {
+							%>
+
+
+							<!-- Card -->
+							<div
+								class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4">
+								<div class="row">
+									<!--Card image-->
+									<div class="col col-lg-12 view overlay zoom ">
+										<%
+											if (pro.getFoto().equals("producto.png")) {
+										%>
+										<img
+											class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"
+											src="img/<%=pro.getFoto()%>" alt="Card image cap">
+
+										<%
+											} else {
+										%>
+										<img
+											class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"
+											src="Imagenes/<%=pro.getFoto()%>" alt="Card image cap">
+										<%
+											}
+										%>
+										<div class="mask rgba-white-slight"></div>
+									</div>
+								</div>
+								<!--Card content-->
+								<div class="row">
+
+									<!--Title-->
+									<div class="col col-lg-12">
+										<h4 class="card-title"><%=pro.getNombre()%></h4>
+									</div>
+
+									<div class="col col-lg-12 colSinPading">
+										<form action="PaginaProducto" method="get">
+											<input type="hidden" name="id_vendedor"
+												value="<%=pro.getId_vendedor()%>"> <input
+												type="hidden" name="id_producto" value="<%=pro.getId()%>">
+											<button type="submit" class="btn btn-light-blue btn-md">
+												VER</button>
+										</form>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<%
+								}
+							%>
+							<!-- Card -->
+						</div>
+					</div>
+				</div>
+
+				<div id="noticias" class="col">
+					<div class="text-center">
+						<h4>Noticias</h4>
+						<hr>
+						<div class="row">
+							<%
+								for (Post post : posts) {
+							%>
+							<div class="sombraProductoInicio col col-lg-12 mb-4">
+								<strong><%=post.getNombre_autor()%></strong>
+								<p><%=post.getTexto()%></p>
+								<label>Valoración: <%=post.getValoracion()%></label>
+							</div>
+
+
+							<%
+								}
+							%>
+						</div>
+					</div>
+				</div>
+
+				<div id="lateral2" class="col">
+
+					<div class="text-center">
+						<h4>Vendedores</h4>
+						<hr>
+
+						<!-- Card deck -->
+						<div class="row">
+
+							<%
+								for (Vendedor ven : vendedores) {
+							%>
+
+
+							<!-- Card -->
+							<div
+								class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4">
+								<div class="row">
+									<!--Card image-->
+									<div class="col col-lg-12 view overlay zoom ">
+										<%
+											if (ven.getFoto().equals("desconocido.txt")) {
+										%>
+										<img
+											class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"
+											src="img/user.png" alt="Card image cap">
+
+										<%
+											} else {
+										%>
+										<img
+											class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"
+											src="Imagenes/<%=ven.getFoto()%>" alt="Card image cap">
+										<%
+											}
+										%>
+										<div class="mask rgba-white-slight"></div>
+									</div>
+								</div>
+								<!--Card content-->
+								<div class="row">
+
+									<!--Title-->
+									<div class="col col-lg-12">
+										<h4 class="card-title"><%=ven.getNombre()%></h4>
+									</div>
+
+									<div class="col col-lg-12 colSinPading">
+										<form action="PaginaVendedor" method="get">
+											<input type="hidden" name="id_vendedor"
+												value="<%=ven.getId_vendedor()%>"> 
+											<button type="submit" class="btn btn-light-blue btn-md">
+												VER</button>
+										</form>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<%
+								}
+							%>
+							<!-- Card -->
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
 	</div>
 	<!-- Footer -->
 	<footer class="page-footer font-small unique-color-dark pt-4">

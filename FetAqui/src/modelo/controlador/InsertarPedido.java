@@ -14,9 +14,11 @@ import javax.servlet.http.HttpSession;
 import modelo.ejb.DetallesPedidoEJB;
 import modelo.ejb.PedidoEJB;
 import modelo.ejb.SesionClienteEJB;
+import modelo.ejb.VendedorEJB;
 import modelo.pojo.Cliente;
 import modelo.pojo.DetallePedido;
 import modelo.pojo.Pedido;
+import modelo.pojo.Vendedor;
 
 /**
  * Servlet implementation class Carrito
@@ -32,6 +34,9 @@ public class InsertarPedido extends HttpServlet {
 
 	@EJB
 	DetallesPedidoEJB detallePedidoEJB;
+
+	@EJB
+	VendedorEJB vendedorEJB;
 
 	private static final long serialVersionUID = 1L;
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
@@ -49,12 +54,10 @@ public class InsertarPedido extends HttpServlet {
 
 		Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		
-
 		if (c != null) {
 
 			if (session.getAttribute("pedido") == null) {
-				
+
 				if (c.getDireccion() != null) {
 					Timestamp fecha_pedido = new Timestamp(System.currentTimeMillis());
 					Timestamp fecha_entrega = new Timestamp(System.currentTimeMillis());
@@ -90,15 +93,22 @@ public class InsertarPedido extends HttpServlet {
 					detallePedidoEJB.insertarDetallePedido(detallePedido);
 
 					Integer numProductos = pedidoEJB.getNumeroProductos(id_pedido);
-					
-					
+
 					session.setAttribute("numProductos", numProductos);
 
-					response.sendRedirect("ObtenerTodosProductos");
+					if (request.getParameter("id_vendedor") != null) {
+
+						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+
+						response.sendRedirect("PaginaVendedor?id_vendedor=" + id_vendedor);
+					} else {
+
+						response.sendRedirect("ObtenerTodosProductos");
+					}
 				} else {
-					
+
 					String error = "Para realizar una compra actualice su perfil de usuario";
-					
+
 					session.setAttribute("error", error);
 					response.sendRedirect("ObtenerTodosProductos");
 				}
@@ -127,7 +137,15 @@ public class InsertarPedido extends HttpServlet {
 
 				session.setAttribute("numProductos", numProductos);
 
-				response.sendRedirect("ObtenerTodosProductos");
+				if (request.getParameter("id_vendedor") != null) {
+
+					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+
+					response.sendRedirect("PaginaVendedor?id_vendedor=" + id_vendedor);
+				} else {
+
+					response.sendRedirect("ObtenerTodosProductos");
+				}
 			}
 
 		} else {

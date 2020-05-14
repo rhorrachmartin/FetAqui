@@ -8,7 +8,7 @@ public class PedidoDetallado {
 	Integer id_detalle;
 	Timestamp fecha_pedido;
 	Timestamp fecha_entrega;
-	Integer precio_unidad;
+	double precio_unidad;
 	Integer cantidad;
 	double precio_final;
 	String cliente;
@@ -58,11 +58,11 @@ public class PedidoDetallado {
 		this.fecha_entrega = fecha_entrega;
 	}
 
-	public Integer getPrecio_unidad() {
+	public double getPrecio_unidad() {
 		return precio_unidad;
 	}
 
-	public void setPrecio_unidad(Integer precio_unidad) {
+	public void setPrecio_unidad(double precio_unidad) {
 		this.precio_unidad = precio_unidad;
 	}
 

@@ -9,30 +9,46 @@
 <title>FET AQUI</title>
 <!--  FONT AWESOME -->
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css"
+	rel="stylesheet">
 <link href="css/estilos.css" type="text/css" rel="stylesheet">
 <!-- -------------------SCRIPTS--------------- -->
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 <script src="js/validarPassword.js"></script>
 </head>
 <body>
 
-	<div id="container" >
+	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand logoNavegador" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -40,23 +56,27 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="ObtenerTodosProductos">Productos</a></li>
-					<li class="nav-item"><a class="nav-link" href="ObtenerTodosVendedores">Vendedores</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<%
 						if (request.getAttribute("error") != null) {
-							String error = (String) request.getAttribute("error");
+						String error = (String) request.getAttribute("error");
 					%>
 					<li class="nav-item"><a class="btn btn-danger btn-sm"
 						data-toggle="modal" data-target="#"><%=error%></a></li>
 					<%
 						}
 					%>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalRegistro">REGISTRARSE</a></li>
 
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalLogin">LOGIN</a></li>
 
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
@@ -66,6 +86,75 @@
 				</ul>
 			</div>
 		</nav>
+
+
+		<main class="container fondoContainer">
+			<div class="row">
+				<div class="col col-lg-12  text-center vertical-center">
+
+					<h1 class="nombreLogo">Fet Aquí</h1>
+
+				</div>
+
+				<div class="col col-lg-12 text-center vertical-center">
+					<h2 class="bajoLogo">La aplicación que te permite apoyar a
+						nuestros agricultores y productores</h2>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col col-lg-12  text-center vertical-center">
+
+					<h1 class="quienesSomos">¿Quiénes somos?</h1>
+
+				</div>
+
+				<div class="col col-lg-12 text-center vertical-center">
+					<h2 class="bajoquienesSomos">Somos mallorquines preocupados y ocupados por el consumo local</h2>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col col-lg-12  text-center vertical-center">
+
+					<h1 class="quienesSomos">6 razones para el consumo local</h1>
+
+				</div>
+
+				<div class="col col-lg-4 text-center vertical-center">
+					<img src="img/flag.png" class="img-fluid rounded-circle">
+					<p>Transformas la economía de la isla</p>
+				</div>
+				
+				<div class="col col-lg-4 text-center vertical-center">
+					<img src="img/equidad.png" class="img-fluid rounded-circle">
+					<p>Promueves una economía más equitativa</p>
+				</div>
+				
+				<div class="col col-lg-4 text-center vertical-center">
+					<img src="img/family.png" class="img-fluid rounded-circle">
+					<p>Apoyas a familias que prosperan de manera independiente</p>
+				</div>
+				
+				<div class="col col-lg-4 text-center vertical-center">
+					<img src="img/gracias.png" class="img-fluid rounded-circle">
+					<p>Generas seguridad, faz y felicidad a pequeños empresarios</p>
+				</div>
+				
+				<div class="col col-lg-4 text-center vertical-center">
+					<img src="img/ambiente.png" class="img-fluid rounded-circle">
+					<p>Promueves el cuidado del medioambiente</p>
+				</div>
+				
+				<div class="col col-lg-4 text-center vertical-center">
+					<img src="img/justice.png" class="img-fluid rounded-circle">
+					<p>Ayudas a construir un país más justo</p>
+				</div>
+				
+			</div>
+			
+		</main>
+
 		<!------------------------------------------------------MODAL DE ELECCION DE TIPO DE REGISTRO------------------------------------------------------------------------>
 		<div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
 			<div class="modal-dialog">
@@ -310,14 +399,14 @@
 
 		<%
 			boolean activado = false;
-			if (request.getAttribute("activado") != null) {
-				activado = (boolean) request.getAttribute("activado");
-			}
+		if (request.getAttribute("activado") != null) {
+			activado = (boolean) request.getAttribute("activado");
+		}
 
-			String email = "";
-			if (request.getAttribute("email") != null) {
-				email = (String) request.getAttribute("email");
-			}
+		String email = "";
+		if (request.getAttribute("email") != null) {
+			email = (String) request.getAttribute("email");
+		}
 		%>
 
 		<%

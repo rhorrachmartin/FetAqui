@@ -82,18 +82,21 @@ public class PaginaVendedor extends HttpServlet {
 			try {
 				if (c != null) {
 					rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_CLIENTE_JSP);
+
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 
 					if (request.getParameter("selectCategorias") == null) {
+
 						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 						ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+						Vendedor vendedor2 = vendedorEJB.getVendedorPorId(id_vendedor);
 
-						request.setAttribute("vendedor", vendedor);
+						request.setAttribute("vendedor", vendedor2);
 						request.setAttribute("productos", productos);
 						request.setAttribute("categorias", categorias);
 
 						rs.forward(request, response);
+
 					} else {
 
 						if (!request.getParameter("selectCategorias").equals("todos")) {
@@ -103,7 +106,7 @@ public class PaginaVendedor extends HttpServlet {
 							ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
 									id_categoria);
 
-							Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+							Vendedor vendedor3 = vendedorEJB.getVendedorPorId(id_vendedor);
 							Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
 
 							if (productos.isEmpty()) {
@@ -112,7 +115,7 @@ public class PaginaVendedor extends HttpServlet {
 							}
 
 							request.setAttribute("categoria", categoria);
-							request.setAttribute("vendedor", vendedor);
+							request.setAttribute("vendedor", vendedor3);
 							request.setAttribute("productos", productos);
 							request.setAttribute("categorias", categorias);
 
@@ -121,9 +124,9 @@ public class PaginaVendedor extends HttpServlet {
 							ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 							ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
 
-							Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+							Vendedor vendedor4 = vendedorEJB.getVendedorPorId(id_vendedor);
 
-							request.setAttribute("vendedor", vendedor);
+							request.setAttribute("vendedor", vendedor4);
 							request.setAttribute("productos", productos);
 							request.setAttribute("categorias", categorias);
 
@@ -131,6 +134,7 @@ public class PaginaVendedor extends HttpServlet {
 						}
 
 					}
+
 				} else {
 					rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_VENDEDOR_JSP);
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));

@@ -103,8 +103,7 @@ public class Login extends HttpServlet {
 					// Iniciamos la sesión
 					session = request.getSession(true);
 					sesionClienteEJB.crearSesion(session, c);
-					request.setAttribute("cliente", c);
-					rs.forward(request, response);
+					response.sendRedirect("Principal");
 				} else {
 					response.sendRedirect("Principal?error=Usuario no activado");
 				}

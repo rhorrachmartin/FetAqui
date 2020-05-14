@@ -117,6 +117,15 @@ public class Principal extends HttpServlet {
 
 				if (c != null) {
 					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
+					
+					ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+					ArrayList<Producto> productos = productoEJB.getProductos();
+					ArrayList<Post> posts = postEJB.getPosts();
+					
+					request.setAttribute("vendedores", vendedores);
+					request.setAttribute("productos", productos);
+					request.setAttribute("posts", posts);
+					
 					rs.forward(request, response);
 				} else {
 					

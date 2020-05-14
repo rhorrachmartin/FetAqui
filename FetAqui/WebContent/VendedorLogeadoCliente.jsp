@@ -50,6 +50,7 @@
 	Categoria categoria = null;
 	Vendedor vendedor = null;
 	Cliente c = null;
+	HttpSession session = request.getSession(false);
 	if (request.getAttribute("categorias") != null) {
 		categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
 	}
@@ -72,6 +73,12 @@
 
 		c = (Cliente) request.getAttribute("c");
 	}
+	
+	int numProductos = 0;
+
+	if (session.getAttribute("numProductos") != null) {
+		numProductos = (Integer) session.getAttribute("numProductos");
+	}
 	%>
 
 	<div id="container">
@@ -93,7 +100,7 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="#"><i class="fas fa-shopping-basket"></i> CESTA (0)</a></li>
+						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
@@ -328,6 +335,30 @@
 													Precio:
 													<%=pro.getPrecio()%>€ /
 													<%=pro.getFormato()%></h5>
+											</div>
+
+											<div class="col col-lg-12">
+												<div class="cantidad">
+													<form action="InsertarPedido" method="post">
+
+														<button class="plus-boton" type="button" name="button">
+															<img src="img/plus.svg" alt="" />
+														</button>
+														<input type="text" id="unidades<%=pro.getId()%>"
+															class="unidades" name="cantidad" value="1">
+														<button class="minus-boton" type="button" name="button">
+															<img src="img/minus.svg" alt="" />
+														</button>
+														<input type="hidden" name="id_vendedor"
+															value="<%=vendedor.getId_vendedor()%>">
+														<input type="hidden" name="id_producto"
+															value="<%=pro.getId()%>"> <input type="hidden"
+															name="precio" value="<%=pro.getPrecio()%>">
+														<button type="submit" class="btn btn-light-blue btn-md">
+															<i class="fas fa-cart-plus"></i>
+														</button>
+													</form>
+												</div>
 											</div>
 
 										</div>
@@ -597,7 +628,7 @@
 			});
 		});
 	</script>
-
+	<script src="js/cantidadesCarro.js"></script>
 
 </body>
 </html>

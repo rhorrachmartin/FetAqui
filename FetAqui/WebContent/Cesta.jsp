@@ -49,7 +49,7 @@
 	Cliente cliente = null;
 	ArrayList<PedidoDetallado> pDetallado = null;
 	String error = "";
-
+	
 	if (session.getAttribute("cliente") != null) {
 		cliente = (Cliente) session.getAttribute("cliente");
 
@@ -57,6 +57,12 @@
 
 	if (request.getAttribute("pedidoDetallado") != null) {
 		pDetallado = (ArrayList<PedidoDetallado>) request.getAttribute("pedidoDetallado");
+	}
+	
+	int numProductos = 0;
+
+	if (session.getAttribute("numProductos") != null) {
+		numProductos = (Integer) session.getAttribute("numProductos");
 	}
 	%>
 	<div id="container">
@@ -76,7 +82,7 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="#"><i class="fas fa-shopping-basket"></i> CESTA (0)</a></li>
+						href="#"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
 					<li class="nav-item"><a class="btn btn-primary btn-sm"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-success btn-sm"
