@@ -74,11 +74,12 @@ public class Login extends HttpServlet {
 		// Buscamos al usuario en BD
 		Vendedor vendedor = null;
 		Cliente c = null;
+		
 
 		try {
 			// Si el usuario no existe con esos parámetros devolvemos un error
 			if (vendedorEJB.getVendedorEmailPass(email, password) == null
-					&& clienteEJB.getCliente(email, password) == null) {
+					&& clienteEJB.getClienteEmailPass(email, password) == null) {
 
 				response.sendRedirect("Principal?error=Usuario inexistente");
 

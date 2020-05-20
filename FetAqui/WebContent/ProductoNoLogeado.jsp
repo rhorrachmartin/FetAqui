@@ -10,40 +10,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FET AQUI</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css"
+	rel="stylesheet">
 <link href="css/estilos.css" type="text/css" rel="stylesheet">
 <!-- -------------------SCRIPTS--------------- -->
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 <script src="js/validarPassword.js"></script>
 </head>
 <body>
 	<%
 		Producto producto = null;
-		Vendedor vendedor = null;
+	Vendedor vendedor = null;
 
-		if (request.getAttribute("producto") != null) {
-			producto = (Producto) request.getAttribute("producto");
-		}
+	if (request.getAttribute("producto") != null) {
+		producto = (Producto) request.getAttribute("producto");
+	}
 
-		if (request.getAttribute("vendedor") != null) {
-			vendedor = (Vendedor) request.getAttribute("vendedor");
-		}
+	if (request.getAttribute("vendedor") != null) {
+		vendedor = (Vendedor) request.getAttribute("vendedor");
+	}
 	%>
 
-	<div id="container" >
+	<div id="container">
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
@@ -57,22 +73,23 @@
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="ObtenerTodosProductos">Productos</a></li>
-					<li class="nav-item"><a class="nav-link" href="ObtenerTodosVendedores">Vendedores</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<%
 						if (request.getAttribute("error") != null) {
-							String error = (String) request.getAttribute("error");
+						String error = (String) request.getAttribute("error");
 					%>
 					<li class="nav-item"><a class="btn btn-danger btn-sm"
 						data-toggle="modal" data-target="#"><%=error%></a></li>
 					<%
 						}
 					%>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalRegistro">REGISTRARSE</a></li>
 
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalLogin">LOGIN</a></li>
 
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
@@ -127,7 +144,8 @@
 
 				<div class="col col-lg-12"
 					style="margin: 1px; word-wrap: break-word;">
-					<p><%=producto.getDescripcion()%><p>
+					<p><%=producto.getDescripcion()%>
+					<p>
 				</div>
 			</div>
 			<!-- FIN DESCRIPCIÓN DEL PRODUCTO -->
@@ -428,14 +446,14 @@
 
 		<%
 			boolean activado = false;
-			if (request.getAttribute("activado") != null) {
-				activado = (boolean) request.getAttribute("activado");
-			}
+		if (request.getAttribute("activado") != null) {
+			activado = (boolean) request.getAttribute("activado");
+		}
 
-			String email = "";
-			if (request.getAttribute("email") != null) {
-				email = (String) request.getAttribute("email");
-			}
+		String email = "";
+		if (request.getAttribute("email") != null) {
+			email = (String) request.getAttribute("email");
+		}
 		%>
 
 		<%

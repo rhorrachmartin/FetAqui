@@ -17,6 +17,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -95,10 +101,10 @@
 					<%
 						}
 					%>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalRegistro">REGISTRARSE</a></li>
 
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalLogin">LOGIN</a></li>
 
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
@@ -117,9 +123,22 @@
 
 				<div id="lateral" class="col col-lg-2">
 
+					<%
+						if (vendedor.getFoto().equals("FotoPorDefecto")) {
+					%>
+					<div>
+						<img id="imagenVendedor" src="img/user.png">
+					</div>
+					<%
+						} else {
+					%>
+
 					<div>
 						<img id="imagenVendedor" src="Imagenes/<%=vendedor.getFoto()%>">
 					</div>
+					<%
+						}
+					%>
 					<hr>
 					<div>
 						<h2><%=vendedor.getNombre()%></h2>
@@ -264,7 +283,7 @@
 					%>
 
 					<!-- Card deck -->
-					<div class="row row-cols-1 row-cols-md-5">
+					<div class="row row-cols-1 row-cols-md-2 row-cols-lg-5">
 
 						<%
 							for (Producto pro : productos) {
@@ -297,7 +316,7 @@
 								<div class="card-body text-center">
 
 									<!--Title-->
-									<h4 class="card-title"><%=pro.getNombre()%></h4>
+									<h4 class="card-title tituloProducto"><%=pro.getNombre()%></h4>
 									<!--Text-->
 									<div class="descripcionProducto">
 										<p class="card-text"><%=pro.getDescripcion()%></p>

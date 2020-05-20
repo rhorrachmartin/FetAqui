@@ -11,74 +11,91 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FET AQUI</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css"
+	rel="stylesheet">
 <link href="css/estilos.css" type="text/css" rel="stylesheet">
 <!-- -------------------SCRIPTS--------------- -->
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 <script src="js/validarPassword.js"></script>
 </head>
 <body>
 	<%
 		Vendedor vendedor = null;
-		if (request.getAttribute("vendedor") != null) {
-			vendedor = (Vendedor) request.getAttribute("vendedor");
-		}
+	if (request.getAttribute("vendedor") != null) {
+		vendedor = (Vendedor) request.getAttribute("vendedor");
+	}
 	%>
-	<div id="container" >
+	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-            <a class="navbar-brand" href="#">FET AQUÍ</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="ObtenerTodosVendedores">Vendedores</a></li>
-                </ul>
-                
-                <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item"><a class="btn btn-primary btn-sm"
-                        href="PaginaPropioVendedor">MI PÁGINA</a></li>
-                    <li class="nav-item"><a class="btn btn-primary btn-sm"
-                        href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
-                    <li class="nav-item"><a class="btn btn-success btn-sm"
-                        href="Logout">SALIR</a></li>
-                    <%
-                        if (vendedor.getFoto().equals("desconocido.txt")) {
-                    %>
-                    <li class="nav-item avatar"><a class="nav-link p-0"
-                        href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
-                            class="rounded-circle z-depth-0" alt="avatar image" height="35">
-                    </a></li>
-                    <%
-                        } else {
-                    %>
-                    <li class="nav-item avatar"><a class="nav-link p-0"
-                        href="OpcionesPerfilVendedor.jsp"> <img
-                            src="Imagenes/<%=vendedor.getFoto()%>"
-                            class="rounded-circle z-depth-0" alt="avatar image" height="35">
-                    </a></li>
-                    <%
-                        }
-                    %>
-                </ul>
-            </div>
-        </nav>
+			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
+					<li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
+				</ul>
+
+				<ul class="navbar-nav ml-auto nav-flex-icons">
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+						href="PaginaPropioVendedor">MI PÁGINA</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
+						href="Logout">SALIR</a></li>
+					<%
+						if (vendedor.getFoto().equals("FotoPorDefecto")) {
+					%>
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
+					</a></li>
+					<%
+						} else {
+					%>
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img
+							src="Imagenes/<%=vendedor.getFoto()%>"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
+					</a></li>
+					<%
+						}
+					%>
+				</ul>
+			</div>
+		</nav>
 
 		<div class="container" id="botonesPerfil">
 
@@ -327,8 +344,8 @@
 								<div class="form-group">
 									<label for="telefono">Telefono </label> <input type="text"
 										id="telefono" name="telefono" class="form-control"
-										aria-describedby="telefono" value="<%=vendedor.getTelefono()%>"
-										required>
+										aria-describedby="telefono"
+										value="<%=vendedor.getTelefono()%>" required>
 								</div>
 
 								<div class="form-group">
@@ -347,7 +364,7 @@
 										<%
 											ArrayList<Poblacion> poblaciones = (ArrayList<Poblacion>) request.getAttribute("poblaciones");
 
-											for (Poblacion p : poblaciones) {
+										for (Poblacion p : poblaciones) {
 										%>
 										<option value=<%=p.getId()%>><%=p.getNombre()%></option>
 										<%
@@ -359,8 +376,8 @@
 								<%
 									String error = "";
 
-									if (request.getAttribute("error") != null) {
-										error = (String) request.getAttribute("error");
+								if (request.getAttribute("error") != null) {
+									error = (String) request.getAttribute("error");
 								%>
 								<div class="form-group">
 									<label for="passAntiguo">Password actual</label> <input

@@ -88,7 +88,7 @@
 		</nav>
 
 
-		<main class="container fondoContainer">
+		<main class="container-fluid fondoContainer">
 			<div class="row">
 				<div class="col col-lg-12  text-center vertical-center">
 
@@ -110,7 +110,8 @@
 				</div>
 
 				<div class="col col-lg-12 text-center vertical-center">
-					<h2 class="bajoquienesSomos">Somos mallorquines preocupados y ocupados por el consumo local</h2>
+					<h2 class="bajoquienesSomos">Somos mallorquines preocupados y
+						ocupados por el consumo local</h2>
 				</div>
 			</div>
 			<hr>
@@ -120,39 +121,66 @@
 					<h1 class="quienesSomos">6 razones para el consumo local</h1>
 
 				</div>
-
-				<div class="col col-lg-4 text-center vertical-center">
-					<img src="img/flag.png" class="img-fluid rounded-circle">
-					<p>Transformas la economía de la isla</p>
-				</div>
-				
-				<div class="col col-lg-4 text-center vertical-center">
-					<img src="img/equidad.png" class="img-fluid rounded-circle">
-					<p>Promueves una economía más equitativa</p>
-				</div>
-				
-				<div class="col col-lg-4 text-center vertical-center">
-					<img src="img/family.png" class="img-fluid rounded-circle">
-					<p>Apoyas a familias que prosperan de manera independiente</p>
-				</div>
-				
-				<div class="col col-lg-4 text-center vertical-center">
-					<img src="img/gracias.png" class="img-fluid rounded-circle">
-					<p>Generas seguridad, faz y felicidad a pequeños empresarios</p>
-				</div>
-				
-				<div class="col col-lg-4 text-center vertical-center">
-					<img src="img/ambiente.png" class="img-fluid rounded-circle">
-					<p>Promueves el cuidado del medioambiente</p>
-				</div>
-				
-				<div class="col col-lg-4 text-center vertical-center">
-					<img src="img/justice.png" class="img-fluid rounded-circle">
-					<p>Ayudas a construir un país más justo</p>
-				</div>
-				
 			</div>
-			
+			<div class="row">
+				<div
+					class="col col-lg-4 col-sm-12 col-12 col-md-6 text-center vertical-center view overlay zoom">
+					<figure>
+						<img src="img/flag.png"
+							class="img-fluid rounded-circle imagenRazon">
+						<figcaption>Transformas la economía de la isla</figcaption>
+					</figure>
+				</div>
+
+				<div
+					class="col col-lg-4 col-sm-12 col-12 col-md-6 text-center vertical-center view overlay zoom">
+					<figure>
+						<img src="img/equidad.png"
+							class="img-fluid rounded-circle imagenRazon">
+						<figcaption>Promueves una economía más equitativa</figcaption>
+					</figure>
+				</div>
+
+				<div
+					class="col col-lg-4 col-sm-12 col-12 col-md-6 text-center vertical-center view overlay zoom">
+					<figure>
+						<img src="img/family.png"
+							class="img-fluid rounded-circle imagenRazon">
+						<figcaption>Apoyas a familias que prosperan de manera
+							independiente</figcaption>
+					</figure>
+				</div>
+
+				<div
+					class="col col-lg-4 col-sm-12 col-12 col-md-6 text-center vertical-center view overlay zoom">
+					<figure>
+						<img src="img/gracias.png"
+							class="img-fluid rounded-circle imagenRazon">
+						<figcaption>Generas seguridad, faz y felicidad a
+							pequeños empresarios</figcaption>
+					</figure>
+				</div>
+
+				<div
+					class="col col-lg-4 col-sm-12 col-12 col-md-6 text-center vertical-center view overlay zoom">
+					<figure>
+						<img src="img/ambiente.png"
+							class="img-fluid rounded-circle imagenRazon">
+						<figcaption>Promueves el cuidado del medioambiente</figcaption>
+					</figure>
+				</div>
+
+				<div
+					class="col col-lg-4 col-sm-12 col-12 col-md-6 text-center vertical-center view overlay zoom">
+					<figure>
+						<img src="img/justice.png"
+							class="img-fluid rounded-circle imagenRazon">
+						<figcaption>Ayudas a construir un país más justo</figcaption>
+					</figure>
+				</div>
+
+			</div>
+
 		</main>
 
 		<!------------------------------------------------------MODAL DE ELECCION DE TIPO DE REGISTRO------------------------------------------------------------------------>
@@ -387,7 +415,9 @@
 
 					<!--Footer-->
 					<div class="modal-footer justify-content-center">
-						<a type="button" class="btn btn-success">Login <i
+
+						<a class="btn btn-success btn-sm botonesNavegador"
+							data-toggle="modal" data-target="#modalLogin">LOGIN <i
 							class="fas fa-sign-in-alt"></i></a> <a type="button"
 							class="btn btn-outline-success waves-effect" data-dismiss="modal">Cerrar</a>
 					</div>

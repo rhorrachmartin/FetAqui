@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <%@ page import="modelo.pojo.Cliente"%>
+<%@ page import="modelo.pojo.Pedido"%>
 <%@ page import="modelo.pojo.PedidoDetallado"%>
 <%@ page import="java.text.DecimalFormat"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
@@ -51,18 +52,16 @@
 	<%
 		HttpSession session = request.getSession(false);
 	Cliente cliente = null;
-	ArrayList<PedidoDetallado> pDetallado = null;
+	ArrayList<Pedido> pedidos = null;
 	String error = "";
-	double totalPedido = 0;
-	DecimalFormat df = new DecimalFormat("####0.00");
 
 	if (session.getAttribute("cliente") != null) {
 		cliente = (Cliente) session.getAttribute("cliente");
 
 	}
 
-	if (request.getAttribute("pedidoDetallado") != null) {
-		pDetallado = (ArrayList<PedidoDetallado>) request.getAttribute("pedidoDetallado");
+	if (request.getAttribute("pedidos") != null) {
+		pedidos = (ArrayList<Pedido>) request.getAttribute("pedidos");
 	}
 
 	int numProductos = 0;
@@ -121,7 +120,7 @@
 			<div class="row divPedido">
 
 				<div class="col col-lg-12 text-center">
-					<h3>SU PEDIDO</h3>
+					<h3>SUS PEDIDOS</h3>
 				</div>
 
 				<hr>
@@ -141,30 +140,6 @@
 				<div class="col col-lg-12">
 
 					<div class="row">
-						<div class="col col-lg-12">
-							<p>
-								<strong>Dirección: </strong><%=pDetallado.get(0).getDireccion()%>
-							</p>
-						</div>
-						<div class="col col-lg-12">
-							<p>
-								<strong>Población: </strong><%=pDetallado.get(0).getPoblacion()%>
-							</p>
-						</div>
-						<div class="col col-lg-12">
-							<p>
-								<strong>Fecha de entrega: </strong><%=pDetallado.get(0).getFecha_entrega()%>
-							</p>
-						</div>
-					</div>
-
-				</div>
-				<hr>
-				<div class="col col-lg-12 text-center">
-					<h4>PEDIDO DETALLADO</h4>
-					<div class="row">
-
-
 
 						<div class="col col-lg-12">
 							<div class="table-responsive">
@@ -173,12 +148,9 @@
 									<!--Table head-->
 									<thead>
 										<tr>
-											<th class="th-lg"></th>
-											<th class="th-lg">Vendedor</th>
-											<th class="th-lg">Producto</th>
-											<th class="th-lg">Cantidad</th>
-											<th class="th-lg">Precio Unitario</th>
-											<th class="th-lg">Precio Total</th>
+											<th class="th-lg">Pedido</th>
+											<th class="th-lg">Fecha</th>
+											<th class="th-lg">Estado</th>
 											<th class="th-lg"></th>
 										</tr>
 										<!--Table body-->
@@ -187,41 +159,19 @@
 
 										<!--Table head-->
 										<%
-											for (PedidoDetallado pd : pDetallado) {
-
-											totalPedido = totalPedido + pd.getPrecio_final();
+											for (Pedido pedido : pedidos) {
 										%>
 										<tr>
-											<td>
-												<%
-													if (pd.getFoto().equals("producto.png")) {
-												%>
-												<div class="thumbnail">
-													<img class="img-responsive imagenProductoTabla"
-														src="img/<%=pd.getFoto()%>">
-												</div> <%
- 	} else {
- %>
-												<div class="thumbnail">
-													<img class="img-responsive imagenProductoTabla"
-														src="Imagenes/<%=pd.getFoto()%>" alt="Card image cap">
-												</div> <%
- 	}
- %>
-											</td>
-											<td><%=pd.getVendedor()%></td>
-											<td><%=pd.getProducto()%></td>
-											<td><%=pd.getCantidad()%></td>
-											<td><%=pd.getPrecio_unidad()%>€</td>
-											<td><%=pd.getPrecio_final()%>€</td>
+											<td><%=pedido.getId() %></td>
+											<td><%=pedido.getFecha_pedido()%></td>
+											<td><%=pedido.getEstado()%></td>
 											<td>
 
-												<form action="BorrarProductoCesta" method="post">
-													<input type="hidden" name="id_detalle"
-														value="<%=pd.getId_detalle()%>">
+												<form action="VerPedido" method="post">
+													<input type="hidden" name="id_pedido"
+														value="<%=pedido.getId()%>">
 													<button type="submit" class="btn btn-light-blue btn-md">
-														<a data-toggle="tooltip" title="ELIMINAR"><i
-															class="far fa-trash-alt"></i></a>
+														<a data-toggle="tooltip" title="ELIMINAR">VER PEDIDO</a>
 													</button>
 
 												</form>
@@ -238,43 +188,13 @@
 
 							</div>
 						</div>
-
-						<div class="col col-lg-12 justify-content-center text-center">
-							<%
-								if (totalPedido == 0) {
-							%>
-							<h1>TOTAL: 0/€</h1>
-							<%
-								} else {
-							%>
-							<h1>
-								TOTAL:
-								<%=df.format(totalPedido)%>/€
-							</h1>
-							<%
-								}
-							%>
-						</div>
-
-						<div class="col col-lg-12 text-center">
-							<form action="ConfirmarPedido" method="post">
-								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
-								<input type="hidden" name="id_pedido"
-									value="<%=pDetallado.get(0).getId_pedido()%>">
-								<button type="submit" class="btn btn-light-blue btn-md">
-									<a>CONFIRMAR PEDIDO Y PAGAR</a>
-								</button>
-
-							</form>
-						</div>
 						<%
 							}
 						%>
 					</div>
+
+
 				</div>
-
-
-
 			</div>
 		</main>
 	</div>

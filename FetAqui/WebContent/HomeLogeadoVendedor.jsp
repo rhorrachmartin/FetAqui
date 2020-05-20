@@ -18,6 +18,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -89,14 +95,14 @@
 				</ul>
 
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="PaginaPropioVendedor">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						href="Logout">SALIR</a></li>
 					<%
-						if (vendedor.getFoto().equals("desconocido.txt")) {
+						if (vendedor.getFoto().equals("FotoPorDefecto")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0"
 						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
@@ -121,8 +127,7 @@
 
 			<div class="row row-cols-1 row-cols-md-3">
 
-				<div id="lateralProductosPrincipal"
-					class="col">
+				<div id="lateralProductosPrincipal" class="col">
 
 					<div class="text-center">
 						<h4>Productos</h4>
@@ -196,7 +201,7 @@
 					<div class="text-center">
 						<h4>Noticias</h4>
 						<hr>
-						<div class="row">
+						<div class="row divNoticiaPrincipal" >
 							<%
 								for (Post post : posts) {
 							%>
@@ -264,7 +269,7 @@
 									<div class="col col-lg-12 colSinPading">
 										<form action="PaginaVendedor" method="get">
 											<input type="hidden" name="id_vendedor"
-												value="<%=ven.getId_vendedor()%>"> 
+												value="<%=ven.getId_vendedor()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
 												VER</button>
 										</form>

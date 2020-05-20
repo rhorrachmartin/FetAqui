@@ -17,6 +17,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -44,13 +50,13 @@
 <body>
 
 	<%
-	HttpSession session = request.getSession(false);
-		Cliente cliente = null;
+		HttpSession session = request.getSession(false);
+	Cliente cliente = null;
 	if (request.getAttribute("cliente") != null) {
 
 		cliente = (Cliente) request.getAttribute("cliente");
 	}
-	
+
 	int numProductos = 0;
 
 	if (session.getAttribute("numProductos") != null) {
@@ -76,14 +82,14 @@
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						href="Logout">SALIR</a></li>
 					<%
-						if (cliente.getFoto().equals("desconocido.txt")) {
+						if (cliente.getFoto().equals("FotoPorDefecto")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
@@ -229,17 +235,17 @@
 			<div class="col mb-4">
 				<div class="card h-100">
 					<!--Card image-->
-					<div id="contenedorImagenProducto" class="view overlay zoom">
+					<div class="view overlay zoom contenedorVendedorVendedores">
 						<%
-							if (ve.getFoto().equals("producto.png")) {
+							if (ve.getFoto().equals("FotoPorDefecto")) {
 						%>
-						<img id="imagenProducto" class="img-fluid z-depth-1"
+						<img class="img-fluid z-depth-1 imagenVendedorVendedores"
 							src="img/<%=ve.getFoto()%>" alt="Card image cap">
 
 						<%
 							} else {
 						%>
-						<img id="imagenProducto" class="img-fluid z-depth-1"
+						<img class="img-fluid z-depth-1 imagenVendedorVendedores"
 							src="Imagenes/<%=ve.getFoto()%>" alt="Card image cap">
 						<%
 							}
@@ -253,7 +259,6 @@
 						<!--Title-->
 						<h4 class="card-title"><%=ve.getNombre()%></h4>
 						<!--Text-->
-						<p id="descripcionProducto" class="card-text"><%=ve.getEmail()%></p>
 						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 						<div class="row">
 

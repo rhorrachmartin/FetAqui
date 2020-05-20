@@ -18,6 +18,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -78,14 +84,14 @@
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						href="Logout">SALIR</a></li>
 					<%
-						if (cliente.getFoto().equals("desconocido.txt")) {
+						if (cliente.getFoto().equals("FotoPorDefecto")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
@@ -223,7 +229,7 @@
 
 		<!-- Card deck -->
 		<div
-			class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 m-5">
+			class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 
 			<%
 				for (Producto pro : productos) {
@@ -256,7 +262,7 @@
 					<div class="card-body text-center">
 
 						<!--Title-->
-						<h4 class="card-title"><%=pro.getNombre()%>
+						<h4 class="card-title tituloProducto"><%=pro.getNombre()%>
 							<%=pro.getPrecio()%>€/<%=pro.getFormato()%></h4>
 						<!--Text-->
 						<div class="descripcionProducto">
@@ -292,7 +298,8 @@
 										<button class="plus-boton" type="button" name="button">
 											<img src="img/plus.svg" alt="" />
 										</button>
-										<input type="text" id="unidades<%=pro.getId() %>" class="unidades" name="cantidad" value="1">
+										<input type="text" id="unidades<%=pro.getId()%>"
+											class="unidades" name="cantidad" value="1">
 										<button class="minus-boton" type="button" name="button">
 											<img src="img/minus.svg" alt="" />
 										</button>

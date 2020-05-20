@@ -45,10 +45,10 @@
 		poblacion.nombre as poblacion, cliente.direccion as idDireccion,direccion.direccion, cliente.foto,cliente.activado
 		from
 		cliente
-		inner join
+		left join
 		direccion
 		on cliente.direccion = direccion.id_direccion
-		inner join
+		left join
 		poblacion
 		on direccion.poblacion = poblacion.id_poblacion
 		where

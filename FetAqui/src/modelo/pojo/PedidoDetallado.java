@@ -16,6 +16,7 @@ public class PedidoDetallado {
 	String direccion;
 	String producto;
 	Integer id_vendedor;
+	Integer id_cliente;
 	String estado;
 	String vendedor;
 	String foto;
@@ -30,9 +31,15 @@ public class PedidoDetallado {
 
 	public void setId_pedido(Integer id_pedido) {
 		this.id_pedido = id_pedido;
+	}	
+
+	public Integer getId_cliente() {
+		return id_cliente;
 	}
-	
-	
+
+	public void setId_cliente(Integer id_cliente) {
+		this.id_cliente = id_cliente;
+	}
 
 	public Integer getId_detalle() {
 		return id_detalle;

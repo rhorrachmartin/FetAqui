@@ -16,6 +16,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -46,7 +52,7 @@
 	Vendedor vendedor = null;
 	Cliente c = null;
 	HttpSession session = request.getSession(false);
-	
+
 	if (request.getAttribute("producto") != null) {
 		producto = (Producto) request.getAttribute("producto");
 	}
@@ -59,7 +65,7 @@
 
 		c = (Cliente) request.getAttribute("c");
 	}
-	
+
 	int numProductos = 0;
 
 	if (session.getAttribute("numProductos") != null) {
@@ -85,14 +91,14 @@
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						href="Logout">SALIR</a></li>
 					<%
-						if (c.getFoto().equals("desconocido.txt")) {
+						if (c.getFoto().equals("FotoPorDefecto")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"

@@ -14,6 +14,9 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
@@ -59,14 +62,14 @@
                 </ul>
                 
                 <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item"><a class="btn btn-primary btn-sm"
+                <li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
                         href="PaginaPropioVendedor">MI PÁGINA</a></li>
-                    <li class="nav-item"><a class="btn btn-primary btn-sm"
+                    <li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
                         href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
-                    <li class="nav-item"><a class="btn btn-success btn-sm"
+                    <li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
                         href="Logout">SALIR</a></li>
                     <%
-                        if (vendedor.getFoto().equals("desconocido.txt")) {
+                        if (vendedor.getFoto().equals("FotoPorDefecto")) {
                     %>
                     <li class="nav-item avatar"><a class="nav-link p-0"
                         href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
@@ -99,8 +102,8 @@
 		<div class="container">
 			<div class="row justify-content-center m-5">
 				<div class="lg lg-12 ">
-					<a class="btn btn-primary btn-lg" href="AñadirProducto">AÑADIR
-						PRODUCTOS</a> <a class="btn btn-info btn-lg" href="ObtenerProductosVendedor">MODIFICAR
+					<a class="btn aqua-gradient btn-lg" href="AñadirProducto">AÑADIR
+						PRODUCTOS</a> <a class="btn aqua-gradient btn-lg" href="ObtenerProductosVendedor">MODIFICAR
 						PRODUCTOS</a>
 					<div class="custom-control custom-switch text-center">
 						<form id="ventaOnline" action="VentasOnline" method="post">

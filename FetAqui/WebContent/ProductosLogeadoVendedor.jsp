@@ -17,6 +17,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -63,20 +69,21 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link" href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosProductos">Productos</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="PaginaPropioVendedor">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						href="Logout">SALIR</a></li>
 					<%
-						if (vendedor.getFoto().equals("desconocido.txt")) {
+						if (vendedor.getFoto().equals("FotoPorDefecto")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0"
 						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
@@ -214,7 +221,8 @@
 		%>
 
 		<!-- Card deck -->
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 m-5">
+		<div
+			class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 
 			<%
 				for (Producto pro : productos) {
@@ -247,7 +255,7 @@
 					<div class="card-body text-center">
 
 						<!--Title-->
-						<h4 class="card-title"><%=pro.getNombre()%></h4>
+						<h4 class="card-title tituloProducto"><%=pro.getNombre()%></h4>
 						<!--Text-->
 						<div class="descripcionProducto">
 							<p class="card-text"><%=pro.getDescripcion()%></p>

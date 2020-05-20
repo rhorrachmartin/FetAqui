@@ -54,7 +54,7 @@ public class MailOfficeEJB {
 		Session session = Session.getInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("rhorrach@gmail.com", "86Mesias!86");
+				return new PasswordAuthentication("fetaquimallorca@gmail.com", "Aqui!2020");
 			}
 		});
 
@@ -90,7 +90,8 @@ public class MailOfficeEJB {
 	 * @param mensaje
 	 */
 	public void sendMail2(String para, String remitente, String asunto, String mensaje) {
-
+		
+		System.out.println("entro");
 		Properties prop = new Properties();
 		// Creamos un objeto de oficina de correos
 		prop.put("mail.smtp.auth", true);
@@ -102,7 +103,7 @@ public class MailOfficeEJB {
 		Session session = Session.getInstance(prop, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("rhorrach@gmail.com", "86Mesias!86");
+				return new PasswordAuthentication("fetaquimallorca@gmail.com", "Aqui!2020");
 			}
 		});
 

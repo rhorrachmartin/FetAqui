@@ -48,7 +48,7 @@ public class ImagenesEJB {
 		String fileName = null;
 		for (Part part : request.getParts()) {
 
-			if (!getFileName(part).equals("desconocido.txt") || getFileName(part) == null) {
+			if (!getFileName(part).equals("FotoPorDefecto") || getFileName(part) == null) {
 				
 				fileName = getFileName(part);
 				
@@ -78,7 +78,7 @@ public class ImagenesEJB {
 			if (content.trim().startsWith("filename"))
 				return content.substring(content.indexOf('=') + 2, content.length() - 1);
 		}
-		return "desconocido.txt";
+		return "FotoPorDefecto";
 	}
 
 }

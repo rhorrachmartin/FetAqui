@@ -184,7 +184,7 @@ public class Principal extends HttpServlet {
 				v.setEmail(emailp);
 				v.setPassword(passwordp);
 				v.setFoto(imagen);
-				v.setIdDireccion(direccion);
+				v.setId_direccion(direccion);
 				v.setTelefono(telefono);
 				v.setActivado(activado);
 				v.setFecha_alta(fecha);

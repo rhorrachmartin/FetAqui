@@ -10,7 +10,7 @@ public class Vendedor {
 	String email;
 	String password;
 	String foto;
-	Integer idDireccion;
+	Integer id_direccion;
 	String telefono;
 	Integer activado;
 	Timestamp fecha_alta;
@@ -79,12 +79,12 @@ public class Vendedor {
 		this.foto = foto;
 	}
 
-	public Integer getIdDireccion() {
-		return idDireccion;
+	public Integer getId_direccion() {
+		return id_direccion;
 	}
 
-	public void setIdDireccion(Integer idDireccion) {
-		this.idDireccion = idDireccion;
+	public void setId_direccion(Integer id_direccion) {
+		this.id_direccion = id_direccion;
 	}
 
 	public String getTelefono() {
@@ -135,13 +135,6 @@ public class Vendedor {
 		this.poblacion = poblacion;
 	}
 
-	@Override
-	public String toString() {
-		return "Vendedor [id_vendedor=" + id_vendedor + ", nif=" + nif + ", nombre=" + nombre + ", email=" + email
-				+ ", password=" + password + ", foto=" + foto + ", idDireccion=" + idDireccion + ", telefono="
-				+ telefono + ", activado=" + activado + ", fecha_alta=" + fecha_alta + ", venta_online=" + venta_online
-				+ ", direccion=" + direccion + ", idPoblacion=" + idPoblacion + ", poblacion=" + poblacion + "]";
-	}
 	
 	
 	

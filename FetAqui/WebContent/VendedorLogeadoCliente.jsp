@@ -18,6 +18,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -73,7 +79,7 @@
 
 		c = (Cliente) request.getAttribute("c");
 	}
-	
+
 	int numProductos = 0;
 
 	if (session.getAttribute("numProductos") != null) {
@@ -99,14 +105,14 @@
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						href="Logout">SALIR</a></li>
 					<%
-						if (c.getFoto().equals("desconocido.txt")) {
+						if (c.getFoto().equals("FotoPorDefecto")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
@@ -132,11 +138,24 @@
 
 			<div class="row">
 
-				<div id="lateral" class="col col-lg-2">
+				<div id="lateral" class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-2">
+
+					<%
+						if (vendedor.getFoto().equals("FotoPorDefecto")) {
+					%>
+					<div>
+						<img id="imagenVendedor" src="img/user.png">
+					</div>
+					<%
+						} else {
+					%>
 
 					<div>
 						<img id="imagenVendedor" src="Imagenes/<%=vendedor.getFoto()%>">
 					</div>
+					<%
+						}
+					%>
 					<hr>
 					<div>
 						<h2><%=vendedor.getNombre()%></h2>
@@ -179,7 +198,7 @@
 
 				</div>
 
-				<div id="main" class="col col-lg-10 text-center">
+				<div id="main" class="col-12 col-sm-12 col-md-6 col-lg-9 col-xl-10 text-center">
 
 					<!-- DIV ELECCION CATEGORÍA -->
 					<%
@@ -288,7 +307,7 @@
 					%>
 
 					<!-- Card deck -->
-					<div class="row row-cols-1 row-cols-md-5">
+					<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-3 row-cols-xl-4">
 
 						<%
 							for (Producto pro : productos) {
@@ -350,10 +369,10 @@
 															<img src="img/minus.svg" alt="" />
 														</button>
 														<input type="hidden" name="id_vendedor"
-															value="<%=vendedor.getId_vendedor()%>">
-														<input type="hidden" name="id_producto"
-															value="<%=pro.getId()%>"> <input type="hidden"
-															name="precio" value="<%=pro.getPrecio()%>">
+															value="<%=vendedor.getId_vendedor()%>"> <input
+															type="hidden" name="id_producto" value="<%=pro.getId()%>">
+														<input type="hidden" name="precio"
+															value="<%=pro.getPrecio()%>">
 														<button type="submit" class="btn btn-light-blue btn-md">
 															<i class="fas fa-cart-plus"></i>
 														</button>

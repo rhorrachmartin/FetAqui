@@ -15,6 +15,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -44,14 +50,14 @@
 
 	<%
 		HttpSession session = request.getSession(false);
-		Vendedor vendedor = null;
+	Vendedor vendedor = null;
 
-		if (session.getAttribute("vendedor") != null) {
-			vendedor = (Vendedor) session.getAttribute("vendedor");
+	if (session.getAttribute("vendedor") != null) {
+		vendedor = (Vendedor) session.getAttribute("vendedor");
 
-		}
+	}
 	%>
-	<div id="container" >
+	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
 			<a class="navbar-brand" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -67,14 +73,16 @@
 				</ul>
 
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						href="PaginaPropioVendedor">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
-						href="Logout">SALIR</a></li>
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador" href="Logout">SALIR</a></li>
 					<%
-						if (vendedor.getFoto().equals("desconocido.txt")) {
+						if (vendedor.getFoto().equals("FotoPorDefecto")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0"
 						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
@@ -102,19 +110,25 @@
 			if (request.getAttribute("error") == null) {
 		%>
 		<div class="container">
-			<div id="loginPanel" class="row justify-content-center">
-				<div class="lg lg-8 m-5">
-					<a class="btn btn-primary btn-lg" href="Perfil">DATOS
-						PERSONALES</a> <a class="btn btn-info btn-lg"
-						href="AdministrarPaginaVendedor.jsp">ADMINISTRAR PÁGINA</a> <a
-						class="btn btn-info btn-lg" href="#">MIS PEDIDOS</a>
+			<div id="loginPanel" class="row">
+				<div class="col col-lg-12">
+					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor" href="Perfil">DATOS
+						PERSONALES</a>
+				</div>
+				<div class="col col-lg-12">
+					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor" href="AdministrarPaginaVendedor.jsp">ADMINISTRAR
+						PÁGINA</a>
+				</div>
+				<div class="col col-lg-12">
+					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor" href="#">MIS PEDIDOS</a>
 				</div>
 			</div>
-
 		</div>
-		<%
-			}
-		%>
+
+	</div>
+	<%
+		}
+	%>
 	</div>
 	<!-- Footer -->
 	<footer class="page-footer font-small unique-color-dark pt-4 ">

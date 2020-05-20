@@ -156,6 +156,12 @@
 								<strong>Fecha de entrega: </strong><%=pDetallado.get(0).getFecha_entrega()%>
 							</p>
 						</div>
+
+						<div class="col col-lg-12">
+							<p>
+								<strong>Estado: </strong><%=pDetallado.get(0).getEstado()%>
+							</p>
+						</div>
 					</div>
 
 				</div>
@@ -179,7 +185,6 @@
 											<th class="th-lg">Cantidad</th>
 											<th class="th-lg">Precio Unitario</th>
 											<th class="th-lg">Precio Total</th>
-											<th class="th-lg"></th>
 										</tr>
 										<!--Table body-->
 									<tbody>
@@ -214,19 +219,6 @@
 											<td><%=pd.getCantidad()%></td>
 											<td><%=pd.getPrecio_unidad()%>€</td>
 											<td><%=pd.getPrecio_final()%>€</td>
-											<td>
-
-												<form action="BorrarProductoCesta" method="post">
-													<input type="hidden" name="id_detalle"
-														value="<%=pd.getId_detalle()%>">
-													<button type="submit" class="btn btn-light-blue btn-md">
-														<a data-toggle="tooltip" title="ELIMINAR"><i
-															class="far fa-trash-alt"></i></a>
-													</button>
-
-												</form>
-
-											</td>
 										</tr>
 										<%
 											}
@@ -257,15 +249,27 @@
 						</div>
 
 						<div class="col col-lg-12 text-center">
-							<form action="ConfirmarPedido" method="post">
+
+							<%
+								if (pDetallado.get(0).getEstado().equals("pendiente")) {
+							%>
+							<form action="Anularedido" method="post">
 								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
 								<input type="hidden" name="id_pedido"
 									value="<%=pDetallado.get(0).getId_pedido()%>">
 								<button type="submit" class="btn btn-light-blue btn-md">
-									<a>CONFIRMAR PEDIDO Y PAGAR</a>
-								</button>
-
+									<a>ANULAR PEDIDO</a>
 							</form>
+
+
+							<%
+								} else {
+							%>
+								<h2>PEDIDO CONFIRMADO</h2>
+							<%
+								}
+							%>
+
 						</div>
 						<%
 							}

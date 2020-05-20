@@ -52,7 +52,7 @@ public class Mail extends HttpServlet {
 		try {
 			//Recogemos los atributos necesarios
 			String para = request.getParameter("email");
-			String remitente = "rhorrach@gmail.com";
+			String remitente = "fetaquimallorca@gmail.com";
 			String asunto = "Email de confirmación de registro en FET AQUI";
 			int codigo = Integer.parseInt(request.getParameter("codigo"));
 			

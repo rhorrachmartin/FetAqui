@@ -1,98 +1,124 @@
-body{
-	background-image: url("../img/llengo.png");
-	 background-repeat: repeat;
-}
-
-.fondoContainer{
+.fondoContainer {
 	background-color: white;
 }
 
 #container {
-	min-height: 80vh;
+	min-height: 85vh;
 }
 
 #loginPanel {
 	display: flex;
-	justify-content: center;
+	justify-content: center !important;
 	align-items: center;
 	height: 200px;
+	margin-top: 100px;
 }
 
-.nombreLogo{
-	font-family: 'Permanent Marker', cursive;
+.opcionPerfilVendedor {
+	width: 100% !important;
+	margin: 20px;
+}
+
+.nombreLogo {
+	font-family: 'Permanent Marker', cursive !important;
 	font-size: 4em;
 }
 
-.quienesSomos{
-	font-family: 'Permanent Marker', cursive;
+.quienesSomos {
+	font-family: 'Permanent Marker', cursive !important;
 }
 
-.bajoquienesSomos{
-	font-family: 'Amatic SC', cursive;
+.bajoquienesSomos {
+	font-family: 'Amatic SC', cursive !important;
 	font-size: 2em;
 }
 
-.bajoLogo{
-	font-family: 'Amatic SC', cursive;
+.bajoLogo {
+	font-family: 'Amatic SC', cursive !important;
 	font-size: 2em;
 }
 
-.logoNavegador{
+.imagenRazon {
+	max-width: 60% !important;
+	display: unset !important;
+}
+
+.logoNavegador {
 	font-family: 'Permanent Marker', cursive !important;
 }
 
 .vertical-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-p{
+p {
 	word-wrap: break-word;
 }
 
-.logoPresentacion{
-	 height: 150px;
-	 background-image: url("../img/llengo.png");
-	 background-repeat: repeat;
+.logoPresentacion {
+	height: 150px;
+	background-image: url("../img/llengo.png");
+	background-repeat: repeat;
 }
 
-.navbar{
+.navbar {
 	background-image: url("../img/llengo.png") !important;
-	 background-repeat: repeat !important;
-	 -webkit-box-shadow: 0px 10px 18px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 10px 18px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 10px 18px 0px rgba(0,0,0,0.75);
-	 
+	background-repeat: repeat !important;
+	-webkit-box-shadow: 0px 10px 18px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 10px 18px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 10px 18px 0px rgba(0, 0, 0, 0.75);
 }
+
+.page-footer {
+	background-image: url("../img/llengo.png") !important;
+	background-repeat: repeat !important;
+	color: black !important;
+	font-family: 'Permanent Marker', cursive !important;
+}
+
+.page-footer a {
+	color: black !important;
+	font-family: 'Permanent Marker', cursive !important;
+}
+
+.page-footer a:hover {
+	font-family: 'Permanent Marker', cursive !important;
+	text-shadow: 5px 3px 2px #898989;
+	color: green;
+}
+
 
 .navbar a:not(.botonesNavegador){
 	color: black !important;
-	font-family: 'Permanent Marker', cursive;
-	
+	font-family: 'Permanent Marker', cursive !important;
 }
 
-.navbar a:hover{
+.navbar a:hover {
 	text-shadow: 5px 3px 2px #898989;
-	
 }
 
-.thumbnail img{
-    height:50px;
-    width:50%;
-
+.thumbnail img {
+	height: 50px;
+	width: 20%;
 }
 
 .sombraProductoInicio {
 	-webkit-box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 1);
 	-moz-box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 1);
 	box-shadow: 0px 0px 10px -6px rgba(0, 0, 0, 1);
+	max-width: 80% !important;
 }
 
 .descripcionProducto {
 	overflow: auto;
 	min-height: 82px;
 	max-height: 82px;
+}
+
+.tituloProducto {
+	min-height: 55px;
 }
 
 .crop {
@@ -165,16 +191,33 @@ label {
 }
 
 #lateral2 {
-	-webkit-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
-	-moz-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
-	box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	min-height: 90vh;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
 }
 
 #lateralProductosPrincipal {
-	-webkit-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
-	-moz-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
-	box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
 	min-height: 90vh;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+#noticias {
+	padding: 5px;
+	width: 80% !important;
+	max-width: 80% !important;
 }
 
 #imagenVendedor {
@@ -197,15 +240,32 @@ label {
 	max-width: 100% !important;
 }
 
+.divNoticiaPrincipal {
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+}
+
 .contenedorImagenProducto {
-	max-height: 150px !important;
+	min-height: 180px !important;
+	max-height: 190px !important;
+}
+
+.contenedorVendedorVendedores {
+	min-height: 180px !important;
+	max-height: 190px !important;
 }
 
 .imagenProducto {
-	width: 100% !important;
+	height: 100%;
+	margin: 0 auto;
 }
 
-.imagenLogoPresentacion{
+.imagenVendedorVendedores {
+	height: 100%;
+	margin: 0 auto;
+}
+
+.imagenLogoPresentacion {
 	width: 100% !important;
 }
 
@@ -246,34 +306,40 @@ label {
 }
 
 .cantidad {
-  padding-top: 20px;
+	padding-top: 20px;
 }
+
 .cantidad input {
-  -webkit-appearance: none;
-  border: none;
-  text-align: center;
-  width: 32px;
-  font-size: 16px;
-  color: #43484D;
-  font-weight: 300;
+	-webkit-appearance: none;
+	border: none;
+	text-align: center;
+	width: 32px;
+	font-size: 16px;
+	color: #43484D;
+	font-weight: 300;
 }
- 
+
 boton[class*=boton] {
-  width: 30px;
-  height: 30px;
-  background-color: #E1E8EE;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
+	width: 30px;
+	height: 30px;
+	background-color: #E1E8EE;
+	border-radius: 6px;
+	border: none;
+	cursor: pointer;
 }
+
 .minus-boton img {
-  margin-bottom: 3px;
+	margin-bottom: 3px;
 }
+
 .plus-boton img {
-  margin-top: 2px;
+	margin-top: 2px;
 }
- 
-button:focus,
-input:focus {
-  outline:0;
+
+button:focus, input:focus {
+	outline: 0;
+}
+
+.divPedido {
+	margin-top: 50px;
 }

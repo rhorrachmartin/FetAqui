@@ -82,8 +82,127 @@
 
 	</select>
 	
+	<resultMap type='PedidoDetallado' id='getPedidoDetalladoPorIdVendedorYpedido'>
+		<result property='id_pedido' column='id_pedido' />
+		<result property='id_detalle' column='id_detalle' />
+		<result property='id_cliente' column='id_cliente' />
+		<result property='fecha_pedido' column='fecha_pedido' />
+		<result property='fecha_entrega' column='fecha_entrega' />
+		<result property='precio_unidad' column='precio_unidad' />
+		<result property='cantidad' column='cantidad' />
+		<result property='precio_final' column='precio_final' />
+		<result property='cliente' column='cliente' />
+		<result property='poblacion' column='poblacion' />
+		<result property='direccion' column='direccion' />
+		<result property='producto' column='producto' />
+		<result property='vendedor' column='vendedor' />
+		<result property='id_vendedor' column='id_vendedor' />
+		<result property='estado' column='estado' />
+	</resultMap>
+
+	<select id="getPedidoDetalladoPorIdVendedorYpedido"
+		resultMap="getPedidoDetalladoPorIdVendedorYpedido">
+
+		select
+		pedido.id_pedido,
+		detalle_pedido.id_detalle,
+		cliente.id_cliente,
+		pedido.fecha_pedido,
+		pedido.fecha_entrega,
+		precio_unidad,
+		sum(cantidad) as cantidad,
+		precio_unidad * sum(cantidad) as precio_final,
+		concat(cliente.nombre, ' ' ,cliente.apellido) as cliente,
+		poblacion.nombre as poblacion,
+		direccion.direccion,
+		producto.nombre as producto,
+		producto.foto as foto,
+		vendedor.nombre as vendedor,
+		vendedor.id_vendedor as id_vendedor,
+		pedido.estado
+		from pedido
+		inner join detalle_pedido
+		on pedido.id_pedido = detalle_pedido.id_pedido
+		inner join producto
+		on detalle_pedido.id_producto = producto.id_producto
+		inner join direccion
+		on direccion.id_direccion = pedido.destino
+		inner join poblacion
+		on poblacion.id_poblacion = direccion.poblacion
+		inner join cliente
+		on cliente.id_cliente = pedido.cliente
+		inner join vendedor
+		on vendedor.id_vendedor = producto.vendedor
+		where pedido.id_pedido = #{id_pedido} and
+		vendedor.id_vendedor = #{id_vendedor}
+		group by pedido.id_pedido, detalle_pedido.id_detalle,producto.nombre,
+		vendedor.nombre,vendedor.id_vendedor,producto.descripcion,producto.foto,detalle_pedido.precio_unidad;
+
+	</select>
+	
+	<resultMap type='Vendedor' id='getVendedoresPorPedido'>
+		<result property='id_vendedor' column='id_vendedor' />
+	</resultMap>
+
+	<select id="getVendedoresPorPedido"
+		resultMap="getVendedoresPorPedido" parameterType='int'>
+
+		select distinct vendedor.id_vendedor
+            from vendedor
+        inner join producto
+            on producto.vendedor = vendedor.id_vendedor
+        inner join detalle_pedido
+            on detalle_pedido.id_producto = producto.id_producto
+        inner join pedido
+            on pedido.id_pedido = detalle_pedido.id_pedido
+        where pedido.id_pedido = #{id_pedido};
+
+	</select>
+	
+	<resultMap type='Pedido' id='getPedidosCliente'>
+		<result property='id_pedido' column='id_pedido' />
+		<result property='cliente' column='id_cliente' />
+		<result property='fecha_pedido' column='fecha_pedido' />
+		<result property='estado' column='estado' />
+	</resultMap>
+
+	<select id="getPedidosCliente" parameterType="int"
+		resultMap="getPedidosCliente">
+
+		select 
+			pedido.id_pedido, 
+			cliente.id_cliente, 
+			pedido.fecha_pedido,
+			pedido.estado 
+		from pedido
+        	inner join cliente
+        on 
+        	pedido.cliente = cliente.id_cliente
+        where 
+        	id_cliente = #{id_cliente};
+
+	</select>
+	
 	<delete id='borrarProductoCesta' parameterType='int'>
 		delete from detalle_pedido where id_detalle = #{id_detalle};
 	</delete>
+	
+	<update id="updatePedidoAconfirmado" parameterType='int'>
+		update 
+			pedido 
+		set 
+			estado = 'Confirmado'	
+		where 
+			pedido.id_pedido = #{id_pedido};
+	</update>
+	
+	<update id="updatePedidoApendiente" parameterType='int'>
+		update 
+			pedido 
+		set 
+			estado = 'Pendiente'	
+		where 
+			pedido.id_pedido = #{id_pedido};
+	</update>
 
 </mapper>

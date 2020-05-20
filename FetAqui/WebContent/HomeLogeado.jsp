@@ -19,6 +19,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -49,17 +55,16 @@
 	<%
 		HttpSession session = request.getSession(false);
 	Cliente cliente = null;
-	
+
 	ArrayList<Vendedor> vendedores = null;
 	ArrayList<Producto> productos = null;
 	ArrayList<Post> posts = null;
-	
-	
+
 	if (session.getAttribute("cliente") != null) {
 		cliente = (Cliente) session.getAttribute("cliente");
 
 	}
-	
+
 	if (request.getAttribute("vendedores") != null) {
 		vendedores = (ArrayList<Vendedor>) request.getAttribute("vendedores");
 
@@ -74,7 +79,7 @@
 		posts = (ArrayList<Post>) request.getAttribute("posts");
 
 	}
-	
+
 	int numProductos = 0;
 
 	if (session.getAttribute("numProductos") != null) {
@@ -83,7 +88,7 @@
 	%>
 	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand logoNavegador" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -97,14 +102,16 @@
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
-						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%= numProductos %>)</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador" href="Cesta"><i
+							class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
-						href="Logout">SALIR</a></li>
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador" href="Logout">SALIR</a></li>
 					<%
-						if (cliente.getFoto().equals("desconocido.txt")) {
+						if (cliente.getFoto().equals("FotoPorDefecto")) {
 					%>
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
@@ -123,20 +130,19 @@
 				</ul>
 			</div>
 		</nav>
-		
+
 		<div class="container-fluid">
 
-			<div class="row row-cols-1 row-cols-md-3">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
 
-				<div id="lateralProductosPrincipal"
-					class="col">
+				<div id="lateralProductosPrincipal" class="col">
 
 					<div class="text-center">
 						<h4>Productos</h4>
 						<hr>
 
 						<!-- Card deck -->
-						<div class="row">
+						<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2">
 
 							<%
 								for (Producto pro : productos) {
@@ -145,8 +151,8 @@
 
 							<!-- Card -->
 							<div
-								class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4">
-								<div class="row">
+								class="sombraProductoInicio mb-4">
+								<div class="row ">
 									<!--Card image-->
 									<div class="col col-lg-12 view overlay zoom ">
 										<%
@@ -176,14 +182,49 @@
 										<h4 class="card-title"><%=pro.getNombre()%></h4>
 									</div>
 
-									<div class="col col-lg-12 colSinPading">
+									<div class="col col-lg-12">
+										<form action="PaginaVendedor" method="get">
+											<input type="hidden" name="id_vendedor"
+												value="<%=pro.getId_vendedor()%>">
+											<button type="submit" class="btn btn-light-blue btn-md">
+												<i class="fas fa-user-tie"></i>
+											</button>
+										</form>
+									</div>
+
+									<div class="col col-lg-12">
 										<form action="PaginaProducto" method="get">
 											<input type="hidden" name="id_vendedor"
 												value="<%=pro.getId_vendedor()%>"> <input
 												type="hidden" name="id_producto" value="<%=pro.getId()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
-												VER</button>
+												<i class="fas fa-eye"></i>
+											</button>
 										</form>
+									</div>
+									<div class="col col-lg-12">
+										<div class="cantidad">
+											<form action="InsertarPedido" method="post">
+
+												<button class="plus-boton" type="button" name="button">
+													<img src="img/plus.svg" alt="" />
+												</button>
+												<input type="text" id="unidades<%=pro.getId()%>"
+													class="unidades" name="cantidad" value="1">
+												<button class="minus-boton" type="button" name="button">
+													<img src="img/minus.svg" alt="" />
+												</button>
+												
+												<input type="hidden" name="paginaPrincipal" value="1">
+
+												<input type="hidden" name="id_producto"
+													value="<%=pro.getId()%>"> <input type="hidden"
+													name="precio" value="<%=pro.getPrecio()%>">
+												<button type="submit" class="btn btn-light-blue btn-md">
+													<i class="fas fa-cart-plus"></i>
+												</button>
+											</form>
+										</div>
 									</div>
 								</div>
 
@@ -203,7 +244,7 @@
 					<div class="text-center">
 						<h4>Noticias</h4>
 						<hr>
-						<div class="row">
+						<div class="row justify-content-center">
 							<%
 								for (Post post : posts) {
 							%>
@@ -271,7 +312,7 @@
 									<div class="col col-lg-12 colSinPading">
 										<form action="PaginaVendedor" method="get">
 											<input type="hidden" name="id_vendedor"
-												value="<%=ven.getId_vendedor()%>"> 
+												value="<%=ven.getId_vendedor()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
 												VER</button>
 										</form>
@@ -322,6 +363,6 @@
 
 	</footer>
 	<!-- Footer -->
-
+	<script src="js/cantidadesCarro.js"></script>
 </body>
 </html>

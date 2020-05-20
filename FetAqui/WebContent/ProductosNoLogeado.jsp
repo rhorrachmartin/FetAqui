@@ -16,6 +16,12 @@
 <!-- Google Fonts -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -46,7 +52,7 @@
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand logoNavegador" href="#">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -69,10 +75,12 @@
 					<%
 						}
 					%>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalRegistro">REGISTRARSE</a></li>
 
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalLogin">LOGIN</a></li>
 
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
@@ -200,7 +208,7 @@
 		%>
 
 		<!-- Card deck -->
-		<div class="row row-cols-1 row-cols-md-5 m-5">
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 
 			<%
 				for (Producto pro : productos) {
@@ -233,7 +241,7 @@
 					<div class="card-body text-center">
 
 						<!--Title-->
-						<h4 class="card-title"><%=pro.getNombre()%></h4>
+						<h4 class="card-title tituloProducto"><%=pro.getNombre()%></h4>
 						<!--Text-->
 						<div class="descripcionProducto">
 							<p class="card-text"><%=pro.getDescripcion()%></p>

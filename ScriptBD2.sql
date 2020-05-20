@@ -151,7 +151,7 @@ create table pedido(
     cliente int not null,
     destino int not null,
     estado varchar(32) not null,
-    foreign key (cliente) references cliente(id_cliente)
+    foreigsn key (cliente) references cliente(id_cliente)
 		on delete cascade,
 	foreign key (destino) references direccion(id_direccion)
 		on update cascade
@@ -182,42 +182,3 @@ insert into categoria (nombre) values ('Frutas'),('Verduras'),('Carnes'),('Pesca
 										('Aguas'),('Refrescos'),('Embutidos'),('Dulce/Pasteleria'),('Otros');
 
 insert into formato (nombre) values ('100 GR.'),('200 GR.'),('400 GR.'),('500 GR.'),('KG'),('LATA'),('BOTELLA'),('BARRA'),('UNIDAD');
-
-insert into direccion (direccion,poblacion) values ('Avenida Argentina 1 3º c', 1);
-insert into direccion (direccion,poblacion) values ('Major 2 1 b', 2);
-
-insert into vendedor (nif,nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
-	values ('NIF','Agrícola Palma','vendedor@gmail.com', 'Vendedor!1986', 'foto.jpg', 1, 630513222, 1, now(),1);
-    
-insert into vendedor (nif,nombre,email, password, foto, direccion, telefono, activado, fecha_alta, venta_online) 
-	values ('NIF','Agrícola Palma 2','vendedor2@gmail.com', 'Vendedor2!1986', 'foto.jpg', 1, 600000000, 1, now(),1);
-
-insert into post (texto_post, autor) values ('Esto es un post de prueba', 1);
-
-insert into cliente (email, nombre, apellido, telefono, password, foto, activado) 
-	values ('cliente@gmail.com', 'Ramon', 'Horrach', 630513222,'Cliente!1986','foto2.jpg',1);
-    
-insert into valoracion_post (valoracion, id_cliente, id_post) values (10, 1, 1);
-
-insert into valoracioncv (valoracion, id_cliente, id_vendedor) values (10,1,1);
-
-insert into valoracionvc (valoracion, id_cliente, id_vendedor) values (10,1,1);
-
-
-
-insert into producto (nombre, descripcion, foto, precio, vendedor, stock, vendido, categoria, formato,venta_online) 
-	values ('Naranjas de Sóller', 'Naranjas traídas de Sóller', 'naranjas.jpg', 0.50, 1,100,0,1,1,1);
-    
-insert into producto (nombre, descripcion, foto, precio, vendedor, stock, vendido, categoria, formato,venta_online) 
-	values ('Plátanos de Canarias', 'Plátanos de Canarias autétincos', 'platanos.jpg', 0.580, 1,100,0,1,1,1);
-    
-insert into valoracion_producto (valoracion, cliente, producto) values (10,1,1);
-
-insert into pedido (fecha_pedido, fecha_entrega,cliente, destino, estado) values (now(), now(),1,1,'Pendiente');
-
-insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
-insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
-insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
-insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,1,0.50,3,0);
-insert into detalle_pedido (id_pedido, id_producto, precio_unidad, cantidad, dto) values (1,2,0.580,5,0);
-

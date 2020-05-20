@@ -148,7 +148,7 @@ public class AñadirProducto extends HttpServlet {
 			productoEJB.insertarProducto(producto);
 			
 			Integer valoracion = 5;
-			valoracionProducto.setCliente(vendedor.getId_vendedor());
+			valoracionProducto.setCliente(1);
 			valoracionProducto.setProducto(producto.getId());
 			valoracionProducto.setValoracion(valoracion);
 			

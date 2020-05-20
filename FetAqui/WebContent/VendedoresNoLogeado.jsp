@@ -11,28 +11,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FET AQUI</title>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<link
+	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css"
+	rel="stylesheet">
 <link href="css/estilos.css" type="text/css" rel="stylesheet">
 <!-- -------------------SCRIPTS--------------- -->
 <!-- JQuery -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 <script src="js/validarPassword.js"></script>
 </head>
 <body>
 
-	<div id="container" >
+	<div id="container">
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
@@ -46,22 +62,23 @@
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="ObtenerTodosProductos">Productos</a></li>
-					<li class="nav-item"><a class="nav-link" href="ObtenerTodosVendedores">Vendedores</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<%
 						if (request.getAttribute("error") != null) {
-							String error = (String) request.getAttribute("error");
+						String error = (String) request.getAttribute("error");
 					%>
 					<li class="nav-item"><a class="btn btn-danger btn-sm"
 						data-toggle="modal" data-target="#"><%=error%></a></li>
 					<%
 						}
 					%>
-					<li class="nav-item"><a class="btn btn-primary btn-sm"
+					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalRegistro">REGISTRARSE</a></li>
 
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalLogin">LOGIN</a></li>
 
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
@@ -77,21 +94,21 @@
 
 		<%
 			ArrayList<Poblacion> poblaciones = null;
-			ArrayList<Vendedor> vendedores = null;
-			Poblacion poblacion = null;
+		ArrayList<Vendedor> vendedores = null;
+		Poblacion poblacion = null;
 
-			if (request.getAttribute("poblaciones") != null) {
-				poblaciones = (ArrayList<Poblacion>) request.getAttribute("poblaciones");
-			}
+		if (request.getAttribute("poblaciones") != null) {
+			poblaciones = (ArrayList<Poblacion>) request.getAttribute("poblaciones");
+		}
 
-			if (request.getAttribute("vendedores") != null) {
-				vendedores = (ArrayList<Vendedor>) request.getAttribute("vendedores");
-			}
+		if (request.getAttribute("vendedores") != null) {
+			vendedores = (ArrayList<Vendedor>) request.getAttribute("vendedores");
+		}
 
-			if (request.getAttribute("poblacion") != null) {
+		if (request.getAttribute("poblacion") != null) {
 
-				poblacion = (Poblacion) request.getAttribute("poblacion");
-			}
+			poblacion = (Poblacion) request.getAttribute("poblacion");
+		}
 		%>
 
 
@@ -166,7 +183,7 @@
 
 		<%
 			if (request.getAttribute("error") != null) {
-				String error = (String) request.getAttribute("error");
+			String error = (String) request.getAttribute("error");
 		%>
 
 		<div class="container">
@@ -187,7 +204,7 @@
 		%>
 
 		<!-- Card deck -->
-		<div class="row row-cols-1 row-cols-md-5 m-5">
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 m-5">
 
 			<%
 				for (Vendedor ve : vendedores) {
@@ -198,17 +215,17 @@
 			<div class="col mb-4">
 				<div class="card h-100">
 					<!--Card image-->
-					<div id="contenedorImagenProducto" class="view overlay zoom">
+					<div class="view overlay zoom contenedorVendedorVendedores mx-auto">
 						<%
-							if (ve.getFoto().equals("producto.png")) {
+							if (ve.getFoto().equals("FotoPorDefecto")) {
 						%>
-						<img id="imagenProducto" class="img-fluid z-depth-1"
-							src="img/<%=ve.getFoto()%>" alt="Card image cap">
+						<img class="img-fluid z-depth-1 imagenVendedorVendedores"
+							src="img/user.png" alt="Card image cap">
 
 						<%
 							} else {
 						%>
-						<img id="imagenProducto" class="img-fluid z-depth-1"
+						<img class="img-fluid z-depth-1 imagenVendedorVendedores"
 							src="Imagenes/<%=ve.getFoto()%>" alt="Card image cap">
 						<%
 							}
@@ -222,7 +239,6 @@
 						<!--Title-->
 						<h4 class="card-title"><%=ve.getNombre()%></h4>
 						<!--Text-->
-						<p id="descripcionProducto" class="card-text"><%=ve.getEmail()%></p>
 						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 						<div class="row">
 
