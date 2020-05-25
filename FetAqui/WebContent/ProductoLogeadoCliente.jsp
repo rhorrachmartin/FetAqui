@@ -61,9 +61,9 @@
 		vendedor = (Vendedor) request.getAttribute("vendedor");
 	}
 
-	if (request.getAttribute("c") != null) {
+	if (session.getAttribute("cliente") != null) {
 
-		c = (Cliente) request.getAttribute("c");
+		c = (Cliente) session.getAttribute("cliente");
 	}
 
 	int numProductos = 0;

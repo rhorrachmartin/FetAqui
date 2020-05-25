@@ -80,6 +80,8 @@ public class PaginaProducto extends HttpServlet {
 				try {
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+					
+					
 
 					Producto producto = productoEJB.getProductoPorId(id_producto);
 					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);

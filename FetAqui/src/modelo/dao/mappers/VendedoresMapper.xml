@@ -162,7 +162,7 @@
 			poblacion
 		on 
 			direccion.poblacion = poblacion.id_poblacion 
-		inner 
+		left 
 			join valoracioncv
         on 
         	vendedor.id_vendedor = valoracioncv.id_vendedor

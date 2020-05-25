@@ -179,12 +179,51 @@
         on 
         	pedido.cliente = cliente.id_cliente
         where 
-        	id_cliente = #{id_cliente};
+        	id_cliente = #{id_cliente}
+        order by fecha_pedido desc;
+
+	</select>
+	
+	<resultMap type='Pedido' id='getPedidosVendedor'>
+		<result property='id_pedido' column='id_pedido' />
+		<result property='cliente' column='id_cliente' />
+		<result property='fecha_pedido' column='fecha_pedido' />
+		<result property='estado' column='estado' />
+	</resultMap>
+
+	<select id="getPedidosVendedor" parameterType="int"
+		resultMap="getPedidosVendedor">
+
+		select 
+        	pedido.id_pedido,
+        	cliente.id_cliente,
+        	vendedor.id_vendedor,
+        	pedido.fecha_pedido,
+			pedido.estado 
+        from
+        	vendedor 
+        inner join producto
+        	on vendedor.id_vendedor = producto.id_producto
+        inner join detalle_pedido
+        	on producto.id_producto = detalle_pedido.id_producto
+        inner join pedido
+        	on detalle_pedido.id_pedido = pedido.id_pedido
+        inner join cliente
+        	on pedido.cliente = cliente.id_cliente
+        where 
+        	id_vendedor = #{id_vendedor} and
+			pedido.estado = "Confirmado"
+        group by pedido.id_pedido
+        order by fecha_pedido desc;
 
 	</select>
 	
 	<delete id='borrarProductoCesta' parameterType='int'>
 		delete from detalle_pedido where id_detalle = #{id_detalle};
+	</delete>
+	
+	<delete id='borrarPedidoPorId' parameterType='int'>
+		delete from pedido where pedido.id_pedido = #{id_pedido};
 	</delete>
 	
 	<update id="updatePedidoAconfirmado" parameterType='int'>

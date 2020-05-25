@@ -27,6 +27,22 @@ public class PedidoDAO {
 		}
 	}
 
+	public void borrarPedidoPorId(Integer id_pedido) {
+
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			PedidosMapper pedidosMapper = sqlSession.getMapper(PedidosMapper.class);
+			// Insertamos el usuario
+			pedidosMapper.borrarPedidoPorId(id_pedido);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
 	public void borrarProductoCesta(Integer id_detalle) {
 
 		// Abrimos la sesión
@@ -139,6 +155,20 @@ public class PedidoDAO {
 			PedidosMapper pedidosMapper = sqlSession.getMapper(PedidosMapper.class);
 			// Insertamos el usuario
 			return pedidosMapper.getPedidosCliente(id_cliente);
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
+	
+	public ArrayList<Pedido> getPedidosVendedor(Integer id_vendedor) {
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			PedidosMapper pedidosMapper = sqlSession.getMapper(PedidosMapper.class);
+			// Insertamos el usuario
+			return pedidosMapper.getPedidosVendedor(id_vendedor);
 		} finally {
 			// Cerramos sesión
 			sqlSession.close();

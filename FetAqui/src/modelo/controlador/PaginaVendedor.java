@@ -84,6 +84,8 @@ public class PaginaVendedor extends HttpServlet {
 					rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_CLIENTE_JSP);
 
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+					
+					System.out.println(id_vendedor);
 
 					if (request.getParameter("selectCategorias") == null) {
 

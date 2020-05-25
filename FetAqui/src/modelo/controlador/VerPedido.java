@@ -114,7 +114,7 @@ public class VerPedido extends HttpServlet {
 						String error = "No existen datos para este pedido";
 
 						request.setAttribute("error", error);
-
+						request.setAttribute("id_pedido", id_pedido);
 						rs.forward(request, response);
 					} else {
 						request.setAttribute("pedidoDetallado", pDetallado);

@@ -120,7 +120,7 @@
 						PÁGINA</a>
 				</div>
 				<div class="col col-lg-12">
-					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor" href="#">MIS PEDIDOS</a>
+					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor" href="ObtenerPedidosVendedor">MIS PEDIDOS</a>
 				</div>
 			</div>
 		</div>

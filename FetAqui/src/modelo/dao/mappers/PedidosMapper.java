@@ -27,6 +27,8 @@ public interface PedidosMapper {
 	
 	public void borrarProductoCesta(@Param("id_detalle") Integer id_detalle);
 	
+	public void borrarPedidoPorId(@Param("id_pedido") Integer id_pedido);
+	
 	public void updatePedidoAconfirmado(@Param("id_pedido") Integer id_pedido);
 	
 	public void updatePedidoApendiente(@Param("id_pedido") Integer id_pedido);
@@ -35,5 +37,6 @@ public interface PedidosMapper {
 	
 	public ArrayList<Pedido> getPedidosCliente(@Param("id_cliente") Integer id_cliente);
 	
+	public ArrayList<Pedido> getPedidosVendedor(@Param("id_vendedor") Integer id_vendedor);
 
 }

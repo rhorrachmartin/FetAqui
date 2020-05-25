@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <%@ page import="modelo.pojo.Cliente"%>
+<%@ page import="modelo.pojo.Vendedor"%>
 <%@ page import="modelo.pojo.Pedido"%>
 <%@ page import="modelo.pojo.PedidoDetallado"%>
 <%@ page import="java.text.DecimalFormat"%>
@@ -51,23 +52,17 @@
 
 	<%
 		HttpSession session = request.getSession(false);
-	Cliente cliente = null;
+	Vendedor vendedor = null;
 	ArrayList<Pedido> pedidos = null;
 	String error = "";
 
-	if (session.getAttribute("cliente") != null) {
-		cliente = (Cliente) session.getAttribute("cliente");
+	if (session.getAttribute("vendedor") != null) {
+		vendedor = (Vendedor) session.getAttribute("vendedor");
 
 	}
 
 	if (request.getAttribute("pedidos") != null) {
 		pedidos = (ArrayList<Pedido>) request.getAttribute("pedidos");
-	}
-
-	int numProductos = 0;
-
-	if (session.getAttribute("numProductos") != null) {
-		numProductos = (Integer) session.getAttribute("numProductos");
 	}
 	%>
 	<div id="container">
@@ -87,25 +82,26 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a
-						class="btn btn-primary btn-sm botonesNavegador" href="Cesta"><i
-							class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+						class="btn btn-primary btn-sm botonesNavegador"
+						href="PaginaPropioVendedor">MI PÁGINA</a></li>
 					<li class="nav-item"><a
 						class="btn btn-primary btn-sm botonesNavegador"
-						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
+						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
 					<li class="nav-item"><a
 						class="btn btn-success btn-sm botonesNavegador" href="Logout">SALIR</a></li>
 					<%
-						if (cliente.getFoto().equals("FotoPorDefecto")) {
+						if (vendedor.getFoto().equals("FotoPorDefecto")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="img/user.png" class="rounded-circle z-depth-0"
-							alt="avatar image" height="35">
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="Imagenes/<%=cliente.getFoto()%>"
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img
+							src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
@@ -162,16 +158,16 @@
 											for (Pedido pedido : pedidos) {
 										%>
 										<tr>
-											<td><%=pedido.getId() %></td>
+											<td><%=pedido.getId()%></td>
 											<td><%=pedido.getFecha_pedido()%></td>
 											<td><%=pedido.getEstado()%></td>
 											<td>
 
-												<form action="VerPedido" method="post">
+												<form action="VerPedidoVendedor" method="post">
 													<input type="hidden" name="id_pedido"
 														value="<%=pedido.getId()%>">
 													<button type="submit" class="btn btn-light-blue btn-md">
-														<a data-toggle="tooltip" title="VER PEDIDO">VER PEDIDO</a>
+														<a data-toggle="tooltip" title="ELIMINAR">VER PEDIDO</a>
 													</button>
 
 												</form>

@@ -25,6 +25,12 @@ public class PedidoEJB {
 
 		pedidoDAO.borrarProductoCesta(id_detalle);
 	}
+	
+	public void borrarPedidoPorId(Integer id_pedido) {
+		PedidoDAO pedidoDAO = new PedidoDAO();
+
+		pedidoDAO.borrarPedidoPorId(id_pedido);
+	}
 
 	public int getNumeroProductos(Integer id_pedido) {
 		PedidoDAO pedidoDAO = new PedidoDAO();
@@ -66,6 +72,12 @@ public class PedidoEJB {
 		PedidoDAO pedidoDAO = new PedidoDAO();
 
 		return pedidoDAO.getPedidosCliente(id_cliente);
+	}
+	
+	public ArrayList<Pedido> getPedidosVendedor(Integer id_vendedor){
+		PedidoDAO pedidoDAO = new PedidoDAO();
+
+		return pedidoDAO.getPedidosVendedor(id_vendedor);
 	}
 
 }

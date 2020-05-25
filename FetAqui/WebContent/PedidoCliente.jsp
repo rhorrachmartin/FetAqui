@@ -64,6 +64,8 @@
 	if (request.getAttribute("pedidoDetallado") != null) {
 		pDetallado = (ArrayList<PedidoDetallado>) request.getAttribute("pedidoDetallado");
 	}
+	
+	
 
 	int numProductos = 0;
 
@@ -88,7 +90,7 @@
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a
-						class="btn btn-primary btn-sm botonesNavegador" href="#"><i
+						class="btn btn-primary btn-sm botonesNavegador" href="Cesta"><i
 							class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
 					<li class="nav-item"><a
 						class="btn btn-primary btn-sm botonesNavegador"
@@ -129,11 +131,20 @@
 				<%
 					if (request.getAttribute("error") != null) {
 					error = (String) request.getAttribute("error");
+					Integer id_pedido = (Integer) request.getAttribute("id_pedido");
 				%>
-
 				<div class="col col-lg-12 text-center">
 					<h2><%=error%></h2>
+
+					<form action="AnularPedido" method="post">
+						<input type="hidden" name="id_pedido"
+							value="<%=id_pedido%>">
+						<button type="submit" class="btn btn-light-blue btn-md">
+							<a>ANULAR PEDIDO</a>
+					</form>
 				</div>
+
+
 				<%
 					} else {
 				%>
@@ -253,19 +264,26 @@
 							<%
 								if (pDetallado.get(0).getEstado().equals("pendiente")) {
 							%>
-							<form action="Anularedido" method="post">
-								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
+							<form action="AnularPedido" method="post">
 								<input type="hidden" name="id_pedido"
 									value="<%=pDetallado.get(0).getId_pedido()%>">
 								<button type="submit" class="btn btn-light-blue btn-md">
 									<a>ANULAR PEDIDO</a>
 							</form>
 
+							<form action="ConfirmarPedido" method="post">
+								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
+								<input type="hidden" name="id_pedido"
+									value="<%=pDetallado.get(0).getId_pedido()%>">
+								<button type="submit" class="btn btn-light-blue btn-md">
+									<a>CONFIRMAR Y PAGAR</a>
+							</form>
+
 
 							<%
 								} else {
 							%>
-								<h2>PEDIDO CONFIRMADO</h2>
+							<h2>PEDIDO CONFIRMADO</h2>
 							<%
 								}
 							%>

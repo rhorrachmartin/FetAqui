@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
 <%@ page import="modelo.pojo.Cliente"%>
-<%@ page import="modelo.pojo.Pedido"%>
+<%@ page import="modelo.pojo.Vendedor"%>
 <%@ page import="modelo.pojo.PedidoDetallado"%>
 <%@ page import="java.text.DecimalFormat"%>
 <%@ page import="javax.servlet.http.HttpSession"%>
@@ -51,17 +51,19 @@
 
 	<%
 		HttpSession session = request.getSession(false);
-	Cliente cliente = null;
-	ArrayList<Pedido> pedidos = null;
+	Vendedor vendedor = null;
+	ArrayList<PedidoDetallado> pDetallado = null;
 	String error = "";
+	double totalPedido = 0;
+	DecimalFormat df = new DecimalFormat("####0.00");
 
-	if (session.getAttribute("cliente") != null) {
-		cliente = (Cliente) session.getAttribute("cliente");
+	if (session.getAttribute("vendedor") != null) {
+		vendedor = (Vendedor) session.getAttribute("vendedor");
 
 	}
 
-	if (request.getAttribute("pedidos") != null) {
-		pedidos = (ArrayList<Pedido>) request.getAttribute("pedidos");
+	if (request.getAttribute("pedidoDetallado") != null) {
+		pDetallado = (ArrayList<PedidoDetallado>) request.getAttribute("pedidoDetallado");
 	}
 
 	int numProductos = 0;
@@ -80,32 +82,33 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="Principal">Inicio</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="ObtenerTodosProductos">Productos</a></li>
+					<li class="nav-item"><a class="nav-link" href="Productos">Productos</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
+
 				<ul class="navbar-nav ml-auto nav-flex-icons">
 					<li class="nav-item"><a
-						class="btn btn-primary btn-sm botonesNavegador" href="Cesta"><i
-							class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+						class="btn btn-primary btn-sm botonesNavegador"
+						href="PaginaPropioVendedor">MI PÁGINA</a></li>
 					<li class="nav-item"><a
 						class="btn btn-primary btn-sm botonesNavegador"
-						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
+						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
 					<li class="nav-item"><a
 						class="btn btn-success btn-sm botonesNavegador" href="Logout">SALIR</a></li>
 					<%
-						if (cliente.getFoto().equals("FotoPorDefecto")) {
+						if (vendedor.getFoto().equals("FotoPorDefecto")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="img/user.png" class="rounded-circle z-depth-0"
-							alt="avatar image" height="35">
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img src="img/user.png"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="Imagenes/<%=cliente.getFoto()%>"
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="OpcionesPerfilVendedor.jsp"> <img
+							src="Imagenes/<%=vendedor.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
@@ -120,7 +123,7 @@
 			<div class="row divPedido">
 
 				<div class="col col-lg-12 text-center">
-					<h3>SUS PEDIDOS</h3>
+					<h3>SU PEDIDO</h3>
 				</div>
 
 				<hr>
@@ -140,6 +143,36 @@
 				<div class="col col-lg-12">
 
 					<div class="row">
+						<div class="col col-lg-12">
+							<p>
+								<strong>Dirección: </strong><%=pDetallado.get(0).getDireccion()%>
+							</p>
+						</div>
+						<div class="col col-lg-12">
+							<p>
+								<strong>Población: </strong><%=pDetallado.get(0).getPoblacion()%>
+							</p>
+						</div>
+						<div class="col col-lg-12">
+							<p>
+								<strong>Fecha de entrega: </strong><%=pDetallado.get(0).getFecha_entrega()%>
+							</p>
+						</div>
+
+						<div class="col col-lg-12">
+							<p>
+								<strong>Estado: </strong><%=pDetallado.get(0).getEstado()%>
+							</p>
+						</div>
+					</div>
+
+				</div>
+				<hr>
+				<div class="col col-lg-12 text-center">
+					<h4>PEDIDO DETALLADO</h4>
+					<div class="row">
+
+
 
 						<div class="col col-lg-12">
 							<div class="table-responsive">
@@ -148,10 +181,12 @@
 									<!--Table head-->
 									<thead>
 										<tr>
-											<th class="th-lg">Pedido</th>
-											<th class="th-lg">Fecha</th>
-											<th class="th-lg">Estado</th>
 											<th class="th-lg"></th>
+											<th class="th-lg">Vendedor</th>
+											<th class="th-lg">Producto</th>
+											<th class="th-lg">Cantidad</th>
+											<th class="th-lg">Precio Unitario</th>
+											<th class="th-lg">Precio Total</th>
 										</tr>
 										<!--Table body-->
 									<tbody>
@@ -159,24 +194,33 @@
 
 										<!--Table head-->
 										<%
-											for (Pedido pedido : pedidos) {
+											for (PedidoDetallado pd : pDetallado) {
+
+											totalPedido = totalPedido + pd.getPrecio_final();
 										%>
 										<tr>
-											<td><%=pedido.getId() %></td>
-											<td><%=pedido.getFecha_pedido()%></td>
-											<td><%=pedido.getEstado()%></td>
 											<td>
-
-												<form action="VerPedido" method="post">
-													<input type="hidden" name="id_pedido"
-														value="<%=pedido.getId()%>">
-													<button type="submit" class="btn btn-light-blue btn-md">
-														<a data-toggle="tooltip" title="VER PEDIDO">VER PEDIDO</a>
-													</button>
-
-												</form>
-
+												<%
+													if (pd.getFoto().equals("producto.png")) {
+												%>
+												<div class="thumbnail">
+													<img class="img-responsive imagenProductoTabla"
+														src="img/<%=pd.getFoto()%>">
+												</div> <%
+ 	} else {
+ %>
+												<div class="thumbnail">
+													<img class="img-responsive imagenProductoTabla"
+														src="Imagenes/<%=pd.getFoto()%>" alt="Card image cap">
+												</div> <%
+ 	}
+ %>
 											</td>
+											<td><%=pd.getVendedor()%></td>
+											<td><%=pd.getProducto()%></td>
+											<td><%=pd.getCantidad()%></td>
+											<td><%=pd.getPrecio_unidad()%>€</td>
+											<td><%=pd.getPrecio_final()%>€</td>
 										</tr>
 										<%
 											}
@@ -188,13 +232,55 @@
 
 							</div>
 						</div>
+
+						<div class="col col-lg-12 justify-content-center text-center">
+							<%
+								if (totalPedido == 0) {
+							%>
+							<h1>TOTAL: 0/€</h1>
+							<%
+								} else {
+							%>
+							<h1>
+								TOTAL:
+								<%=df.format(totalPedido)%>/€
+							</h1>
+							<%
+								}
+							%>
+						</div>
+
+						<div class="col col-lg-12 text-center">
+
+							<%
+								if (pDetallado.get(0).getEstado().equals("pendiente")) {
+							%>
+							<form action="Anularedido" method="post">
+								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
+								<input type="hidden" name="id_pedido"
+									value="<%=pDetallado.get(0).getId_pedido()%>">
+								<button type="submit" class="btn btn-light-blue btn-md">
+									<a>ANULAR PEDIDO</a>
+							</form>
+
+
+							<%
+								} else {
+							%>
+							<h2>PEDIDO CONFIRMADO</h2>
+							<%
+								}
+							%>
+
+						</div>
 						<%
 							}
 						%>
 					</div>
-
-
 				</div>
+
+
+
 			</div>
 		</main>
 	</div>
