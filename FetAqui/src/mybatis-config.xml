@@ -20,6 +20,7 @@
 		<typeAlias type='modelo.pojo.Pedido' alias='Pedido'></typeAlias>
 		<typeAlias type='modelo.pojo.DetallePedido' alias='DetallePedido'></typeAlias>
 		<typeAlias type='modelo.pojo.PedidoDetallado' alias='PedidoDetallado'></typeAlias>
+		<typeAlias type='modelo.pojo.ValoracionCv' alias='ValoracionCv'></typeAlias>
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
@@ -47,5 +48,6 @@
 		<mapper resource='modelo/dao/mappers/ValoracionesPostsMapper.xml' />
 		<mapper resource='modelo/dao/mappers/PedidosMapper.xml' />
 		<mapper resource='modelo/dao/mappers/DetallesPedidoMapper.xml' />
+		<mapper resource='modelo/dao/mappers/ValoracionesVendedoresMapper.xml' />
 	</mappers>
 </configuration>

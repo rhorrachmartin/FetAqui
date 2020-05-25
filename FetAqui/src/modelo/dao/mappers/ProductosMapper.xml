@@ -123,6 +123,7 @@
 		<result property='formato' column='formato' />
 		<result property='venta_online' column='venta_online' />
 		<result property='stock' column='stock' />
+		<result property='valoracion' column='valoracion' />
 	</resultMap>
 	
 	<select id="getProductos"  resultMap="getProductos">
@@ -137,7 +138,7 @@
             producto.categoria as id_categoria,
             producto.formato as id_formato,
             producto.venta_online,
-            avg(valoracion_producto.valoracion) as valoracion,
+            round(avg(valoracion_producto.valoracion), 2) as valoracion,
             categoria.nombre as categoria,
             formato.nombre as formato
         from producto

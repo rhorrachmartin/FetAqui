@@ -57,6 +57,7 @@
 	Vendedor vendedor = null;
 	Cliente c = null;
 	HttpSession session = request.getSession(false);
+	
 	if (request.getAttribute("categorias") != null) {
 		categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
 	}
@@ -75,9 +76,9 @@
 		vendedor = (Vendedor) request.getAttribute("vendedor");
 	}
 
-	if (request.getAttribute("c") != null) {
+	if (session.getAttribute("cliente") != null) {
 
-		c = (Cliente) request.getAttribute("c");
+		c = (Cliente) session.getAttribute("cliente");
 	}
 
 	int numProductos = 0;
@@ -193,6 +194,33 @@
 							}
 						%>
 					</div>
+					
+					<hr>
+					
+					<label>Valoración: <%=vendedor.getValoracion()%></label>
+
+									<div class="col col-lg-12 mb-2">
+										<form action="ValorarVendedor" method="post" class="valorarVendedor">
+											<input type="hidden" name="id_vendedor" value="<%=vendedor.getId_vendedor()%>">
+											<input type="hidden" name="id_cliente"
+												value="<%=c.getId_cliente()%>"> <input
+												type="hidden" name="paginaVendedor" value="paginaVendedor"> <select
+												name="valoracion" onchange="submit(<%=vendedor.getId_vendedor()%>)"
+												class="browser-default custom-select">
+												<option selected disabled>Valore al vendedor</option>
+												<option value="10">10</option>
+												<option value="9">9</option>
+												<option value="8">8</option>
+												<option value="7">7</option>
+												<option value="6">6</option>
+												<option value="5">5</option>
+												<option value="4">4</option>
+												<option value="3">3</option>
+												<option value="2">2</option>
+												<option value="1">1</option>
+											</select>
+										</form>
+									</div>
 
 
 
@@ -208,11 +236,7 @@
 					<div class="container">
 						<!-- DIV BUSQUEDA POR CATEGORÍA -->
 						<div class="row">
-							<div class="col col-lg-1 text-center">
-								<a type="button" class="btn btn-light-blue btn-md"
-									href="ObtenerTodosProductos">Volver</a>
-							</div>
-							<div class="col col-lg-11 m-5 text-center">
+							<div class="col col-lg-12 m-5 text-center">
 
 								<h3>BUSCAR POR CATEGORÍAS</h3>
 								<form id="categorias" action="PaginaVendedor" method="get">
@@ -248,11 +272,7 @@
 					<div class="container">
 						<!-- DIV BUSQUEDA POR CATEGORÍA -->
 						<div class="row">
-							<div class="col col-lg-1 text-center">
-								<a type="button" class="btn btn-light-blue btn-md"
-									href="ObtenerTodosProductos">Volver</a>
-							</div>
-							<div class="col col-lg-11 m-5 text-center">
+							<div class="col col-lg-12 m-5 text-center">
 								<h3>BUSCAR POR CATEGORÍAS</h3>
 								<form id="categorias" action="PaginaVendedor" method="get">
 									<input type="hidden" name="id_vendedor"

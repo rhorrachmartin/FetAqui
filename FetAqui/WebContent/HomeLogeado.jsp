@@ -131,7 +131,7 @@
 			</div>
 		</nav>
 
-		<div class="container-fluid">
+		<div class="container-fluid mt-4">
 
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
 
@@ -142,7 +142,8 @@
 						<hr>
 
 						<!-- Card deck -->
-						<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2">
+						<div
+							class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2">
 
 							<%
 								for (Producto pro : productos) {
@@ -150,8 +151,7 @@
 
 
 							<!-- Card -->
-							<div
-								class="sombraProductoInicio mb-4">
+							<div class="sombraProductoInicio mb-4">
 								<div class="row ">
 									<!--Card image-->
 									<div class="col col-lg-12 view overlay zoom ">
@@ -214,7 +214,7 @@
 												<button class="minus-boton" type="button" name="button">
 													<img src="img/minus.svg" alt="" />
 												</button>
-												
+
 												<input type="hidden" name="paginaPrincipal" value="1">
 
 												<input type="hidden" name="id_producto"
@@ -226,114 +226,191 @@
 											</form>
 										</div>
 									</div>
-								</div>
 
-							</div>
+									<label>Valoración: <%=pro.getValoracion()%></label>
 
-
-
-							<%
-								}
-							%>
-							<!-- Card -->
-						</div>
-					</div>
-				</div>
-
-				<div id="noticias" class="col">
-					<div class="text-center">
-						<h4>Noticias</h4>
-						<hr>
-						<div class="row justify-content-center">
-							<%
-								for (Post post : posts) {
-							%>
-							<div class="sombraProductoInicio col col-lg-12 mb-4">
-								<strong><%=post.getNombre_autor()%></strong>
-								<p><%=post.getTexto()%></p>
-								<label>Valoración: <%=post.getValoracion()%></label>
-							</div>
-
-
-							<%
-								}
-							%>
-						</div>
-					</div>
-				</div>
-
-				<div id="lateral2" class="col">
-
-					<div class="text-center">
-						<h4>Vendedores</h4>
-						<hr>
-
-						<!-- Card deck -->
-						<div class="row">
-
-							<%
-								for (Vendedor ven : vendedores) {
-							%>
-
-
-							<!-- Card -->
-							<div
-								class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4">
-								<div class="row">
-									<!--Card image-->
-									<div class="col col-lg-12 view overlay zoom ">
-										<%
-											if (ven.getFoto().equals("desconocido.txt")) {
-										%>
-										<img
-											class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"
-											src="img/user.png" alt="Card image cap">
-
-										<%
-											} else {
-										%>
-										<img
-											class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"
-											src="Imagenes/<%=ven.getFoto()%>" alt="Card image cap">
-										<%
-											}
-										%>
-										<div class="mask rgba-white-slight"></div>
-									</div>
-								</div>
-								<!--Card content-->
-								<div class="row">
-
-									<!--Title-->
-									<div class="col col-lg-12">
-										<h4 class="card-title"><%=ven.getNombre()%></h4>
-									</div>
-
-									<div class="col col-lg-12 colSinPading">
-										<form action="PaginaVendedor" method="get">
-											<input type="hidden" name="id_vendedor"
-												value="<%=ven.getId_vendedor()%>">
-											<button type="submit" class="btn btn-light-blue btn-md">
-												VER</button>
+									<div class="col col-lg-12 mb-2">
+										<form action="ValorarProducto" method="post" class="valorarProducto">
+											<input type="hidden" name="id_producto" value="<%=pro.getId()%>">
+											<input type="hidden" name="id_cliente"
+												value="<%=cliente.getId_cliente()%>"> <input
+												type="hidden" name="inicio" value="inicio"> <select
+												name="valoracion" onchange="submit(<%=pro.getId()%>)"
+												class="browser-default custom-select">
+												<option selected disabled>Valore el producto</option>
+												<option value="10">10</option>
+												<option value="9">9</option>
+												<option value="8">8</option>
+												<option value="7">7</option>
+												<option value="6">6</option>
+												<option value="5">5</option>
+												<option value="4">4</option>
+												<option value="3">3</option>
+												<option value="2">2</option>
+												<option value="1">1</option>
+											</select>
 										</form>
 									</div>
 								</div>
-
 							</div>
 
-
-
-							<%
-								}
-							%>
-							<!-- Card -->
 						</div>
+
+
+
+						<%
+							}
+						%>
+						<!-- Card -->
 					</div>
 				</div>
+			</div>
 
+			<div id="noticias" class="col">
+				<div class="text-center">
+					<h4>Noticias</h4>
+					<hr>
+					<div class="row justify-content-center">
+						<%
+							for (Post post : posts) {
+						%>
+						<div class="sombraProductoInicio col col-lg-12 mb-4">
+							<strong><%=post.getNombre_autor()%></strong>
+							<p><%=post.getTexto()%></p>
+							<label>Valoración: <%=post.getValoracion()%></label>
+
+							<div class="col col-lg-12 mb-2">
+								<form action="ValorarPost" method="post" class="valorarPost">
+									<input type="hidden" name="id_post" value="<%=post.getId()%>">
+									<input type="hidden" name="id_cliente"
+										value="<%=cliente.getId_cliente()%>"> <input
+										type="hidden" name="productos" value="productos"> <select
+										name="valoracion" onchange="submit(<%=post.getId()%>)"
+										class="browser-default custom-select">
+										<option selected disabled>Valore la noticia</option>
+										<option value="10">10</option>
+										<option value="9">9</option>
+										<option value="8">8</option>
+										<option value="7">7</option>
+										<option value="6">6</option>
+										<option value="5">5</option>
+										<option value="4">4</option>
+										<option value="3">3</option>
+										<option value="2">2</option>
+										<option value="1">1</option>
+									</select>
+								</form>
+							</div>
+						</div>
+
+
+						<%
+							}
+						%>
+					</div>
+				</div>
+			</div>
+
+			<div id="lateral2" class="col">
+
+				<div class="text-center">
+					<h4>Vendedores</h4>
+					<hr>
+
+					<!-- Card deck -->
+					<div class="row">
+
+						<%
+							for (Vendedor ven : vendedores) {
+						%>
+
+
+						<!-- Card -->
+						<div
+							class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4">
+							<div class="row">
+								<!--Card image-->
+								<div class="col col-lg-12 view overlay zoom ">
+									<%
+										if (ven.getFoto().equals("FotoPorDefecto")) {
+									%>
+									<img
+										class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"
+										src="img/user.png" alt="Card image cap">
+
+									<%
+										} else {
+									%>
+									<img
+										class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"
+										src="Imagenes/<%=ven.getFoto()%>" alt="Card image cap">
+									<%
+										}
+									%>
+									<div class="mask rgba-white-slight"></div>
+								</div>
+							</div>
+							<!--Card content-->
+							<div class="row text-center">
+
+								<!--Title-->
+								<div class="col col-lg-12">
+									<h4 class="card-title"><%=ven.getNombre()%></h4>
+								</div>
+
+								<label>Valoración: <%=ven.getValoracion()%></label>
+
+								<div class="col col-lg-12 mb-2">
+									<form action="ValorarVendedor" method="post"
+										class="valorarVendedor">
+										<input type="hidden" name="id_vendedor"
+											value="<%=ven.getId_vendedor()%>"> <input
+											type="hidden" name="id_cliente"
+											value="<%=cliente.getId_cliente()%>"> <input
+											type="hidden" name="principal" value="principal"> <select
+											name="valoracion"
+											onchange="submit(<%=ven.getId_vendedor()%>)"
+											class="browser-default custom-select">
+											<option selected disabled>Valore al vendedor</option>
+											<option value="10">10</option>
+											<option value="9">9</option>
+											<option value="8">8</option>
+											<option value="7">7</option>
+											<option value="6">6</option>
+											<option value="5">5</option>
+											<option value="4">4</option>
+											<option value="3">3</option>
+											<option value="2">2</option>
+											<option value="1">1</option>
+										</select>
+									</form>
+								</div>
+
+								<div class="col col-lg-12 colSinPading">
+									<form action="PaginaVendedor" method="get">
+										<input type="hidden" name="id_vendedor"
+											value="<%=ven.getId_vendedor()%>">
+										<button type="submit" class="btn btn-light-blue btn-md">
+											VER</button>
+									</form>
+								</div>
+							</div>
+
+						</div>
+
+
+
+						<%
+							}
+						%>
+						<!-- Card -->
+					</div>
+				</div>
 			</div>
 
 		</div>
+
+	</div>
 	</div>
 	<!-- Footer -->
 	<footer class="page-footer font-small unique-color-dark pt-4">

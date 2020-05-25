@@ -18,6 +18,7 @@ public class Vendedor {
 	String direccion;
 	Integer idPoblacion;
 	String poblacion;
+	double valoracion;
 
 	public Vendedor() {
 		super();
@@ -135,6 +136,15 @@ public class Vendedor {
 		this.poblacion = poblacion;
 	}
 
+	public double getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(double valoracion) {
+		this.valoracion = valoracion;
+	}
+	
+	
 	
 	
 	

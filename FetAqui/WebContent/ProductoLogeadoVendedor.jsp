@@ -140,17 +140,17 @@
 			<hr>
 			<!-- FOTO PRODUCTO -->
 			<div class="row">
-				<div class="col col-lg-12 text-center">
+				<div class="col col-lg-12 mx-auto contenedorImagenProductoGrande">
 					<%
 						if (producto.getFoto().equals("producto.png")) {
 					%>
-					<img class="img-fluid imagenProducto rounded mx-auto d-block"
+					<img class="img-fluid imagenProductoGrande rounded mx-auto d-block"
 						src="img/<%=producto.getFoto()%>" alt="Card image cap">
 
 					<%
 						} else {
 					%>
-					<img class="img-fluid imagenProducto rounded mx-auto d-block"
+					<img class="img-fluid imagenProductoGrande rounded mx-auto d-block"
 						src="Imagenes/<%=producto.getFoto()%>" alt="Card image cap">
 					<%
 						}

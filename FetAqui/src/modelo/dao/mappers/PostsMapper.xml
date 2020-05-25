@@ -15,7 +15,11 @@
 
 	<select id="getPosts" resultMap="getPosts">
 		select 
-			post.id_post, post.texto_post, post.autor, vendedor.nombre as nombre_autor, valoracion_post.valoracion 
+			post.id_post, 
+			post.texto_post, 
+			post.autor, 
+			vendedor.nombre as nombre_autor, 
+			round(avg(valoracion_post.valoracion), 2) as valoracion
         from 
         	post
         inner join 
@@ -25,7 +29,8 @@
         inner join 
         	valoracion_post
         on 
-        	post.id_post = valoracion_post.id_post;
+        	post.id_post = valoracion_post.id_post
+        group by post.id_post;
 	</select>
 	
 	<select id="getPostsPorVendedor" parameterType="int" resultMap="getPosts">

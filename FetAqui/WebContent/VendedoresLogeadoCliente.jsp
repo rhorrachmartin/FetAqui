@@ -240,7 +240,7 @@
 							if (ve.getFoto().equals("FotoPorDefecto")) {
 						%>
 						<img class="img-fluid z-depth-1 imagenVendedorVendedores"
-							src="img/<%=ve.getFoto()%>" alt="Card image cap">
+							src="img/user.png" alt="Card image cap">
 
 						<%
 							} else {
@@ -261,6 +261,31 @@
 						<!--Text-->
 						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 						<div class="row">
+						
+						<label>Valoración: <%=ve.getValoracion()%></label>
+
+									<div class="col col-lg-12 mb-2">
+										<form action="ValorarVendedor" method="post" class="valorarVendedor">
+											<input type="hidden" name="id_vendedor" value="<%=ve.getId_vendedor()%>">
+											<input type="hidden" name="id_cliente"
+												value="<%=cliente.getId_cliente()%>"> <input
+												type="hidden" name="paginaVendedores" value="paginaVendedores"> <select
+												name="valoracion" onchange="submit(<%=ve.getId_vendedor()%>)"
+												class="browser-default custom-select">
+												<option selected disabled>Valore al vendedor</option>
+												<option value="10">10</option>
+												<option value="9">9</option>
+												<option value="8">8</option>
+												<option value="7">7</option>
+												<option value="6">6</option>
+												<option value="5">5</option>
+												<option value="4">4</option>
+												<option value="3">3</option>
+												<option value="2">2</option>
+												<option value="1">1</option>
+											</select>
+										</form>
+									</div>
 
 							<div class="col col-lg-12">
 								<form action="PaginaVendedor" method="get">

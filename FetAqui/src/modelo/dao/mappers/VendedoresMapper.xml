@@ -19,20 +19,28 @@
 
 	<select id="getVendedores" resultMap="getVendedores">
 		select
-		id_vendedor,
-		vendedor.nombre, email,
-		telefono,foto, direccion.direccion,
-		poblacion.nombre as poblacion,venta_online
+			vendedor.id_vendedor,
+			vendedor.nombre, email,
+			telefono,foto, direccion.direccion,
+			poblacion.nombre as poblacion,venta_online,
+			round(avg(valoracioncv.valoracion), 2) as valoracion
 		from
-		vendedor
+			vendedor
 		inner join
-		direccion
+			direccion
 		on
-		direccion.id_direccion = vendedor.direccion
+			direccion.id_direccion = vendedor.direccion
 		inner join
-		poblacion
-		on poblacion.id_poblacion = direccion.poblacion
-		where vendedor.activado = 1;
+			poblacion
+		on 
+			poblacion.id_poblacion = direccion.poblacion
+		inner 
+			join valoracioncv
+        on 
+        	vendedor.id_vendedor = valoracioncv.id_vendedor
+		where 
+			vendedor.activado = 1
+		group by vendedor.id_vendedor;
 	</select>
 	
 	<resultMap type='Vendedor' id='getVendedoresPoblacion'>
@@ -130,7 +138,7 @@
 	
 	<select id="getVendedorPorId" parameterType="int" resultType="Vendedor">
 		select
-			id_vendedor,
+			vendedor.id_vendedor,
 			nif,
 			vendedor.nombre,
 			telefono,			 
@@ -142,7 +150,8 @@
 			direccion.direccion,
 			vendedor.foto, 
 			vendedor.activado,			
-			venta_online
+			venta_online,
+			round(avg(valoracioncv.valoracion), 2) as valoracion
 		from
 			vendedor
 		inner join
@@ -153,8 +162,12 @@
 			poblacion
 		on 
 			direccion.poblacion = poblacion.id_poblacion 
+		inner 
+			join valoracioncv
+        on 
+        	vendedor.id_vendedor = valoracioncv.id_vendedor
 		where 
-			id_vendedor = #{id_vendedor};
+			vendedor.id_vendedor = #{id_vendedor};
 	</select>
 	
 	<select id="getVendedorEmailPass" resultType="Vendedor">

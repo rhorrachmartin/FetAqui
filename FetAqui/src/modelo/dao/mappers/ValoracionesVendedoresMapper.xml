@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='modelo.dao.mappers.ValoracionesVendedoresMapper'>
+	
+	<insert id="insertarValoracionVendedor" parameterType="ValoracionCv"
+		useGeneratedKeys="true" keyProperty="id" >
+		insert into valoracioncv (valoracion, id_cliente,id_vendedor)
+		values (#{valoracion}, #{id_cliente},#{id_vendedor});
+	</insert>
+
+
+</mapper>

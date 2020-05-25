@@ -21,7 +21,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
 	rel="stylesheet">
-	<link
+<link
 	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
 	rel="stylesheet">
 <!-- Bootstrap core CSS -->
@@ -54,9 +54,9 @@
 	<%
 		Cliente cliente = null;
 	HttpSession session = request.getSession(false);
-	if (request.getAttribute("cliente") != null) {
+	if (session.getAttribute("cliente") != null) {
 
-		cliente = (Cliente) request.getAttribute("cliente");
+		cliente = (Cliente) session.getAttribute("cliente");
 	}
 
 	int numProductos = 0;
@@ -84,12 +84,14 @@
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
-						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador" href="Cesta"><i
+							class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
-						href="Logout">SALIR</a></li>
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador" href="Logout">SALIR</a></li>
 					<%
 						if (cliente.getFoto().equals("FotoPorDefecto")) {
 					%>
@@ -264,12 +266,42 @@
 						<!--Title-->
 						<h4 class="card-title tituloProducto"><%=pro.getNombre()%>
 							<%=pro.getPrecio()%>€/<%=pro.getFormato()%></h4>
+
+
 						<!--Text-->
 						<div class="descripcionProducto">
 							<p class="card-text"><%=pro.getDescripcion()%></p>
 						</div>
 						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 						<div class="row">
+
+							<div class="col col-lg-12">
+								<p>
+									Valoración:
+									<%=pro.getValoracion()%></p>
+							</div>
+
+							<div class="col col-lg-12">
+								<form action="ValorarProducto" method="post" class="valorarProducto">
+									<input type="hidden" name="id_producto" value="<%=pro.getId()%>">
+									<input type="hidden" name="id_cliente" value="<%=cliente.getId_cliente()%>">
+									<input type="hidden" name="productos" value="productos">
+														
+									<select name="valoracion" onchange="submit(<%=pro.getId()%>)"  class="browser-default custom-select">
+										<option selected disabled>Valore el producto</option>
+										<option value="10">10</option>
+										<option value="9">9</option>
+										<option value="8">8</option>
+										<option value="7">7</option>
+										<option value="6">6</option>
+										<option value="5">5</option>
+										<option value="4">4</option>
+										<option value="3">3</option>
+										<option value="2">2</option>
+										<option value="1">1</option>
+									</select>
+								</form>
+							</div>
 
 							<div class="col col-lg-6">
 								<form action="PaginaVendedor" method="get">
@@ -313,6 +345,8 @@
 									</form>
 								</div>
 							</div>
+
+
 						</div>
 					</div>
 				</div>
@@ -571,6 +605,13 @@
 				submit();
 			});
 		});
+		
+		function submitValoracion(idProducto) {
+
+			$('#valoracionProducto'+idProducto).submit();
+
+		}
+		
 	</script>
 	<script src="js/cantidadesCarro.js"></script>
 

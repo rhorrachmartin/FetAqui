@@ -132,7 +132,7 @@
 
 			<div class="row">
 
-				<div id="lateral" class="col col-lg-2">
+				<div id="lateral" class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-2">
 
 					<%
 						if (vendedor.getFoto().equals("FotoPorDefecto")) {
@@ -192,7 +192,7 @@
 
 				</div>
 
-				<div id="main" class="col col-lg-10 text-center">
+				<div id="main" class="col-12 col-sm-12 col-md-6 col-lg-9 col-xl-10 text-center">
 
 					<!-- DIV ELECCION CATEGORÍA -->
 					<%
@@ -294,7 +294,7 @@
 					%>
 
 					<!-- Card deck -->
-					<div class="row row-cols-1 row-cols-md-5">
+					<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-3 row-cols-xl-4">
 
 						<%
 							for (Producto pro : productos) {

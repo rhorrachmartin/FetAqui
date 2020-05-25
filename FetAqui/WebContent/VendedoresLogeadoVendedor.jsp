@@ -234,7 +234,7 @@
 							if (ve.getFoto().equals("FotoPorDefecto")) {
 						%>
 						<img class="img-fluid z-depth-1 imagenVendedorVendedores"
-							src="img/<%=ve.getFoto()%>" alt="Card image cap">
+							src="img/user.png" alt="Card image cap">
 
 						<%
 							} else {

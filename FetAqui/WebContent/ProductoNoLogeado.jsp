@@ -18,7 +18,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
 	rel="stylesheet">
-	<link
+<link
 	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
 	rel="stylesheet">
 <!-- Bootstrap core CSS -->
@@ -86,10 +86,12 @@
 					<%
 						}
 					%>
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalRegistro">REGISTRARSE</a></li>
 
-					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador"
 						data-toggle="modal" data-target="#modalLogin">LOGIN</a></li>
 
 					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
@@ -129,8 +131,21 @@
 			<hr>
 			<!-- FOTO PRODUCTO -->
 			<div class="row">
-				<div class="col col-lg-12 text-center">
-					<img class="imagenProducto" src="Imagenes/<%=producto.getFoto()%>">
+				<div class="col col-lg-12 mx-auto contenedorImagenProductoGrande">
+					<%
+						if (producto.getFoto().equals("producto.png")) {
+					%>
+					<img class="img-fluid imagenProductoGrande rounded mx-auto d-block"
+						src="img/<%=producto.getFoto()%>" alt="Card image cap">
+
+					<%
+						} else {
+					%>
+					<img class="img-fluid imagenProductoGrande rounded mx-auto d-block"
+						src="Imagenes/<%=producto.getFoto()%>" alt="Card image cap">
+					<%
+						}
+					%>
 				</div>
 			</div>
 			<!-- FIN FOTO PRODUCTO -->
