@@ -86,8 +86,13 @@ public class BorrarProductoCesta extends HttpServlet {
 			if (request.getParameter("id_detalle") != null) {
 
 				Integer id_detalle = Integer.valueOf(request.getParameter("id_detalle"));
+				Integer id_pedido = Integer.valueOf(request.getParameter("id_pedido"));
 				
 				pedidoEJB.borrarProductoCesta(id_detalle);
+				
+				Integer numProductos = pedidoEJB.getNumeroProductos(id_pedido);
+				session.removeAttribute("numProductos");
+				session.setAttribute("numProductos", numProductos);
 				
 				response.sendRedirect("Cesta");
 

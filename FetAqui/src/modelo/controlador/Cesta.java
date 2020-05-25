@@ -79,7 +79,7 @@ public class Cesta extends HttpServlet {
 				String mensaje = "Sin artículos en la cesta";
 
 				request.setAttribute("error", mensaje);
-
+				session.removeAttribute("numProductos");
 				rs.forward(request, response);
 			}
 

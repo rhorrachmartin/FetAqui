@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,9 +44,82 @@ public class ConfirmarPedido extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+	static final String CONFIRMAR_PEDIDO_JSP = "/ConfirmarPedido.jsp";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		response.setContentType(CONTENT_TYPE);
+		RequestDispatcher rs = getServletContext().getRequestDispatcher(CONFIRMAR_PEDIDO_JSP);
+		
+		HttpSession session = request.getSession(false);
+		
+		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		
+		if (c != null) {
+
+			if (request.getParameter("id_pedido") != null) {
+					
+				Integer id_pedido = Integer.valueOf(request.getParameter("id_pedido"));
+				ArrayList<PedidoDetallado> pDetallado = pedidoEJB.getPedidoDetalladoPorId(id_pedido);
+				double total = Double.valueOf(request.getParameter("totalPedido"));
+				
+				if (c.getDireccion() != null) {
+					
+					request.setAttribute("pedidoDetallado", pDetallado);
+					request.setAttribute("total", total);
+					rs.forward(request, response);
+					
+				} else {
+
+					String error = "Para realizar una compra actualice su perfil de usuario";
+
+					session.setAttribute("error", error);
+					response.sendRedirect("ObtenerTodosProductos");
+				}
+
+			} else {
+				Pedido pedido = (Pedido) session.getAttribute("pedido");
+
+				Integer id_pedido = pedido.getId();
+
+				Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+
+				Integer cantidad = Integer.valueOf(request.getParameter("cantidad"));
+
+				Double precio = Double.valueOf(request.getParameter("precio"));
+
+				DetallePedido detallePedido = new DetallePedido();
+
+				detallePedido.setPedido(id_pedido);
+				detallePedido.setProducto(id_producto);
+				detallePedido.setPrecioUnitario(precio);
+				detallePedido.setCantidad(cantidad);
+
+				detallePedidoEJB.insertarDetallePedido(detallePedido);
+
+				Integer numProductos = pedidoEJB.getNumeroProductos(id_pedido);
+
+				session.setAttribute("numProductos", numProductos);
+
+				if (request.getParameter("id_vendedor") != null) {
+
+					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+
+					response.sendRedirect("PaginaVendedor?id_vendedor=" + id_vendedor);
+				} else if (request.getParameter("paginaPrincipal") != null) {
+					response.sendRedirect("Principal");
+				} else {
+
+					response.sendRedirect("ObtenerTodosProductos");
+				}
+			}
+
+		} else {
+			response.sendRedirect("Principal");
+		}
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -72,6 +72,7 @@ public class AnularPedido extends HttpServlet {
 					System.out.println(id_pedido);
 
 					pedidoEJB.borrarPedidoPorId(id_pedido);
+					session.removeAttribute("pedido");
 					response.sendRedirect("ObtenerPedidosCliente");
 
 				} else {

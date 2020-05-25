@@ -219,6 +219,8 @@
 												<form action="BorrarProductoCesta" method="post">
 													<input type="hidden" name="id_detalle"
 														value="<%=pd.getId_detalle()%>">
+														<input type="hidden" name="id_pedido"
+														value="<%=pd.getId_pedido()%>">
 													<button type="submit" class="btn btn-light-blue btn-md">
 														<a data-toggle="tooltip" title="ELIMINAR"><i
 															class="far fa-trash-alt"></i></a>
@@ -257,7 +259,7 @@
 						</div>
 
 						<div class="col col-lg-12 text-center">
-							<form action="ConfirmarPedido" method="post">
+							<form action="ConfirmarPedido" method="get">
 								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
 								<input type="hidden" name="id_pedido"
 									value="<%=pDetallado.get(0).getId_pedido()%>">

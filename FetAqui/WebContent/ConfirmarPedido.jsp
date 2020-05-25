@@ -64,8 +64,6 @@
 	if (request.getAttribute("pedidoDetallado") != null) {
 		pDetallado = (ArrayList<PedidoDetallado>) request.getAttribute("pedidoDetallado");
 	}
-	
-	
 
 	int numProductos = 0;
 
@@ -118,184 +116,169 @@
 			</div>
 		</nav>
 
-		<main class="container">
+		<main class="container-fluid">
+
 
 			<div class="row divPedido">
 
-				<div class="col col-lg-12 text-center">
-					<h3>SU PEDIDO</h3>
-				</div>
+				<div class="col col-lg-6">
 
-				<hr>
-
-				<%
-					if (request.getAttribute("error") != null) {
-					error = (String) request.getAttribute("error");
-					Integer id_pedido = (Integer) request.getAttribute("id_pedido");
-				%>
-				<div class="col col-lg-12 text-center">
-					<h2><%=error%></h2>
-
-					<form action="AnularPedido" method="post">
-						<input type="hidden" name="id_pedido"
-							value="<%=id_pedido%>">
-						<button type="submit" class="btn btn-light-blue btn-md">
-							<a>ANULAR PEDIDO</a>
-					</form>
-				</div>
-
-
-				<%
-					} else {
-				%>
-
-				<div class="col col-lg-12">
-
-					<div class="row">
-						<div class="col col-lg-12">
-							<p>
-								<strong>Dirección: </strong><%=pDetallado.get(0).getDireccion()%>
-							</p>
-						</div>
-						<div class="col col-lg-12">
-							<p>
-								<strong>Población: </strong><%=pDetallado.get(0).getPoblacion()%>
-							</p>
-						</div>
-						<div class="col col-lg-12">
-							<p>
-								<strong>Fecha de entrega: </strong><%=pDetallado.get(0).getFecha_entrega()%>
-							</p>
-						</div>
-
-						<div class="col col-lg-12">
-							<p>
-								<strong>Estado: </strong><%=pDetallado.get(0).getEstado()%>
-							</p>
-						</div>
+					<div class="col col-lg-12 text-center">
+						<h3>SU PEDIDO</h3>
 					</div>
 
-				</div>
-				<hr>
-				<div class="col col-lg-12 text-center">
-					<h4>PEDIDO DETALLADO</h4>
-					<div class="row">
+					<hr>
 
+					<div class="col col-lg-12">
 
+						<div class="row">
+							<div class="col col-lg-12">
+								<p>
+									<strong>Dirección: </strong><%=pDetallado.get(0).getDireccion()%>
+								</p>
+							</div>
+							<div class="col col-lg-12">
+								<p>
+									<strong>Población: </strong><%=pDetallado.get(0).getPoblacion()%>
+								</p>
+							</div>
+							<div class="col col-lg-12">
+								<p>
+									<strong>Fecha de entrega: </strong><%=pDetallado.get(0).getFecha_entrega()%>
+								</p>
+							</div>
 
-						<div class="col col-lg-12">
-							<div class="table-responsive">
-								<!--Table-->
-								<table class="table">
-									<!--Table head-->
-									<thead>
-										<tr>
-											<th class="th-lg"></th>
-											<th class="th-lg">Vendedor</th>
-											<th class="th-lg">Producto</th>
-											<th class="th-lg">Cantidad</th>
-											<th class="th-lg">Precio Unitario</th>
-											<th class="th-lg">Precio Total</th>
-										</tr>
-										<!--Table body-->
-									<tbody>
-
-
-										<!--Table head-->
-										<%
-											for (PedidoDetallado pd : pDetallado) {
-
-											totalPedido = totalPedido + pd.getPrecio_final();
-										%>
-										<tr>
-											<td>
-												<%
-													if (pd.getFoto().equals("producto.png")) {
-												%>
-												<div class="thumbnail">
-													<img class="img-responsive imagenProductoTabla"
-														src="img/<%=pd.getFoto()%>">
-												</div> <%
- 	} else {
- %>
-												<div class="thumbnail">
-													<img class="img-responsive imagenProductoTabla"
-														src="Imagenes/<%=pd.getFoto()%>" alt="Card image cap">
-												</div> <%
- 	}
- %>
-											</td>
-											<td><%=pd.getVendedor()%></td>
-											<td><%=pd.getProducto()%></td>
-											<td><%=pd.getCantidad()%></td>
-											<td><%=pd.getPrecio_unidad()%>€</td>
-											<td><%=pd.getPrecio_final()%>€</td>
-										</tr>
-										<%
-											}
-										%>
-									</tbody>
-									<!--Table body-->
-								</table>
-								<!--Table-->
-
+							<div class="col col-lg-12">
+								<p>
+									<strong>Estado: </strong><%=pDetallado.get(0).getEstado()%>
+								</p>
 							</div>
 						</div>
 
-						<div class="col col-lg-12 justify-content-center text-center">
-							<%
-								if (totalPedido == 0) {
-							%>
-							<h1>TOTAL: 0/€</h1>
-							<%
-								} else {
-							%>
-							<h1>
-								TOTAL:
-								<%=df.format(totalPedido)%>/€
-							</h1>
-							<%
-								}
-							%>
+					</div>
+					<hr>
+					<div class="col col-lg-12 text-center">
+						<h4>PEDIDO DETALLADO</h4>
+						<div class="row">
+
+
+
+							<div class="col col-lg-12">
+								<div class="table-responsive">
+									<!--Table-->
+									<table class="table">
+										<!--Table head-->
+										<thead>
+											<tr>
+												<th class="th-lg"></th>
+												<th class="th-lg">Vendedor</th>
+												<th class="th-lg">Producto</th>
+												<th class="th-lg">Cantidad</th>
+												<th class="th-lg">Precio Unitario</th>
+												<th class="th-lg">Precio Total</th>
+											</tr>
+											<!--Table body-->
+										<tbody>
+
+
+											<!--Table head-->
+											<%
+												for (PedidoDetallado pd : pDetallado) {
+
+												totalPedido = totalPedido + pd.getPrecio_final();
+											%>
+											<tr>
+												<td>
+													<%
+														if (pd.getFoto().equals("producto.png")) {
+													%>
+													<div class="thumbnail">
+														<img class="img-responsive imagenProductoTabla"
+															src="img/<%=pd.getFoto()%>">
+													</div> <%
+ 	} else {
+ %>
+													<div class="thumbnail">
+														<img class="img-responsive imagenProductoTabla"
+															src="Imagenes/<%=pd.getFoto()%>" alt="Card image cap">
+													</div> <%
+ 	}
+ %>
+												</td>
+												<td><%=pd.getVendedor()%></td>
+												<td><%=pd.getProducto()%></td>
+												<td><%=pd.getCantidad()%></td>
+												<td><%=pd.getPrecio_unidad()%>€</td>
+												<td><%=pd.getPrecio_final()%>€</td>
+											</tr>
+											<%
+												}
+											%>
+										</tbody>
+										<!--Table body-->
+									</table>
+									<!--Table-->
+
+								</div>
+							</div>
+
+							<div class="col col-lg-12 justify-content-center text-center">
+								<%
+									if (totalPedido == 0) {
+								%>
+								<h1>TOTAL: 0/€</h1>
+								<%
+									} else {
+								%>
+								<h1>
+									TOTAL:
+									<%=df.format(totalPedido)%>/€
+								</h1>
+								<%
+									}
+								%>
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+
+				<div class="col col-lg-6 text-center">
+
+					<h2>FORMAS DE PAGO</h2>
+
+					<hr>
+
+					<div class="row">
+
+						<div class="col col-lg-12">
+
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input"
+									id="reembolso"> <label class="custom-control-label"
+									for="reembolso">Contrareembolso</label>
+							</div>
 						</div>
 
-						<div class="col col-lg-12 text-center">
 
-							<%
-								if (pDetallado.get(0).getEstado().equals("pendiente")) {
-							%>
-							<form action="AnularPedido" method="post">
-								<input type="hidden" name="id_pedido"
-									value="<%=pDetallado.get(0).getId_pedido()%>">
-								<button type="submit" class="btn btn-light-blue btn-md">
-									<a>ANULAR PEDIDO</a>
-							</form>
 
-							<form action="ConfirmarPedido" method="get">
+						<div class="col col-lg-12">
+							<form action="ConfirmarPedido" method="post">
 								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
 								<input type="hidden" name="id_pedido"
 									value="<%=pDetallado.get(0).getId_pedido()%>">
 								<button type="submit" class="btn btn-light-blue btn-md">
-									<a>CONFIRMAR Y PAGAR</a>
+									<a>REALIZAR PEDIDO</a>
 							</form>
 
-
-							<%
-								} else {
-							%>
-							<h2>PEDIDO CONFIRMADO</h2>
-							<%
-								}
-							%>
-
 						</div>
-						<%
-							}
-						%>
+
+
 					</div>
+
 				</div>
-
-
 
 			</div>
 		</main>
