@@ -387,7 +387,7 @@
 		</div>
 
 		<!-- MODAL DE CONFIRMACIÓN DE EMAIL -->
-		<div class="modal fade" id="centralModalSuccess" tabindex="-1"
+		<div class="modal hide fade" id="centralModalSuccess" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-notify modal-success" role="document">
 				<!--Content-->
@@ -415,11 +415,8 @@
 
 					<!--Footer-->
 					<div class="modal-footer justify-content-center">
-
-						<a class="btn btn-success btn-sm botonesNavegador"
-							data-toggle="modal" data-target="#modalLogin">LOGIN <i
-							class="fas fa-sign-in-alt"></i></a> <a type="button"
-							class="btn btn-outline-success waves-effect" data-dismiss="modal">Cerrar</a>
+					<a type="button"
+							class="btn btn-outline-success waves-effect" data-dismiss="modal">OK</a>
 					</div>
 				</div>
 				<!--/.Content-->

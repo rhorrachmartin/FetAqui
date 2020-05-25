@@ -41,12 +41,22 @@
 
 	<select id="getCliente" resultType="Cliente">
 		select
-		id_cliente, cliente.nombre, apellido, telefono,email,password, poblacion.id_poblacion as idPoblacion,
-		poblacion.nombre as poblacion, cliente.direccion as idDireccion,direccion.direccion, cliente.foto,cliente.activado
+			id_cliente, 
+			cliente.nombre, 
+			apellido, 
+			telefono,
+			email,
+			password, 
+			poblacion.id_poblacion as idPoblacion,
+			poblacion.nombre as poblacion, 
+			cliente.direccion as idDireccion,
+			direccion.direccion, 
+			cliente.foto,
+			cliente.activado
 		from
-		cliente
+			cliente
 		left join
-		direccion
+			direccion
 		on cliente.direccion = direccion.id_direccion
 		left join
 		poblacion

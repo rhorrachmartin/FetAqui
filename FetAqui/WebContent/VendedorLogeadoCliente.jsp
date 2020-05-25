@@ -167,16 +167,31 @@
 					</div>
 					<hr>
 					<div>
-						<p><%=vendedor.getPoblacion()%></p>
+						<%if(vendedor.getPoblacion() != null){ %>
+							<p><%=vendedor.getPoblacion()%></p>
+						<%}else{ %>
+							<p>Sin especificar</p>
+						<%} %>
 						<hr>
-						<p><%=vendedor.getDireccion()%></p>
+						
+						<%if(vendedor.getDireccion() != null){ %>
+							<p><%=vendedor.getDireccion()%></p>
+						<%}else{ %>
+							<p>Sin especificar</p>
+						<%} %>
+						
 					</div>
 					<hr>
 					<div>
 						<h4>CONTACTO</h4>
 					</div>
 					<hr>
-					<p><%=vendedor.getTelefono()%></p>
+					
+					<%if(vendedor.getTelefono() != null){ %>
+							<p><%=vendedor.getTelefono()%></p>
+						<%}else{ %>
+							<p>Sin especificar</p>
+						<%} %>
 					<hr>
 					<p><%=vendedor.getEmail()%></p>
 					<hr>

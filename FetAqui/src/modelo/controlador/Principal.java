@@ -169,9 +169,8 @@ public class Principal extends HttpServlet {
 				String passwordp = request.getParameter("passwordp");
 
 				String imagen = "FotoPorDefecto";
-				String nif = "NIF";
-				int direccion = 1;
-				String telefono = "Telf";
+				String nif = " ";
+				String telefono = " ";
 				int activado = 0;
 				int venta_online = 0;
 				// Recogemos la fecha actual
@@ -184,7 +183,6 @@ public class Principal extends HttpServlet {
 				v.setEmail(emailp);
 				v.setPassword(passwordp);
 				v.setFoto(imagen);
-				v.setId_direccion(direccion);
 				v.setTelefono(telefono);
 				v.setActivado(activado);
 				v.setFecha_alta(fecha);
@@ -232,7 +230,6 @@ public class Principal extends HttpServlet {
 				String passwordc = request.getParameter("passwordc");
 
 				String imagen = "FotoPorDefecto";
-				int direccion = 1;
 				String telefono = "TelfDef";
 				// Creamos el pojo usuario
 				Cliente c = new Cliente();
@@ -241,7 +238,6 @@ public class Principal extends HttpServlet {
 				c.setPassword(passwordc);
 				c.setApellido("-");
 				c.setTelefono(telefono);
-				c.setIdDireccion(direccion);
 				c.setFoto(imagen);
 				c.setActivado(0);
 				// Comprobamos si el correo ya existe en la BD

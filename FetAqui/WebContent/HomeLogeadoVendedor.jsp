@@ -240,7 +240,7 @@
 									<!--Card image-->
 									<div class="col col-lg-12 view overlay zoom ">
 										<%
-											if (ven.getFoto().equals("desconocido.txt")) {
+											if (ven.getFoto().equals("FotoPorDefecto")) {
 										%>
 										<img
 											class="img-fluid z-depth-1 cropInicio rounded mx-auto d-block"

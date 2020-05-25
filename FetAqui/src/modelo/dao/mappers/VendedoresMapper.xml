@@ -26,15 +26,15 @@
 			round(avg(valoracioncv.valoracion), 2) as valoracion
 		from
 			vendedor
-		inner join
+		left join
 			direccion
 		on
 			direccion.id_direccion = vendedor.direccion
-		inner join
+		left join
 			poblacion
 		on 
 			poblacion.id_poblacion = direccion.poblacion
-		inner 
+		left 
 			join valoracioncv
         on 
         	vendedor.id_vendedor = valoracioncv.id_vendedor
@@ -58,20 +58,25 @@
 
 	<select id="getVendedoresPoblacion" parameterType="int" resultMap="getVendedoresPoblacion">
 		select
-		id_vendedor,
-		vendedor.nombre, email,
-		telefono,foto, direccion.direccion,
-		poblacion.nombre as poblacion,venta_online
+			id_vendedor,
+			vendedor.nombre, 
+			email,
+			telefono,
+			foto, 
+			direccion.direccion,
+			poblacion.nombre as poblacion,
+			venta_online
 		from
-		vendedor
+			vendedor
 		inner join
-		direccion
+			direccion
 		on
-		direccion.id_direccion = vendedor.direccion
+			direccion.id_direccion = vendedor.direccion
 		inner join
-		poblacion
+			poblacion
 		on poblacion.id_poblacion = direccion.poblacion
-		where poblacion.id_poblacion = #{id_poblacion}
+			where 
+		poblacion.id_poblacion = #{id_poblacion}
 		and activado = 1;
 	</select>
 	
@@ -124,11 +129,11 @@
 			venta_online
 		from
 			vendedor
-		inner join
+		left join
 			direccion
 		on
 			vendedor.direccion = direccion.id_direccion
-		inner join
+		left join
 			poblacion
 		on 
 			direccion.poblacion = poblacion.id_poblacion 
@@ -154,11 +159,11 @@
 			round(avg(valoracioncv.valoracion), 2) as valoracion
 		from
 			vendedor
-		inner join
+		left join
 			direccion
 		on
 			vendedor.direccion = direccion.id_direccion
-		inner join
+		left join
 			poblacion
 		on 
 			direccion.poblacion = poblacion.id_poblacion 
