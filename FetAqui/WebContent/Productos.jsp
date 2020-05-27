@@ -65,7 +65,7 @@
 	%>
 	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand logoNavegador" href="#">FET AQUÍ</a>
+			<a class="navbar-brand logoNavegador" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>

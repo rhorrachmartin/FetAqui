@@ -50,7 +50,7 @@ public class PublicarNoticia extends HttpServlet {
 
 	@EJB
 	ValoracionProductoEJB valoracionProductoEJB;
-	
+
 	@EJB
 	ValoracionPostEJB valoracionPostEJB;
 	/**
@@ -65,7 +65,11 @@ public class PublicarNoticia extends HttpServlet {
 	static final String PAGINA_PROPIA_VENDEDOR = "/PaginaPropiaVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		// Creamos el RequestDispatcher
@@ -82,7 +86,7 @@ public class PublicarNoticia extends HttpServlet {
 			String post = request.getParameter("post");
 
 			post.replace("\n", "").replace("\t", "").replace("\r", "").replace(" ", "");
-			
+
 			Post p = new Post();
 
 			p.setTexto(post);
@@ -95,14 +99,12 @@ public class PublicarNoticia extends HttpServlet {
 				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 				ArrayList<Formato> formatos = formatoEJB.getFormatos();
 				ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
-				
-				Post p2 = postEJB.getPostPorId(p.getId());
-				
+
 				ValoracionPost valoracion = new ValoracionPost();
 				valoracion.setId_cliente(1);
 				valoracion.setId_post(p.getId());
 				valoracion.setValoracion(5);
-				
+
 				valoracionPostEJB.insertarValoracionPostPorDefecto(valoracion);
 
 				request.setAttribute("productos", productos);
@@ -131,15 +133,6 @@ public class PublicarNoticia extends HttpServlet {
 		} else {
 			response.sendRedirect("Principal");
 		}
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 
 	}
 

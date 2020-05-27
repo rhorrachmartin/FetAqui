@@ -48,7 +48,7 @@
 
 	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand logoNavegador" href="#">FET AQUÍ</a>
+			<a class="navbar-brand logoNavegador" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -89,7 +89,7 @@
 
 
 		<main class="container-fluid fondoContainer">
-			<div class="row">
+			<div class="row mt-3">
 				<div class="col col-lg-12  text-center vertical-center">
 
 					<h1 class="nombreLogo">Fet Aquí</h1>
@@ -101,8 +101,8 @@
 						nuestros agricultores y productores</h2>
 				</div>
 			</div>
-
-			<div class="row">
+			<hr>
+			<div class="row mt-3">
 				<div class="col col-lg-12  text-center vertical-center">
 
 					<h1 class="quienesSomos">¿Quiénes somos?</h1>
@@ -118,7 +118,7 @@
 			<div class="row">
 				<div class="col col-lg-12  text-center vertical-center">
 
-					<h1 class="quienesSomos">6 razones para el consumo local</h1>
+					<h1 class="quienesSomos">6 buenas razones para el consumo local</h1>
 
 				</div>
 			</div>
@@ -156,7 +156,7 @@
 					<figure>
 						<img src="img/gracias.png"
 							class="img-fluid rounded-circle imagenRazon">
-						<figcaption>Generas seguridad, faz y felicidad a
+						<figcaption>Generas seguridad, paz y felicidad a
 							pequeños empresarios</figcaption>
 					</figure>
 				</div>

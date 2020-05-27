@@ -143,7 +143,7 @@ public class Cesta extends HttpServlet {
 					response.sendRedirect("ObtenerTodosProductos");
 				} else {
 
-					String error = "Para realizar una compra actualice su perfil de usuario";
+					String error = "Para realizar una compra actualice su perfil de usuario, su dirección es importante para poderle realizar el envío correctamente";
 
 					session.setAttribute("error", error);
 					response.sendRedirect("ObtenerTodosProductos");

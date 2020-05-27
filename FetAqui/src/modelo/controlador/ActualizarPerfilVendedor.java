@@ -49,16 +49,7 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 
 	static final String PERFIL_VENDEDOR_JSP = "/PerfilVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-		HttpSession session = request.getSession(false);
-
-		if (session == null) {
-			response.sendRedirect("Principal");
-		}
-	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -79,7 +70,6 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 		Vendedor vendedorExiste = null;
 		String nif = request.getParameter("nif");
 		String nombre = request.getParameter("nombre");
-		System.out.println(nombre);
 		String telefono = request.getParameter("telefono");
 		String passAntiguo = request.getParameter("passAntiguo");
 		String direccion = request.getParameter("direccion");
@@ -90,7 +80,6 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 		Integer id_poblacion = Integer.valueOf(request.getParameter("poblacion"));
 		if (vendedor.getNombre() != null) {
 			vendedorExiste = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
-			System.out.println(vendedorExiste.getNombre());
 			
 			if (vendedorExiste.getPassword().equals(passAntiguo)) {
 				
@@ -107,8 +96,6 @@ public class ActualizarPerfilVendedor extends HttpServlet {
 				}
 
 				Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
-				
-				System.out.println(vendedorActualizado.getNombre());
 
 				request.getSession().setAttribute("vendedor", vendedorActualizado);
 

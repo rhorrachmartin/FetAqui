@@ -19,7 +19,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
 	rel="stylesheet">
-	<link
+<link
 	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
 	rel="stylesheet">
 <!-- Bootstrap core CSS -->
@@ -77,7 +77,7 @@
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -91,12 +91,14 @@
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
-						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador" href="Cesta"><i
+							class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
-						href="Logout">SALIR</a></li>
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador" href="Logout">SALIR</a></li>
 					<%
 						if (c.getFoto().equals("FotoPorDefecto")) {
 					%>
@@ -121,21 +123,8 @@
 
 		<div id="contenedorProducto" class="container mt-5 mb-5">
 
-			<div class="row">
-
-				<div class="col col-lg-2">
-
-					<a type="button" class="btn btn-light-blue btn-md"
-						href="ObtenerTodosProductos">Volver</a>
-
-				</div>
-
-			</div>
-
 			<!-- CABECERA PRODUCTO -->
 			<div class="row">
-
-
 
 				<div class="col col-lg-12 text-center">
 					<h3><%=producto.getNombre()%></h3>
@@ -193,8 +182,35 @@
 			</div>
 			<!-- FIN PRECIO PRODUCTO -->
 
-			<div class="col col-lg-6">
-				<form action="PaginaVendedor" method="get">
+
+			<div class="col col-lg-12 text-center">
+				<div class="cantidad">
+					<form action="InsertarPedido" method="post">
+
+						<button class="plus-boton" type="button" name="button">
+							<img src="img/plus.svg" alt="" />
+						</button>
+						<input type="text" id="unidades<%=producto.getId()%>"
+							class="unidades" name="cantidad" value="1">
+						<button class="minus-boton" type="button" name="button">
+							<img src="img/minus.svg" alt="" />
+						</button>
+
+						<input type="hidden" name="paginaProducto" value="1"> 
+						<input type="hidden" name="id_producto" value="<%=producto.getId()%>">
+						<input type="hidden" name="precio"
+							value="<%=producto.getPrecio()%>">
+						<button type="submit" class="btn btn-light-blue btn-md">
+							<i class="fas fa-cart-plus"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="col col-lg-12 text-center">
+				<a type="button" class="btn btn-light-blue btn-md"
+					href="ObtenerTodosProductos">Volver</a>
+				<form action="PaginaVendedor" method="post">
 					<input type="hidden" name="id_vendedor"
 						value="<%=producto.getId_vendedor()%>">
 					<button type="submit" class="btn btn-light-blue btn-md">
@@ -232,247 +248,6 @@
 		</footer>
 		<!-- Footer -->
 
-
-		<!------------------------------------------------------MODAL DE ELECCION DE TIPO DE REGISTRO------------------------------------------------------------------------>
-		<div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title">¿Eres un profesional o un consumidor?</h4>
-						<button type="button" class="close" data-dismiss="modal">×</button>
-					</div>
-
-
-					<div class="modal-body panelEleccionRegistro">
-						<button class="btn btn-primary btn-lg" data-toggle="modal"
-							data-target="#formularioProfesional">Profesional</button>
-						<button class="btn btn-success btn-lg" data-toggle="modal"
-							data-target="#formularioConsumidor">Consumidor</button>
-					</div>
-
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-					</div>
-
-				</div>
-			</div>
-		</div>
-		<!------------------------------------------------------MODAL DE REGISTRO DE PROFESIONAL------------------------------------------------------------------------>
-		<div class="modal fade" id="formularioProfesional" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header text-center">
-						<h4 class="modal-title w-100 font-weight-bold">Registrarse
-							como vendedor</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form action="Principal" method="post">
-						<div class="modal-body mx-3">
-							<div class="md-form mb-5">
-								<i class="fas fa-user prefix grey-text"></i> <input type="text"
-									id="orangeForm-name" class="form-control validate"
-									name="nombrep"> <label data-error="wrong"
-									data-success="right" for="orangeForm-name">Su nombre</label>
-							</div>
-							<div class="md-form mb-5">
-								<i class="fas fa-envelope prefix grey-text"></i> <input
-									type="email" id="orangeForm-email"
-									class="form-control validate" name="emailp"> <label
-									data-error="wrong" data-success="right" for="orangeForm-email">Su
-									email</label>
-							</div>
-
-							<div class="row my-5">
-								<div class="col-md-4">
-									<div class="md-form">
-										<i class="fas fa-lock prefix"></i> <input type="password"
-											id="inputValidationEx2" class="form-control validate"
-											name="passwordp"> <label for="inputValidationEx2"
-											data-error="Escriba su contraseña correctamente"
-											data-success="OK" style="width: 200px;">Password</label>
-									</div>
-								</div>
-								<div class="col-md-5">
-
-									<div class="alert alert-warning password-alert" role="alert">
-										<ul>
-											<li class="requirements leng"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 8 caracteres</li>
-											<li class="requirements big-letter"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 letra mayúscula</li>
-											<li class="requirements num"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 número</li>
-											<li class="requirements special-char"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 carácter especial</li>
-										</ul>
-									</div>
-
-								</div>
-							</div>
-
-						</div>
-						<div class="modal-footer d-flex justify-content-center">
-							<button id="registrarse" type="submit"
-								class="btn btn-deep-orange" disabled>Registrarse</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<!------------------------------------------------------MODAL DE REGISTRO DE CLIENTE------------------------------------------------------------------------>
-		<div class="modal fade" id="formularioConsumidor" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header text-center">
-						<h4 class="modal-title w-100 font-weight-bold">Registrarse
-							como cliente</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form action="Principal" method="post">
-						<div class="modal-body mx-3">
-							<div class="md-form mb-5">
-								<i class="fas fa-user prefix grey-text"></i> <input type="text"
-									id="orangeForm-name2" class="form-control validate"
-									name="nombrec"> <label data-error="wrong"
-									data-success="right" for="orangeForm-name2">Su nombre</label>
-							</div>
-							<div class="md-form mb-5">
-								<i class="fas fa-envelope prefix grey-text"></i> <input
-									type="email" id="orangeForm-email2"
-									class="form-control validate" name="emailc"> <label
-									data-error="wrong" data-success="right" for="orangeForm-email2">Su
-									email</label>
-							</div>
-
-							<div class="row my-5">
-								<div class="col-md-4">
-									<div class="md-form">
-										<i class="fas fa-lock prefix"></i> <input type="password"
-											id="inputValidationEx3" class="form-control validate"
-											name="passwordc"> <label for="inputValidationEx3"
-											data-error="Escriba su contraseña correctamente"
-											data-success="OK" style="width: 200px;">Password</label>
-									</div>
-								</div>
-								<div class="col-md-5">
-
-									<div class="alert alert-warning password-alert" role="alert">
-										<ul>
-											<li class="requirements leng"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 8 caracteres</li>
-											<li class="requirements big-letter"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 letra mayúscula</li>
-											<li class="requirements num"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 número</li>
-											<li class="requirements special-char"><i
-												class="fas fa-check green-text"></i><i
-												class="fas fa-times red-text"></i> 1 carácter especial</li>
-										</ul>
-									</div>
-
-								</div>
-							</div>
-
-						</div>
-						<div class="modal-footer d-flex justify-content-center">
-							<button id="registrarse2" type="submit"
-								class="btn btn-deep-orange" disabled>Registrarse</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<!-- MODAL DE LOGIN -->
-
-		<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header text-center">
-						<h4 class="modal-title w-100 font-weight-bold">ENTRAR</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form action="Login" method="post">
-						<div class="modal-body mx-3">
-
-							<div class="md-form mb-5">
-								<i class="fas fa-envelope prefix grey-text"></i> <input
-									type="email" id="defaultForm-email"
-									class="form-control validate" name="email"> <label
-									data-error="wrong" data-success="right" for="defaultForm-email">Email</label>
-							</div>
-
-							<div class="md-form mb-4">
-								<i class="fas fa-lock prefix grey-text"></i> <input
-									type="password" id="defaultForm-pass"
-									class="form-control validate" name="password"> <label
-									data-error="wrong" data-success="right" for="defaultForm-pass">Password</label>
-							</div>
-						</div>
-						<div class="modal-footer d-flex justify-content-center">
-							<button type="submit" class="btn btn-default">Login</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-
-		<!-- MODAL DE CONFIRMACIÓN DE EMAIL -->
-		<div class="modal fade" id="centralModalSuccess" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-notify modal-success" role="document">
-				<!--Content-->
-				<div class="modal-content">
-					<!--Header-->
-					<div class="modal-header">
-						<p class="heading lead">¡Muchas gracias!</p>
-
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true" class="white-text">&times;</span>
-						</button>
-					</div>
-
-					<!--Body-->
-					<div class="modal-body">
-						<div class="text-center">
-							<i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-							<p>
-								Ha activado su usuario.<br> Recuerde que su usuario es el <strong>correo
-									electrónico</strong> con el que se ha registrado.
-							</p>
-						</div>
-					</div>
-
-					<!--Footer-->
-					<div class="modal-footer justify-content-center">
-						<a type="button" class="btn btn-success">Login <i
-							class="fas fa-sign-in-alt"></i></a> <a type="button"
-							class="btn btn-outline-success waves-effect" data-dismiss="modal">Cerrar</a>
-					</div>
-				</div>
-				<!--/.Content-->
-			</div>
-		</div>
 
 
 		<%
@@ -547,7 +322,7 @@
 			</div>
 		</div>
 	</div>
-
+	<script src="js/cantidadesCarro.js"></script>
 
 </body>
 </html>

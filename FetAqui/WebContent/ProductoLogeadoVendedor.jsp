@@ -68,7 +68,7 @@
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -113,17 +113,6 @@
 		<!-- FIN NAVEGADOR -->
 
 		<div id="contenedorProducto" class="container mt-5 mb-5">
-
-			<div class="row">
-
-				<div class="col col-lg-2">
-
-					<a type="button" class="btn btn-light-blue btn-md"
-						href="ObtenerTodosProductos">Volver</a>
-
-				</div>
-
-			</div>
 
 			<!-- CABECERA PRODUCTO -->
 			<div class="row">
@@ -186,13 +175,15 @@
 			</div>
 			<!-- FIN PRECIO PRODUCTO -->
 
-			<div class="col col-lg-6">
-				<form action="PaginaVendedor" method="get">
+			<div class="col col-lg-12 text-center">
+				<form action="PaginaVendedor" method="post">
 					<input type="hidden" name="id_vendedor"
 						value="<%=producto.getId_vendedor()%>">
 					<button type="submit" class="btn btn-light-blue btn-md">
 						IR AL VENDEDOR</button>
 				</form>
+				<a type="button" class="btn btn-light-blue btn-md"
+						href="ObtenerTodosProductos">Volver</a>
 			</div>
 		</div>
 

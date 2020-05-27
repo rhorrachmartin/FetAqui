@@ -12,10 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PedidoEJB;
-import modelo.ejb.ProductoEJB;
 import modelo.pojo.Cliente;
-import modelo.pojo.Producto;
-import modelo.pojo.Vendedor;
 
 /**
  * Servlet implementation class ActualizarPerfilCliente
@@ -68,8 +65,6 @@ public class AnularPedido extends HttpServlet {
 				Integer id_pedido = Integer.valueOf(request.getParameter("id_pedido"));
 				
 				if (id_pedido != null) {
-					
-					System.out.println(id_pedido);
 
 					pedidoEJB.borrarPedidoPorId(id_pedido);
 					session.removeAttribute("pedido");

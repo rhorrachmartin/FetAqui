@@ -52,7 +52,7 @@
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand logoNavegador" href="#">FET AQUÍ</a>
+			<a class="navbar-brand logoNavegador" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -125,10 +125,11 @@
 
 				<div class="col col-lg-12 m-5 text-center">
 					<h3>BUSCAR POR CATEGORÍAS</h3>
-					<form id="categorias" action="ObtenerTodosProductos" method="get">
+					<form id="categorias" action="ObtenerTodosProductos" method="post">
 						<select name="selectCategorias" id="selectCategorias"
 							class="browser-default custom-select">
 							<option value="<%=categoria.getId()%>"><%=categoria.getNombre()%></option>
+							<option value="todos">TODAS LAS CATEGORÍAS</option>
 							<%
 								for (Categoria ca : categorias) {
 							%>
@@ -157,10 +158,10 @@
 
 				<div class="col col-lg-12 m-5 text-center">
 					<h3>BUSCAR POR CATEGORÍAS</h3>
-					<form id="categorias" action="ObtenerTodosProductos" method="get">
+					<form id="categorias" action="ObtenerTodosProductos" method="post">
 						<select name="selectCategorias" id="selectCategorias"
 							class="browser-default custom-select">
-							<option selected>ELIJA UNA CATEGORÍA</option>
+							<option value="todos">TODAS LAS CATEGORÍAS</option>
 							<%
 								for (Categoria ca : categorias) {
 							%>
@@ -250,7 +251,7 @@
 						<div class="row">
 
 							<div class="col col-lg-6">
-								<form action="PaginaVendedor" method="get">
+								<form action="PaginaVendedor" method="post">
 									<input type="hidden" name="id_vendedor"
 										value="<%=pro.getId_vendedor()%>">
 									<button type="submit" class="btn btn-light-blue btn-md">
@@ -259,7 +260,7 @@
 							</div>
 
 							<div class="col col-lg-6">
-								<form action="PaginaProducto" method="get">
+								<form action="PaginaProducto" method="post">
 									<input type="hidden" name="id_vendedor"
 										value="<%=pro.getId_vendedor()%>"> <input
 										type="hidden" name="id_producto" value="<%=pro.getId()%>">

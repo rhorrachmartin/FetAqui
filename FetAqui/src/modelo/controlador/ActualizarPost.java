@@ -60,7 +60,11 @@ public class ActualizarPost extends HttpServlet {
 	static final String PAGINA_PROPIA_VENDEDOR = "/PaginaPropiaVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		// Creamos el RequestDispatcher
@@ -75,14 +79,13 @@ public class ActualizarPost extends HttpServlet {
 		if (session != null && vendedor.getNombre() != null) {
 
 			String post = request.getParameter("post");
-			
-			
+
 			post.replace("\n", "").replace("\t", "").replace("\r", "").replace(" ", "");
-			
+
 			Integer id_post = Integer.valueOf(request.getParameter("idPost"));
-			
+
 			Post p = new Post();
-			
+
 			p.setId(id_post);
 			p.setTexto(post);
 			p.setAutor(vendedor.getId_vendedor());
@@ -121,15 +124,6 @@ public class ActualizarPost extends HttpServlet {
 		} else {
 			response.sendRedirect("Principal");
 		}
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 
 	}
 

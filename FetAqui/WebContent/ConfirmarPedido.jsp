@@ -73,7 +73,7 @@
 	%>
 	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -252,20 +252,12 @@
 					<hr>
 
 					<div class="row">
-
-						<div class="col col-lg-12">
-
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="reembolso"> <label class="custom-control-label"
-									for="reembolso">Contrareembolso</label>
-							</div>
-						</div>
-
-
-
-						<div class="col col-lg-12">
+						<div class="col col-lg-12 text-center">
 							<form action="ConfirmarPedido" method="post">
+
+								<input type="checkbox" class="custom-control-input"
+									id="reembolso" required><br> <label
+									class="custom-control-label" for="reembolso">Contrareembolso</label><br>
 								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
 								<input type="hidden" name="id_pedido"
 									value="<%=pDetallado.get(0).getId_pedido()%>">

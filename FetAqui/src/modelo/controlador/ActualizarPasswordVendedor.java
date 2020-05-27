@@ -45,16 +45,6 @@ public class ActualizarPasswordVendedor extends HttpServlet {
 	static final String PERFIL_VENDEDOR_JSP = "/PerfilVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-		HttpSession session = request.getSession(false);
-
-		if (session == null) {
-			response.sendRedirect("Principal");
-		}
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -72,6 +62,7 @@ public class ActualizarPasswordVendedor extends HttpServlet {
 		String passNuevo1 = request.getParameter("passNuevo1");
 		String passNuevo2 = request.getParameter("passNuevo2");
 		ArrayList<Poblacion> poblaciones = null;
+		
 		try {
 
 			if (vendedor.getNombre() != null) {

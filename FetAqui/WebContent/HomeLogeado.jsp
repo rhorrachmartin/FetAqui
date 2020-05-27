@@ -88,7 +88,7 @@
 	%>
 	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand logoNavegador" href="#">FET AQUÍ</a>
+			<a class="navbar-brand logoNavegador" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -113,15 +113,15 @@
 					<%
 						if (cliente.getFoto().equals("FotoPorDefecto")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="img/user.png" class="rounded-circle z-depth-0"
-							alt="avatar image" height="35">
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="Principal"> <img src="img/user.png"
+							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
-							<img src="Imagenes/<%=cliente.getFoto()%>"
+					<li class="nav-item avatar"><a class="nav-link p-0"
+						href="Principal"> <img src="Imagenes/<%=cliente.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
 					<%
@@ -152,7 +152,7 @@
 							<!-- Card -->
 							<div
 								class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4">
-								<div class="row ">
+								<div class="row mt-2">
 									<!--Card image-->
 									<div class="col col-lg-12 view overlay zoom ">
 										<%
@@ -180,10 +180,12 @@
 									<!--Title-->
 									<div class="col col-lg-12">
 										<h4 class="card-title"><%=pro.getNombre()%></h4>
+										<hr>
+										<h4 class="card-title"><%=pro.getPrecio()%>€/<%=pro.getFormato()%></h4>
 									</div>
 
-									<div class="col col-lg-12">
-										<form action="PaginaVendedor" method="get">
+									<div class="col col-lg-6">
+										<form action="PaginaVendedor" method="post">
 											<input type="hidden" name="id_vendedor"
 												value="<%=pro.getId_vendedor()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
@@ -192,45 +194,20 @@
 										</form>
 									</div>
 
-									<div class="col col-lg-12">
-										<form action="PaginaProducto" method="get">
-										<input type="hidden" name="id_vendedor"
-												value="<%=pro.getId_vendedor()%>">
-											<input type="hidden" name="id_producto"
-												value="<%=pro.getId()%>">
+									<div class="col col-lg-6">
+										<form action="PaginaProducto" method="post">
+											<input type="hidden" name="id_vendedor"
+												value="<%=pro.getId_vendedor()%>"> <input
+												type="hidden" name="id_producto" value="<%=pro.getId()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
 												<i class="fas fa-eye"></i>
 											</button>
 										</form>
 									</div>
-									<div class="col col-lg-12">
-										<div class="cantidad">
-											<form action="InsertarPedido" method="post">
 
-												<button class="plus-boton" type="button" name="button">
-													<img src="img/plus.svg" alt="" />
-												</button>
-												<input type="text" id="unidades<%=pro.getId()%>"
-													class="unidades" name="cantidad" value="1">
-												<button class="minus-boton" type="button" name="button">
-													<img src="img/minus.svg" alt="" />
-												</button>
 
-												<input type="hidden" name="paginaPrincipal" value="1">
-
-												<input type="hidden" name="id_producto"
-													value="<%=pro.getId()%>"> <input type="hidden"
-													name="precio" value="<%=pro.getPrecio()%>">
-												<button type="submit" class="btn btn-light-blue btn-md">
-													<i class="fas fa-cart-plus"></i>
-												</button>
-											</form>
-										</div>
-									</div>
-
-									<label>Valoración: <%=pro.getValoracion()%></label>
-
-									<div class="col col-lg-12 mb-2">
+									<div class="col col-lg-12 mt-4 mb-2">
+										<label>Valoración: <%=pro.getValoracion()%></label>
 										<form action="ValorarProducto" method="post"
 											class="valorarProducto">
 											<input type="hidden" name="id_producto"
@@ -331,7 +308,7 @@
 							<!-- Card -->
 							<div
 								class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4">
-								<div class="row">
+								<div class="row mt-2">
 									<!--Card image-->
 									<div class="col col-lg-12 view overlay zoom ">
 										<%
@@ -358,12 +335,13 @@
 
 									<!--Title-->
 									<div class="col col-lg-12">
-										<h4 class="card-title"><%=ven.getNombre()%></h4>
+										<h4 class="card-title nombreVendedorInicio"><%=ven.getNombre()%></h4>
 									</div>
 
-									<label>Valoración: <%=ven.getValoracion()%></label>
+
 
 									<div class="col col-lg-12 mb-2">
+										<label>Valoración: <%=ven.getValoracion()%></label>
 										<form action="ValorarVendedor" method="post"
 											class="valorarVendedor">
 											<input type="hidden" name="id_vendedor"
@@ -390,7 +368,7 @@
 									</div>
 
 									<div class="col col-lg-12 colSinPading">
-										<form action="PaginaVendedor" method="get">
+										<form action="PaginaVendedor" method="post">
 											<input type="hidden" name="id_vendedor"
 												value="<%=ven.getId_vendedor()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">
@@ -442,6 +420,6 @@
 
 	</footer>
 	<!-- Footer -->
-	<script src="js/cantidadesCarro.js"></script>
+	
 </body>
 </html>

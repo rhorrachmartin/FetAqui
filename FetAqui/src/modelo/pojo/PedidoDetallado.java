@@ -17,6 +17,9 @@ public class PedidoDetallado {
 	String producto;
 	Integer id_vendedor;
 	Integer id_cliente;
+	Integer telf_cliente;
+	String email_cliente;
+	String email_vendedor;
 	String estado;
 	String vendedor;
 	String foto;
@@ -155,14 +158,31 @@ public class PedidoDetallado {
 		this.vendedor = vendedor;
 	}
 
-	@Override
-	public String toString() {
-		return "PedidoDetallado [id_pedido=" + id_pedido + ", fecha_pedido=" + fecha_pedido + ", fecha_entrega="
-				+ fecha_entrega + ", precio_unidad=" + precio_unidad + ", cantidad=" + cantidad + ", precio_final="
-				+ precio_final + ", cliente=" + cliente + ", poblacion=" + poblacion + ", direccion=" + direccion
-				+ ", producto=" + producto + ", id_vendedor=" + id_vendedor + ", estado=" + estado + ", vendedor="
-				+ vendedor + "]";
+	public String getEmail_cliente() {
+		return email_cliente;
 	}
+
+	public void setEmail_cliente(String email_cliente) {
+		this.email_cliente = email_cliente;
+	}
+
+	public String getEmail_vendedor() {
+		return email_vendedor;
+	}
+
+	public void setEmail_vendedor(String email_vendedor) {
+		this.email_vendedor = email_vendedor;
+	}
+
+	public Integer getTelf_cliente() {
+		return telf_cliente;
+	}
+
+	public void setTelf_cliente(Integer telf_cliente) {
+		this.telf_cliente = telf_cliente;
+	}
+
+	
 	
 	
 

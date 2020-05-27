@@ -83,7 +83,7 @@
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -102,7 +102,7 @@
 						href="PaginaPropioVendedor">MI PÁGINA</a></li>
 					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm"
+					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
 						href="Logout">SALIR</a></li>
 					<%
 						if (v.getFoto().equals("FotoPorDefecto")) {
@@ -220,7 +220,7 @@
 
 							<div class="col col-lg-12 m-5 text-center">
 								<h3>BUSCAR POR CATEGORÍAS</h3>
-								<form id="categorias" action="PaginaVendedor" method="get">
+								<form id="categorias" action="PaginaVendedor" method="post">
 									<input type="hidden" name="id_vendedor"
 										value="<%=vendedor.getId_vendedor()%>"> <select
 										name="selectCategorias" id="selectCategorias"
@@ -256,7 +256,7 @@
 
 							<div class="col col-lg-12 m-5 text-center">
 								<h3>BUSCAR POR CATEGORÍAS</h3>
-								<form id="categorias" action="PaginaVendedor" method="get">
+								<form id="categorias" action="PaginaVendedor" method="post">
 									<input type="hidden" name="id_vendedor"
 										value="<%=vendedor.getId_vendedor()%>"> <select
 										name="selectCategorias" id="selectCategorias"

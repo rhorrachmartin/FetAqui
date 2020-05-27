@@ -207,7 +207,7 @@
 	
 	<select id="getProductoPorId" parameterType="int" resultType="Producto">
 		select 
-			producto.id_producto, 
+			producto.id_producto as id, 
 			producto.nombre,
 			producto.descripcion,
 			producto.foto,

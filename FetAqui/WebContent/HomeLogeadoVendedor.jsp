@@ -80,7 +80,7 @@
 	%>
 	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -175,7 +175,7 @@
 									</div>
 
 									<div class="col col-lg-12 colSinPading">
-										<form action="PaginaProducto" method="get">
+										<form action="PaginaProducto" method="post">
 											<input type="hidden" name="id_vendedor"
 												value="<%=pro.getId_vendedor()%>"> <input
 												type="hidden" name="id_producto" value="<%=pro.getId()%>">
@@ -205,7 +205,7 @@
 							<%
 								for (Post post : posts) {
 							%>
-							<div class="sombraProductoInicio col col-lg-12 mb-4">
+							<div class="sombraProductoInicio col col-lg-12 mx-auto mb-4">
 								<strong><%=post.getNombre_autor()%></strong>
 								<p><%=post.getTexto()%></p>
 								<label>Valoración: <%=post.getValoracion()%></label>
@@ -235,7 +235,7 @@
 
 							<!-- Card -->
 							<div
-								class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4">
+								class="sombraProductoInicio col col-xs-12 col-sm-12 col-md-6 col-lg-4 mb-4 mx-auto">
 								<div class="row">
 									<!--Card image-->
 									<div class="col col-lg-12 view overlay zoom ">
@@ -262,12 +262,12 @@
 								<div class="row">
 
 									<!--Title-->
-									<div class="col col-lg-12">
+									<div class="col col-lg-12 nombreVendedorInicio">
 										<h4 class="card-title"><%=ven.getNombre()%></h4>
 									</div>
 
 									<div class="col col-lg-12 colSinPading">
-										<form action="PaginaVendedor" method="get">
+										<form action="PaginaVendedor" method="post">
 											<input type="hidden" name="id_vendedor"
 												value="<%=ven.getId_vendedor()%>">
 											<button type="submit" class="btn btn-light-blue btn-md">

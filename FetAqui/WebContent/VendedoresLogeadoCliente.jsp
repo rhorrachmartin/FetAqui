@@ -143,7 +143,7 @@
 
 				<div class="col col-lg-12 m-5 text-center">
 					<h3>BUSCAR POR POBLACIÓN</h3>
-					<form id="poblaciones" action="ObtenerTodosVendedores" method="get">
+					<form id="poblaciones" action="ObtenerTodosVendedores" method="post">
 						<select name="selectPoblacion" id="selectPoblacion"
 							class="browser-default custom-select">
 							<option value="<%=poblacion.getId()%>"><%=poblacion.getNombre()%></option>
@@ -175,7 +175,7 @@
 
 				<div class="col col-lg-12 m-5 text-center">
 					<h3>BUSCAR POR POBLACIONES</h3>
-					<form id="poblaciones" action="ObtenerTodosVendedores" method="get">
+					<form id="poblaciones" action="ObtenerTodosVendedores" method="post">
 						<select name="selectPoblacion" id="selectPoblacion"
 							class="browser-default custom-select">
 							<option value="todos">TODAS LAS POBLACIONES</option>
@@ -288,7 +288,7 @@
 									</div>
 
 							<div class="col col-lg-12">
-								<form action="PaginaVendedor" method="get">
+								<form action="PaginaVendedor" method="post">
 									<input type="hidden" name="id_vendedor"
 										value="<%=ve.getId_vendedor()%>">
 									<button type="submit" class="btn btn-light-blue btn-md">

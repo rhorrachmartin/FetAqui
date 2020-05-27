@@ -73,7 +73,6 @@ public class ValorarProducto extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 		
-		System.out.println(request.getParameter("valoracion") +", producto: " + request.getParameter("id_producto") +", cliente: " + request.getParameter("id_cliente"));
 		
 		if(session.getAttribute("cliente") != null) {
 			

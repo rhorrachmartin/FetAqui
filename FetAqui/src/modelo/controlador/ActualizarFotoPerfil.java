@@ -51,22 +51,6 @@ public class ActualizarFotoPerfil extends HttpServlet {
 
 	static final String PERFIL_CLIENTE_JSP = "/PerfilCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-	/**
-	 * cambiamos carpeta y repositorio
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-		HttpSession session = request.getSession(false);
-
-		try {
-			if (session == null) {
-				response.sendRedirect("Principal");
-			}
-		} catch (Exception e) {
-			e.getMessage();
-		}
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

@@ -24,6 +24,10 @@
 	font-size: 4em;
 }
 
+.nombreVendedorInicio{
+	min-height: 70px;
+}
+
 .quienesSomos {
 	font-family: 'Permanent Marker', cursive !important;
 }
@@ -31,11 +35,13 @@
 .bajoquienesSomos {
 	font-family: 'Amatic SC', cursive !important;
 	font-size: 2em;
+	text-shadow: 3px 5px 4px rgba(0,0,0,0.48);
 }
 
 .bajoLogo {
 	font-family: 'Amatic SC', cursive !important;
 	font-size: 2em;
+	text-shadow: 3px 5px 4px rgba(0,0,0,0.48);
 }
 
 .imagenRazon {
@@ -188,10 +194,18 @@ label {
 	width: 500px;
 }
 
+
+
 #lateral {
-	-webkit-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
-	-moz-box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
-	box-shadow: 3px 0px 15px 0px rgba(0, 0, 0, 0.75) !important;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	min-height: 90vh;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
 }
 
 #lateral2 {

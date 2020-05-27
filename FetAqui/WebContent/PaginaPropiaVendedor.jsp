@@ -84,7 +84,7 @@
 
 		<!-- NAVEGADOR -->
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -131,7 +131,7 @@
 		<!-- FIN NAVEGADOR -->
 
 		<!-- CONTENEDOR PRINCIPAL -->
-		<div class="container-fluid">
+		<div class="container-fluid mt-3">
 
 			<div class="row">
 
@@ -225,7 +225,7 @@
 
 
 
-								<form id="categorias" action="PaginaPropioVendedor" method="get">
+								<form id="categorias" action="PaginaPropioVendedor" method="post">
 									<input type="hidden" name="id_vendedor"
 										value="<%=vendedor.getId_vendedor()%>"> <select
 										name="selectCategorias" id="selectCategorias"
@@ -259,7 +259,7 @@
 
 							<div class="col col-lg-12 m-5 text-center">
 								<h3>BUSCAR POR CATEGORÍAS</h3>
-								<form id="categorias" action="PaginaPropioVendedor" method="get">
+								<form id="categorias" action="PaginaPropioVendedor" method="post">
 									<input type="hidden" name="id_vendedor"
 										value="<%=vendedor.getId_vendedor()%>"> <select
 										name="selectCategorias" id="selectCategorias"
@@ -380,7 +380,7 @@
 						<h5>PUBLICA UNA NOTICIA</h5>
 						<hr>
 						<div class="form-group shadow-textarea text-center">
-							<form action="PublicarNoticia" method="get" id="formNoticia">
+							<form action="PublicarNoticia" method="post" id="formNoticia">
 								<textarea name="post" class="form-control z-depth-1"
 									id="exampleFormControlTextarea6" rows="5" cols="25"
 									maxlength="200" placeholder="Escriba aquí" form="formNoticia"></textarea>
@@ -436,7 +436,7 @@
 										</button>
 									</div>
 									<div class="modal-body mx-3">
-										<form action="ActualizarPost" method="get">
+										<form action="ActualizarPost" method="post">
 											<input type="hidden" name="idPost" value="<%=pos.getId()%>">
 
 

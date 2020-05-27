@@ -36,6 +36,8 @@
 		<result property='cantidad' column='cantidad' />
 		<result property='precio_final' column='precio_final' />
 		<result property='cliente' column='cliente' />
+		<result property='email_cliente' column='email_cliente' />
+		<result property='telf_cliente' column='telf_cliente' />
 		<result property='poblacion' column='poblacion' />
 		<result property='direccion' column='direccion' />
 		<result property='producto' column='producto' />
@@ -58,6 +60,8 @@
 		concat(cliente.nombre, ' ' ,cliente.apellido) as cliente,
 		poblacion.nombre as poblacion,
 		direccion.direccion,
+		cliente.email as email_cliente,
+		cliente.telefono as telf_cliente,
 		producto.nombre as producto,
 		producto.foto as foto,
 		vendedor.nombre as vendedor,
@@ -97,6 +101,9 @@
 		<result property='producto' column='producto' />
 		<result property='vendedor' column='vendedor' />
 		<result property='id_vendedor' column='id_vendedor' />
+		<result property='email_cliente' column='email_cliente' />
+		<result property='telf_cliente' column='telf_cliente' />
+		<result property='email_vendedor' column='email_vendedor' />
 		<result property='estado' column='estado' />
 	</resultMap>
 
@@ -113,12 +120,15 @@
 		sum(cantidad) as cantidad,
 		precio_unidad * sum(cantidad) as precio_final,
 		concat(cliente.nombre, ' ' ,cliente.apellido) as cliente,
+		cliente.telefono as telf_cliente,
 		poblacion.nombre as poblacion,
 		direccion.direccion,
 		producto.nombre as producto,
 		producto.foto as foto,
 		vendedor.nombre as vendedor,
 		vendedor.id_vendedor as id_vendedor,
+		vendedor.email as email_vendedor,
+		cliente.email as email_cliente,
 		pedido.estado
 		from pedido
 		inner join detalle_pedido
@@ -147,7 +157,7 @@
 	<select id="getVendedoresPorPedido"
 		resultMap="getVendedoresPorPedido" parameterType='int'>
 
-		select distinct vendedor.id_vendedor
+		select distinct vendedor.id_vendedor, vendedor.email
             from vendedor
         inner join producto
             on producto.vendedor = vendedor.id_vendedor

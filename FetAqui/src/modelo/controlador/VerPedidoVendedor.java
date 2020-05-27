@@ -104,7 +104,7 @@ public class VerPedidoVendedor extends HttpServlet {
 
 				if (pedidoEJB.getPedidoDetalladoPorId(id_pedido) != null) {
 
-					ArrayList<PedidoDetallado> pDetallado = pedidoEJB.getPedidoDetalladoPorId(id_pedido);
+					ArrayList<PedidoDetallado> pDetallado = pedidoEJB.getPedidoDetalladoPorIdVendedorYpedido(v.getId_vendedor(), id_pedido);
 
 					if (pDetallado.size() == 0) {
 						String error = "No existen datos para este pedido";

@@ -91,7 +91,6 @@ public class MailOfficeEJB {
 	 */
 	public void sendMail2(String para, String remitente, String asunto, String mensaje) {
 		
-		System.out.println("entro");
 		Properties prop = new Properties();
 		// Creamos un objeto de oficina de correos
 		prop.put("mail.smtp.auth", true);
@@ -114,7 +113,7 @@ public class MailOfficeEJB {
 			message.setSubject(asunto);
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
-			mimeBodyPart.setContent(mensaje, "text/html");
+			mimeBodyPart.setContent(mensaje, "text/html; charset=utf-8");
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);

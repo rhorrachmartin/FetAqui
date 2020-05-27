@@ -74,7 +74,7 @@
 	%>
 	<div id="container">
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
-			<a class="navbar-brand" href="#">FET AQUÍ</a>
+			<a class="navbar-brand" href="Principal">FET AQUÍ</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -123,7 +123,7 @@
 			<div class="row divPedido">
 
 				<div class="col col-lg-12 text-center">
-					<h3>SU PEDIDO</h3>
+					<h3>Pedido Nº <%=pDetallado.get(0).getId_pedido() %></h3>
 				</div>
 
 				<hr>
@@ -143,6 +143,19 @@
 				<div class="col col-lg-12">
 
 					<div class="row">
+
+						<div class="col col-lg-12">
+							<p>
+								<strong>Cliente: </strong><%=pDetallado.get(0).getCliente()%>
+							</p>
+						</div>
+						
+						<div class="col col-lg-12">
+							<p>
+								<strong>Contacto del cliente: </strong><%=pDetallado.get(0).getTelf_cliente()%>
+							</p>
+						</div>
+						
 						<div class="col col-lg-12">
 							<p>
 								<strong>Dirección: </strong><%=pDetallado.get(0).getDireccion()%>
@@ -156,12 +169,6 @@
 						<div class="col col-lg-12">
 							<p>
 								<strong>Fecha de entrega: </strong><%=pDetallado.get(0).getFecha_entrega()%>
-							</p>
-						</div>
-
-						<div class="col col-lg-12">
-							<p>
-								<strong>Estado: </strong><%=pDetallado.get(0).getEstado()%>
 							</p>
 						</div>
 					</div>
@@ -248,30 +255,6 @@
 							<%
 								}
 							%>
-						</div>
-
-						<div class="col col-lg-12 text-center">
-
-							<%
-								if (pDetallado.get(0).getEstado().equals("pendiente")) {
-							%>
-							<form action="Anularedido" method="post">
-								<input type="hidden" name="totalPedido" value="<%=totalPedido%>">
-								<input type="hidden" name="id_pedido"
-									value="<%=pDetallado.get(0).getId_pedido()%>">
-								<button type="submit" class="btn btn-light-blue btn-md">
-									<a>ANULAR PEDIDO</a>
-							</form>
-
-
-							<%
-								} else {
-							%>
-							<h2>PEDIDO CONFIRMADO</h2>
-							<%
-								}
-							%>
-
 						</div>
 						<%
 							}

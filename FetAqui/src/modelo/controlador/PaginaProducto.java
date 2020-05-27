@@ -54,9 +54,87 @@ public class PaginaProducto extends HttpServlet {
 	static final String PRODUCTO_LOGEADO_VENDEDOR_JSP = "/ProductoLogeadoVendedor.jsp";
 	static final String PRODUCTO_LOGEADO_CLIENTE_JSP = "/ProductoLogeadoCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType(CONTENT_TYPE);
+		// Creamos el RequestDispatcher
+		RequestDispatcher rs = getServletContext().getRequestDispatcher(PRODUCTO_NO_LOGEADO_JSP);
+
+		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
+		HttpSession session = request.getSession(false);
+
+		// Intentamos obtener el usuario de la sesión
+		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
+		Cliente c = sesionClienteEJB.clienteLogeado(session);
+
+		request.setAttribute("v", v);
+		request.setAttribute("c", c);
+
+		if (v != null || c != null) {
+
+			if (c != null) {
+				rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_CLIENTE_JSP);
+
+				try {
+					
+					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+					
+					Producto producto = productoEJB.getProductoPorId(id_producto);
+					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("producto", producto);
+
+					rs.forward(request, response);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			} else {
+				rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_VENDEDOR_JSP);
+				try {
+					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+
+					Producto producto = productoEJB.getProductoPorId(id_producto);
+					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("producto", producto);
+
+					rs.forward(request, response);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+		} else {
+			rs = getServletContext().getRequestDispatcher(PRODUCTO_NO_LOGEADO_JSP);
+
+			try {
+				Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+				Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+
+				Producto producto = productoEJB.getProductoPorId(id_producto);
+				Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+
+				request.setAttribute("vendedor", vendedor);
+				request.setAttribute("producto", producto);
+
+				rs.forward(request, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType(CONTENT_TYPE);
 		// Creamos el RequestDispatcher
@@ -80,8 +158,6 @@ public class PaginaProducto extends HttpServlet {
 				try {
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
-					
-					
 
 					Producto producto = productoEJB.getProductoPorId(id_producto);
 					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
@@ -133,7 +209,6 @@ public class PaginaProducto extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 }

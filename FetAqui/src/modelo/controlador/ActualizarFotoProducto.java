@@ -70,6 +70,7 @@ public class ActualizarFotoProducto extends HttpServlet {
 		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 
 		if (session != null && vendedor.getNombre() != null) {
+			
 			ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 			ArrayList<Formato> formatos = formatoEJB.getFormatos();
 

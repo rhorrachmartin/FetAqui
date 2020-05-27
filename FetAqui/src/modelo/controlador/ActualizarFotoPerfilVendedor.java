@@ -51,20 +51,6 @@ public class ActualizarFotoPerfilVendedor extends HttpServlet {
 	static final String PERFIL_VENDEDOR_JSP = "/PerfilVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType(CONTENT_TYPE);
-		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-		HttpSession session = request.getSession(false);
-
-		try {
-			if (session == null) {
-				response.sendRedirect("Principal");
-			}
-		} catch (Exception e) {
-			e.getMessage();
-		}
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -86,7 +72,6 @@ public class ActualizarFotoPerfilVendedor extends HttpServlet {
 
 		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 		Vendedor vendedorExiste = null;
-		String password = request.getParameter("password");
 		ArrayList<Poblacion> poblaciones = null;
 
 		if (vendedor.getNombre() != null) {

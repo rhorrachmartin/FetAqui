@@ -55,7 +55,6 @@ public class ImagenesEJB2 {
 		Part part = parts.get(0);
 		fileName = getFileName(part);
 		
-		System.out.println(fileName);
 		parts.get(0).write(uploadPath + File.separator + fileName);
 		
 //		for (Part part : request.getParts()) {
@@ -65,7 +64,6 @@ public class ImagenesEJB2 {
 //			part.write(uploadPath + File.separator + fileName);
 //		}
 		
-		System.out.println("imagenesEJB: " + fileName);
 		//Devolvemos el nombre de la imagen
 		return fileName;
 		

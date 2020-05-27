@@ -3,7 +3,6 @@ package modelo.controlador;
 import java.io.IOException;
 import java.sql.Timestamp;
 
-
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,12 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import modelo.ejb.DetallesPedidoEJB;
 import modelo.ejb.PedidoEJB;
+import modelo.ejb.ProductoEJB;
 import modelo.ejb.SesionClienteEJB;
 import modelo.ejb.VendedorEJB;
 import modelo.pojo.Cliente;
 import modelo.pojo.DetallePedido;
 import modelo.pojo.Pedido;
-import modelo.pojo.Vendedor;
+import modelo.pojo.Producto;
 
 /**
  * Servlet implementation class Carrito
@@ -32,6 +32,9 @@ public class InsertarPedido extends HttpServlet {
 
 	@EJB
 	PedidoEJB pedidoEJB;
+	
+	@EJB
+	ProductoEJB productoEJB;
 
 	@EJB
 	DetallesPedidoEJB detallePedidoEJB;
@@ -77,6 +80,8 @@ public class InsertarPedido extends HttpServlet {
 					session.setAttribute("pedido", pedido);
 
 					Integer id_pedido = pedido.getId();
+					
+					
 
 					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
 
@@ -104,7 +109,15 @@ public class InsertarPedido extends HttpServlet {
 						response.sendRedirect("PaginaVendedor?id_vendedor=" + id_vendedor);
 
 					} else if (request.getParameter("paginaPrincipal") != null) {
+						
 						response.sendRedirect("Principal");
+						
+					}else if(request.getParameter("paginaProducto") != null) {
+						
+						Producto producto = productoEJB.getProductoPorId(id_producto);
+						
+						response.sendRedirect("PaginaProducto?id_producto=" + id_producto +"&id_vendedor="+producto.getId_vendedor());
+						
 					} else {
 
 						response.sendRedirect("ObtenerTodosProductos");
@@ -148,6 +161,12 @@ public class InsertarPedido extends HttpServlet {
 					response.sendRedirect("PaginaVendedor?id_vendedor=" + id_vendedor);
 				} else if (request.getParameter("paginaPrincipal") != null) {
 					response.sendRedirect("Principal");
+				}else if(request.getParameter("paginaProducto") != null) {
+					
+					Producto producto = productoEJB.getProductoPorId(id_producto);
+					
+					response.sendRedirect("PaginaProducto?id_producto=" + id_producto +"&id_vendedor="+producto.getId_vendedor());
+					
 				} else {
 
 					response.sendRedirect("ObtenerTodosProductos");
