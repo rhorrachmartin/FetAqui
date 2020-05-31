@@ -43,7 +43,11 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 <script src="js/validarPassword.js"></script>
+
 </head>
 <body>
 
@@ -78,23 +82,25 @@
 						href="ObtenerTodosVendedores">Vendedores</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
-						href="Cesta"><i class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador" href="Cesta"><i
+							class="fas fa-shopping-basket"></i> CESTA (<%=numProductos%>)</a></li>
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfil.jsp">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
-						href="Logout">SALIR</a></li>
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador" href="Logout">SALIR</a></li>
 					<%
 						if (cliente.getFoto().equals("FotoPorDefecto")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
 							alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="Imagenes/<%=cliente.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
@@ -137,6 +143,8 @@
 				<li class="list-inline-item"><a href="Login"
 					class="btn btn-outline-white btn-rounded" data-toggle="modal"
 					data-target="#modalRegistro">Darse de alta</a></li>
+				<li><a id="baja" class="btn btn-danger btn-sm">DARME DE
+						BAJA</a></li>
 			</ul>
 			<!-- Call to action -->
 
@@ -151,6 +159,52 @@
 
 	</footer>
 	<!-- Footer -->
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#baja')
+									.on(
+											'click',
+											function() {
+												bootbox
+														.confirm({
+															message : "¿Seguro que desea darse de baja?",
+															buttons : {
+																confirm : {
+																	label : 'Sí',
+																	className : 'btn-success'
+																},
+																cancel : {
+																	label : 'No',
+																	className : 'btn-danger'
+																}
+															},
+															callback : function(
+																	result) {
+																if (result) {
+																	var url = "BajaCliente";
+																	window.location.href = url;
+
+																} else {
+																	bootbox
+																			.alert({
+																				message : "Gracias por seguir confiando en nosotros!"
+																			});
+																}
+															}
+														});
+											});
+						});
+	</script>
 
 </body>
 </html>

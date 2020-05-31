@@ -115,14 +115,14 @@
 					<%
 						if (c.getFoto().equals("FotoPorDefecto")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
 							alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="Imagenes/<%=c.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
@@ -135,7 +135,7 @@
 		<!-- FIN NAVEGADOR -->
 
 		<!-- CONTENEDOR PRINCIPAL -->
-		<div class="container-fluid">
+		<div class="container-fluid mt-3">
 
 			<div class="row">
 

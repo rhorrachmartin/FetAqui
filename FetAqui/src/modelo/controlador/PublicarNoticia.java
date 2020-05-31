@@ -30,7 +30,10 @@ import modelo.pojo.ValoracionPost;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class PublicarNoticia
+ * Clase encargada de insertar y publicar una noticia de un Vendedor
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/PublicarNoticia")
 public class PublicarNoticia extends HttpServlet {
@@ -53,9 +56,7 @@ public class PublicarNoticia extends HttpServlet {
 
 	@EJB
 	ValoracionPostEJB valoracionPostEJB;
-	/**
-	 * EJB para trabajar con los logger
-	 */
+
 	@EJB
 	LoggersEJB logger;
 
@@ -65,10 +66,6 @@ public class PublicarNoticia extends HttpServlet {
 	static final String PAGINA_PROPIA_VENDEDOR = "/PaginaPropiaVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -79,59 +76,63 @@ public class PublicarNoticia extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+		try {
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 
-		if (session != null && vendedor.getNombre() != null) {
+			if (session != null && vendedor.getNombre() != null) {
 
-			String post = request.getParameter("post");
+				String post = request.getParameter("post");
 
-			post.replace("\n", "").replace("\t", "").replace("\r", "").replace(" ", "");
+				post.replace("\n", "").replace("\t", "").replace("\r", "").replace(" ", "");
 
-			Post p = new Post();
+				Post p = new Post();
 
-			p.setTexto(post);
-			p.setAutor(vendedor.getId_vendedor());
+				p.setTexto(post);
+				p.setAutor(vendedor.getId_vendedor());
 
-			if (StringUtils.isNotBlank(p.getTexto())) {
+				if (StringUtils.isNotBlank(p.getTexto())) {
 
-				postEJB.insertarPost(p);
-				ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-				ArrayList<Formato> formatos = formatoEJB.getFormatos();
-				ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
+					postEJB.insertarPost(p);
+					ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
+					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+					ArrayList<Formato> formatos = formatoEJB.getFormatos();
+					ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
 
-				ValoracionPost valoracion = new ValoracionPost();
-				valoracion.setId_cliente(1);
-				valoracion.setId_post(p.getId());
-				valoracion.setValoracion(5);
+					ValoracionPost valoracion = new ValoracionPost();
+					valoracion.setId_cliente(1);
+					valoracion.setId_post(p.getId());
+					valoracion.setValoracion(5);
 
-				valoracionPostEJB.insertarValoracionPostPorDefecto(valoracion);
+					valoracionPostEJB.insertarValoracionPostPorDefecto(valoracion);
 
-				request.setAttribute("productos", productos);
-				request.setAttribute("posts", posts);
-				request.setAttribute("vendedor", vendedor);
-				request.setAttribute("categorias", categorias);
-				request.setAttribute("formatos", formatos);
+					request.setAttribute("productos", productos);
+					request.setAttribute("posts", posts);
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("categorias", categorias);
+					request.setAttribute("formatos", formatos);
 
-				rs.forward(request, response);
+					rs.forward(request, response);
+
+				} else {
+					ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
+					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+					ArrayList<Formato> formatos = formatoEJB.getFormatos();
+					ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
+
+					request.setAttribute("productos", productos);
+					request.setAttribute("posts", posts);
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("categorias", categorias);
+					request.setAttribute("formatos", formatos);
+
+					rs.forward(request, response);
+				}
 
 			} else {
-				ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-				ArrayList<Formato> formatos = formatoEJB.getFormatos();
-				ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
-
-				request.setAttribute("productos", productos);
-				request.setAttribute("posts", posts);
-				request.setAttribute("vendedor", vendedor);
-				request.setAttribute("categorias", categorias);
-				request.setAttribute("formatos", formatos);
-
-				rs.forward(request, response);
+				response.sendRedirect("Principal");
 			}
-
-		} else {
-			response.sendRedirect("Principal");
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

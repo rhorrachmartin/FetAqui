@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.ejb.DetallesPedidoEJB;
+import modelo.ejb.LoggersEJB;
 import modelo.ejb.PedidoEJB;
 import modelo.ejb.SesionClienteEJB;
 import modelo.pojo.Cliente;
@@ -22,7 +23,10 @@ import modelo.pojo.Pedido;
 import modelo.pojo.PedidoDetallado;
 
 /**
- * Servlet implementation class Carrito
+ * Controlador encargado de mostrar los productos de la cesta
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/Cesta")
 public class Cesta extends HttpServlet {
@@ -36,6 +40,9 @@ public class Cesta extends HttpServlet {
 	@EJB
 	DetallesPedidoEJB detallePedidoEJB;
 
+	@EJB
+	LoggersEJB logger;
+
 	private static final long serialVersionUID = 1L;
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String CESTA_JSP = "/Cesta.jsp";
@@ -48,43 +55,47 @@ public class Cesta extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		try {
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		if (c != null) {
+			if (c != null) {
 
-			request.setAttribute("cliente", c);
+				request.setAttribute("cliente", c);
 
-			if (session.getAttribute("pedido") != null) {
-				Pedido pedido = (Pedido) session.getAttribute("pedido");
+				if (session.getAttribute("pedido") != null) {
+					Pedido pedido = (Pedido) session.getAttribute("pedido");
 
-				ArrayList<PedidoDetallado> pedidoDetallado = pedidoEJB.getPedidoDetalladoPorId(pedido.getId());
+					ArrayList<PedidoDetallado> pedidoDetallado = pedidoEJB.getPedidoDetalladoPorId(pedido.getId());
 
-				if (pedidoDetallado.isEmpty()) {
-					String mensaje = "Cesta vacía";
-					
-					Integer numProductos = pedidoEJB.getNumeroProductos(pedido.getId());
+					if (pedidoDetallado.isEmpty()) {
+						String mensaje = "Cesta vacía";
 
-					session.setAttribute("numProductos", numProductos);
+						Integer numProductos = pedidoEJB.getNumeroProductos(pedido.getId());
+
+						session.setAttribute("numProductos", numProductos);
+
+						request.setAttribute("error", mensaje);
+
+						rs.forward(request, response);
+					} else {
+						request.setAttribute("pedidoDetallado", pedidoDetallado);
+
+						rs.forward(request, response);
+					}
+
+				} else {
+					String mensaje = "Sin artículos en la cesta";
 
 					request.setAttribute("error", mensaje);
-
-					rs.forward(request, response);
-				} else {
-					request.setAttribute("pedidoDetallado", pedidoDetallado);
-
+					session.removeAttribute("numProductos");
 					rs.forward(request, response);
 				}
 
 			} else {
-				String mensaje = "Sin artículos en la cesta";
-
-				request.setAttribute("error", mensaje);
-				session.removeAttribute("numProductos");
-				rs.forward(request, response);
+				response.sendRedirect("Principal");
 			}
-
-		} else {
-			response.sendRedirect("Principal");
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}
@@ -96,28 +107,62 @@ public class Cesta extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		try {
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		if (c != null) {
+			if (c != null) {
 
-			if (session.getAttribute("pedido") == null) {
+				if (session.getAttribute("pedido") == null) {
 
-				if (c.getDireccion() != null) {
-					Timestamp fecha_pedido = new Timestamp(System.currentTimeMillis());
-					Timestamp fecha_entrega = new Timestamp(System.currentTimeMillis());
-					Integer destino = c.getIdDireccion();
-					String estado = "pendiente";
-					Pedido pedido = new Pedido();
+					if (c.getDireccion() != null) {
+						Timestamp fecha_pedido = new Timestamp(System.currentTimeMillis());
+						Timestamp fecha_entrega = new Timestamp(System.currentTimeMillis());
+						Integer destino = c.getIdDireccion();
+						String estado = "pendiente";
+						Pedido pedido = new Pedido();
 
-					pedido.setFecha_pedido(fecha_pedido);
-					pedido.setFecha_entrega(fecha_entrega);
-					pedido.setCliente(c.getId_cliente());
-					pedido.setDestino(destino);
-					pedido.setEstado(estado);
+						pedido.setFecha_pedido(fecha_pedido);
+						pedido.setFecha_entrega(fecha_entrega);
+						pedido.setCliente(c.getId_cliente());
+						pedido.setDestino(destino);
+						pedido.setEstado(estado);
 
-					pedidoEJB.insertarPedido(pedido);
+						pedidoEJB.insertarPedido(pedido);
 
-					session.setAttribute("pedido", pedido);
+						session.setAttribute("pedido", pedido);
+
+						Integer id_pedido = pedido.getId();
+
+						Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+
+						Integer cantidad = Integer.valueOf(request.getParameter("cantidad"));
+
+						Double precio = Double.valueOf(request.getParameter("precio"));
+
+						DetallePedido detallePedido = new DetallePedido();
+
+						detallePedido.setPedido(id_pedido);
+						detallePedido.setProducto(id_producto);
+						detallePedido.setPrecioUnitario(precio);
+						detallePedido.setCantidad(cantidad);
+
+						detallePedidoEJB.insertarDetallePedido(detallePedido);
+
+						Integer numProductos = pedidoEJB.getNumeroProductos(id_pedido);
+
+						session.setAttribute("numProductos", numProductos);
+
+						response.sendRedirect("ObtenerTodosProductos");
+					} else {
+
+						String error = "Para realizar una compra actualice su perfil de usuario, su dirección es importante para poderle realizar el envío correctamente";
+
+						session.setAttribute("error", error);
+						response.sendRedirect("ObtenerTodosProductos");
+					}
+
+				} else {
+					Pedido pedido = (Pedido) session.getAttribute("pedido");
 
 					Integer id_pedido = pedido.getId();
 
@@ -141,43 +186,13 @@ public class Cesta extends HttpServlet {
 					session.setAttribute("numProductos", numProductos);
 
 					response.sendRedirect("ObtenerTodosProductos");
-				} else {
-
-					String error = "Para realizar una compra actualice su perfil de usuario, su dirección es importante para poderle realizar el envío correctamente";
-
-					session.setAttribute("error", error);
-					response.sendRedirect("ObtenerTodosProductos");
 				}
 
 			} else {
-				Pedido pedido = (Pedido) session.getAttribute("pedido");
-
-				Integer id_pedido = pedido.getId();
-
-				Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
-
-				Integer cantidad = Integer.valueOf(request.getParameter("cantidad"));
-
-				Double precio = Double.valueOf(request.getParameter("precio"));
-
-				DetallePedido detallePedido = new DetallePedido();
-
-				detallePedido.setPedido(id_pedido);
-				detallePedido.setProducto(id_producto);
-				detallePedido.setPrecioUnitario(precio);
-				detallePedido.setCantidad(cantidad);
-
-				detallePedidoEJB.insertarDetallePedido(detallePedido);
-
-				Integer numProductos = pedidoEJB.getNumeroProductos(id_pedido);
-
-				session.setAttribute("numProductos", numProductos);
-
-				response.sendRedirect("ObtenerTodosProductos");
+				response.sendRedirect("Principal");
 			}
-
-		} else {
-			response.sendRedirect("Principal");
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

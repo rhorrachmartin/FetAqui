@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.ejb.DetallesPedidoEJB;
+import modelo.ejb.LoggersEJB;
 import modelo.ejb.MailOfficeEJB;
 import modelo.ejb.PedidoEJB;
 import modelo.ejb.SesionClienteEJB;
@@ -24,7 +25,11 @@ import modelo.pojo.Vendedor;
 import vista.HtmlEmail;
 
 /**
- * Servlet implementation class Carrito
+ * Controlador encargado de obtener un pedido concreto y pasarlo a confirmado
+ * para enviar los datos del mismo a Cliente y Vendedor
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ConfirmarPedido")
 public class ConfirmarPedido extends HttpServlet {
@@ -44,6 +49,9 @@ public class ConfirmarPedido extends HttpServlet {
 	@EJB
 	MailOfficeEJB mailOfficeEJB;
 
+	@EJB
+	LoggersEJB logger;
+
 	private static final long serialVersionUID = 1L;
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String CONFIRMAR_PEDIDO_JSP = "/ConfirmarPedido.jsp";
@@ -56,46 +64,50 @@ public class ConfirmarPedido extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		try {
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		if (c != null) {
+			if (c != null) {
 
-			if (request.getParameter("id_pedido") != null) {
+				if (request.getParameter("id_pedido") != null) {
 
-				Integer id_pedido = Integer.valueOf(request.getParameter("id_pedido"));
+					Integer id_pedido = Integer.valueOf(request.getParameter("id_pedido"));
 
-				if (pedidoEJB.getPedidoDetalladoPorId(id_pedido) != null) {
+					if (pedidoEJB.getPedidoDetalladoPorId(id_pedido) != null) {
 
-					ArrayList<PedidoDetallado> pDetallado = pedidoEJB.getPedidoDetalladoPorId(id_pedido);
-					double total = Double.valueOf(request.getParameter("totalPedido"));
+						ArrayList<PedidoDetallado> pDetallado = pedidoEJB.getPedidoDetalladoPorId(id_pedido);
+						double total = Double.valueOf(request.getParameter("totalPedido"));
 
-					if (c.getDireccion() != null) {
+						if (c.getDireccion() != null) {
 
-						request.setAttribute("pedidoDetallado", pDetallado);
-						request.setAttribute("total", total);
-						rs.forward(request, response);
+							request.setAttribute("pedidoDetallado", pDetallado);
+							request.setAttribute("total", total);
+							rs.forward(request, response);
+
+						} else {
+
+							String error = "Para realizar una compra actualice su perfil de usuario";
+
+							session.setAttribute("error", error);
+							response.sendRedirect("ObtenerTodosProductos");
+						}
 
 					} else {
-
-						String error = "Para realizar una compra actualice su perfil de usuario";
+						String error = "No hay datos para este pedido.";
 
 						session.setAttribute("error", error);
 						response.sendRedirect("ObtenerTodosProductos");
 					}
 
 				} else {
-					String error = "No hay datos para este pedido.";
-
-					session.setAttribute("error", error);
 					response.sendRedirect("ObtenerTodosProductos");
 				}
 
 			} else {
-				response.sendRedirect("ObtenerTodosProductos");
+				response.sendRedirect("Principal");
 			}
-
-		} else {
-			response.sendRedirect("Principal");
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}
@@ -107,104 +119,109 @@ public class ConfirmarPedido extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		try {
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		if (c != null) {
+			if (c != null) {
 
-			if (session.getAttribute("pedido") != null) {
+				if (session.getAttribute("pedido") != null) {
 
-				if (c.getDireccion() != null) {
+					if (c.getDireccion() != null) {
 
-					Pedido pedido = (Pedido) session.getAttribute("pedido");
+						Pedido pedido = (Pedido) session.getAttribute("pedido");
 
-					Integer id_pedido = pedido.getId();
+						Integer id_pedido = pedido.getId();
 
-					ArrayList<Vendedor> vendedores = pedidoEJB.getVendedoresPorPedido(id_pedido);
+						ArrayList<Vendedor> vendedores = pedidoEJB.getVendedoresPorPedido(id_pedido);
 
-					for (Vendedor ve : vendedores) {
-						ArrayList<PedidoDetallado> pDetalladoVendedor = pedidoEJB
-								.getPedidoDetalladoPorIdVendedorYpedido(ve.getId_vendedor(), id_pedido);
+						for (Vendedor ve : vendedores) {
+							ArrayList<PedidoDetallado> pDetalladoVendedor = pedidoEJB
+									.getPedidoDetalladoPorIdVendedorYpedido(ve.getId_vendedor(), id_pedido);
 
-						HtmlEmail pedidoVendedores = new HtmlEmail();
+							HtmlEmail pedidoVendedores = new HtmlEmail();
 
-						String mensajeVendedor = pedidoVendedores.mailPedidoVendedor(pDetalladoVendedor);
+							String mensajeVendedor = pedidoVendedores.mailPedidoVendedor(pDetalladoVendedor);
 
-						mailOfficeEJB.sendMail2(ve.getEmail(), "fetaquimallorca@gmail.com",
-								"Nuevo pedido de fetaquimallorca.com", mensajeVendedor);
+							mailOfficeEJB.sendMail2(ve.getEmail(), "fetaquimallorca@gmail.com",
+									"Nuevo pedido de fetaquimallorca.com", mensajeVendedor);
 
-						pedidoEJB.updatePedidoAconfirmado(id_pedido);
+							pedidoEJB.updatePedidoAconfirmado(id_pedido);
 
+						}
+
+						ArrayList<PedidoDetallado> pedidoDetalladoCliente = pedidoEJB
+								.getPedidoDetalladoPorId(pedido.getId());
+
+						HtmlEmail pedidoCliente = new HtmlEmail();
+
+						String mensajeCliente = pedidoCliente.mailPedidoCliente(pedidoDetalladoCliente);
+
+						mailOfficeEJB.sendMail2(c.getEmail(), "fetaquimallorca@gmail.com",
+								"Confirmación de su pedido de fetaquimallorca.com", mensajeCliente);
+
+						session.removeAttribute("pedido");
+
+						response.sendRedirect("ObtenerPedidosCliente");
+
+					} else {
+
+						String error = "Para realizar una compra actualice su perfil de usuario";
+
+						session.setAttribute("error", error);
+						response.sendRedirect("ObtenerTodosProductos");
 					}
-
-					ArrayList<PedidoDetallado> pedidoDetalladoCliente = pedidoEJB
-							.getPedidoDetalladoPorId(pedido.getId());
-
-					HtmlEmail pedidoCliente = new HtmlEmail();
-
-					String mensajeCliente = pedidoCliente.mailPedidoCliente(pedidoDetalladoCliente);
-
-					mailOfficeEJB.sendMail2(c.getEmail(), "fetaquimallorca@gmail.com",
-							"Confirmación de su pedido de fetaquimallorca.com", mensajeCliente);
-
-					session.removeAttribute("pedido");
-
-					response.sendRedirect("ObtenerPedidosCliente");
 
 				} else {
 
-					String error = "Para realizar una compra actualice su perfil de usuario";
+					if (c.getDireccion() != null) {
 
-					session.setAttribute("error", error);
-					response.sendRedirect("ObtenerTodosProductos");
+						Integer id_pedido = Integer.valueOf(request.getParameter("id_pedido"));
+
+						ArrayList<Vendedor> vendedores = pedidoEJB.getVendedoresPorPedido(id_pedido);
+
+						for (Vendedor ve : vendedores) {
+							ArrayList<PedidoDetallado> pDetalladoVendedor = pedidoEJB
+									.getPedidoDetalladoPorIdVendedorYpedido(ve.getId_vendedor(), id_pedido);
+
+							HtmlEmail pedidoVendedores = new HtmlEmail();
+
+							String mensajeVendedor = pedidoVendedores.mailPedidoVendedor(pDetalladoVendedor);
+
+							mailOfficeEJB.sendMail2(ve.getEmail(), "fetaquimallorca@gmail.com",
+									"Nuevo pedido de fetaquimallorca.com", mensajeVendedor);
+
+							pedidoEJB.updatePedidoAconfirmado(id_pedido);
+
+						}
+
+						ArrayList<PedidoDetallado> pedidoDetalladoCliente = pedidoEJB
+								.getPedidoDetalladoPorId(id_pedido);
+
+						HtmlEmail pedidoCliente = new HtmlEmail();
+
+						String mensajeCliente = pedidoCliente.mailPedidoCliente(pedidoDetalladoCliente);
+
+						mailOfficeEJB.sendMail2(c.getEmail(), "fetaquimallorca@gmail.com",
+								"Confirmación de su pedido de fetaquimallorca.com", mensajeCliente);
+
+						session.removeAttribute("pedido");
+
+						response.sendRedirect("ObtenerPedidosCliente");
+
+					} else {
+
+						String error = "Para realizar una compra actualice su perfil de usuario";
+
+						session.setAttribute("error", error);
+						response.sendRedirect("ObtenerTodosProductos");
+					}
 				}
 
 			} else {
-
-				if (c.getDireccion() != null) {
-
-					Integer id_pedido = Integer.valueOf(request.getParameter("id_pedido"));
-
-					ArrayList<Vendedor> vendedores = pedidoEJB.getVendedoresPorPedido(id_pedido);
-
-					for (Vendedor ve : vendedores) {
-						ArrayList<PedidoDetallado> pDetalladoVendedor = pedidoEJB
-								.getPedidoDetalladoPorIdVendedorYpedido(ve.getId_vendedor(), id_pedido);
-
-						HtmlEmail pedidoVendedores = new HtmlEmail();
-
-						String mensajeVendedor = pedidoVendedores.mailPedidoVendedor(pDetalladoVendedor);
-
-						mailOfficeEJB.sendMail2(ve.getEmail(), "fetaquimallorca@gmail.com",
-								"Nuevo pedido de fetaquimallorca.com", mensajeVendedor);
-
-						pedidoEJB.updatePedidoAconfirmado(id_pedido);
-
-					}
-
-					ArrayList<PedidoDetallado> pedidoDetalladoCliente = pedidoEJB.getPedidoDetalladoPorId(id_pedido);
-
-					HtmlEmail pedidoCliente = new HtmlEmail();
-
-					String mensajeCliente = pedidoCliente.mailPedidoCliente(pedidoDetalladoCliente);
-
-					mailOfficeEJB.sendMail2(c.getEmail(), "fetaquimallorca@gmail.com",
-							"Confirmación de su pedido de fetaquimallorca.com", mensajeCliente);
-
-					session.removeAttribute("pedido");
-
-					response.sendRedirect("ObtenerPedidosCliente");
-
-				} else {
-
-					String error = "Para realizar una compra actualice su perfil de usuario";
-
-					session.setAttribute("error", error);
-					response.sendRedirect("ObtenerTodosProductos");
-				}
+				response.sendRedirect("Principal");
 			}
-
-		} else {
-			response.sendRedirect("Principal");
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

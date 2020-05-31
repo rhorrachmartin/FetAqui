@@ -1,5 +1,6 @@
 package vista;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import modelo.pojo.PedidoDetallado;
@@ -29,7 +30,9 @@ public class HtmlEmail {
 
 	public String mailPedidoVendedor(ArrayList<PedidoDetallado> pedidoDetallado) {
 
-StringBuilder bld = new StringBuilder();
+		StringBuilder bld = new StringBuilder();
+		
+		DecimalFormat df = new DecimalFormat("####0.00");
 		
 		double precioTotal = 0;
 		
@@ -103,7 +106,7 @@ StringBuilder bld = new StringBuilder();
 				
 				bld.append("<tr>\n");
 				bld.append("<td colspan=\"3\"><b>Total:</b></td>\n"); 
-				bld.append("<td>"+precioTotal+"/€</td>\n");
+				bld.append("<td>"+df.format(precioTotal)+"/€</td>\n");
 				bld.append(" </tr>\n  </table>\n");
 				bld.append("\n" + 
 				"      <hr/>\n" + 
@@ -138,6 +141,8 @@ StringBuilder bld = new StringBuilder();
 	public String mailPedidoCliente(ArrayList<PedidoDetallado> pedidoDetallado) {
 		
 		StringBuilder bld = new StringBuilder();
+		
+		DecimalFormat df = new DecimalFormat("####0.00");
 		
 		double precioTotal = 0;
 		
@@ -211,7 +216,7 @@ StringBuilder bld = new StringBuilder();
 				
 				bld.append("<tr>\n");
 				bld.append("<td colspan=\"3\"><b>Total:</b></td>\n"); 
-				bld.append("<td>"+precioTotal+"/€</td>\n");
+				bld.append("<td>"+df.format(precioTotal)+"/€</td>\n");
 				bld.append(" </tr>\n  </table>\n");
 				bld.append("\n" + 
 				"      <hr/>\n" + 

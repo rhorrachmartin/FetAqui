@@ -24,7 +24,11 @@ import modelo.pojo.ValoracionPost;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Clase encargada de insertar y actualziar la valoración de un post de un
+ * Vendedor
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ValorarPost")
 public class ValorarPost extends HttpServlet {
@@ -32,22 +36,19 @@ public class ValorarPost extends HttpServlet {
 
 	@EJB
 	ValoracionPostEJB valoracionPostEJB;
-	
+
 	@EJB
 	CategoriaEJB categoriaEJB;
 
 	@EJB
 	ProductoEJB productoEJB;
-	
+
 	@EJB
 	VendedorEJB vendedorEJB;
-	
+
 	@EJB
 	PostEJB postEJB;
 
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
 
@@ -60,65 +61,66 @@ public class ValorarPost extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		if (session == null && session.getAttribute("vendedor") == null && session.getAttribute("cliente") == null) {
-			response.sendRedirect("Principal");
+		try {
+			if (session == null && session.getAttribute("vendedor") == null
+					&& session.getAttribute("cliente") == null) {
+				response.sendRedirect("Principal");
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		response.setContentType(CONTENT_TYPE);
 
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
-		
-		
-		if(session.getAttribute("cliente") != null) {
-			
-			if(request.getParameter("valoracion") != null && request.getParameter("id_post") != null && request.getParameter("id_cliente") != null) {
-				
-				ValoracionPost valoracionPost = new ValoracionPost();
-				
-				Integer valoracion = Integer.valueOf(request.getParameter("valoracion"));
-				Integer id_post = Integer.valueOf(request.getParameter("id_post"));
-				Integer id_cliente = Integer.valueOf(request.getParameter("id_cliente"));
-				
-				valoracionPost.setId_cliente(id_cliente);
-				valoracionPost.setId_post(id_post);
-				valoracionPost.setValoracion(valoracion);
-				
-				ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
-				ArrayList<Producto> productos = productoEJB.getProductos();
-				ArrayList<Post> posts = postEJB.getPosts();
-				
-				request.setAttribute("vendedores", vendedores);
-				request.setAttribute("productos", productos);
-				request.setAttribute("posts", posts);
-				
-				valoracionPostEJB.insertarValoracionPostPorDefecto(valoracionPost);
-				
-				
-				RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
-				rs.forward(request, response);
-				
-				
-				
-				
-			}else {
-				response.sendRedirect("ObtenerTodosProductos");
+
+		try {
+			if (session.getAttribute("cliente") != null) {
+
+				if (request.getParameter("valoracion") != null && request.getParameter("id_post") != null
+						&& request.getParameter("id_cliente") != null) {
+
+					ValoracionPost valoracionPost = new ValoracionPost();
+
+					Integer valoracion = Integer.valueOf(request.getParameter("valoracion"));
+					Integer id_post = Integer.valueOf(request.getParameter("id_post"));
+					Integer id_cliente = Integer.valueOf(request.getParameter("id_cliente"));
+
+					valoracionPost.setId_cliente(id_cliente);
+					valoracionPost.setId_post(id_post);
+					valoracionPost.setValoracion(valoracion);
+
+					ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+					ArrayList<Producto> productos = productoEJB.getProductos();
+					ArrayList<Post> posts = postEJB.getPosts();
+
+					request.setAttribute("vendedores", vendedores);
+					request.setAttribute("productos", productos);
+					request.setAttribute("posts", posts);
+
+					valoracionPostEJB.insertarValoracionPostPorDefecto(valoracionPost);
+
+					RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
+					rs.forward(request, response);
+
+				} else {
+					response.sendRedirect("ObtenerTodosProductos");
+				}
+
+			} else {
+				response.sendRedirect("Principal");
 			}
-			
-			
-		}else {
-			response.sendRedirect("Principal");
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
-		ValorarPost valoracionProducto = new ValorarPost();
+		
 
 	}
 

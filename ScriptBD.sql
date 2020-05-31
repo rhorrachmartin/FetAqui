@@ -1,5 +1,6 @@
 CREATE DATABASE fetaqui CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+
 use fetaqui;
 
 create table poblacion(
@@ -183,9 +184,6 @@ insert into categoria (nombre) values ('Frutas'),('Verduras'),('Carnes'),('Pesca
 
 insert into formato (nombre) values ('100 GR.'),('200 GR.'),('400 GR.'),('500 GR.'),('KG'),('LATA'),('BOTELLA'),('BARRA'),('UNIDAD');
 
-insert into vendedor (nif,nombre,email, password, foto, telefono, activado, fecha_alta, venta_online) 
-	values ('NIF','Agrícola Palma','vendedor@gmail.com', 'Vendedor!1986', 'FotoPorDefecto', 630513222, 1, now(),1);
-
 insert into cliente (email, nombre, apellido, telefono, password, foto, activado) 
-	values ('cliente@gmail.com', 'Ramon', 'Horrach', 630513222,'Cliente!1986','foto2.jpg',1);
+	values ('cliente@gmail.com', 'Ramon', 'Horrach', 630513222,'Cliente!1986','FotoPorDefecto',1);
 

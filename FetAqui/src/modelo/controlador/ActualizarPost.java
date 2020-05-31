@@ -28,7 +28,10 @@ import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class PublicarNoticia
+ * Controlador encargado de actualizar un Post
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ActualizarPost")
 public class ActualizarPost extends HttpServlet {
@@ -48,9 +51,7 @@ public class ActualizarPost extends HttpServlet {
 
 	@EJB
 	ValoracionProductoEJB valoracionProductoEJB;
-	/**
-	 * EJB para trabajar con los logger
-	 */
+
 	@EJB
 	LoggersEJB logger;
 
@@ -60,10 +61,6 @@ public class ActualizarPost extends HttpServlet {
 	static final String PAGINA_PROPIA_VENDEDOR = "/PaginaPropiaVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -74,55 +71,78 @@ public class ActualizarPost extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+		try {
 
-		if (session != null && vendedor.getNombre() != null) {
+			// REcogemos el usuario vendedor de la sesión
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 
-			String post = request.getParameter("post");
+			// COmprobamos que exista el usuario en la sesión
+			if (session != null && vendedor.getNombre() != null) {
 
-			post.replace("\n", "").replace("\t", "").replace("\r", "").replace(" ", "");
+				// Recogemos el post escrito por el vendedor
+				String post = request.getParameter("post");
 
-			Integer id_post = Integer.valueOf(request.getParameter("idPost"));
+				// Contramos los espacios en blanco, tabulaciones y saltos de linea
+				post.replace("\n", "").replace("\t", "").replace("\r", "").replace(" ", "");
 
-			Post p = new Post();
+				// Recogemos la id del post a actualizar
+				Integer id_post = Integer.valueOf(request.getParameter("idPost"));
 
-			p.setId(id_post);
-			p.setTexto(post);
-			p.setAutor(vendedor.getId_vendedor());
+				// Seteamos el pojo del post
+				Post p = new Post();
+				p.setId(id_post);
+				p.setTexto(post);
+				p.setAutor(vendedor.getId_vendedor());
 
-			if (StringUtils.isNotBlank(p.getTexto())) {
+				// Si el texto del post no está en blanco
+				if (StringUtils.isNotBlank(p.getTexto())) {
 
-				postEJB.editarPost(p);
-				ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-				ArrayList<Formato> formatos = formatoEJB.getFormatos();
-				ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
+					// Actualizamos el post
+					postEJB.editarPost(p);
 
-				request.setAttribute("productos", productos);
-				request.setAttribute("posts", posts);
-				request.setAttribute("vendedor", vendedor);
-				request.setAttribute("categorias", categorias);
-				request.setAttribute("formatos", formatos);
+					// Recogemos todos los parámetros necesarios
+					ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
+					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+					ArrayList<Formato> formatos = formatoEJB.getFormatos();
+					ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
 
-				rs.forward(request, response);
+					// Lo pasamos todo a la request
+					request.setAttribute("productos", productos);
+					request.setAttribute("posts", posts);
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("categorias", categorias);
+					request.setAttribute("formatos", formatos);
+
+					// Redirigimos a PAGINA_PROPIA_VENDEDOR
+					rs.forward(request, response);
+
+				} else {
+
+					// Si el texto del post a actualizar está en blanco no lo actualizamos
+
+					// Recogemos todos los parámetros necesarios
+					ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
+					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+					ArrayList<Formato> formatos = formatoEJB.getFormatos();
+					ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
+
+					// Lo pasamos todo a la request
+					request.setAttribute("productos", productos);
+					request.setAttribute("posts", posts);
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("categorias", categorias);
+					request.setAttribute("formatos", formatos);
+
+					// Redirigimos a PAGINA_PROPIA_VENDEDOR
+					rs.forward(request, response);
+				}
 
 			} else {
-				ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-				ArrayList<Formato> formatos = formatoEJB.getFormatos();
-				ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
-
-				request.setAttribute("productos", productos);
-				request.setAttribute("posts", posts);
-				request.setAttribute("vendedor", vendedor);
-				request.setAttribute("categorias", categorias);
-				request.setAttribute("formatos", formatos);
-
-				rs.forward(request, response);
+				// Si no hay un usuario vendedor o no hay sesión redirigimos a Principal
+				response.sendRedirect("Principal");
 			}
-
-		} else {
-			response.sendRedirect("Principal");
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

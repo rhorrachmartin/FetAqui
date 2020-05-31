@@ -21,15 +21,15 @@ import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class AñadirProducto
+ * Clase controlador encargado de obtener la ficha de un producto
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/PaginaProducto")
 public class PaginaProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
 	@EJB
 	VendedorEJB vendedorEJB;
 
@@ -39,14 +39,9 @@ public class PaginaProducto extends HttpServlet {
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
 
-	/**
-	 * EJB para trabajar con sesiones de cliente
-	 */
 	@EJB
 	SesionClienteEJB sesionClienteEJB;
-	/**
-	 * EJB para trabajar con los logger
-	 */
+
 	@EJB
 	LoggersEJB logger;
 
@@ -54,9 +49,10 @@ public class PaginaProducto extends HttpServlet {
 	static final String PRODUCTO_LOGEADO_VENDEDOR_JSP = "/ProductoLogeadoVendedor.jsp";
 	static final String PRODUCTO_LOGEADO_CLIENTE_JSP = "/ProductoLogeadoCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-	
+
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType(CONTENT_TYPE);
 		// Creamos el RequestDispatcher
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(PRODUCTO_NO_LOGEADO_JSP);
@@ -64,37 +60,58 @@ public class PaginaProducto extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		// Intentamos obtener el usuario de la sesión
-		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		try {
+			// Intentamos obtener el usuario de la sesión
+			Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		request.setAttribute("v", v);
-		request.setAttribute("c", c);
+			request.setAttribute("v", v);
+			request.setAttribute("c", c);
 
-		if (v != null || c != null) {
+			if (v != null || c != null) {
 
-			if (c != null) {
-				rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_CLIENTE_JSP);
+				if (c != null) {
+					rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_CLIENTE_JSP);
 
-				try {
-					
-					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
-					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-					
-					Producto producto = productoEJB.getProductoPorId(id_producto);
-					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+					try {
 
-					request.setAttribute("vendedor", vendedor);
-					request.setAttribute("producto", producto);
+						Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 
-					rs.forward(request, response);
+						Producto producto = productoEJB.getProductoPorId(id_producto);
+						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
 
-				} catch (Exception e) {
-					e.printStackTrace();
+						request.setAttribute("vendedor", vendedor);
+						request.setAttribute("producto", producto);
+
+						rs.forward(request, response);
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} else {
+					rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_VENDEDOR_JSP);
+					try {
+						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+						Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+
+						Producto producto = productoEJB.getProductoPorId(id_producto);
+						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+
+						request.setAttribute("vendedor", vendedor);
+						request.setAttribute("producto", producto);
+
+						rs.forward(request, response);
+
+					} catch (Exception e) {
+						logger.setErrorLogger(e.getMessage());
+					}
 				}
 
 			} else {
-				rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_VENDEDOR_JSP);
+				rs = getServletContext().getRequestDispatcher(PRODUCTO_NO_LOGEADO_JSP);
+
 				try {
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
@@ -108,28 +125,11 @@ public class PaginaProducto extends HttpServlet {
 					rs.forward(request, response);
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.setErrorLogger(e.getMessage());
 				}
 			}
-
-		} else {
-			rs = getServletContext().getRequestDispatcher(PRODUCTO_NO_LOGEADO_JSP);
-
-			try {
-				Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-				Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
-
-				Producto producto = productoEJB.getProductoPorId(id_producto);
-				Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-
-				request.setAttribute("vendedor", vendedor);
-				request.setAttribute("producto", producto);
-
-				rs.forward(request, response);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 
@@ -143,36 +143,57 @@ public class PaginaProducto extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		// Intentamos obtener el usuario de la sesión
-		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		try {
+			// Intentamos obtener el usuario de la sesión
+			Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		request.setAttribute("v", v);
-		request.setAttribute("c", c);
+			request.setAttribute("v", v);
+			request.setAttribute("c", c);
 
-		if (v != null || c != null) {
+			if (v != null || c != null) {
 
-			if (c != null) {
-				rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_CLIENTE_JSP);
+				if (c != null) {
+					rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_CLIENTE_JSP);
 
-				try {
-					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+					try {
+						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+						Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
 
-					Producto producto = productoEJB.getProductoPorId(id_producto);
-					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+						Producto producto = productoEJB.getProductoPorId(id_producto);
+						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
 
-					request.setAttribute("vendedor", vendedor);
-					request.setAttribute("producto", producto);
+						request.setAttribute("vendedor", vendedor);
+						request.setAttribute("producto", producto);
 
-					rs.forward(request, response);
+						rs.forward(request, response);
 
-				} catch (Exception e) {
-					e.printStackTrace();
+					} catch (Exception e) {
+						logger.setErrorLogger(e.getMessage());
+					}
+
+				} else {
+					rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_VENDEDOR_JSP);
+					try {
+						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+						Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+
+						Producto producto = productoEJB.getProductoPorId(id_producto);
+						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+
+						request.setAttribute("vendedor", vendedor);
+						request.setAttribute("producto", producto);
+
+						rs.forward(request, response);
+
+					} catch (Exception e) {
+						logger.setErrorLogger(e.getMessage());
+					}
 				}
 
 			} else {
-				rs = getServletContext().getRequestDispatcher(PRODUCTO_LOGEADO_VENDEDOR_JSP);
+				rs = getServletContext().getRequestDispatcher(PRODUCTO_NO_LOGEADO_JSP);
+
 				try {
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
@@ -186,28 +207,11 @@ public class PaginaProducto extends HttpServlet {
 					rs.forward(request, response);
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.setErrorLogger(e.getMessage());
 				}
 			}
-
-		} else {
-			rs = getServletContext().getRequestDispatcher(PRODUCTO_NO_LOGEADO_JSP);
-
-			try {
-				Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-				Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
-
-				Producto producto = productoEJB.getProductoPorId(id_producto);
-				Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-
-				request.setAttribute("vendedor", vendedor);
-				request.setAttribute("producto", producto);
-
-				rs.forward(request, response);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 

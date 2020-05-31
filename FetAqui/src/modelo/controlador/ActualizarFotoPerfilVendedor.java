@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.ejb.ImagenesEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PoblacionEJB;
 import modelo.ejb.VendedorEJB;
@@ -23,25 +22,22 @@ import modelo.pojo.Poblacion;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Clase controlador encargado de actualizar la foto de perfil de un vendedor
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ActualizarFotoPerfilVendedor")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ActualizarFotoPerfilVendedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuariosas as
-	 */
 	@EJB
 	VendedorEJB vendedorEJB;
 
 	@EJB
 	PoblacionEJB poblacionEJB;
 
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
 
@@ -51,11 +47,7 @@ public class ActualizarFotoPerfilVendedor extends HttpServlet {
 	static final String PERFIL_VENDEDOR_JSP = "/PerfilVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -70,49 +62,69 @@ public class ActualizarFotoPerfilVendedor extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-		Vendedor vendedorExiste = null;
-		ArrayList<Poblacion> poblaciones = null;
-
-		if (vendedor.getNombre() != null) {
-			vendedorExiste = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
-
-			if (vendedorExiste != null) {
-				try {
+		try {
+			//Recogemos el usuario Vendedor de la sesión
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+			
+			//Recogemos el password introducido por el usuario
+			String password = request.getParameter("password");
+			ArrayList<Poblacion> poblaciones = null;
+			
+			//Si hemos encontrado usuario en la sesión
+			if (vendedor.getNombre() != null) {
+				
+				//Comparamos el password del usuario en sesión con el password introducido
+				if (vendedor.getPassword().equals(password)) {
+					
+					//Recogemos el nombre de la foto y la guardamos en disco
 					String foto = imagenesEJB.guardarImagen(request, contexto);
 					
-					vendedorEJB.updateFoto(foto, vendedorExiste.getId_vendedor());
-
+					//actualizamos en BD
+					vendedorEJB.updateFoto(foto, vendedor.getId_vendedor());
+					
+					//Recogemos el vendedor actualizado
 					Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
+					
+					//Actualizamos la sesión del usuario Vendedor
 					request.getSession().setAttribute("vendedor", vendedorActualizado);
+					
+					//Recogemos las poblaciones de BD
 					poblaciones = poblacionEJB.getPoblaciones();
+					
+					//Las pasamos a la request
 					request.setAttribute("poblaciones", poblaciones);
+					
+					//Pasamos el vendedor actualizado a la request
 					request.setAttribute("vendedor", vendedorActualizado);
+					
+					//Redirigimos a PERFIL_VENDEDOR_JSP
 					rs.forward(request, response);
-				} catch (Exception e) {
-					e.getMessage();
+
+				} else {
+					//Si no coinciden las contraseñas mostramos un mensaje de error
+					String error = "Contraseña incorrecta";
+					
+					//Recogemos las poblaciones de BD
+					poblaciones = poblacionEJB.getPoblaciones();
+					
+					//Las pasamos a la request
+					request.setAttribute("poblaciones", poblaciones);
+					
+					//Pasamos el Vendedor a la request junto con el mensaje de error
+					request.setAttribute("vendedor", vendedor);
+					request.setAttribute("error", error);
+					
+					//Redirigimos a PERFIL_VENDEDOR_JSP
+					rs.forward(request, response);
 				}
 
 			} else {
-				try {
-					String error = "Contraseña incorrecta";
-					Vendedor vendedor3 = (Vendedor) session.getAttribute("vendedor");
-					poblaciones = poblacionEJB.getPoblaciones();
-					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("vendedor", vendedor3);
-					request.setAttribute("error", error);
-					rs.forward(request, response);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				//Si no encontramos sesión redirigimos a Principal
+				response.sendRedirect("Principal");
 			}
 
-		} else {
-			try {
-				response.sendRedirect("Principal");
-			} catch (Exception e) {
-				e.getMessage();
-			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

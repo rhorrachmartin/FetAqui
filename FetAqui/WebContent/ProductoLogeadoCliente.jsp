@@ -102,14 +102,14 @@
 					<%
 						if (c.getFoto().equals("FotoPorDefecto")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
 							alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="Imagenes/<%=c.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
@@ -209,7 +209,7 @@
 
 			<div class="col col-lg-12 text-center">
 				<a type="button" class="btn btn-light-blue btn-md"
-					href="ObtenerTodosProductos">Volver</a>
+					href="ObtenerTodosProductos">IR A PRODUCTOS</a>
 				<form action="PaginaVendedor" method="post">
 					<input type="hidden" name="id_vendedor"
 						value="<%=producto.getId_vendedor()%>">

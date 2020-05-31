@@ -24,14 +24,16 @@ import modelo.pojo.Post;
 import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
-
+/**
+ * Clase encargada de cargar la página propia de un vendedor
+ * 
+ * @author ramon
+ *
+ */
 @WebServlet("/PaginaPropioVendedor")
 public class PaginaPropioVendedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
 	@EJB
 	VendedorEJB vendedorEJB;
 
@@ -43,12 +45,10 @@ public class PaginaPropioVendedor extends HttpServlet {
 
 	@EJB
 	FormatoEJB formatoEJB;
-	
+
 	@EJB
 	PostEJB postEJB;
-	/**
-	 * EJB para trabajar con los logger
-	 */
+
 	@EJB
 	LoggersEJB logger;
 
@@ -63,20 +63,19 @@ public class PaginaPropioVendedor extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-
 		response.setContentType(CONTENT_TYPE);
 
 		try {
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 
 			if (vendedor != null) {
 				if (request.getParameter("selectCategorias") == null) {
-					
+
 					ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
 					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 					ArrayList<Formato> formatos = formatoEJB.getFormatos();
 					ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-					
+
 					request.setAttribute("posts", posts);
 					request.setAttribute("vendedor", vendedor);
 					request.setAttribute("formatos", formatos);
@@ -86,19 +85,19 @@ public class PaginaPropioVendedor extends HttpServlet {
 				} else {
 					if (!request.getParameter("selectCategorias").equals("todos")) {
 						Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
-						
+
 						ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
 						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-						ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(vendedor.getId_vendedor(),
-								id_categoria);
-						
+						ArrayList<Producto> productos = productoEJB
+								.getProductosVendedorCategoria(vendedor.getId_vendedor(), id_categoria);
+
 						Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
 
 						if (productos.isEmpty()) {
 							String error = "No hay productos en esta categoría";
 							request.setAttribute("error", error);
 						}
-						
+
 						request.setAttribute("posts", posts);
 						request.setAttribute("categoria", categoria);
 						request.setAttribute("vendedor", vendedor);
@@ -110,7 +109,7 @@ public class PaginaPropioVendedor extends HttpServlet {
 						ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
 						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 						ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-						
+
 						request.setAttribute("posts", posts);
 						request.setAttribute("vendedor", vendedor);
 						request.setAttribute("productos", productos);
@@ -125,10 +124,9 @@ public class PaginaPropioVendedor extends HttpServlet {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}
 
 }
-

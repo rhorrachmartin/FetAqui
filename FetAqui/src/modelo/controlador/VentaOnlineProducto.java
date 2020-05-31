@@ -16,7 +16,9 @@ import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Clase encargada activar y desactivar la venta online de un producto
+ * @author ramon
+ *
  */
 @WebServlet("/VentaOnlineProducto")
 public class VentaOnlineProducto extends HttpServlet {
@@ -24,10 +26,7 @@ public class VentaOnlineProducto extends HttpServlet {
 
 	@EJB
 	ProductoEJB productoEJB;
-
-	/**
-	 * EJB para trabajar con los logger
-	 */
+	
 	@EJB
 	LoggersEJB logger;
 
@@ -38,15 +37,17 @@ public class VentaOnlineProducto extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		if (session == null && session.getAttribute("vendedor") == null && session.getAttribute("cliente") == null) {
-			response.sendRedirect("Principal");
+		try {
+			if (session == null && session.getAttribute("vendedor") == null
+					&& session.getAttribute("cliente") == null) {
+				response.sendRedirect("Principal");
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -62,7 +63,6 @@ public class VentaOnlineProducto extends HttpServlet {
 			Integer idProducto = Integer.valueOf(request.getParameter("producto"));
 
 			Producto producto = productoEJB.getProductoPorId(idProducto);
-			
 
 			if (vendedor.getNombre() != null) {
 				if (producto.getVenta_online() == 0) {
@@ -81,7 +81,7 @@ public class VentaOnlineProducto extends HttpServlet {
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

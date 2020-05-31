@@ -9,6 +9,11 @@
 		insert into valoracion_post (valoracion, id_cliente,id_post)
 		values (#{valoracion}, #{id_cliente},#{id_post});
 	</insert>
+	
+	<delete id='borrarValoracionCliente' parameterType='int'>
+		delete from valoracion_post where id_cliente = #{id_cliente};
+	</delete>
+	
 
 
 </mapper>

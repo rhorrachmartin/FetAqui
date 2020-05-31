@@ -15,7 +15,9 @@ import modelo.ejb.SesionClienteEJB;
 import modelo.ejb.SesionVendedorEJB;
 
 /**
- * Servlet implementation class Logout
+ * Clase controlador encargado de cerrar sesión de los usuarios
+ * @author ramon
+ *
  */
 @WebServlet("/Logout")
 public class Logout extends HttpServlet {

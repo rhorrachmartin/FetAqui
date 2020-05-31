@@ -22,15 +22,15 @@ import modelo.pojo.Poblacion;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class AñadirProducto
+ * Clase controlador encargado de obtener todos los vendedores
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ObtenerTodosVendedores")
 public class ObtenerTodosVendedores extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
 	@EJB
 	VendedorEJB vendedorEJB;
 
@@ -40,9 +40,6 @@ public class ObtenerTodosVendedores extends HttpServlet {
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
 
-	/**
-	 * EJB para trabajar con sesiones de cliente
-	 */
 	@EJB
 	SesionClienteEJB sesionClienteEJB;
 
@@ -64,48 +61,21 @@ public class ObtenerTodosVendedores extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		// Intentamos obtener el usuario de la sesión
-		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		try {
+			// Intentamos obtener el usuario de la sesión
+			Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		request.setAttribute("vendedor", v);
-		request.setAttribute("cliente", c);
+			request.setAttribute("vendedor", v);
+			request.setAttribute("cliente", c);
 
-		if (v != null || c != null) {
+			if (v != null || c != null) {
 
-			if (c != null) {
-				rs = getServletContext().getRequestDispatcher(VENDEDORES_LOGEADO_CLIENTE_JSP);
-				try {
-					if (request.getParameter("selectPoblacion") == null) {
+				if (c != null) {
+					rs = getServletContext().getRequestDispatcher(VENDEDORES_LOGEADO_CLIENTE_JSP);
+					try {
+						if (request.getParameter("selectPoblacion") == null) {
 
-						ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
-
-						request.setAttribute("poblaciones", poblaciones);
-						request.setAttribute("vendedores", vendedores);
-
-						rs.forward(request, response);
-
-					} else {
-						if (!request.getParameter("selectPoblacion").equals("todos")) {
-							Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
-
-							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
-							Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
-
-							if (vendedores.isEmpty()) {
-								String error = "No existen vendedores en esta población.";
-								request.setAttribute("poblacion", poblacion);
-								request.setAttribute("error", error);
-							}
-
-							request.setAttribute("poblacion", poblacion);
-							request.setAttribute("poblaciones", poblaciones);
-							request.setAttribute("vendedores", vendedores);
-
-							rs.forward(request, response);
-						} else {
 							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
 							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 
@@ -113,94 +83,94 @@ public class ObtenerTodosVendedores extends HttpServlet {
 							request.setAttribute("vendedores", vendedores);
 
 							rs.forward(request, response);
-						}
 
-					}
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			} else {
-				rs = getServletContext().getRequestDispatcher(VENDEDORES_LOGEADO_VENDEDOR_JSP);
-				try {
-					if (request.getParameter("selectPoblacion") == null) {
+						} else {
+							if (!request.getParameter("selectPoblacion").equals("todos")) {
+								Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
 
-						ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+								ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+								ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
+								Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
 
-						request.setAttribute("poblaciones", poblaciones);
-						request.setAttribute("vendedores", vendedores);
+								if (vendedores.isEmpty()) {
+									String error = "No existen vendedores en esta población.";
+									request.setAttribute("poblacion", poblacion);
+									request.setAttribute("error", error);
+								}
 
-						rs.forward(request, response);
-
-					} else {
-						if (!request.getParameter("selectPoblacion").equals("todos")) {
-							Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
-
-							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
-							Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
-
-							if (vendedores.isEmpty()) {
-								String error = "No existen vendedores en esta población.";
 								request.setAttribute("poblacion", poblacion);
-								request.setAttribute("error", error);
+								request.setAttribute("poblaciones", poblaciones);
+								request.setAttribute("vendedores", vendedores);
+
+								rs.forward(request, response);
+							} else {
+								ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+								ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+
+								request.setAttribute("poblaciones", poblaciones);
+								request.setAttribute("vendedores", vendedores);
+
+								rs.forward(request, response);
 							}
 
-							request.setAttribute("poblacion", poblacion);
-							request.setAttribute("poblaciones", poblaciones);
-							request.setAttribute("vendedores", vendedores);
-
-							rs.forward(request, response);
-						} else {
-							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
-
-							request.setAttribute("poblaciones", poblaciones);
-							request.setAttribute("vendedores", vendedores);
-
-							rs.forward(request, response);
 						}
-
+					} catch (Exception e) {
+						logger.setErrorLogger(e.getMessage());
 					}
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-
-			}
-
-		} else {
-
-			try {
-				if (request.getParameter("selectPoblacion") == null) {
-
-					ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-					ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
-
-					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("vendedores", vendedores);
-
-					rs.forward(request, response);
-
 				} else {
-					if (!request.getParameter("selectPoblacion").equals("todos")) {
-						Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
+					rs = getServletContext().getRequestDispatcher(VENDEDORES_LOGEADO_VENDEDOR_JSP);
+					try {
+						if (request.getParameter("selectPoblacion") == null) {
 
-						ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
-						Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
+							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 
-						if (vendedores.isEmpty()) {
-							String error = "No existen vendedores en esta población.";
-							request.setAttribute("poblacion", poblacion);
-							request.setAttribute("error", error);
+							request.setAttribute("poblaciones", poblaciones);
+							request.setAttribute("vendedores", vendedores);
+
+							rs.forward(request, response);
+
+						} else {
+							if (!request.getParameter("selectPoblacion").equals("todos")) {
+								Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
+
+								ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+								ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
+								Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
+
+								if (vendedores.isEmpty()) {
+									String error = "No existen vendedores en esta población.";
+									request.setAttribute("poblacion", poblacion);
+									request.setAttribute("error", error);
+								}
+
+								request.setAttribute("poblacion", poblacion);
+								request.setAttribute("poblaciones", poblaciones);
+								request.setAttribute("vendedores", vendedores);
+
+								rs.forward(request, response);
+							} else {
+								ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+								ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+
+								request.setAttribute("poblaciones", poblaciones);
+								request.setAttribute("vendedores", vendedores);
+
+								rs.forward(request, response);
+							}
+
 						}
+					} catch (Exception e) {
+						logger.setErrorLogger(e.getMessage());
+					}
 
-						request.setAttribute("poblacion", poblacion);
-						request.setAttribute("poblaciones", poblaciones);
-						request.setAttribute("vendedores", vendedores);
+				}
 
-						rs.forward(request, response);
-					} else {
+			} else {
+
+				try {
+					if (request.getParameter("selectPoblacion") == null) {
+
 						ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
 						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 
@@ -208,13 +178,44 @@ public class ObtenerTodosVendedores extends HttpServlet {
 						request.setAttribute("vendedores", vendedores);
 
 						rs.forward(request, response);
+
+					} else {
+						if (!request.getParameter("selectPoblacion").equals("todos")) {
+							Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
+
+							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
+							Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
+
+							if (vendedores.isEmpty()) {
+								String error = "No existen vendedores en esta población.";
+								request.setAttribute("poblacion", poblacion);
+								request.setAttribute("error", error);
+							}
+
+							request.setAttribute("poblacion", poblacion);
+							request.setAttribute("poblaciones", poblaciones);
+							request.setAttribute("vendedores", vendedores);
+
+							rs.forward(request, response);
+						} else {
+							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+
+							request.setAttribute("poblaciones", poblaciones);
+							request.setAttribute("vendedores", vendedores);
+
+							rs.forward(request, response);
+						}
+
 					}
-
+				} catch (Exception e) {
+					logger.setErrorLogger(e.getMessage());
 				}
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
 
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 
@@ -228,48 +229,21 @@ public class ObtenerTodosVendedores extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		// Intentamos obtener el usuario de la sesión
-		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
+		try {
+			// Intentamos obtener el usuario de la sesión
+			Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		request.setAttribute("vendedor", v);
-		request.setAttribute("cliente", c);
+			request.setAttribute("vendedor", v);
+			request.setAttribute("cliente", c);
 
-		if (v != null || c != null) {
+			if (v != null || c != null) {
 
-			if (c != null) {
-				rs = getServletContext().getRequestDispatcher(VENDEDORES_LOGEADO_CLIENTE_JSP);
-				try {
-					if (request.getParameter("selectPoblacion") == null) {
+				if (c != null) {
+					rs = getServletContext().getRequestDispatcher(VENDEDORES_LOGEADO_CLIENTE_JSP);
+					try {
+						if (request.getParameter("selectPoblacion") == null) {
 
-						ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
-
-						request.setAttribute("poblaciones", poblaciones);
-						request.setAttribute("vendedores", vendedores);
-
-						rs.forward(request, response);
-
-					} else {
-						if (!request.getParameter("selectPoblacion").equals("todos")) {
-							Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
-
-							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
-							Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
-
-							if (vendedores.isEmpty()) {
-								String error = "No existen vendedores en esta población.";
-								request.setAttribute("poblacion", poblacion);
-								request.setAttribute("error", error);
-							}
-
-							request.setAttribute("poblacion", poblacion);
-							request.setAttribute("poblaciones", poblaciones);
-							request.setAttribute("vendedores", vendedores);
-
-							rs.forward(request, response);
-						} else {
 							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
 							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 
@@ -277,94 +251,94 @@ public class ObtenerTodosVendedores extends HttpServlet {
 							request.setAttribute("vendedores", vendedores);
 
 							rs.forward(request, response);
-						}
 
-					}
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			} else {
-				rs = getServletContext().getRequestDispatcher(VENDEDORES_LOGEADO_VENDEDOR_JSP);
-				try {
-					if (request.getParameter("selectPoblacion") == null) {
+						} else {
+							if (!request.getParameter("selectPoblacion").equals("todos")) {
+								Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
 
-						ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+								ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+								ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
+								Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
 
-						request.setAttribute("poblaciones", poblaciones);
-						request.setAttribute("vendedores", vendedores);
+								if (vendedores.isEmpty()) {
+									String error = "No existen vendedores en esta población.";
+									request.setAttribute("poblacion", poblacion);
+									request.setAttribute("error", error);
+								}
 
-						rs.forward(request, response);
-
-					} else {
-						if (!request.getParameter("selectPoblacion").equals("todos")) {
-							Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
-
-							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
-							Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
-
-							if (vendedores.isEmpty()) {
-								String error = "No existen vendedores en esta población.";
 								request.setAttribute("poblacion", poblacion);
-								request.setAttribute("error", error);
+								request.setAttribute("poblaciones", poblaciones);
+								request.setAttribute("vendedores", vendedores);
+
+								rs.forward(request, response);
+							} else {
+								ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+								ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+
+								request.setAttribute("poblaciones", poblaciones);
+								request.setAttribute("vendedores", vendedores);
+
+								rs.forward(request, response);
 							}
 
-							request.setAttribute("poblacion", poblacion);
-							request.setAttribute("poblaciones", poblaciones);
-							request.setAttribute("vendedores", vendedores);
-
-							rs.forward(request, response);
-						} else {
-							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
-
-							request.setAttribute("poblaciones", poblaciones);
-							request.setAttribute("vendedores", vendedores);
-
-							rs.forward(request, response);
 						}
-
+					} catch (Exception e) {
+						logger.setErrorLogger(e.getMessage());
 					}
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-
-			}
-
-		} else {
-
-			try {
-				if (request.getParameter("selectPoblacion") == null) {
-
-					ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-					ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
-
-					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("vendedores", vendedores);
-
-					rs.forward(request, response);
-
 				} else {
-					if (!request.getParameter("selectPoblacion").equals("todos")) {
-						Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
+					rs = getServletContext().getRequestDispatcher(VENDEDORES_LOGEADO_VENDEDOR_JSP);
+					try {
+						if (request.getParameter("selectPoblacion") == null) {
 
-						ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
-						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
-						Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
+							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 
-						if (vendedores.isEmpty()) {
-							String error = "No existen vendedores en esta población.";
-							request.setAttribute("poblacion", poblacion);
-							request.setAttribute("error", error);
+							request.setAttribute("poblaciones", poblaciones);
+							request.setAttribute("vendedores", vendedores);
+
+							rs.forward(request, response);
+
+						} else {
+							if (!request.getParameter("selectPoblacion").equals("todos")) {
+								Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
+
+								ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+								ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
+								Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
+
+								if (vendedores.isEmpty()) {
+									String error = "No existen vendedores en esta población.";
+									request.setAttribute("poblacion", poblacion);
+									request.setAttribute("error", error);
+								}
+
+								request.setAttribute("poblacion", poblacion);
+								request.setAttribute("poblaciones", poblaciones);
+								request.setAttribute("vendedores", vendedores);
+
+								rs.forward(request, response);
+							} else {
+								ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+								ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+
+								request.setAttribute("poblaciones", poblaciones);
+								request.setAttribute("vendedores", vendedores);
+
+								rs.forward(request, response);
+							}
+
 						}
+					} catch (Exception e) {
+						logger.setErrorLogger(e.getMessage());
+					}
 
-						request.setAttribute("poblacion", poblacion);
-						request.setAttribute("poblaciones", poblaciones);
-						request.setAttribute("vendedores", vendedores);
+				}
 
-						rs.forward(request, response);
-					} else {
+			} else {
+
+				try {
+					if (request.getParameter("selectPoblacion") == null) {
+
 						ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
 						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 
@@ -372,13 +346,44 @@ public class ObtenerTodosVendedores extends HttpServlet {
 						request.setAttribute("vendedores", vendedores);
 
 						rs.forward(request, response);
+
+					} else {
+						if (!request.getParameter("selectPoblacion").equals("todos")) {
+							Integer id_poblacion = Integer.valueOf(request.getParameter("selectPoblacion"));
+
+							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedoresPoblacion(id_poblacion);
+							Poblacion poblacion = poblacionEJB.getPoblacionPorId(id_poblacion);
+
+							if (vendedores.isEmpty()) {
+								String error = "No existen vendedores en esta población.";
+								request.setAttribute("poblacion", poblacion);
+								request.setAttribute("error", error);
+							}
+
+							request.setAttribute("poblacion", poblacion);
+							request.setAttribute("poblaciones", poblaciones);
+							request.setAttribute("vendedores", vendedores);
+
+							rs.forward(request, response);
+						} else {
+							ArrayList<Poblacion> poblaciones = poblacionEJB.getPoblaciones();
+							ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+
+							request.setAttribute("poblaciones", poblaciones);
+							request.setAttribute("vendedores", vendedores);
+
+							rs.forward(request, response);
+						}
+
 					}
-
+				} catch (Exception e) {
+					logger.setErrorLogger(e.getMessage());
 				}
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
 
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 

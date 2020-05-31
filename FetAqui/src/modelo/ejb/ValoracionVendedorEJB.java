@@ -15,5 +15,11 @@ public class ValoracionVendedorEJB {
 
 		valoracionVendedorDAO.insertarValoracionVendedor(valoracionCv);
 	}
+	
+	public void borrarValoracionCliente(Integer id_cliente) {
+		ValoracionVendedorDAO valoracionVendedorDAO = new ValoracionVendedorDAO();
+		
+		valoracionVendedorDAO.borrarValoracionCliente(id_cliente);
+	}
 
 }

@@ -16,21 +16,21 @@ import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Controlador encargado de eliminar un producto de un Vendedor
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/EliminarProducto")
 public class EliminarProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	
 	@EJB
 	ProductoEJB productoEJB;
 
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
+
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,15 +38,16 @@ public class EliminarProducto extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		if (session == null && session.getAttribute("vendedor") == null && session.getAttribute("cliente") == null) {
-			response.sendRedirect("Principal");
+		try {
+			if (session == null && session.getAttribute("vendedor") == null
+					&& session.getAttribute("cliente") == null) {
+				response.sendRedirect("Principal");
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -55,9 +56,9 @@ public class EliminarProducto extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-
 		try {
+
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 
 			Integer idProducto = Integer.valueOf(request.getParameter("producto"));
 
@@ -80,7 +81,7 @@ public class EliminarProducto extends HttpServlet {
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

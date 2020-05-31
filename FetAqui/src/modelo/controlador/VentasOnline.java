@@ -19,24 +19,22 @@ import modelo.pojo.Poblacion;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Clase encargada de activar y desactivar las ventas online de todos los
+ * productos de un Vendedor
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/VentasOnline")
 public class VentasOnline extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
 	@EJB
 	VendedorEJB vendedorEJB;
 
 	@EJB
 	PoblacionEJB poblacionEJB;
 
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
 
@@ -48,15 +46,16 @@ public class VentasOnline extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		if (session == null && session.getAttribute("vendedor") == null && session.getAttribute("cliente") == null) {
-			response.sendRedirect("Principal");
+		try {
+			if (session == null && session.getAttribute("vendedor") == null
+					&& session.getAttribute("cliente") == null) {
+				response.sendRedirect("Principal");
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -68,18 +67,18 @@ public class VentasOnline extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-		
-		Vendedor vendedorActualizado = null;
-		
-		ArrayList<Poblacion> poblaciones = null;
-		
 		try {
-			
+
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+
+			Vendedor vendedorActualizado = null;
+
+			ArrayList<Poblacion> poblaciones = null;
+
 			if (vendedor.getNombre() != null) {
 
 				if (vendedor.getVenta_online() == 0) {
-					
+
 					vendedorEJB.activarVentaOnline(vendedor.getId_vendedor());
 
 					vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
@@ -89,22 +88,22 @@ public class VentasOnline extends HttpServlet {
 					poblaciones = poblacionEJB.getPoblaciones();
 
 					request.setAttribute("poblaciones", poblaciones);
-					
+
 					request.getSession().setAttribute("vendedor", vendedorActualizado);
-					
+
 					rs.forward(request, response);
 
 				} else {
 					vendedorEJB.desactivarVentaOnline(vendedor.getId_vendedor());
 
 					vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
-					
+
 					poblaciones = poblacionEJB.getPoblaciones();
-					
+
 					request.setAttribute("poblaciones", poblaciones);
-					
+
 					request.getSession().setAttribute("vendedor", vendedorActualizado);
-					
+
 					rs.forward(request, response);
 				}
 
@@ -112,7 +111,7 @@ public class VentasOnline extends HttpServlet {
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

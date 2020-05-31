@@ -18,10 +18,14 @@ import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PedidoEJB;
 import modelo.ejb.ProductoEJB;
-import modelo.pojo.Cliente;
 import modelo.pojo.Pedido;
 import modelo.pojo.Vendedor;
 
+/**
+ * Clase controlador encargado de obtener todos los pedidos que le han hecho a un vendedor
+ * @author ramon
+ *
+ */
 @WebServlet("/ObtenerPedidosVendedor")
 public class ObtenerPedidosVendedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,9 +41,7 @@ public class ObtenerPedidosVendedor extends HttpServlet {
 
 	@EJB
 	PedidoEJB pedidoEJB;
-	/**
-	 * EJB para trabajar con los logger
-	 */
+	
 	@EJB
 	LoggersEJB logger;
 
@@ -51,6 +53,7 @@ public class ObtenerPedidosVendedor extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		response.setContentType(CONTENT_TYPE);
 		// Creamos el RequestDispatcher
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(PEDIDOS_VENDEDOR_JSP);
@@ -58,36 +61,40 @@ public class ObtenerPedidosVendedor extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+		try {
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 
-		if (session != null && vendedor.getNombre() != null) {
+			if (session != null && vendedor.getNombre() != null) {
 
-			if (pedidoEJB.getPedidosVendedor(vendedor.getId_vendedor()) != null) {
+				if (pedidoEJB.getPedidosVendedor(vendedor.getId_vendedor()) != null) {
 
-				ArrayList<Pedido> pedidos = pedidoEJB.getPedidosVendedor(vendedor.getId_vendedor());
+					ArrayList<Pedido> pedidos = pedidoEJB.getPedidosVendedor(vendedor.getId_vendedor());
 
-				if (pedidos.isEmpty()) {
+					if (pedidos.isEmpty()) {
+						String error = "No existen pedidos";
+
+						request.setAttribute("error", error);
+
+						rs.forward(request, response);
+					} else {
+						request.setAttribute("pedidos", pedidos);
+
+						rs.forward(request, response);
+					}
+
+				} else {
 					String error = "No existen pedidos";
 
 					request.setAttribute("error", error);
 
 					rs.forward(request, response);
-				} else {
-					request.setAttribute("pedidos", pedidos);
-
-					rs.forward(request, response);
 				}
 
 			} else {
-				String error = "No existen pedidos";
-
-				request.setAttribute("error", error);
-
-				rs.forward(request, response);
+				response.sendRedirect("Principal");
 			}
-
-		} else {
-			response.sendRedirect("Principal");
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

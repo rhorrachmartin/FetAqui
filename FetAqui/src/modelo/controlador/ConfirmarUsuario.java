@@ -18,7 +18,7 @@ import modelo.ejb.LoggersEJB;
 import modelo.ejb.VendedorEJB;
 
 /**
- * Clase encarga de confirmar el usuario una vez se ha registrado y ha confirmado su activación por corre electrónico
+ * Clase encarga de confirmar el usuario una vez se ha registrado y ha confirmado su activación por correo electrónico
  * @author ramon
  *
  */
@@ -26,36 +26,21 @@ import modelo.ejb.VendedorEJB;
 public class ConfirmarUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
 	@EJB
 	VendedorEJB vendedorEJB;
 	
 	@EJB
 	ClienteEJB clienteEJB;
 	
-	/**
-	 * EJB para trabajar con los codigos de activación de vendedores
-	 */
 	@EJB
 	CodigoVendedorEJB codigoVendedorEJB;
 	
-	/**
-	 * EJB para trabajar con los codigos de activacion de clientes
-	 */
 	@EJB
 	CodigoClienteEJB codigoClienteEJB;
 	
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
 	
-	/**
-	 * Método doGet que confirma la activación de un usuario
-	 */
 	
 	static final String HOME_JSP = "/Home.jsp";
 	

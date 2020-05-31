@@ -89,7 +89,7 @@
 
 
 		<main class="container-fluid fondoContainer">
-			<div class="row mt-3">
+			<div class="row mt-3 mb-5">
 				<div class="col col-lg-12  text-center vertical-center">
 
 					<h1 class="nombreLogo">Fet Aquí</h1>
@@ -101,24 +101,13 @@
 						nuestros agricultores y productores</h2>
 				</div>
 			</div>
-			<hr>
-			<div class="row mt-3">
-				<div class="col col-lg-12  text-center vertical-center">
-
-					<h1 class="quienesSomos">¿Quiénes somos?</h1>
-
-				</div>
-
-				<div class="col col-lg-12 text-center vertical-center">
-					<h2 class="bajoquienesSomos">Somos mallorquines preocupados y
-						ocupados por el consumo local</h2>
-				</div>
-			</div>
+			
 			<hr>
 			<div class="row">
 				<div class="col col-lg-12  text-center vertical-center">
 
-					<h1 class="quienesSomos">6 buenas razones para el consumo local</h1>
+					<h1 class="quienesSomos">6 buenas razones para el consumo
+						local</h1>
 
 				</div>
 			</div>
@@ -180,6 +169,20 @@
 				</div>
 
 			</div>
+			
+			<hr>
+			<div class="row mt-3">
+				<div class="col col-lg-12  text-center vertical-center">
+
+					<h1 class="quienesSomos">¿Quiénes somos?</h1>
+
+				</div>
+
+				<div class="col col-lg-12 text-center vertical-center">
+					<h2 class="bajoquienesSomos">Somos mallorquines preocupados y
+						ocupados por el consumo local.<br> Trabajamos para hacer llegar los productos de la isla directamente del huerto a tu hogar.</h2>
+				</div>
+			</div>
 
 		</main>
 
@@ -226,15 +229,16 @@
 							<div class="md-form mb-5">
 								<i class="fas fa-user prefix grey-text"></i> <input type="text"
 									id="orangeForm-name" class="form-control validate"
-									name="nombrep"> <label data-error="wrong"
-									data-success="right" for="orangeForm-name">Su nombre</label>
+									name="nombrep" maxlength="32"> <label
+									data-error="wrong" data-success="right" for="orangeForm-name">Su
+									nombre</label>
 							</div>
 							<div class="md-form mb-5">
 								<i class="fas fa-envelope prefix grey-text"></i> <input
 									type="email" id="orangeForm-email"
-									class="form-control validate" name="emailp"> <label
-									data-error="wrong" data-success="right" for="orangeForm-email">Su
-									email</label>
+									class="form-control validate" name="emailp" maxlength="64">
+								<label data-error="wrong" data-success="right"
+									for="orangeForm-email">Su email</label>
 							</div>
 
 							<div class="row my-5">
@@ -242,7 +246,8 @@
 									<div class="md-form">
 										<i class="fas fa-lock prefix"></i> <input type="password"
 											id="inputValidationEx2" class="form-control validate"
-											name="passwordp"> <label for="inputValidationEx2"
+											name="passwordp" maxlength="32"> <label
+											for="inputValidationEx2"
 											data-error="Escriba su contraseña correctamente"
 											data-success="OK" style="width: 200px;">Password</label>
 									</div>
@@ -296,15 +301,16 @@
 							<div class="md-form mb-5">
 								<i class="fas fa-user prefix grey-text"></i> <input type="text"
 									id="orangeForm-name2" class="form-control validate"
-									name="nombrec"> <label data-error="wrong"
-									data-success="right" for="orangeForm-name2">Su nombre</label>
+									name="nombrec" maxlength="32"> <label
+									data-error="wrong" data-success="right" for="orangeForm-name2">Su
+									nombre</label>
 							</div>
 							<div class="md-form mb-5">
 								<i class="fas fa-envelope prefix grey-text"></i> <input
 									type="email" id="orangeForm-email2"
-									class="form-control validate" name="emailc"> <label
-									data-error="wrong" data-success="right" for="orangeForm-email2">Su
-									email</label>
+									class="form-control validate" name="emailc" maxlength="32">
+								<label data-error="wrong" data-success="right"
+									for="orangeForm-email2">Su email</label>
 							</div>
 
 							<div class="row my-5">
@@ -312,7 +318,8 @@
 									<div class="md-form">
 										<i class="fas fa-lock prefix"></i> <input type="password"
 											id="inputValidationEx3" class="form-control validate"
-											name="passwordc"> <label for="inputValidationEx3"
+											name="passwordc" maxlength="32"> <label
+											for="inputValidationEx3"
 											data-error="Escriba su contraseña correctamente"
 											data-success="OK" style="width: 200px;">Password</label>
 									</div>
@@ -367,15 +374,17 @@
 							<div class="md-form mb-5">
 								<i class="fas fa-envelope prefix grey-text"></i> <input
 									type="email" id="defaultForm-email"
-									class="form-control validate" name="email"> <label
-									data-error="wrong" data-success="right" for="defaultForm-email">Email</label>
+									class="form-control validate" name="email" maxlength="64">
+								<label data-error="wrong" data-success="right"
+									for="defaultForm-email">Email</label>
 							</div>
 
 							<div class="md-form mb-4">
 								<i class="fas fa-lock prefix grey-text"></i> <input
 									type="password" id="defaultForm-pass"
-									class="form-control validate" name="password"> <label
-									data-error="wrong" data-success="right" for="defaultForm-pass">Password</label>
+									class="form-control validate" name="password" maxlength="32">
+								<label data-error="wrong" data-success="right"
+									for="defaultForm-pass">Password</label>
 							</div>
 						</div>
 						<div class="modal-footer d-flex justify-content-center">
@@ -415,8 +424,8 @@
 
 					<!--Footer-->
 					<div class="modal-footer justify-content-center">
-					<a type="button"
-							class="btn btn-outline-success waves-effect" data-dismiss="modal">OK</a>
+						<a type="button" class="btn btn-outline-success waves-effect"
+							data-dismiss="modal">OK</a>
 					</div>
 				</div>
 				<!--/.Content-->
@@ -524,7 +533,51 @@
 
 	</footer>
 	<!-- Footer -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
 
-
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#baja')
+									.on(
+											'click',
+											function() {
+												bootbox
+														.confirm({
+															message : "¿Seguro que desea darse de baja?",
+															buttons : {
+																confirm : {
+																	label : 'Sí',
+																	className : 'btn-success'
+																},
+																cancel : {
+																	label : 'No',
+																	className : 'btn-danger'
+																}
+															},
+															callback : function(
+																	result) {
+																if (result) {
+																	bootbox
+																			.alert({
+																				message : "Se ha dado de baja correctamente, esperamos volver a verle pronto."
+																			});
+																} else {
+																	bootbox
+																			.alert({
+																				message : "Gracias por seguir confiando en nosotros!"
+																			});
+																}
+															}
+														});
+											});
+						});
+	</script>
 </body>
 </html>

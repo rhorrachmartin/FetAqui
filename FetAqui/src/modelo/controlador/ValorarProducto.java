@@ -17,13 +17,18 @@ import modelo.ejb.LoggersEJB;
 import modelo.ejb.PostEJB;
 import modelo.ejb.ProductoEJB;
 import modelo.ejb.ValoracionProductoEJB;
+import modelo.ejb.VendedorEJB;
 import modelo.pojo.Categoria;
 import modelo.pojo.Post;
 import modelo.pojo.Producto;
 import modelo.pojo.ValoracionProducto;
+import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Clase encargada de insertar y actualizar la valoración de un producto
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ValorarProducto")
 public class ValorarProducto extends HttpServlet {
@@ -31,19 +36,19 @@ public class ValorarProducto extends HttpServlet {
 
 	@EJB
 	ValoracionProductoEJB valoracionProductoEJB;
-	
+
 	@EJB
 	CategoriaEJB categoriaEJB;
 
 	@EJB
 	ProductoEJB productoEJB;
-	
+
+	@EJB
+	VendedorEJB vendedorEJB;
+
 	@EJB
 	PostEJB postEJB;
 
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
 
@@ -56,74 +61,77 @@ public class ValorarProducto extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		if (session == null && session.getAttribute("vendedor") == null && session.getAttribute("cliente") == null) {
-			response.sendRedirect("Principal");
+		try {
+			if (session == null && session.getAttribute("vendedor") == null
+					&& session.getAttribute("cliente") == null) {
+				response.sendRedirect("Principal");
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		response.setContentType(CONTENT_TYPE);
 
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
-		
-		
-		if(session.getAttribute("cliente") != null) {
-			
-			if(request.getParameter("valoracion") != null && request.getParameter("id_producto") != null && request.getParameter("id_cliente") != null) {
-				
-				ValoracionProducto valoracionProducto = new ValoracionProducto();
-				
-				Integer valoracion = Integer.valueOf(request.getParameter("valoracion"));
-				Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
-				Integer id_cliente = Integer.valueOf(request.getParameter("id_cliente"));
-				
-				valoracionProducto.setCliente(id_cliente);
-				valoracionProducto.setProducto(id_producto);
-				valoracionProducto.setValoracion(valoracion);
-				
-				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-				ArrayList<Producto> productos = productoEJB.getProductos();				
-				ArrayList<Post> posts = postEJB.getPosts();
-				
-				request.setAttribute("posts", posts);				
-				request.setAttribute("productos", productos);
-				request.setAttribute("categorias", categorias);
-				
-				valoracionProductoEJB.insertarValoracionProducto(valoracionProducto);
-				
-				if(request.getParameter("productos")!= null) {
-					RequestDispatcher rs = getServletContext().getRequestDispatcher(PRODUCTOS_LOGEADO_CLIENTE_JSP);
-					rs.forward(request, response);
-				}else if(request.getParameter("inicio") != null) {
-					RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
-					
-					request.setAttribute("posts", posts);				
+
+		try {
+			if (session.getAttribute("cliente") != null) {
+
+				if (request.getParameter("valoracion") != null && request.getParameter("id_producto") != null
+						&& request.getParameter("id_cliente") != null) {
+
+					ValoracionProducto valoracionProducto = new ValoracionProducto();
+
+					Integer valoracion = Integer.valueOf(request.getParameter("valoracion"));
+					Integer id_producto = Integer.valueOf(request.getParameter("id_producto"));
+					Integer id_cliente = Integer.valueOf(request.getParameter("id_cliente"));
+
+					valoracionProducto.setCliente(id_cliente);
+					valoracionProducto.setProducto(id_producto);
+					valoracionProducto.setValoracion(valoracion);
+
+					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+					ArrayList<Producto> productos = productoEJB.getProductos();
+					ArrayList<Post> posts = postEJB.getPosts();
+
+					request.setAttribute("posts", posts);
 					request.setAttribute("productos", productos);
 					request.setAttribute("categorias", categorias);
-					
-					rs.forward(request, response);
-				}
-				
-				
-				
-				
-			}else {
-				response.sendRedirect("ObtenerTodosProductos");
-			}
-			
-			
-		}else {
-			response.sendRedirect("Principal");
-		}
 
-		ValorarProducto valoracionProducto = new ValorarProducto();
+					valoracionProductoEJB.insertarValoracionProducto(valoracionProducto);
+
+					if (request.getParameter("productos") != null) {
+						RequestDispatcher rs = getServletContext().getRequestDispatcher(PRODUCTOS_LOGEADO_CLIENTE_JSP);
+						rs.forward(request, response);
+					} else if (request.getParameter("inicio") != null) {
+						RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
+
+						ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
+
+						request.setAttribute("posts", posts);
+						request.setAttribute("productos", productos);
+						request.setAttribute("vendedores", vendedores);
+
+						rs.forward(request, response);
+					}
+
+				} else {
+					response.sendRedirect("ObtenerTodosProductos");
+				}
+
+			} else {
+				response.sendRedirect("Principal");
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
+		}
 
 	}
 

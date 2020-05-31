@@ -35,6 +35,22 @@ public class ValoracionProductoDAO {
 			sqlSession.close();
 		}
 	}
+	
+	public void borrarValoracionCliente(Integer id_cliente) {
+
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			ValoracionesProductoMapper valoracionesProductoMapper = sqlSession.getMapper(ValoracionesProductoMapper.class);
+			// Insertamos la direccion
+			valoracionesProductoMapper.borrarValoracionCliente(id_cliente);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 
 	

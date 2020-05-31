@@ -20,25 +20,22 @@ import modelo.pojo.Poblacion;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Clase controlador encargado de actualizar el password de un Vendedor
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ActualizarPasswordVendedor")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ActualizarPasswordVendedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
 	@EJB
 	VendedorEJB vendedorEJB;
 
 	@EJB
 	PoblacionEJB poblacionEJB;
 
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
 
@@ -56,48 +53,66 @@ public class ActualizarPasswordVendedor extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-		Vendedor vendedorExiste = null;
-		String passAntiguo = request.getParameter("passAntiguo");
-		String passNuevo1 = request.getParameter("passNuevo1");
-		String passNuevo2 = request.getParameter("passNuevo2");
-		ArrayList<Poblacion> poblaciones = null;
-		
 		try {
 
+			// Recogemos el usuario Vendedor de la sesión
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+
+			// Recogemos el password antiguo y dos veces el nuevo
+			String passAntiguo = request.getParameter("passAntiguo");
+			String passNuevo1 = request.getParameter("passNuevo1");
+			String passNuevo2 = request.getParameter("passNuevo2");
+
+			// Si existe un usuario Vendedor en la sesión
 			if (vendedor.getNombre() != null) {
-				vendedorExiste = vendedorEJB.getVendedor(vendedor.getEmail(), vendedor.getPassword());
 
-				if (vendedorExiste.getPassword().equals(passAntiguo) && passNuevo1.equals(passNuevo2)) {
+				ArrayList<Poblacion> poblaciones = null;
 
-					vendedorEJB.updatePassword(passNuevo2, vendedorExiste.getId_vendedor());
+				// Si el password del Vendedor coincide con el introducido y los dos passwords
+				// nuevos son iguales
+				if (vendedor.getPassword().equals(passAntiguo) && passNuevo1.equals(passNuevo2)) {
 
+					// Actualizamos el password del vendedor
+					vendedorEJB.updatePassword(passNuevo2, vendedor.getId_vendedor());
+
+					// Recogemos el vendedor actualizado
 					Vendedor vendedorActualizado = vendedorEJB.getVendedor(vendedor.getEmail(), passNuevo2);
 
+					// Sustituimos el usuario vendedor de la sesión
 					request.getSession().setAttribute("vendedor", vendedorActualizado);
 
+					// Recogemos las poblaciones
 					poblaciones = poblacionEJB.getPoblaciones();
 
+					// Lo pasamos todo a la request
 					request.setAttribute("poblaciones", poblaciones);
-
 					request.setAttribute("vendedor", vendedorActualizado);
 
+					// Redirigimos a PERFIL_VENDEDOR_JSP
 					rs.forward(request, response);
 				} else {
+					// Si no coinciden las contraseñas mostramos un mensaje de error
 					String error = "Las contraseñas no coinciden";
-					Vendedor vendedor3 = (Vendedor) session.getAttribute("vendedor");
+
+					// Recogemos las poblaciones
 					poblaciones = poblacionEJB.getPoblaciones();
+
+					// Lo pasamos todo a la request
 					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("vendedor", vendedor3);
+					request.setAttribute("vendedor", vendedor);
 					request.setAttribute("error", error);
+
+					// Redirigimos a PERFIL_VENDEDOR_JSP
 					rs.forward(request, response);
 				}
 
 			} else {
+
+				// Si no hay usuario en la sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

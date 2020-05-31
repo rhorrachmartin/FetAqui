@@ -9,6 +9,10 @@
 		insert into valoracioncv (valoracion, id_cliente,id_vendedor)
 		values (#{valoracion}, #{id_cliente},#{id_vendedor});
 	</insert>
+	
+	<delete id='borrarValoracionCliente' parameterType='int'>
+		delete from valoracioncv where id_cliente = #{id_cliente};
+	</delete>
 
 
 </mapper>

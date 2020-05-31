@@ -29,16 +29,15 @@ import modelo.pojo.CodigoActivacionVendedor;
 import modelo.pojo.Post;
 import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
-
 /**
- * Servlet implementation class Registro
+ * Clase principal de la aplicación
+ * @author ramon
+ *
  */
 @WebServlet("/Principal")
 public class Principal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	/**
-	 * EJB para trabajar con Vendedores
-	 */
+	
 	@EJB
 	VendedorEJB vendedorEJB;
 	
@@ -47,39 +46,22 @@ public class Principal extends HttpServlet {
 	
 	@EJB
 	PostEJB postEJB;
-
-	/**
-	 * EJB para trabajar con Clientes
-	 */
+	
 	@EJB
 	ClienteEJB clienteEJB;
 
-	/**
-	 * EJB para trabajar con sesiones de vendedor
-	 */
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
-
-	/**
-	 * EJB para trabajar con sesiones de cliente
-	 */
+	
 	@EJB
 	SesionClienteEJB sesionClienteEJB;
-	/**
-	 * EJB para tratar los códigos de activación
-	 */
+	
 	@EJB
 	CodigoVendedorEJB codigoVendedorEJB;
-
-	/**
-	 * EJB para tratar los códigos de activación
-	 */
+	
 	@EJB
 	CodigoClienteEJB codigoClienteEJB;
-
-	/**
-	 * EJB para trabajar con los logger
-	 */
+	
 	@EJB
 	LoggersEJB logger;
 
@@ -110,6 +92,10 @@ public class Principal extends HttpServlet {
 
 		request.setAttribute("vendedor", v);
 		request.setAttribute("cliente", c);
+		
+		
+	
+		
 		// Si hay sesión
 		if (v != null || c != null) {
 			// Ya está logeado, lo redirigimos a la principal

@@ -117,7 +117,7 @@
 		<!-- FIN NAVEGADOR -->
 
 		<!-- CONTENEDOR PRINCIPAL -->
-		<div class="container-fluid">
+		<div class="container-fluid mt-3">
 
 			<div class="row">
 

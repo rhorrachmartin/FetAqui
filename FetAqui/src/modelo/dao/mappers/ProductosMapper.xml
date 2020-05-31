@@ -142,7 +142,7 @@
             categoria.nombre as categoria,
             formato.nombre as formato
         from producto
-        inner join 
+        left join 
 			valoracion_producto
         on 
 			producto.id_producto = valoracion_producto.producto

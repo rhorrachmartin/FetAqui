@@ -7,7 +7,6 @@ import modelo.pojo.ValoracionCv;
 
 public class ValoracionVendedorDAO {
 
-	
 	/**
 	 * Método para insertar una direccion en BD
 	 * 
@@ -19,7 +18,8 @@ public class ValoracionVendedorDAO {
 		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
 		try {
 			// Obtenemos el mapper
-			ValoracionesVendedoresMapper valoracionesVendedoresMapper = sqlSession.getMapper(ValoracionesVendedoresMapper.class);
+			ValoracionesVendedoresMapper valoracionesVendedoresMapper = sqlSession
+					.getMapper(ValoracionesVendedoresMapper.class);
 			// Insertamos la direccion
 			valoracionesVendedoresMapper.insertarValoracionVendedor(valoracionCv);
 			sqlSession.commit();
@@ -29,7 +29,21 @@ public class ValoracionVendedorDAO {
 		}
 	}
 
+	public void borrarValoracionCliente(Integer id_cliente) {
 
-	
+		// Abrimos la sesión
+		SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+		try {
+			// Obtenemos el mapper
+			ValoracionesVendedoresMapper valoracionesVendedoresMapper = sqlSession
+					.getMapper(ValoracionesVendedoresMapper.class);
+			// Insertamos la direccion
+			valoracionesVendedoresMapper.borrarValoracionCliente(id_cliente);
+			sqlSession.commit();
+		} finally {
+			// Cerramos sesión
+			sqlSession.close();
+		}
+	}
 
 }

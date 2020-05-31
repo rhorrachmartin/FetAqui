@@ -121,7 +121,7 @@
 								<div class="form-group">
 									<label for="nombre">Nombre</label> <input type="text"
 										id="nombre" name="nombre" class="form-control"
-										aria-describedby="nombre" required>
+										aria-describedby="nombre" maxlength="64" required>
 								</div>
 
 								<div class="form-group">
@@ -169,7 +169,7 @@
 								<div class="form-group">
 									<label for="stock">Stock </label> <input type="number"
 										id="stock" name="stock" class="form-control"
-										aria-describedby="stock" required> <small
+										aria-describedby="stock" min="1" max="2147483647" required> <small
 										id="ayudaStock" class="form-text text-muted">Cantidad
 										disponible para la venta</small>
 								</div>

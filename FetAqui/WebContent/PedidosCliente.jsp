@@ -97,14 +97,14 @@
 					<%
 						if (cliente.getFoto().equals("FotoPorDefecto")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
 							alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="Imagenes/<%=cliente.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>

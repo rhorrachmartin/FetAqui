@@ -19,7 +19,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
 	rel="stylesheet">
-	<link
+<link
 	href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
 	rel="stylesheet">
 <!-- Bootstrap core CSS -->
@@ -69,12 +69,14 @@
 				</ul>
 
 				<ul class="navbar-nav ml-auto nav-flex-icons">
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						href="PaginaPropioVendedor">MI PÁGINA</a></li>
-					<li class="nav-item"><a class="btn btn-primary btn-sm botonesNavegador"
+					<li class="nav-item"><a
+						class="btn btn-primary btn-sm botonesNavegador"
 						href="OpcionesPerfilVendedor.jsp">ADMINISTRACIÓN</a></li>
-					<li class="nav-item"><a class="btn btn-success btn-sm botonesNavegador"
-						href="Logout">SALIR</a></li>
+					<li class="nav-item"><a
+						class="btn btn-success btn-sm botonesNavegador" href="Logout">SALIR</a></li>
 					<%
 						if (vendedor.getFoto().equals("FotoPorDefecto")) {
 					%>
@@ -107,7 +109,7 @@
 
 					<div class="text-center">
 						<a href="" class="btn aqua-gradient" data-toggle="modal"
-							data-target="#modalLoginAvatar">Cambiar foto de perfil</a>
+							data-target="#modalLoginAvatar">CAMBIAR FOTO DE PERFIL</a>
 					</div>
 
 				</div>
@@ -162,7 +164,7 @@
 										<div class="md-form">
 											<i class="fas fa-lock prefix"></i> <input type="password"
 												id="inputValidationEx3" class="form-control validate"
-												name="password" required> <label
+												name="password" maxlength="32" required> <label
 												for="inputValidationEx3"
 												data-error="Escriba su contraseña correctamente"
 												data-success="OK" style="width: 200px;">Password</label>
@@ -227,7 +229,7 @@
 								<label for="passAntiguo">Password actual</label> <input
 									type="password" id="passAntiguo" name="passAntiguo"
 									class="form-control" aria-describedby="password" value=""
-									required> <small id="ayudaPass"
+									maxlength="32" required> <small id="ayudaPass"
 									class="form-text text-muted">Contraseña actual</small>
 							</div>
 
@@ -236,7 +238,8 @@
 									<div class="md-form">
 										<i class="fas fa-lock prefix"></i> <input type="password"
 											id="inputValidationEx3" class="form-control validate"
-											name="passNuevo1"> <label for="inputValidationEx3"
+											name="passNuevo1" maxlength="32"> <label
+											for="inputValidationEx3"
 											data-error="Escriba su contraseña correctamente"
 											data-success="OK" style="width: 200px;">Password</label>
 									</div>
@@ -267,7 +270,8 @@
 									<div class="md-form">
 										<i class="fas fa-lock prefix"></i> <input type="password"
 											id="inputValidationEx3" class="form-control validate"
-											name="passNuevo2"> <label for="inputValidationEx3"
+											name="passNuevo2" maxlength="32"> <label
+											for="inputValidationEx3"
 											data-error="Escriba su contraseña correctamente"
 											data-success="OK" style="width: 200px;">Password</label>
 									</div>
@@ -331,30 +335,48 @@
 								<div class="form-group">
 									<label for="nif">NIF</label> <input type="text" id="nif"
 										name="nif" class="form-control" aria-describedby="nombre"
-										value=<%=vendedor.getNif()%> required>
+										value="<%=vendedor.getNif()%>" maxlength="9" required>
 								</div>
 
 								<div class="form-group">
 									<label for="nombre">Nombre</label> <input type="text"
 										id="nombre" name="nombre" class="form-control"
 										aria-describedby="nombre" value="<%=vendedor.getNombre()%>"
-										required>
+										maxlength="32" required>
 								</div>
 
 								<div class="form-group">
 									<label for="telefono">Telefono </label> <input type="text"
 										id="telefono" name="telefono" class="form-control"
 										aria-describedby="telefono"
-										value="<%=vendedor.getTelefono()%>" required>
+										value="<%=vendedor.getTelefono()%>" maxlength="9" required>
 								</div>
 
+								<%
+									if (vendedor.getDireccion() != null) {
+								%>
 								<div class="form-group">
 									<label for="direccion">Direccion </label> <input type="text"
 										id="direccion" name="direccion" class="form-control"
 										aria-describedby="direccion"
-										value="<%=vendedor.getDireccion()%>" required>
+										value="<%=vendedor.getDireccion()%>" maxlength="200" required>
 								</div>
+								<%
+									} else {
+								%>
+								<div class="form-group">
+									<label for="direccion">Direccion </label> <input type="text"
+										id="direccion" name="direccion" class="form-control"
+										aria-describedby="direccion" value=" " maxlength="200"
+										required>
+								</div>
+								<%
+									}
+								%>
 
+								<%
+									if (vendedor.getDireccion() != null) {
+								%>
 								<div class="form-group">
 									<label for="poblacion">Poblacion </label> <select
 										id="poblacion" name="poblacion"
@@ -372,6 +394,31 @@
 										%>
 									</select>
 								</div>
+								<%
+									} else {
+								%>
+								<div class="form-group">
+									<label for="poblacion">Poblacion </label> <select
+										id="poblacion" name="poblacion"
+										class="browser-default custom-select">
+										<%
+											ArrayList<Poblacion> poblaciones = (ArrayList<Poblacion>) request.getAttribute("poblaciones");
+
+										for (Poblacion p : poblaciones) {
+										%>
+										<option value=<%=p.getId()%>><%=p.getNombre()%></option>
+										<%
+											}
+										%>
+									</select>
+								</div>
+								<%
+									}
+								%>
+
+
+
+
 
 								<%
 									String error = "";
@@ -383,7 +430,7 @@
 									<label for="passAntiguo">Password actual</label> <input
 										type="password" id="passAntiguo" name="passAntiguo"
 										class="form-control" aria-describedby="password" value=""
-										required> <small id="ayudaPass"
+										maxlength="64" required> <small id="ayudaPass"
 										class="form-text text-muted"><strong
 										style="color: red"><%=error%></strong></small>
 								</div>
@@ -394,7 +441,7 @@
 									<label for="passAntiguo">Password actual</label> <input
 										type="password" id="passAntiguo" name="passAntiguo"
 										class="form-control" aria-describedby="password" value=""
-										required> <small id="ayudaPass"
+										maxlength="64" required> <small id="ayudaPass"
 										class="form-text text-muted">Para guardar los cambios
 										introduzca su contraseña</small>
 								</div>

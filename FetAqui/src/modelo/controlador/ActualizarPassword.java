@@ -20,16 +20,15 @@ import modelo.pojo.Cliente;
 import modelo.pojo.Poblacion;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Clase controlador encargado de actualizar el password de un usuario Cliente
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ActualizarPassword")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ActualizarPassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * EJB para trabajar con Usuarios
-	 */
 
 	@EJB
 	ClienteEJB clienteEJB;
@@ -37,15 +36,11 @@ public class ActualizarPassword extends HttpServlet {
 	@EJB
 	PoblacionEJB poblacionEJB;
 
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
 
 	static final String PERFIL_CLIENTE_JSP = "/PerfilCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -58,49 +53,67 @@ public class ActualizarPassword extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Cliente cliente = (Cliente) session.getAttribute("cliente");
-		Cliente clienteExiste = null;
-		String passAntiguo = request.getParameter("passAntiguo");
-		String passNuevo1 = request.getParameter("passNuevo1");
-		String passNuevo2 = request.getParameter("passNuevo2");
-		ArrayList<Poblacion> poblaciones = null;
-		
 		try {
 
+			// Recogemos el usuario cliente de la sesión
+			Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+			// Recogemos el password antiguo y dos veces el nuevo
+			String passAntiguo = request.getParameter("passAntiguo");
+			String passNuevo1 = request.getParameter("passNuevo1");
+			String passNuevo2 = request.getParameter("passNuevo2");
+
+			// Si existe un usuario Cliente en la sesión
 			if (cliente.getNombre() != null) {
-				
-				clienteExiste = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
 
-				if (clienteExiste.getPassword().equals(passAntiguo) && passNuevo1.equals(passNuevo2)) {
+				ArrayList<Poblacion> poblaciones = null;
 
-					clienteEJB.updatePassword(passNuevo2, clienteExiste.getId_cliente());
+				// Si el password del cliente coincide con el introducido y los dos passwords
+				// nuevos son iguales
+				if (cliente.getPassword().equals(passAntiguo) && passNuevo1.equals(passNuevo2)) {
 
+					// Actualizamos el password del cliente
+					clienteEJB.updatePassword(passNuevo2, cliente.getId_cliente());
+
+					// Recogemos el cliente acutalizado
 					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), passNuevo2);
 
+					// Sustituimos el usuario cliente de la sesión
 					request.getSession().setAttribute("cliente", clienteActualizado);
 
+					// Rellenamos el ArrayList de Poblacion
 					poblaciones = poblacionEJB.getPoblaciones();
 
+					// Lo pasamos todo a a request
 					request.setAttribute("poblaciones", poblaciones);
-
 					request.setAttribute("cliente", clienteActualizado);
 
+					// Redirigimos a PERFIL_CLIENTE_JSP
 					rs.forward(request, response);
 				} else {
+
+					// Si no coinciden mostramos un mensaje de error
 					String error = "Las contraseñas no coinciden";
-					Cliente cliente3 = (Cliente) session.getAttribute("cliente");
+
+					// Recogemos las poblaciones
 					poblaciones = poblacionEJB.getPoblaciones();
+
+					// Lo pasamos todo a la request
 					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("cliente", cliente3);
+					request.setAttribute("cliente", cliente);
 					request.setAttribute("error", error);
+
+					// Redirigimos a PERFIL_CLIENTE_JSP
 					rs.forward(request, response);
 				}
 
 			} else {
+
+				// Si no hay usuario en la sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {
-			e.getMessage();
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}

@@ -12,8 +12,14 @@ public class ValoracionPostEJB {
 
 	public void insertarValoracionPostPorDefecto(ValoracionPost valoracionPost) {
 		ValoracionPostDAO valoracionPostDAO = new ValoracionPostDAO();
-		
+
 		valoracionPostDAO.insertarValoracionPostPorDefecto(valoracionPost);
+	}
+
+	public void borrarValoracionCliente(Integer id_cliente) {
+		ValoracionPostDAO valoracionPostDAO = new ValoracionPostDAO();
+
+		valoracionPostDAO.borrarValoracionCliente(id_cliente);
 	}
 
 }

@@ -11,8 +11,19 @@ import modelo.pojo.ValoracionProducto;
 public class ValoracionProductoEJB {
 
 	public void insertarValoracionProducto(ValoracionProducto valoracionProducto) {
+		
 		ValoracionProductoDAO valoracionProductoDAO = new ValoracionProductoDAO();
+		
 		valoracionProductoDAO.insertarValoracionProducto(valoracionProducto);
+		
+	}
+	
+	public void borrarValoracionCliente(Integer id_cliente) {
+		
+		ValoracionProductoDAO valoracionProductoDAO = new ValoracionProductoDAO();
+		
+		valoracionProductoDAO.borrarValoracionCliente(id_cliente);
+		
 	}
 
 }

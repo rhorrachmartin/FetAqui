@@ -85,14 +85,14 @@
 					<%
 						if (cliente.getFoto().equals("FotoPorDefecto")) {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="img/user.png" class="rounded-circle z-depth-0"
 							alt="avatar image" height="35">
 					</a></li>
 					<%
 						} else {
 					%>
-					<li class="nav-item avatar"><a class="nav-link p-0" href="#">
+					<li class="nav-item avatar"><a class="nav-link p-0" href="OpcionesPerfil.jsp">
 							<img src="Imagenes/<%=cliente.getFoto()%>"
 							class="rounded-circle z-depth-0" alt="avatar image" height="35">
 					</a></li>
@@ -233,7 +233,7 @@
 								<label for="passAntiguo">Password actual</label> <input
 									type="password" id="passAntiguo" name="passAntiguo"
 									class="form-control" aria-describedby="password" value=""
-									required> <small id="ayudaPass"
+									required maxlength="32"> <small id="ayudaPass"
 									class="form-text text-muted">Contraseña actual</small>
 							</div>
 
@@ -242,7 +242,7 @@
 									<div class="md-form">
 										<i class="fas fa-lock prefix"></i> <input type="password"
 											id="inputValidationEx3" class="form-control validate"
-											name="passNuevo1"> <label for="inputValidationEx3"
+											name="passNuevo1" maxlength="32"> <label for="inputValidationEx3"
 											data-error="Escriba su contraseña correctamente"
 											data-success="OK" style="width: 200px;">Password</label>
 									</div>
@@ -273,7 +273,7 @@
 									<div class="md-form">
 										<i class="fas fa-lock prefix"></i> <input type="password"
 											id="inputValidationEx3" class="form-control validate"
-											name="passNuevo2"> <label for="inputValidationEx3"
+											name="passNuevo2" maxlength="32"> <label for="inputValidationEx3"
 											data-error="Escriba su contraseña correctamente"
 											data-success="OK" style="width: 200px;">Password</label>
 									</div>
@@ -353,14 +353,32 @@
 										aria-describedby="telefono" value=<%=cliente.getTelefono()%>
 										required>
 								</div>
-
+								
+								<%
+									if (cliente.getDireccion() != null) {
+								%>
 								<div class="form-group">
 									<label for="direccion">Direccion </label> <input type="text"
 										id="direccion" name="direccion" class="form-control"
 										aria-describedby="direccion"
 										value="<%=cliente.getDireccion()%>" required>
 								</div>
-
+								<%
+									} else {
+								%>
+								<div class="form-group">
+									<label for="direccion">Direccion </label> <input type="text"
+										id="direccion" name="direccion" class="form-control"
+										aria-describedby="direccion"
+										value=" " required>
+								</div>
+								<%
+									}
+								%>
+								
+								<%
+									if (cliente.getDireccion() != null) {
+								%>
 								<div class="form-group">
 									<label for="poblacion">Poblacion </label> <select
 										id="poblacion" name="poblacion"
@@ -378,6 +396,31 @@
 										%>
 									</select>
 								</div>
+								<%
+									} else {
+								%>
+								<div class="form-group">
+									<label for="poblacion">Poblacion </label> <select
+										id="poblacion" name="poblacion"
+										class="browser-default custom-select">
+										<%
+											ArrayList<Poblacion> poblaciones = (ArrayList<Poblacion>) request.getAttribute("poblaciones");
+
+										for (Poblacion p : poblaciones) {
+										%>
+										<option value=<%=p.getId()%>><%=p.getNombre()%></option>
+										<%
+											}
+										%>
+									</select>
+								</div>
+								<%
+									}
+								%>
+
+								
+
+								
 
 								<%
 									String error = "";

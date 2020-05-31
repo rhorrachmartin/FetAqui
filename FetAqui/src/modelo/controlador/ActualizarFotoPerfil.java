@@ -22,17 +22,16 @@ import modelo.pojo.Cliente;
 import modelo.pojo.Poblacion;
 
 /**
- * Servlet implementation class ActualizarPerfilCliente
+ * Clase controlador encargado de actualizar la foto de perfil de un usuario
+ * Cliente
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ActualizarFotoPerfil")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ActualizarFotoPerfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * EJB para trabajar con Usuariosa asasz> asdasdas asdasdasd
-	 */
-	
 
 	@EJB
 	ClienteEJB clienteEJB;
@@ -40,9 +39,6 @@ public class ActualizarFotoPerfil extends HttpServlet {
 	@EJB
 	PoblacionEJB poblacionEJB;
 
-	/**
-	 * EJB para trabajar con los logger
-	 */
 	@EJB
 	LoggersEJB logger;
 
@@ -53,9 +49,9 @@ public class ActualizarFotoPerfil extends HttpServlet {
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * Método doPost encargado de actualizar la foto de perfil de un usuario Cliente
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -70,52 +66,69 @@ public class ActualizarFotoPerfil extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Cliente cliente = (Cliente) session.getAttribute("cliente");
-		Cliente clienteExiste = null;
-		String password = request.getParameter("password");
-		ArrayList<Poblacion> poblaciones = null;
-
-		if (cliente.getNombre() != null) {
-			clienteExiste = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
-
-			if (clienteExiste.getPassword().equals(password)) {
-
-				try {
+		try {
+			//Recogemos al usuario Cliente de la sesión
+			Cliente cliente = (Cliente) session.getAttribute("cliente");
+			
+			//Recogemos el password introducido por el usuario
+			String password = request.getParameter("password");
+			ArrayList<Poblacion> poblaciones = null;
+			
+			//Si hemos encontrado usuario en la sesión
+			if (cliente.getNombre() != null) {
+				
+				//Comparamos el password del usuario en sesión con el password introducido				
+				if (cliente.getPassword().equals(password)) {
+					
+					//Recogemos el nombre de la foto y la guardamos en disco
 					String foto = imagenesEJB.guardarImagen(request, contexto);
-					clienteEJB.updateFoto(foto, clienteExiste.getId_cliente());
-
+					
+					//actualizamos en BD
+					clienteEJB.updateFoto(foto, cliente.getId_cliente());
+					
+					//Recogemos el cliente actualizado
 					Cliente clienteActualizado = clienteEJB.getCliente(cliente.getEmail(), cliente.getPassword());
+					
+					//Actualizamos la sesión del usuario Cliente
 					request.getSession().setAttribute("cliente", clienteActualizado);
+					
+					//Recogemos las poblaciones de BD
 					poblaciones = poblacionEJB.getPoblaciones();
+					
+					//Las pasamos a la request
 					request.setAttribute("poblaciones", poblaciones);
+					
+					//Pasamos el cliente actualizado a la request
 					request.setAttribute("cliente", clienteActualizado);
+					
+					//Redirigimos a PERFIL_CLIENTE_JSP
 					rs.forward(request, response);
-				} catch (Exception e) {
-					e.getMessage();
+
+				} else {
+					//Si no coinciden las contraseñas mostramos un mensaje de error
+					String error = "Contraseña incorrecta";
+					
+					//Recogemos las poblaciones de BD
+					poblaciones = poblacionEJB.getPoblaciones();
+					
+					//Las pasamos a la request
+					request.setAttribute("poblaciones", poblaciones);
+					
+					//Pasamos el cliente a la request junto con el mensaje de error
+					request.setAttribute("cliente", cliente);
+					request.setAttribute("error", error);
+					//Redirigimos a PERFIL_CLIENTE_JSP
+					rs.forward(request, response);
 				}
 
 			} else {
-				try {
-					String error = "Contraseña incorrecta";
-					Cliente cliente3 = (Cliente) session.getAttribute("cliente");
-					poblaciones = poblacionEJB.getPoblaciones();
-					request.setAttribute("poblaciones", poblaciones);
-					request.setAttribute("cliente", cliente3);
-					request.setAttribute("error", error);
-					rs.forward(request, response);
-				} catch (Exception e) {
-					e.getMessage();
-				}
-			}
-
-		} else {
-			try {
+				//Si no encontramos sesión redirigimos a Principal
 				response.sendRedirect("Principal");
-			} catch (Exception e) {
-				e.getMessage();
 			}
-		}
 
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
+		}
 	}
 
 }

@@ -23,24 +23,24 @@ import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
 /**
- * Servlet implementation class AñadirProducto
+ * Clase controlador encargado de obtener todos los productos de un vendedor
+ * 
+ * @author ramon
+ *
  */
 @WebServlet("/ObtenerProductosVendedor")
 public class ObtenerProductosVendedor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	
 	@EJB
 	CategoriaEJB categoriaEJB;
 
 	@EJB
 	FormatoEJB formatoEJB;
-	
+
 	@EJB
 	ProductoEJB productoEJB;
-	/**
-	 * EJB para trabajar con los logger
-	 */
+
 	@EJB
 	LoggersEJB logger;
 
@@ -60,27 +60,28 @@ public class ObtenerProductosVendedor extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+		try {
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 
-		if (session != null && vendedor.getNombre() != null) {
-			ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-			ArrayList<Formato> formatos = formatoEJB.getFormatos();
-			ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-			
-			
-			request.setAttribute("productos", productos);
-			request.setAttribute("vendedor", vendedor);
-			request.setAttribute("categorias", categorias);
-			request.setAttribute("formatos", formatos);
+			if (session != null && vendedor.getNombre() != null) {
+				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+				ArrayList<Formato> formatos = formatoEJB.getFormatos();
+				ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
 
-			rs.forward(request, response);
+				request.setAttribute("productos", productos);
+				request.setAttribute("vendedor", vendedor);
+				request.setAttribute("categorias", categorias);
+				request.setAttribute("formatos", formatos);
 
-		} else {
-			response.sendRedirect("Principal");
+				rs.forward(request, response);
+
+			} else {
+				response.sendRedirect("Principal");
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}
-
-
 
 }

@@ -13,5 +13,7 @@ public interface ValoracionesProductoMapper {
 
 	
 	public int insertarValoracionProducto(ValoracionProducto valoracionProducto);
+	
+	public void borrarValoracionCliente(Integer id_cliente);
 
 }

@@ -56,6 +56,7 @@
 	ArrayList<Formato> formatos = null;
 	ArrayList<Producto> productos = null;
 	int contadorCheckBox = 0;
+	
 	if (request.getAttribute("vendedor") != null) {
 		vendedor = (Vendedor) request.getAttribute("vendedor");
 		categorias = (ArrayList<Categoria>) request.getAttribute("categorias");
@@ -254,7 +255,7 @@
 										<div class="form-group">
 											<label for="nombre">Nombre</label> <input type="text"
 												id="nombre" name="nombre" class="form-control"
-												aria-describedby="nombre" value="<%=pro.getNombre()%>"
+												aria-describedby="nombre" value="<%=pro.getNombre()%>" maxlength="64"
 												required> <small id="ayudaNombre"
 												class="form-text text-muted">Nombre del producto</small>
 										</div>
@@ -309,7 +310,7 @@
 										<div class="form-group">
 											<label for="stock">Stock </label> <input type="number"
 												id="stock" name="stock" class="form-control"
-												aria-describedby="stock" value="<%=pro.getStock()%>"
+												aria-describedby="stock" value="<%=pro.getStock()%>" min="1" max="2147483647"
 												required> <small id="ayudaStock"
 												class="form-text text-muted">Cantidad disponible
 												para la venta</small>

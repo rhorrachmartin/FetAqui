@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FET AQUI</title>
+<!--  FONT AWESOME -->
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -44,6 +45,7 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
 <script src="js/validarPassword.js"></script>
+
 </head>
 <body>
 
@@ -112,16 +114,19 @@
 		<div class="container">
 			<div id="loginPanel" class="row">
 				<div class="col col-lg-12">
-					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor" href="Perfil">DATOS
-						PERSONALES</a>
+					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor"
+						href="Perfil">DATOS PERSONALES</a>
 				</div>
 				<div class="col col-lg-12">
-					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor" href="AdministrarPaginaVendedor.jsp">ADMINISTRAR
-						PÁGINA</a>
+					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor"
+						href="AdministrarPaginaVendedor.jsp">ADMINISTRAR PÁGINA</a>
 				</div>
 				<div class="col col-lg-12">
-					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor" href="ObtenerPedidosVendedor">MIS PEDIDOS</a>
+					<a class="btn aqua-gradient btn-lg opcionPerfilVendedor"
+						href="ObtenerPedidosVendedor">MIS PEDIDOS</a>
 				</div>
+
+
 			</div>
 		</div>
 
@@ -129,7 +134,7 @@
 	<%
 		}
 	%>
-	</div>
+
 	<!-- Footer -->
 	<footer class="page-footer font-small unique-color-dark pt-4 ">
 
@@ -144,6 +149,9 @@
 				<li class="list-inline-item"><a href="Login"
 					class="btn btn-outline-white btn-rounded" data-toggle="modal"
 					data-target="#modalRegistro">Darse de alta</a></li>
+
+				<li><a id="baja" class="btn btn-danger btn-sm">DARME DE
+						BAJA</a></li>
 			</ul>
 			<!-- Call to action -->
 
@@ -158,6 +166,52 @@
 
 	</footer>
 	<!-- Footer -->
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$('#baja')
+									.on(
+											'click',
+											function() {
+												bootbox
+														.confirm({
+															message : "¿Seguro que desea darse de baja?",
+															buttons : {
+																confirm : {
+																	label : 'Sí',
+																	className : 'btn-success'
+																},
+																cancel : {
+																	label : 'No',
+																	className : 'btn-danger'
+																}
+															},
+															callback : function(
+																	result) {
+																if (result) {
+																	var url = "BajaVendedor";
+																	window.location.href = url;
+
+																} else {
+																	bootbox
+																			.alert({
+																				message : "¡Gracias por seguir confiando en nosotros!"
+																			});
+																}
+															}
+														});
+											});
+						});
+	</script>
 
 </body>
 </html>
