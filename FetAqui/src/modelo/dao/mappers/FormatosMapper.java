@@ -1,12 +1,11 @@
 package modelo.dao.mappers;
 
-
 import java.util.ArrayList;
 
 import modelo.pojo.Formato;
 
 /**
- * Interfaz mapper para manejar los mapper de Poblaciones
+ * Interfaz mapper para manejar los mapper de Formato
  * 
  * @author ramon
  *
@@ -14,8 +13,9 @@ import modelo.pojo.Formato;
 public interface FormatosMapper {
 
 	/**
-	 * Método para obtener los Formatos
-	 * @return ArrayList<Formato> 
+	 * Método para obtener todos los formatos de la BD
+	 * 
+	 * @return ArrayList de Formato
 	 */
 	public ArrayList<Formato> getFormatos();
 

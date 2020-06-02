@@ -40,33 +40,64 @@ public class Perfil extends HttpServlet {
 	static final String PERFIL_CLIENTE_JSP = "/PerfilCliente.jsp";
 	static final String PERFIL_VENDEDOR_JSP = "/PerfilVendedor.jsp";
 
+	/**
+	 * Método doGet encargado de cargar el perfil de los distintos usuarios
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		response.setContentType(CONTENT_TYPE);
+
 		// Creamos el RequestDispatcher por defecto hacia Registro.jsp
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(PERFIL_CLIENTE_JSP);
-		response.setContentType(CONTENT_TYPE);
+
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
 		try {
-			Cliente cliente = null;
-			Vendedor vendedor = null;
-			ArrayList<Poblacion> poblaciones = null;
-			if (session == null && session.getAttribute("cliente") == null
-					&& session.getAttribute("vendedor") == null) {
+			//Si no hay sesión redirigimos a Principal
+			if (session == null) {
+				
 				response.sendRedirect("Principal");
+				
 			} else {
+				
+				//Si hay sesión creamos un arraylist para cargar las poblaciones y comprobamos que tipo de usuario hay en sesión				
+				ArrayList<Poblacion> poblaciones = null;
+				
+				//Si es un usuario cliente
 				if (session.getAttribute("cliente") != null) {
-					cliente = (Cliente) session.getAttribute("cliente");
+					
+					//Lo recogemos de la sesión
+					Cliente cliente = (Cliente) session.getAttribute("cliente");
+					
+					//Lo metemos en la request
 					request.setAttribute("cliente", cliente);
+					
+					//Obtenemos las poblaciones
 					poblaciones = poblacionEJB.getPoblaciones();
+					
+					//Las metemos en la request
 					request.setAttribute("poblaciones", poblaciones);
+					
+					//RS hacia PERFIL_CLIENTE_JSP
 					rs.forward(request, response);
+					
 				} else {
-					vendedor = (Vendedor) session.getAttribute("vendedor");
+					
+					//Si no es cliente es vendedor, lo recogemos de la sesión
+					Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
+					
+					//Lo metemos en la request
 					request.setAttribute("vendedor", vendedor);
+					
+					//Cargamos las poblaciones
 					poblaciones = poblacionEJB.getPoblaciones();
+					
+					//Las metemos en la request
 					request.setAttribute("poblaciones", poblaciones);
+					
+					//RS hacia PERFIL_VENDEDOR_JSP
 					rs = getServletContext().getRequestDispatcher(PERFIL_VENDEDOR_JSP);
 					rs.forward(request, response);
 				}

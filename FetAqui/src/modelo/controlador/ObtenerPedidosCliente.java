@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import modelo.ejb.CategoriaEJB;
 import modelo.ejb.FormatoEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PedidoEJB;
 import modelo.ejb.ProductoEJB;
@@ -46,9 +45,6 @@ public class ObtenerPedidosCliente extends HttpServlet {
 	@EJB
 	LoggersEJB logger;
 
-	@EJB
-	ImagenesEJB2 imagenesEJB;
-
 	static final String PEDIDOS_CLIENTE_JSP = "/PedidosCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
@@ -63,35 +59,53 @@ public class ObtenerPedidosCliente extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		try {
+
+			// Intentamos recoger al usuario cliente de la sesión
 			Cliente cliente = (Cliente) session.getAttribute("cliente");
 
+			// Si hay sesión y usuario cliente en la misma
 			if (session != null && cliente.getNombre() != null) {
 
+				// Si existen pedidos asociados a ese cliente
 				if (pedidoEJB.getPedidosCliente(cliente.getId_cliente()) != null) {
 
+					// Recogemos todos los pedidos de ese cliente
 					ArrayList<Pedido> pedidos = pedidoEJB.getPedidosCliente(cliente.getId_cliente());
 
+					// Si el arraylist está vacío mostramos un mensaje de error
 					if (pedidos.isEmpty()) {
+
 						String error = "No existen pedidos";
 
+						// Lo pasamos a la request
 						request.setAttribute("error", error);
 
+						// Redirigimos a PEDIDOS_CLIENTE_JSP
 						rs.forward(request, response);
 					} else {
+
+						// Si tiene contenido lo introducimos en la request
 						request.setAttribute("pedidos", pedidos);
 
+						// REdirigimos a PEDIDOS_CLIENTE_JSP
 						rs.forward(request, response);
 					}
 
 				} else {
+
+					// Si no existen pedidos asociados a ese cliente mostramos un mensaje de error
 					String error = "No existen pedidos";
 
+					// Lo pasamos a la request
 					request.setAttribute("error", error);
 
+					// Redirigimos a PEDIDOS_CLIENTE_JSP
 					rs.forward(request, response);
 				}
 
 			} else {
+
+				// Si no hay sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {

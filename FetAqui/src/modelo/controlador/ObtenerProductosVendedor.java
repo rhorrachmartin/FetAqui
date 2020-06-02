@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import modelo.ejb.CategoriaEJB;
 import modelo.ejb.FormatoEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.ProductoEJB;
 import modelo.pojo.Categoria;
@@ -44,9 +43,6 @@ public class ObtenerProductosVendedor extends HttpServlet {
 	@EJB
 	LoggersEJB logger;
 
-	@EJB
-	ImagenesEJB2 imagenesEJB;
-
 	static final String PRODUCTOS_JSP = "/Productos.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
@@ -61,21 +57,30 @@ public class ObtenerProductosVendedor extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		try {
+			
+			//Intentamos recoger al usuario Vendedor de la sesión
 			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-
+			
+			//Si existe la sesión y usuarioVendedor en la misma
 			if (session != null && vendedor.getNombre() != null) {
+				
+				//REcogemos todos los parámetros necesarios
 				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 				ArrayList<Formato> formatos = formatoEJB.getFormatos();
 				ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-
+				
+				//Los introducimos en la request
 				request.setAttribute("productos", productos);
 				request.setAttribute("vendedor", vendedor);
 				request.setAttribute("categorias", categorias);
 				request.setAttribute("formatos", formatos);
-
+				
+				//Redirigimos a PRODUCTOS_JSP
 				rs.forward(request, response);
 
 			} else {
+				
+				//Si no hay sesión redrigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {

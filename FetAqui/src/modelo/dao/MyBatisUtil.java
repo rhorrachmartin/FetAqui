@@ -12,7 +12,7 @@ import ch.qos.logback.classic.Logger;
 /**
  * Clase de utilidad para obtener una configuraciónn de MyBatis
  * 
- * @author daw
+ * @author ramon
  *
  */
 public class MyBatisUtil {

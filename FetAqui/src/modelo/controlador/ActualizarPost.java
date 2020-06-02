@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import modelo.ejb.CategoriaEJB;
 import modelo.ejb.FormatoEJB;
-import modelo.ejb.ImagenesEJB;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PostEJB;
 import modelo.ejb.ProductoEJB;
@@ -54,9 +53,6 @@ public class ActualizarPost extends HttpServlet {
 
 	@EJB
 	LoggersEJB logger;
-
-	@EJB
-	ImagenesEJB imagenesEJB;
 
 	static final String PAGINA_PROPIA_VENDEDOR = "/PaginaPropiaVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";

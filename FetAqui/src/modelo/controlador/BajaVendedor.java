@@ -35,7 +35,6 @@ public class BajaVendedor extends HttpServlet {
 	LoggersEJB logger;
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-	static final String HOME_JSP = "/Home.jsp";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -46,17 +45,26 @@ public class BajaVendedor extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		try {
+			//Recogemos al usuario vendedor de la sesión
 			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-
-			if (vendedor.getEmail() != null) {
+			
+			//Comprobamos que existe la sesión y el usuario en la misma
+			if (session != null && vendedor.getEmail() != null) {
+				
+				//Recogemos la id del vendedor
 				Integer id_vendedor = vendedor.getId_vendedor();
-
+				
+				//Borramos al vendedor de la BD
 				vendedorEJB.bajaVendedor(id_vendedor);
-
+				
+				//Cerramos la sesión asociada al usuario
 				sesionVendedorEJB.cerrarSesion(session);
-
+				
+				//Redirigimos a Principal
 				response.sendRedirect("Principal");
 			} else {
+				
+				//Si no hay sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {

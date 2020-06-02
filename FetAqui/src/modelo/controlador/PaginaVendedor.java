@@ -55,7 +55,10 @@ public class PaginaVendedor extends HttpServlet {
 	static final String VENDEDOR_LOGEADO_VENDEDOR_JSP = "/VendedorLogeadoVendedor.jsp";
 	static final String VENDEDOR_LOGEADO_CLIENTE_JSP = "/VendedorLogeadoCliente.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-
+	
+	/**
+	 * Método doGet encargado de cargar la página de un vendedor en función del tipo de usuario logeado
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -72,177 +75,85 @@ public class PaginaVendedor extends HttpServlet {
 			Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
 			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-			request.setAttribute("v", v);
-			request.setAttribute("c", c);
-
+			// Comprobamos que exista usuario en la sesión
 			if (v != null || c != null) {
-				try {
-					if (c != null) {
-						rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_CLIENTE_JSP);
 
-						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+				// Si el usuario es cliente
+				if (c != null) {
 
-						if (request.getParameter("selectCategorias") == null) {
+					// Lo metemos en la request
+					request.setAttribute("c", c);
 
-							ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-							ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-							Vendedor vendedor2 = vendedorEJB.getVendedorPorId(id_vendedor);
+					// RS hacia VENDEDOR_LOGEADO_CLIENTE_JSP
+					rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_CLIENTE_JSP);
 
-							request.setAttribute("vendedor", vendedor2);
-							request.setAttribute("productos", productos);
-							request.setAttribute("categorias", categorias);
+					// Recogemos el id del vendedor
+					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 
-							rs.forward(request, response);
+					// Cargamos todas las categorias y productos junto con el vendedor
+					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+					ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
+					Vendedor vendedor2 = vendedorEJB.getVendedorPorId(id_vendedor);
 
-						} else {
+					// Lo metemos en la request
+					request.setAttribute("vendedor", vendedor2);
+					request.setAttribute("productos", productos);
+					request.setAttribute("categorias", categorias);
 
-							if (!request.getParameter("selectCategorias").equals("todos")) {
-								Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
+					// Redirigimos a VENDEDOR_LOGEADO_CLIENTE_JSP
+					rs.forward(request, response);
 
-								ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-								ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
-										id_categoria);
+				} else {
 
-								Vendedor vendedor3 = vendedorEJB.getVendedorPorId(id_vendedor);
-								Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
+					// Si no es cliente es vendedor, lo metemos en la request
+					request.setAttribute("v", v);
 
-								if (productos.isEmpty()) {
-									String error = "No hay productos en esta categoría";
-									request.setAttribute("error", error);
-								}
+					// RS hacia VENDEDOR_LOGEADO_VENDEDOR_JSP
+					rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_VENDEDOR_JSP);
+					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 
-								request.setAttribute("categoria", categoria);
-								request.setAttribute("vendedor", vendedor3);
-								request.setAttribute("productos", productos);
-								request.setAttribute("categorias", categorias);
-
-								rs.forward(request, response);
-							} else {
-								ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-								ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-
-								Vendedor vendedor4 = vendedorEJB.getVendedorPorId(id_vendedor);
-
-								request.setAttribute("vendedor", vendedor4);
-								request.setAttribute("productos", productos);
-								request.setAttribute("categorias", categorias);
-
-								rs.forward(request, response);
-							}
-
-						}
-
-					} else {
-						rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_VENDEDOR_JSP);
-						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-
-						if (request.getParameter("selectCategorias") == null) {
-							ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-							ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-							Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-
-							request.setAttribute("vendedor", vendedor);
-							request.setAttribute("productos", productos);
-							request.setAttribute("categorias", categorias);
-
-							rs.forward(request, response);
-						} else {
-
-							if (!request.getParameter("selectCategorias").equals("todos")) {
-								Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
-
-								ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-								ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
-										id_categoria);
-
-								Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-								Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
-
-								if (productos.isEmpty()) {
-									String error = "No hay productos en esta categoría";
-									request.setAttribute("error", error);
-								}
-
-								request.setAttribute("categoria", categoria);
-								request.setAttribute("vendedor", vendedor);
-								request.setAttribute("productos", productos);
-								request.setAttribute("categorias", categorias);
-
-								rs.forward(request, response);
-							} else {
-								ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-								ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-
-								Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-
-								request.setAttribute("vendedor", vendedor);
-								request.setAttribute("productos", productos);
-								request.setAttribute("categorias", categorias);
-
-								rs.forward(request, response);
-							}
-
-						}
-					}
-				} catch (Exception e) {
-					logger.setErrorLogger(e.getMessage());
-				}
-			} else {
-				Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-
-				if (request.getParameter("selectCategorias") == null) {
+					// CArgamos todas las categorias, productos y al vendedor
 					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 					ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
 					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
 
+					// Lo metemos en la request
 					request.setAttribute("vendedor", vendedor);
 					request.setAttribute("productos", productos);
 					request.setAttribute("categorias", categorias);
 
+					// Redirigimos a VENDEDOR_LOGEADO_VENDEDOR_JSP
 					rs.forward(request, response);
-				} else {
-
-					if (!request.getParameter("selectCategorias").equals("todos")) {
-						Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
-
-						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-						ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
-								id_categoria);
-
-						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-						Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
-
-						if (productos.isEmpty()) {
-							String error = "No hay productos en esta categoría";
-							request.setAttribute("error", error);
-						}
-
-						request.setAttribute("categoria", categoria);
-						request.setAttribute("vendedor", vendedor);
-						request.setAttribute("productos", productos);
-						request.setAttribute("categorias", categorias);
-
-						rs.forward(request, response);
-					} else {
-						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-						ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-
-						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-
-						request.setAttribute("vendedor", vendedor);
-						request.setAttribute("productos", productos);
-						request.setAttribute("categorias", categorias);
-
-						rs.forward(request, response);
-					}
-
 				}
+
+			} else {
+
+				// Si no hay sesión redirigimos a VENDEDOR_NO_LOGEADO_JSP
+
+				// Recogemos el id del vendedor
+				Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+
+				// Recogemos las categorias, productos y al vendedor
+				ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+				ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
+				Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+
+				// Lo metemos todo en la request
+				request.setAttribute("vendedor", vendedor);
+				request.setAttribute("productos", productos);
+				request.setAttribute("categorias", categorias);
+
+				// Redirigimos hacia VENDEDOR_NO_LOGEADO_JSP
+				rs.forward(request, response);
 			}
 		} catch (Exception e) {
 			logger.setErrorLogger(e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * Método doPost encargado de mostrar la página de un vendedor y de filtrar sus productos por categorías
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -260,167 +171,222 @@ public class PaginaVendedor extends HttpServlet {
 			Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
 			Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-			request.setAttribute("v", v);
-			request.setAttribute("c", c);
-
+			// Comprobamos que existe algún usuario en la sesión
 			if (v != null || c != null) {
-				try {
-					if (c != null) {
-						rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_CLIENTE_JSP);
+				
+				//Si el usuario es cliente
+				if (c != null) {
+					
+					//Lo metemos en la request
+					request.setAttribute("c", c);
+					
+					//RS hacia VENDEDOR_LOGEADO_CLIENTE_JSP
+					rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_CLIENTE_JSP);
+					
+					//Recogemos la id del vendedor
+					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+					
+					//Comprobamos si recibimos parámetro selectCategorias
+					if (request.getParameter("selectCategorias") == null) {
+						
+						//Si es nulo cargamos todas las categorias, todos los productos y el vendedor
+						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+						ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
+						Vendedor vendedor2 = vendedorEJB.getVendedorPorId(id_vendedor);
+						
+						//Lo metemos todo en la request
+						request.setAttribute("vendedor", vendedor2);
+						request.setAttribute("productos", productos);
+						request.setAttribute("categorias", categorias);
+						
+						//Redirigimos hacia VENDEDOR_LOGEADO_CLIENTE_JSP
+						rs.forward(request, response);
 
-						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-
-						if (request.getParameter("selectCategorias") == null) {
-
+					} else {	
+						
+						//Si selectCategorias no equivale a "todos"
+						if (!request.getParameter("selectCategorias").equals("todos")) {
+							
+							//REcogemos la id de la categoria
+							Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
+							
+							//Recogemos todas las categorias, los productos y al vendedor
 							ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-							ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-							Vendedor vendedor2 = vendedorEJB.getVendedorPorId(id_vendedor);
-
-							request.setAttribute("vendedor", vendedor2);
+							ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
+									id_categoria);
+							Vendedor vendedor3 = vendedorEJB.getVendedorPorId(id_vendedor);
+							Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
+							
+							//Si el arraylist de productos está vacío mostramos un mensaje de error
+							if (productos.isEmpty()) {
+								String error = "No hay productos en esta categoría";
+								request.setAttribute("error", error);
+							}
+							
+							//Lo metemos todo en la request
+							request.setAttribute("categoria", categoria);
+							request.setAttribute("vendedor", vendedor3);
 							request.setAttribute("productos", productos);
 							request.setAttribute("categorias", categorias);
-
+							
+							//Redirigimos hacia VENDEDOR_LOGEADO_CLIENTE_JSP
 							rs.forward(request, response);
-
 						} else {
-
-							if (!request.getParameter("selectCategorias").equals("todos")) {
-								Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
-
-								ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-								ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
-										id_categoria);
-
-								Vendedor vendedor3 = vendedorEJB.getVendedorPorId(id_vendedor);
-								Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
-
-								if (productos.isEmpty()) {
-									String error = "No hay productos en esta categoría";
-									request.setAttribute("error", error);
-								}
-
-								request.setAttribute("categoria", categoria);
-								request.setAttribute("vendedor", vendedor3);
-								request.setAttribute("productos", productos);
-								request.setAttribute("categorias", categorias);
-
-								rs.forward(request, response);
-							} else {
-								ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-								ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-
-								Vendedor vendedor4 = vendedorEJB.getVendedorPorId(id_vendedor);
-
-								request.setAttribute("vendedor", vendedor4);
-								request.setAttribute("productos", productos);
-								request.setAttribute("categorias", categorias);
-
-								rs.forward(request, response);
-							}
-
-						}
-
-					} else {
-						rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_VENDEDOR_JSP);
-						Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-
-						if (request.getParameter("selectCategorias") == null) {
+							
+							//Si equivale a todos cargamos todos los productos de todas las categorias y al vendedor
 							ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 							ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-							Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+							Vendedor vendedor4 = vendedorEJB.getVendedorPorId(id_vendedor);
+							
+							//Lo metemos todo en la request
+							request.setAttribute("vendedor", vendedor4);
+							request.setAttribute("productos", productos);
+							request.setAttribute("categorias", categorias);
+							
+							//RS hacia VENDEDOR_LOGEADO_CLIENTE_JSP
+							rs.forward(request, response);
+						}
 
+					}
+
+				} else {
+					
+					//Si no es cliente es vendedor
+					request.setAttribute("v", v);
+					
+					//RS hacia VENDEDOR_LOGEADO_VENDEDOR_JSP
+					rs = getServletContext().getRequestDispatcher(VENDEDOR_LOGEADO_VENDEDOR_JSP);
+					
+					//Recogemos la id del vendedor
+					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
+					
+					//Comprobamos si recibimos el parámetro selectCategorias
+					if (request.getParameter("selectCategorias") == null) {
+						
+						//Si es nulo cargamos todos los productos de todas las categorias y al vendedor
+						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+						ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
+						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+						
+						//Lo metemos todo en la request
+						request.setAttribute("vendedor", vendedor);
+						request.setAttribute("productos", productos);
+						request.setAttribute("categorias", categorias);
+						
+						//Redirigimos hacia VENDEDOR_LOGEADO_VENDEDOR_JSP
+						rs.forward(request, response);
+					} else {
+						
+						//Si el parámetro selectCategorias no equivale a "todos"
+						if (!request.getParameter("selectCategorias").equals("todos")) {
+							
+							//Recogemos la id de la categoria
+							Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
+							
+							//Recogemos todas las categorias, los productos de la categoria y al vendedor
+							ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+							ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
+									id_categoria);
+							Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+							Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
+							
+							//Si el arraylist está vacío mostramos un mensaje de error
+							if (productos.isEmpty()) {
+								String error = "No hay productos en esta categoría";
+								request.setAttribute("error", error);
+							}
+							
+							//Lo metemos todo en la request
+							request.setAttribute("categoria", categoria);
 							request.setAttribute("vendedor", vendedor);
 							request.setAttribute("productos", productos);
 							request.setAttribute("categorias", categorias);
-
+							
+							//RS hacia VENDEDOR_LOGEADO_VENDEDOR_JSP
 							rs.forward(request, response);
 						} else {
-
-							if (!request.getParameter("selectCategorias").equals("todos")) {
-								Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
-
-								ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-								ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
-										id_categoria);
-
-								Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-								Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
-
-								if (productos.isEmpty()) {
-									String error = "No hay productos en esta categoría";
-									request.setAttribute("error", error);
-								}
-
-								request.setAttribute("categoria", categoria);
-								request.setAttribute("vendedor", vendedor);
-								request.setAttribute("productos", productos);
-								request.setAttribute("categorias", categorias);
-
-								rs.forward(request, response);
-							} else {
-								ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
-								ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-
-								Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-
-								request.setAttribute("vendedor", vendedor);
-								request.setAttribute("productos", productos);
-								request.setAttribute("categorias", categorias);
-
-								rs.forward(request, response);
-							}
-
+							
+							//Si equivale a todos cargamos todos los productos de todas las categorias y al vendedor
+							ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
+							ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
+							Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
+							
+							//Lo metemos todo en la request
+							request.setAttribute("vendedor", vendedor);
+							request.setAttribute("productos", productos);
+							request.setAttribute("categorias", categorias);
+							
+							//RS hacia VENDEDOR_LOGEADO_VENDEDOR_JSP
+							rs.forward(request, response);
 						}
+
 					}
-				} catch (Exception e) {
-					logger.setErrorLogger(e.getMessage());
 				}
 			} else {
+				
+				//Si no hay sesión 
+				
+				//Recogemos la id del vendedor
 				Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
-
+				
+				
+				//Comprobamos si el parámetro selectCategorias es nulo
 				if (request.getParameter("selectCategorias") == null) {
+					
+					//CArgamos todos los productos de todas las categorias y al vendedor
 					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 					ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
 					Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-
+					
+					//Lo metemos en la request
 					request.setAttribute("vendedor", vendedor);
 					request.setAttribute("productos", productos);
 					request.setAttribute("categorias", categorias);
-
+					
+					//Redirigimos hacia VENDEDOR_LOGEADO_VENDEDOR_JSP
 					rs.forward(request, response);
 				} else {
-
+					
+					//Si noes nulo comprobamos si equivale a "todos"
 					if (!request.getParameter("selectCategorias").equals("todos")) {
+						
+						//Si no equivale a "todos" cargamos los productos de la categoria recibida  al vendedor
 						Integer id_categoria = Integer.valueOf(request.getParameter("selectCategorias"));
-
 						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 						ArrayList<Producto> productos = productoEJB.getProductosVendedorCategoria(id_vendedor,
 								id_categoria);
-
 						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
 						Categoria categoria = categoriaEJB.getCategoriaPorId(id_categoria);
-
+						
+						//Si el arraylist está vacío mostramos un mensaje de error
 						if (productos.isEmpty()) {
 							String error = "No hay productos en esta categoría";
 							request.setAttribute("error", error);
 						}
-
+						
+						//Lo metemos en la request
 						request.setAttribute("categoria", categoria);
 						request.setAttribute("vendedor", vendedor);
 						request.setAttribute("productos", productos);
 						request.setAttribute("categorias", categorias);
-
+						
+						//Redirigimos hacia VENDEDOR_NO_LOGEADO_JSP
 						rs.forward(request, response);
 					} else {
+						
+						//Si selectCategorias equivale a "todos"
+						
+						//CArgamos todos los productos de todas las categorias y al vendedor
 						ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 						ArrayList<Producto> productos = productoEJB.getProductosVendedor(id_vendedor);
-
 						Vendedor vendedor = vendedorEJB.getVendedorPorId(id_vendedor);
-
+						
+						//Lo metemos en la request
 						request.setAttribute("vendedor", vendedor);
 						request.setAttribute("productos", productos);
 						request.setAttribute("categorias", categorias);
-
+						
+						//Redirigimos hacia VENDEDOR_NO_LOGEADO_JSP
 						rs.forward(request, response);
 					}
 

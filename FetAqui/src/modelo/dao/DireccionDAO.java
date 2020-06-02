@@ -1,30 +1,22 @@
 package modelo.dao;
 
-import java.util.ArrayList;
-
 import org.apache.ibatis.session.SqlSession;
 
-import modelo.dao.mappers.ClientesMapper;
 import modelo.dao.mappers.DireccionesMapper;
-import modelo.dao.mappers.PoblacionesMapper;
-import modelo.pojo.Cliente;
 import modelo.pojo.Direccion;
-import modelo.pojo.Poblacion;
 
 /**
- * Clase DAO con los métodos necesarios para acceder a los mapper (BD)
- * necesarios de Estadisticas
+ * Clase DAO encargada de manejar las direcciones de los usuarios
  * 
  * @author ramon
  *
  */
 public class DireccionDAO {
 
-	
 	/**
 	 * Método para insertar una direccion en BD
 	 * 
-	 * @param direccion
+	 * @param direccion Recibe pojo Direccion
 	 */
 	public void insertarDireccion(Direccion direccion) {
 
@@ -41,8 +33,5 @@ public class DireccionDAO {
 			sqlSession.close();
 		}
 	}
-
-
-	
 
 }

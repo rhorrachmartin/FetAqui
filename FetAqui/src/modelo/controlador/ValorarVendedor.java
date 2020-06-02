@@ -56,21 +56,9 @@ public class ValorarVendedor extends HttpServlet {
 	static final String VENDEDOR_LOGEADO_CLIENTE_JSP = "/VendedorLogeadoCliente.jsp";
 	static final String HOME_LOGEADO_JSP = "/HomeLogeado.jsp";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-		HttpSession session = request.getSession(false);
-
-		try {
-			if (session == null && session.getAttribute("vendedor") == null
-					&& session.getAttribute("cliente") == null) {
-				response.sendRedirect("Principal");
-			}
-		} catch (Exception e) {
-			logger.setErrorLogger(e.getMessage());
-		}
-	}
-
+	/**
+	 * Método doPost encargado de insertar la valoración de un vendedor
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -80,13 +68,18 @@ public class ValorarVendedor extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		try {
+
+			// Comprobamos que exista el usuario cliente en la sesión
 			if (session.getAttribute("cliente") != null) {
 
+				// Si recibimos los parámetros de valoracion, id vendedor e id cliente
 				if (request.getParameter("valoracion") != null && request.getParameter("id_vendedor") != null
 						&& request.getParameter("id_cliente") != null) {
 
+					// Creamos el pojo valoracion cliente vendedor
 					ValoracionCv valoracionCv = new ValoracionCv();
 
+					// Recogemos los parámetros y lo seteamos
 					Integer valoracion = Integer.valueOf(request.getParameter("valoracion"));
 					Integer id_vendedor = Integer.valueOf(request.getParameter("id_vendedor"));
 					Integer id_cliente = Integer.valueOf(request.getParameter("id_cliente"));
@@ -95,30 +88,48 @@ public class ValorarVendedor extends HttpServlet {
 					valoracionCv.setId_vendedor(id_vendedor);
 					valoracionCv.setValoracion(valoracion);
 
+					// Cargamos todos los productos vendedores y posts
 					ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 					ArrayList<Producto> productos = productoEJB.getProductos();
 					ArrayList<Post> posts = postEJB.getPosts();
 
+					// Lo pasamos todo a la request
 					request.setAttribute("vendedores", vendedores);
 					request.setAttribute("productos", productos);
 					request.setAttribute("posts", posts);
 
+					// Insertamos la valoración en BD
 					valoracionVendedorEJB.insertarValoracionVendedor(valoracionCv);
 
+					// Si recibimos el parámetro paginaVendedor
 					if (request.getParameter("paginaVendedor") != null) {
+
+						// REdirigimos a la página de ese vendedor
 						response.sendRedirect("PaginaVendedor?id_vendedor=" + id_vendedor);
+
+						// Si recibimos el parámetro "principal"
 					} else if (request.getParameter("principal") != null) {
+
+						// Redirigimos a HOME_LOGEADO_JSP
 						RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
 						rs.forward(request, response);
+
+						// Si recibimos el parámetro paginaVendedores
 					} else if (request.getParameter("paginaVendedores") != null) {
+
+						// REdirigimos a ObtenerTodosVendedores
 						response.sendRedirect("ObtenerTodosVendedores");
 					}
 
 				} else {
+
+					// Si no hemos recibido el parámetro ObtenerTodosProductos
 					response.sendRedirect("ObtenerTodosProductos");
 				}
 
 			} else {
+
+				// Si no hay sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 

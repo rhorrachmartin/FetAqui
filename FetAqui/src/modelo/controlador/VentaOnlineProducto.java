@@ -17,6 +17,7 @@ import modelo.pojo.Vendedor;
 
 /**
  * Clase encargada activar y desactivar la venta online de un producto
+ * 
  * @author ramon
  *
  */
@@ -26,28 +27,16 @@ public class VentaOnlineProducto extends HttpServlet {
 
 	@EJB
 	ProductoEJB productoEJB;
-	
+
 	@EJB
 	LoggersEJB logger;
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-		HttpSession session = request.getSession(false);
-
-		try {
-			if (session == null && session.getAttribute("vendedor") == null
-					&& session.getAttribute("cliente") == null) {
-				response.sendRedirect("Principal");
-			}
-		} catch (Exception e) {
-			logger.setErrorLogger(e.getMessage());
-		}
-	}
-
-	
+	/**
+	 * Método doPost encargado de activar y desactivar la venta online de un
+	 * producto en concreto
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -56,15 +45,20 @@ public class VentaOnlineProducto extends HttpServlet {
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
 
-		Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-
 		try {
+			// Intentamos recoger al usuario vendedor de la sesión
+			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
 
-			Integer idProducto = Integer.valueOf(request.getParameter("producto"));
-
-			Producto producto = productoEJB.getProductoPorId(idProducto);
-
+			// Si existe
 			if (vendedor.getNombre() != null) {
+
+				// Recogemos la id del producto
+				Integer idProducto = Integer.valueOf(request.getParameter("producto"));
+
+				// Recogemos el producto en función de la id
+				Producto producto = productoEJB.getProductoPorId(idProducto);
+
+				// Si la venta online está desactiva la activamos
 				if (producto.getVenta_online() == 0) {
 
 					productoEJB.activarVentaOnline(idProducto);
@@ -72,12 +66,16 @@ public class VentaOnlineProducto extends HttpServlet {
 					response.sendRedirect("ObtenerProductosVendedor");
 
 				} else {
+
+					// Si está activada la desactibamos
 					productoEJB.desactivarVentaOnline(idProducto);
 
 					response.sendRedirect("ObtenerProductosVendedor");
 				}
 
 			} else {
+
+				// Si no hay sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {

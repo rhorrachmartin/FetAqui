@@ -49,22 +49,11 @@ public class EliminarPost extends HttpServlet {
 	LoggersEJB logger;
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 	static final String PAGINA_PROPIA_VENDEDOR = "/PaginaPropiaVendedor.jsp";
+	
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-		HttpSession session = request.getSession(false);
-
-		try {
-			if (session == null && session.getAttribute("vendedor") == null
-					&& session.getAttribute("cliente") == null) {
-				response.sendRedirect("Principal");
-			}
-		} catch (Exception e) {
-			logger.setErrorLogger(e.getMessage());
-		}
-	}
-
+	/**
+	 * Método doPost encargado de eliminar un post de un usuario Vendedor
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -75,32 +64,45 @@ public class EliminarPost extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		try {
+			
+			//Intentamos recoger el usuario vendedor de la sesión
 			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-
-			Integer id_post = Integer.valueOf(request.getParameter("id_post"));
-
-			Post post = postEJB.getPostPorId(id_post);
-
-			if (vendedor.getNombre() != null) {
-
+			
+			//Si la sesión existe y el usuario también
+			if (session != null && vendedor.getNombre() != null) {
+				
+				//REcogemos el parámetro id post de la request
+				Integer id_post = Integer.valueOf(request.getParameter("id_post"));
+				
+				//Obtenemos el post a través de su id
+				Post post = postEJB.getPostPorId(id_post);
+				
+				//Si existe
 				if (post != null) {
-
+					
+					//Lo borramos
 					postEJB.borrarPost(id_post);
-
+					
+					//Recogemos todos los parámetros necesarios
 					ArrayList<Post> posts = postEJB.getPostsVendedor(vendedor.getId_vendedor());
 					ArrayList<Categoria> categorias = categoriaEJB.getCategorias();
 					ArrayList<Formato> formatos = formatoEJB.getFormatos();
 					ArrayList<Producto> productos = productoEJB.getProductosVendedor(vendedor.getId_vendedor());
-
-					request.setAttribute("posts", posts);
+					
+					//Lo pasamos todo a la request.
+					request.setAttribute("posts", posts);	
 					request.setAttribute("vendedor", vendedor);
 					request.setAttribute("formatos", formatos);
 					request.setAttribute("productos", productos);
 					request.setAttribute("categorias", categorias);
+					
+					//Redigirimos a PAGINA_PROPIA_VENDEDOR
 					rs.forward(request, response);
 				}
 
 			} else {
+				
+				//Si no existe la sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {

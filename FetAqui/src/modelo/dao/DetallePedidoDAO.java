@@ -5,9 +5,19 @@ import org.apache.ibatis.session.SqlSession;
 import modelo.dao.mappers.DetallesPedidoMapper;
 import modelo.pojo.DetallePedido;
 
-
+/**
+ * Clase DAO para manejar los detalles de un pedido
+ * 
+ * @author ramon
+ *
+ */
 public class DetallePedidoDAO {
-	
+
+	/**
+	 * Método para insertar los detalles de un pedido
+	 * 
+	 * @param detallePedido Recibe pojo DetallePedido
+	 */
 	public void insertarDetallePedido(DetallePedido detallePedido) {
 
 		// Abrimos la sesión
@@ -23,7 +33,5 @@ public class DetallePedidoDAO {
 			sqlSession.close();
 		}
 	}
-	
-	
 
 }

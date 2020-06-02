@@ -1,10 +1,5 @@
 package modelo.dao.mappers;
 
-
-import java.util.ArrayList;
-
-import org.apache.ibatis.annotations.Param;
-
 import modelo.pojo.Direccion;
 
 /**
@@ -16,11 +11,11 @@ import modelo.pojo.Direccion;
 public interface DireccionesMapper {
 
 	/**
-	 * Método para obtener las direcciones de una población
-	 * @return ArrayList<Direccion> 
+	 * Método para insertar una direccion en BD
+	 * 
+	 * @param direccion Recibe pojo Direccion
 	 */
-	public ArrayList<Direccion> getDireccionesPorPoblacion(@Param("id_poblacion") Integer id_poblacion);
-	
+
 	public void insertarDireccion(Direccion direccion);
 
 }

@@ -9,7 +9,7 @@ import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
 
 /**
- * Interfaz mapper para manejar los mapper de Direcciones
+ * Interfaz mapper para manejar los mapper de Vendedor
  * 
  * @author ramon
  *
@@ -17,121 +17,134 @@ import modelo.pojo.Vendedor;
 public interface VendedoresMapper {
 
 	/**
-	 * Método para obtener los detalles de un vendedor
+	 * Método para obtener un vendedor a través de su email y password
 	 * 
-	 * @param id_vendedor recibe la id del vendedor
-	 * @return devuelve un pojo vendedor
+	 * @param email
+	 * @param password
+	 * @return Devuelve un pojo Vendedor
 	 */
 	public Vendedor getVendedor(@Param("email") String email, @Param("password") String password);
-	
-	
+
+	/**
+	 * Método para obtener un vendedor a través de su id
+	 * 
+	 * @param id_vendedor Recibe la id del vendedor
+	 * @return Devuelve un pojo Vendedor
+	 */
 	public Vendedor getVendedorPorId(@Param("id_vendedor") Integer id_vendedor);
 
 	/**
-	 * Método para obtener un vendedor a traves de su mail
+	 * Método para obtener un vendedor a través de su email
 	 * 
-	 * @param email
-	 * @return
+	 * @param email Recibe el email del vendedor
+	 * @return Devuelve un pojo Vendedor
 	 */
 	public Vendedor getVendedorEmail(@Param("email") String email);
 
 	/**
-	 * Método para obtener un Vendedor a partir de su email y password
+	 * Método para obtener un vendedor a través de su email y password
 	 * 
-	 * @param email    recibe String email
-	 * @param password Recibe String password
+	 * @param email
+	 * @param password
 	 * @return Devuelve un pojo Vendedor
 	 */
 	public Vendedor getVendedorEmailPass(@Param("email") String email, @Param("password") String password);
 
 	/**
-	 * Método para obtener las direcciones de una población
+	 * Método para obtener todos los vendedores
 	 * 
-	 * @return ArrayList<Direccion>
+	 * @return Devuelve un arraylist de Vendedor
 	 */
 	public ArrayList<Vendedor> getVendedores();
 
 	/**
-	 * Método para buscar vendedores por poblacion
+	 * Método para obtener todos los vendedores de una Poblacion
 	 * 
-	 * @param poblacion recibe string con la poblacion
-	 * @return
+	 * @param id_poblacion REcibe la id de la poblacion
+	 * @return Devuelve un arraylist de poblacion
 	 */
 	public ArrayList<Vendedor> getVendedoresPoblacion(@Param("id_poblacion") Integer id_poblacion);
 
 	/**
-	 * Método para buscar vendedores por nombre
+	 * Método para insertar un usuario Vendedor en la BD
 	 * 
-	 * @param nombre recibe string con el nombre
-	 * @return
-	 */
-	public ArrayList<Vendedor> getVendedoresNombre(@Param("nombre") String nombre);
-
-	/**
-	 * Método para obtener los productos de un vendedor
-	 * 
-	 * @return ArrayList<Producto>
-	 */
-	public ArrayList<Producto> getProductosVendedor(@Param("id_vendedor") Integer id_vendedor);
-
-	/**
-	 * Método para obtener un producto de un vendedor en concreto
-	 * 
-	 * @param id_vendedor recibe id_vendedor
-	 * @param id_producto recibe la id_producto
-	 * @return devuelve un pojo Producto
-	 */
-	public Producto getProductoVendedor(@Param("id_vendedor") Integer id_vendedor,
-			@Param("id_producto") Integer id_producto);
-
-	/**
-	 * Método para obtener todos los pedidos detallados de un vendedor
-	 * 
-	 * @param id_vendedor recibe la id del vendedor
-	 * @return devuelve un arraylist de PedidoDetallado
-	 */
-	public ArrayList<PedidoDetallado> getPedidosDetallados(@Param("id_vendedor") Integer id_vendedor);
-
-	/**
-	 * Método para insertar un vendedor
-	 * 
-	 * @param v REcibe un pojo vendedor
+	 * @param v Recibe un pojo Vendedor
 	 */
 	public void insertarVendedor(Vendedor v);
 
 	/**
 	 * Método para activar un vendedor
 	 * 
-	 * @param v Recibe un pojo vendedor
+	 * @param id_vendedor recibe el id del vendedor
 	 */
 	public void activarVendedor(Integer id_vendedor);
 
 	/**
-	 * Método para activar venta onlinde un vendedor
+	 * Método para activar la venta online de un vendedor
 	 * 
-	 * @param v Recibe un pojo vendedor
+	 * @param id_vendedor Recibe la id del vendedor
 	 */
 	public void activarVentaOnline(Integer id_vendedor);
 
 	/**
-	 * Método para desactivar venta onlinde un vendedor
+	 * Método para desactivar la venta online de un vendedor
 	 * 
-	 * @param v Recibe un pojo vendedor
+	 * @param id_vendedor Recibe la id del vendedor
 	 */
 	public void desactivarVentaOnline(Integer id_vendedor);
-	
+
+	/**
+	 * Método para actualizar el nif del vendedor
+	 * 
+	 * @param nif         Recibe el NIF
+	 * @param id_vendedor Recibe la id del vendedor
+	 */
 	public void updateNif(@Param("nif") String nif, @Param("id_vendedor") Integer id_vendedor);
 
+	/**
+	 * Método para actualizar el nombre de un vendedor
+	 * 
+	 * @param nombre      Recibe el nombre
+	 * @param id_vendedor Recibe la id del vendedor
+	 */
 	public void updateNombre(@Param("nombre") String nombre, @Param("id_vendedor") Integer id_vendedor);
 
+	/**
+	 * Método para actualizar el teléfono de un vendedor
+	 * 
+	 * @param telefono    Recibe el teléfono
+	 * @param id_vendedor Recibe la id del vendedor
+	 */
 	public void updateTelefono(@Param("telefono") String telefono, @Param("id_vendedor") Integer id_vendedor);
 
+	/**
+	 * Método para actualizar el password de un vendedor
+	 * 
+	 * @param password    Recibe el password
+	 * @param id_vendedor Recibe la id del vendedor
+	 */
 	public void updatePassword(@Param("password") String password, @Param("id_vendedor") Integer id_vendedor);
 
+	/**
+	 * Método para actualizar la foto de un vendedor
+	 * 
+	 * @param foto        Recibe la foto
+	 * @param id_vendedor Recibe la id del vendedor
+	 */
 	public void updateFoto(@Param("foto") String foto, @Param("id_vendedor") Integer id_vendedor);
 
+	/**
+	 * Método para actualizar la dirección de un vendedor
+	 * 
+	 * @param id_vendedor Recibe la id del vendedor
+	 */
 	public void updateDireccion(@Param("id_vendedor") Integer id_vendedor);
 
+	/**
+	 * Método para borrar un vendedor de la BD
+	 * 
+	 * @param id_vendedor Recibe la id del vendedor
+	 */
 	public void bajaVendedor(@Param("id_vendedor") Integer id_vendedor);
 
 }

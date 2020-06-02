@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import modelo.ejb.CategoriaEJB;
 import modelo.ejb.FormatoEJB;
-import modelo.ejb.ImagenesEJB2;
 import modelo.ejb.LoggersEJB;
 import modelo.ejb.PedidoEJB;
 import modelo.ejb.ProductoEJB;
@@ -45,9 +44,7 @@ public class ObtenerPedidosVendedor extends HttpServlet {
 	@EJB
 	LoggersEJB logger;
 
-	@EJB
-	ImagenesEJB2 imagenesEJB;
-
+	
 	static final String PEDIDOS_VENDEDOR_JSP = "/PedidosVendedor.jsp";
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
@@ -62,35 +59,52 @@ public class ObtenerPedidosVendedor extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		try {
+			
+			//Intentamos recoger al usuario Vendedor de la sesión
 			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-
+			
+			//Si hay sesión y existe el usuario vendedor en la misma
 			if (session != null && vendedor.getNombre() != null) {
-
+				
+				//Si el vendedor tiene pedidos
 				if (pedidoEJB.getPedidosVendedor(vendedor.getId_vendedor()) != null) {
-
+					
+					//Los recogemos en un arraylist
 					ArrayList<Pedido> pedidos = pedidoEJB.getPedidosVendedor(vendedor.getId_vendedor());
-
+					
+					//Si el arraylist está vacío mostramos un mensaje de error
 					if (pedidos.isEmpty()) {
 						String error = "No existen pedidos";
-
+						
+						//Lo pasamos a la request
 						request.setAttribute("error", error);
-
+						
+						//Redirigimos a PEDIDOS_VENDEDOR_JSP
 						rs.forward(request, response);
 					} else {
+						
+						//Si no está vacío lo pasamos a la request
 						request.setAttribute("pedidos", pedidos);
-
+						
+						//REdirigimos a PEDIDOS_VENDEDOR_JSP
 						rs.forward(request, response);
 					}
 
 				} else {
+					
+					//Si no tiene pedidos mostramos un mensaje de error
 					String error = "No existen pedidos";
-
+					
+					//Lo insertamos en la request
 					request.setAttribute("error", error);
-
+					
+					//Redirigimos a PEDIDOS_VENDEDOR_JSP
 					rs.forward(request, response);
 				}
 
 			} else {
+				
+				//Si no hay sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {

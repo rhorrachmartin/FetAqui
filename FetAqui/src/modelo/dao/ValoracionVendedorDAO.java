@@ -5,12 +5,18 @@ import org.apache.ibatis.session.SqlSession;
 import modelo.dao.mappers.ValoracionesVendedoresMapper;
 import modelo.pojo.ValoracionCv;
 
+/**
+ * Método para manejar las valoraciones de los vendedores
+ * 
+ * @author ramon
+ *
+ */
 public class ValoracionVendedorDAO {
 
 	/**
-	 * Método para insertar una direccion en BD
+	 * Método para insertar la valoracion de un vendedor
 	 * 
-	 * @param direccion
+	 * @param valoracionCv Recibe pojo ValoracionCv
 	 */
 	public void insertarValoracionVendedor(ValoracionCv valoracionCv) {
 
@@ -29,6 +35,11 @@ public class ValoracionVendedorDAO {
 		}
 	}
 
+	/**
+	 * Método para borrar la valoracion de un vendedor hecha por un usuario cliente
+	 * 
+	 * @param id_cliente Recibe la id del cliente
+	 */
 	public void borrarValoracionCliente(Integer id_cliente) {
 
 		// Abrimos la sesión

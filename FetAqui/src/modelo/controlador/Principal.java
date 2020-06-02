@@ -29,39 +29,41 @@ import modelo.pojo.CodigoActivacionVendedor;
 import modelo.pojo.Post;
 import modelo.pojo.Producto;
 import modelo.pojo.Vendedor;
+
 /**
  * Clase principal de la aplicación
+ * 
  * @author ramon
  *
  */
 @WebServlet("/Principal")
 public class Principal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	VendedorEJB vendedorEJB;
-	
+
 	@EJB
 	ProductoEJB productoEJB;
-	
+
 	@EJB
 	PostEJB postEJB;
-	
+
 	@EJB
 	ClienteEJB clienteEJB;
 
 	@EJB
 	SesionVendedorEJB sesionVendedorEJB;
-	
+
 	@EJB
 	SesionClienteEJB sesionClienteEJB;
-	
+
 	@EJB
 	CodigoVendedorEJB codigoVendedorEJB;
-	
+
 	@EJB
 	CodigoClienteEJB codigoClienteEJB;
-	
+
 	@EJB
 	LoggersEJB logger;
 
@@ -71,99 +73,125 @@ public class Principal extends HttpServlet {
 	static final String HOME_LOGEADO_VENDEDOR_JSP = "/HomeLogeadoVendedor.jsp";
 
 	/**
-	 * Método doGet para mostrar el formulario de registro
+	 * Método doGet para mostrar la página principal en función del tipo de usuario
+	 * logeado
 	 */
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType(CONTENT_TYPE);
 
 		// Creamos el RequestDispatcher por defecto hacia Registro.jsp
 		RequestDispatcher rs = getServletContext().getRequestDispatcher(HOME_JSP);
-		response.setContentType(CONTENT_TYPE);
+
 		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
 		HttpSession session = request.getSession(false);
-		// Recogemos el parametro "error"
-		String error = request.getParameter("error");
-		request.setAttribute("error", error);
-		// Intentamos obtener el usuario de la sesión
-		Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
-		Cliente c = sesionClienteEJB.clienteLogeado(session);
 
-		request.setAttribute("vendedor", v);
-		request.setAttribute("cliente", c);
-		
-		
-	
-		
-		// Si hay sesión
-		if (v != null || c != null) {
-			// Ya está logeado, lo redirigimos a la principal
-			try {
+		try {
 
+			// Recogemos el parametro "error"
+			String error = request.getParameter("error");
+
+			// Lo metemos en la request, el JSP manejará si es nulo o no
+			request.setAttribute("error", error);
+
+			// Intentamos obtener el usuario de la sesión
+			Vendedor v = sesionVendedorEJB.vendedorLogeado(session);
+			Cliente c = sesionClienteEJB.clienteLogeado(session);
+
+			// Si hay sesión
+			if (v != null || c != null) {
+
+				// Si es un usuario cliente
 				if (c != null) {
+
+					// Lo metemos en la request
+					request.setAttribute("cliente", c);
+
+					// RS hacia HOME_LOGEADO_JSP
 					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_JSP);
-					
+
+					// Obtenemos todos los vendedores, productos y posts
 					ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 					ArrayList<Producto> productos = productoEJB.getProductos();
 					ArrayList<Post> posts = postEJB.getPosts();
-					
+
+					// Lo metemos en la request
 					request.setAttribute("vendedores", vendedores);
 					request.setAttribute("productos", productos);
 					request.setAttribute("posts", posts);
-					
+
+					// Redirigimos
 					rs.forward(request, response);
 				} else {
-					
+
+					// Si no es cliente es vendedor, lo metemos en la request
+					request.setAttribute("vendedor", v);
+
+					// CArgamos todos los vendedores, productos y posts
 					ArrayList<Vendedor> vendedores = vendedorEJB.getVendedores();
 					ArrayList<Producto> productos = productoEJB.getProductos();
 					ArrayList<Post> posts = postEJB.getPosts();
-					
+
+					// Los metemos en la request
 					request.setAttribute("vendedores", vendedores);
 					request.setAttribute("productos", productos);
 					request.setAttribute("posts", posts);
-					
+
+					// RS hacia HOME_LOGEADO_VENDEDOR_JSP
 					rs = getServletContext().getRequestDispatcher(HOME_LOGEADO_VENDEDOR_JSP);
 					rs.forward(request, response);
 				}
-			} catch (Exception e) {
-				logger.setErrorLogger(e.getMessage());
-			}
-		} else {
-			// No está logeado, mostramos página principal
 
-			rs.forward(request, response);
+			} else {
+				// No está logeado, mostramos página principal sin logear HOME_JSP
+
+				rs.forward(request, response);
+			}
+		} catch (Exception e) {
+			logger.setErrorLogger(e.getMessage());
 		}
 
 	}
 
 	/**
-	 * Método doPost para registrar usuario en BD
+	 * Método doPost encargado de registrar a los diferentes tipos de usuarios.
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		response.setContentType(CONTENT_TYPE);
 
 		try {
 
+			// Si recibimos los parámetros para un usuario vendedor
 			if (request.getParameter("nombrep") != null && request.getParameter("emailp") != null
 					&& request.getParameter("passwordp") != null) {
+
 				// Recogemos los parámetros necesarios
 				String nombrep = request.getParameter("nombrep");
 				String emailp = request.getParameter("emailp");
 				String passwordp = request.getParameter("passwordp");
 
+				// Nombre de la imagen por defecto de un usuario
 				String imagen = "FotoPorDefecto";
+
+				// Datos del usuario por defecto que no se piden en el formulario de registro
 				String nif = " ";
 				String telefono = " ";
 				int activado = 0;
 				int venta_online = 0;
+
 				// Recogemos la fecha actual
 				Date hoy = new Date();
 				Timestamp fecha = new Timestamp(hoy.getTime());
+
 				// Creamos el pojo usuario
 				Vendedor v = new Vendedor();
+
+				// Lo seteamos
 				v.setNif(nif);
 				v.setNombre(nombrep);
 				v.setEmail(emailp);
@@ -182,9 +210,10 @@ public class Principal extends HttpServlet {
 					response.sendRedirect("Principal?error=Correo ya existente");
 
 				} else {
-
+					// Si no existe
 					// Insertamos el usuario en BD
 					vendedorEJB.insertarVendedor(v);
+
 					// Recogemos el usuario insertado en BD
 					Vendedor ve = vendedorEJB.getVendedorEmail(v.getEmail());
 
@@ -193,6 +222,7 @@ public class Principal extends HttpServlet {
 
 					// Comprobamos si el código generado existe en BD
 					boolean existe = codigoVendedorEJB.existeCodigo(codigo);
+
 					// Siempre que exista el codigo sumamos uno al mismo
 					while (existe) {
 						codigo++;
@@ -204,21 +234,28 @@ public class Principal extends HttpServlet {
 
 					// Insertamos el código en BD
 					codigoVendedorEJB.insertCodigo(c);
+
 					// Reenviamos la información al servlet de enviar mail para enviar el codigo al
-					// user
+					// usuario
 					response.sendRedirect("Mail?email=" + emailp + "&codigo=" + codigo + "");
 				}
 
 			} else {
-				// Recogemos los parámetros necesarios
+
+				// Si recibimos los parámetros de un usuario cliente recogemos los parámetros
+				// necesarios
 				String nombrec = request.getParameter("nombrec");
 				String emailc = request.getParameter("emailc");
 				String passwordc = request.getParameter("passwordc");
 
+				// Datos de el usuario por defecto que no se piden en el formulario de registro
 				String imagen = "FotoPorDefecto";
 				String telefono = "TelfDef";
+
 				// Creamos el pojo usuario
 				Cliente c = new Cliente();
+
+				// Lo setemoas
 				c.setEmail(emailc);
 				c.setNombre(nombrec);
 				c.setPassword(passwordc);
@@ -226,6 +263,7 @@ public class Principal extends HttpServlet {
 				c.setTelefono(telefono);
 				c.setFoto(imagen);
 				c.setActivado(0);
+
 				// Comprobamos si el correo ya existe en la BD
 				// No vamos a permitir que haya dos usuarios con el mismo correo
 
@@ -262,7 +300,7 @@ public class Principal extends HttpServlet {
 					codigoClienteEJB.insertCodigo(cod);
 
 					// Reenviamos la información al servlet de enviar mail para enviar el codigo al
-					// user
+					// usuario
 					response.sendRedirect("Mail?email=" + emailc + "&codigo=" + codigo + "");
 				}
 			}

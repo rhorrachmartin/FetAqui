@@ -6,17 +6,18 @@ import javax.servlet.http.HttpSession;
 
 import modelo.pojo.Cliente;
 /**
- * Clase EJB encargada de manejar las sesiones
+ * Clase EJB encargada de manejar las sesiones de usuarios Cliente
  * @author ramon
  *
  */
 @Stateless
 @LocalBean
 public class SesionClienteEJB {
+	
 	/**
-	 * Método introducir un pojo Vendedor en la sesión
-	 * @param session
-	 * @param v
+	 * Método para introducir un pojo Cliente en la sesión
+	 * @param session Recibe la sesion
+	 * @param v Devuelve un pojo Vendedor
 	 */
 	public void crearSesion(HttpSession session, Cliente c) {
 
@@ -24,10 +25,11 @@ public class SesionClienteEJB {
 			session.setAttribute("cliente", c);
 		}
 	}
+	
 	/**
 	 * Método que devuelve un usuario de la sesión
-	 * @param session
-	 * @return
+	 * @param session REcibe la sesion
+	 * @return devuelve un pojo Cliente
 	 */
 	public Cliente clienteLogeado(HttpSession session) {
 		Cliente cliente = null;
@@ -40,7 +42,7 @@ public class SesionClienteEJB {
 	}
 	/**
 	 * Método para cerrar una sesión
-	 * @param session
+	 * @param session Recibe la sesión
 	 */
 	public void cerrarSesion(HttpSession session) {
 

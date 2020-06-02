@@ -33,21 +33,9 @@ public class EliminarProducto extends HttpServlet {
 
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Recogemos la sesión en caso de que la haya, si no hay no la creamos
-		HttpSession session = request.getSession(false);
-
-		try {
-			if (session == null && session.getAttribute("vendedor") == null
-					&& session.getAttribute("cliente") == null) {
-				response.sendRedirect("Principal");
-			}
-		} catch (Exception e) {
-			logger.setErrorLogger(e.getMessage());
-		}
-	}
-
+	/**
+	 * Método doPost encargado de eliminar un producto de un usuario Vendedor
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -57,27 +45,35 @@ public class EliminarProducto extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		try {
-
+			
+			//Intentamos recoger al usuario Vendedor de la sesión
 			Vendedor vendedor = (Vendedor) session.getAttribute("vendedor");
-
-			Integer idProducto = Integer.valueOf(request.getParameter("producto"));
-
-			Producto producto = productoEJB.getProductoPorId(idProducto);
-
-			if (vendedor.getNombre() != null) {
-
+			
+			//Si la sesión existe y el usuario Vendedor también
+			if (session != null && vendedor.getNombre() != null) {
+				
+				//Recogemos el parámetro id producto
+				Integer idProducto = Integer.valueOf(request.getParameter("producto"));
+				
+				//Obtenemos el producto a través de su id
+				Producto producto = productoEJB.getProductoPorId(idProducto);
+				
+				//Si existe
 				if (producto != null) {
-
+					
+					//Lo borramos
 					productoEJB.borrarProducto(idProducto);
-
+					
+					//REdirigimos a ObtenerProductosVendedor
 					response.sendRedirect("ObtenerProductosVendedor");
 
 				} else {
-
+					//Si no existe, redirigimos a ObtenerProductosVendedor
 					response.sendRedirect("ObtenerProductosVendedor");
 				}
 
 			} else {
+				//Si no existe la sesión redirigimos a Principal
 				response.sendRedirect("Principal");
 			}
 		} catch (Exception e) {

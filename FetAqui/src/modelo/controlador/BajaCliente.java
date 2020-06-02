@@ -46,7 +46,6 @@ public class BajaCliente extends HttpServlet {
 	@EJB
 	LoggersEJB logger;
 	static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-	static final String HOME_JSP = "/Home.jsp";
 	
 	/**
 	 * Método doGet encargado de dar de baja un cliente

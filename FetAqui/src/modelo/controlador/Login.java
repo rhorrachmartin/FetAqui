@@ -71,30 +71,48 @@ public class Login extends HttpServlet {
 					&& clienteEJB.getClienteEmailPass(email, password) == null) {
 
 				response.sendRedirect("Principal?error=Usuario inexistente");
-
+				
+				//Si existe como Vendedor
 			} else if (vendedorEJB.getVendedorEmailPass(email, password) != null) {
-
+				
+				//Lo recogemos
 				vendedor = vendedorEJB.getVendedor(email, password);
-
+				
+				//Y comprobamos que esté activado
 				if (vendedor.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);
+					
+					//Introducimos al usuario en la misma
 					sesionVendedorEJB.crearSesion(session, vendedor);
+					
+					//Lo pasamos a la request
 					request.setAttribute("vendedor", vendedor);
+					
+					//REdirigimos a la página del propio vendedor
 					response.sendRedirect("PaginaPropioVendedor");
 				} else {
+					//Si no está activado mostramos un mensaje de error
 					response.sendRedirect("Principal?error=Usuario no activado");
 				}
 
 			} else {
-
+				//Si no existe como Vendedor es cliente, lo recogemos.
 				c = clienteEJB.getCliente(email, password);
+				
+				//COmprobamos que esté activado.
 				if (c.getActivado() == 1) {
 					// Iniciamos la sesión
 					session = request.getSession(true);
+					
+					//Introducimos al usuario en la misma
 					sesionClienteEJB.crearSesion(session, c);
+					
+					//Redirigimos a Principal
 					response.sendRedirect("Principal");
 				} else {
+					
+					//Si no está activado mostramos un mensaje de error
 					response.sendRedirect("Principal?error=Usuario no activado");
 				}
 
